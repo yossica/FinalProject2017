@@ -1,0 +1,31 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="client">
+	<insert id="insert" parameterClass="client.ClientBean">
+		insert into master_client 
+		(client_id,name,address,city,phone_number,fax_number,postal_code,is_enabled,created_by,created_date,
+			changed_by, changed_date)
+		values (#clientId#,#name#,#address#,#city#,#phoneNumber#,#faxNumber#,
+				#postalCode#,#isEnabled#,#createdBy#,sysdate,#changedBy#,#changedDate#)
+	</insert>
+	<update id="update" parameterClass="client.ClientBean">
+		update master_client set
+		name = #name#,
+		address = #address#,
+		city = #city#,
+		phone_number = #phoneNumber#,
+		fax_number = #faxNumber#,
+		postal_code = #postalCode#,
+		changed_by = #changedBy#, 
+		changed_date = sysdate
+		where client_id = #client_id#
+	</update>
+	<update id="toggleEnable" parameterClass="client.ClientBean">
+		update master_client set
+		is_enabled = #isEnabled#
+		changed_by = #changedBy#, 
+		changed_date = sysdate
+		where client_id = #client_id#
+	</update>
+</sqlMap> 

@@ -7,6 +7,7 @@ public class TrainingDetailBean implements Serializable {
 	private int transactionTrainingHeaderId;
 	private String description;
 	private double fee;
+	private int isSettlement;
 	private String createdBy;
 	private String createDate;
 	private String changedBy;

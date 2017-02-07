@@ -12,7 +12,8 @@ public class ClientManager {
 	public void update(ClientBean input){
 		
 	}
-	public void toggleEnable(int id,int isEnable){
+	public void toggleEnable(ClientBean input){
+		//inputnya bean karena nnti lempar ke ibatis pake bean
 		
 	}
 	public ClientBean getById(int input){
