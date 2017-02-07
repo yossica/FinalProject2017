@@ -29,5 +29,175 @@ public class InvoiceBean implements Serializable {
 	private String changedDate;
 	
 	private List<InvoiceDetailBean> detailList;
+
+	public int getTransactionInvoiceHeaderId() {
+		return transactionInvoiceHeaderId;
+	}
+
+	public void setTransactionInvoiceHeaderId(
+			int transactionInvoiceHeaderId) {
+		this.transactionInvoiceHeaderId = transactionInvoiceHeaderId;
+	}
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public String getInvoiceDate() {
+		return invoiceDate;
+	}
+
+	public void setInvoiceDate(String invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
+
+	public int getPeriodMonth() {
+		return periodMonth;
+	}
+
+	public void setPeriodMonth(int periodMonth) {
+		this.periodMonth = periodMonth;
+	}
+
+	public int getPeriodYear() {
+		return periodYear;
+	}
+
+	public void setPeriodYear(int periodYear) {
+		this.periodYear = periodYear;
+	}
+
+	public int getStatusInvoiceId() {
+		return statusInvoiceId;
+	}
+
+	public void setStatusInvoiceId(int statusInvoiceId) {
+		this.statusInvoiceId = statusInvoiceId;
+	}
+
+	public String getStatusInvoiceName() {
+		return statusInvoiceName;
+	}
+
+	public void setStatusInvoiceName(String statusInvoiceName) {
+		this.statusInvoiceName = statusInvoiceName;
+	}
+
+	public int getInvoiceTypeId() {
+		return invoiceTypeId;
+	}
+
+	public void setInvoiceTypeId(int invoiceTypeId) {
+		this.invoiceTypeId = invoiceTypeId;
+	}
+
+	public String getInvoiceTypeName() {
+		return invoiceTypeName;
+	}
+
+	public void setInvoiceTypeName(String invoiceTypeName) {
+		this.invoiceTypeName = invoiceTypeName;
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
+
+	public double getTotalNet() {
+		return totalNet;
+	}
+
+	public void setTotalNet(double totalNet) {
+		this.totalNet = totalNet;
+	}
+
+	public float getPpnPercentage() {
+		return ppnPercentage;
+	}
+
+	public void setPpnPercentage(float ppnPercentage) {
+		this.ppnPercentage = ppnPercentage;
+	}
+
+	public int getIsGross() {
+		return isGross;
+	}
+
+	public void setIsGross(int isGross) {
+		this.isGross = isGross;
+	}
+
+	public double getTotalGross() {
+		return totalGross;
+	}
+
+	public void setTotalGross(double totalGross) {
+		this.totalGross = totalGross;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getChangedBy() {
+		return changedBy;
+	}
+
+	public void setChangedBy(String changedBy) {
+		this.changedBy = changedBy;
+	}
+
+	public String getChangedDate() {
+		return changedDate;
+	}
+
+	public void setChangedDate(String changedDate) {
+		this.changedDate = changedDate;
+	}
+
+	public List<InvoiceDetailBean> getDetailList() {
+		return detailList;
+	}
+
+	public void setDetailList(List<InvoiceDetailBean> detailList) {
+		this.detailList = detailList;
+	}
+	
 }
 	
