@@ -14,7 +14,7 @@ public class TrainingBean implements Serializable {
 	private String createDate;
 	private String changedBy;
 	private String changedDate;
-	//GRACEEE
+
 	private List<TrainingDetailBean> detailList;
 	public int getTransactionTrainingHeaderId() {
 		return transactionTrainingHeaderId;
