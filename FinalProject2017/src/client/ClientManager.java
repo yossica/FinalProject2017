@@ -20,10 +20,14 @@ public class ClientManager {
 		ClientBean result = new ClientBean();
 		return result;
 	}
+	
+	//query belum dibuat
 	public int getCount(){
 		int result=0;
 		return result;
 	}
+	
+	//query belum dibuat
 	public List getAllWithLimit(Paging input){
 		List result = new ArrayList();
 		return result;
