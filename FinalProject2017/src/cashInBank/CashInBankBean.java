@@ -12,6 +12,7 @@ public class CashInBankBean implements Serializable{
 	private int isDebit;
 	private String createdBy;
 	private String createDate;
+	//test grace
 	public int getTransactionCashInBankId() {
 		return transactionCashInBankId;
 	}
