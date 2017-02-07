@@ -11,4 +11,53 @@ public class EmployeeBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changeDate;
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getIsEnabled() {
+		return isEnabled;
+	}
+	public void setIsEnabled(int isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public String getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+	public String getChangedBy() {
+		return changedBy;
+	}
+	public void setChangedBy(String changedBy) {
+		this.changedBy = changedBy;
+	}
+	public String getChangeDate() {
+		return changeDate;
+	}
+	public void setChangeDate(String changeDate) {
+		this.changeDate = changeDate;
+	}
+	
 }
