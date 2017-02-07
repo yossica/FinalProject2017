@@ -10,10 +10,14 @@ public class OutsourceManager {
 		
 	}
 	public void update(OutsourceBean input){
-		
+		//update fee & is gross
 	}
-	public void toggleEnable(int id,int isEnable){
-		
+	public void mutation(OutsourceBean input){
+		//end contract yang lama
+		//insert contract yang baru
+	}
+	public void endContract(int id,int isEnable){
+		//ganti end date contract jadi tanggal hari itu
 	}	
 	public OutsourceBean getById(int input){
 		OutsourceBean result = new OutsourceBean();
