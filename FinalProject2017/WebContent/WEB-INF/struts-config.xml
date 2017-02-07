@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="indexForm" type="index.IndexForm"></form-bean>
+		<form-bean name="cashInBankForm" type="cashInBank.CashInBankForm"></form-bean>
+		<form-bean name="clientForm" type="client.ClientForm"></form-bean>
+		<form-bean name="employeeForm" type="employee.EmployeeForm"></form-bean>
+		<form-bean name="generalInformationForm" type="generalInformation.GeneralInformationForm"></form-bean>
+		<form-bean name="holidayForm" type="holiday.HolidayForm"></form-bean>
+		<form-bean name="invoiceForm" type="invoice.InvoiceForm"></form-bean>
+		<form-bean name="outsourceForm" type="outsource.OutsourceForm"></form-bean>
+		<form-bean name="pettyCashForm" type="pettyCash.PettyCashForm"></form-bean>
+		<form-bean name="trainingForm" type="training.TrainingForm"></form-bean>
+		<form-bean name="userForm" type="user.UserForm"></form-bean>
+	</form-beans>	
+	<action-mappings>
+		<action path="/index" name="indexForm" type="index.IndexHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/cashInBank" name="cashInBankForm" type="cashInBank.CashInBankHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/client" name="clientForm" type="client.ClientHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/employee" name="employeeForm" type="employee.EmployeeHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/generalInformation" name="generalInformationForm" type="generalInformation.GeneralInformationHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/holiday" name="holidayForm" type="holiday.HolidayHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/invoice" name="invoiceForm" type="invoice.InvoiceHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/pettyCash" name="pettyCashForm" type="pettyCash.PettyCashHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/training" name="trainingForm" type="training.TrainingHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+		<action path="/user" name="userForm" type="user.UserHandler" scope="request">
+			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+		</action>
+	</action-mappings>
+</struts-config>
