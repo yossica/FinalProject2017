@@ -6,10 +6,13 @@ import java.util.List;
 public class TrainingBean implements Serializable {
 	private int transactionTrainingHeaderId;
 	private int clientId;
+	private int dpInvoiceId;
 	private String clientName;
+	private String trainingStartDate;
 	private String trainingEndDate;
 	private String description;
 	private int isGross;
+	private int isInvoiceCreated;
 	private String createdBy;
 	private String createDate;
 	private String changedBy;
