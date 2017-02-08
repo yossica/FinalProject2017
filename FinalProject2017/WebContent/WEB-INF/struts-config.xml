@@ -37,8 +37,8 @@
 		<action path="/holiday" name="holidayForm" type="holiday.HolidayHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
 		</action>
-		<action path="/invoi" name="invoiceForm" type="invoice.InvoiceHandler" scope="request">
-			<forward name="invoi" path="/WEB-INF/jsp/invoice.jsp"></forward>
+		<action path="/invoice" name="invoiceForm" type="invoice.InvoiceHandler" scope="request">
+			<forward name="invoice" path="/WEB-INF/jsp/invoice.jsp"></forward>
 		</action>
 		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
