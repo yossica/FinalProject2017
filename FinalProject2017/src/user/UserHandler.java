@@ -14,6 +14,9 @@ public class UserHandler extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		return mapping.findForward("success");
+		//change password
+		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
+		
 	}
 
 }

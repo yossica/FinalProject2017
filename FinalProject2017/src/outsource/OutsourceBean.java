@@ -5,7 +5,10 @@ import java.io.Serializable;
 public class OutsourceBean implements Serializable {
 	private int transactionOutsourceId;
 	private int clientId;
+	private String clientName;
 	private int employeeId;
+	private String employeeName;
+	
 	private String startDate;
 	private String endDate;
 	private int isGross;
@@ -26,11 +29,25 @@ public class OutsourceBean implements Serializable {
 	public void setClientId(int clientId) {
 		this.clientId = clientId;
 	}
+	
+	public String getClientName() {
+		return clientName;
+	}
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
 	public int getEmployeeId() {
 		return employeeId;
 	}
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
+	}
+	
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
 	}
 	public String getStartDate() {
 		return startDate;

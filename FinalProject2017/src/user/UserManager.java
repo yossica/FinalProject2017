@@ -11,4 +11,8 @@ public class UserManager {
 		SqlMapClient smc = utils.IbatisHelper.getSqlMapInstance();
 		smc.update("user.changePassword", input);
 	}
+	public int checkLogin(UserBean input){
+		int result = 0;
+		return result;
+	}
 }
