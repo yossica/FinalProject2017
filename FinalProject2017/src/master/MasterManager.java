@@ -2,14 +2,17 @@ package master;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import utils.Filter;
 import utils.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class MasterManager {
-	public List getAllCashFlowCategory() {
+	/*public List getAllCashFlowCategory() {
 		// hanya mengambil yang enabled
 		List result = new ArrayList();
 
@@ -18,6 +21,25 @@ public class MasterManager {
 			result = ibatis.queryForList("cashFlowCategory.getAll", null);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}*/
+	public List getAllCashFlowCategory(Filter input) {
+		// hanya mengambil yang enabled + cash type sesuai + debit/kredit
+		//filter nanti akan diisi di handler
+		List result = null;
+
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		Map paramMap = new HashMap();
+		try {
+			if(input.getBean() instanceof CashFlowCategoryBean){
+				CashFlowCategoryBean bean = (CashFlowCategoryBean) input.getBean();
+				paramMap.put("cashFlowType", bean.getCashFlowType());
+				paramMap.put("isDebit", bean.getIsDebit());
+			}
+			result = ibatis.queryForList("cashFlowCategory.getAll", paramMap);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;
