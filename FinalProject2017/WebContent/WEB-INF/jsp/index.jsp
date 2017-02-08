@@ -13,13 +13,12 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<!-- Bootstrap Core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="asset/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
 <title>Finance Solution</title>
 </head>
 <body>
 	<div id="wrapper">
-
+		
         Navigation
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -351,6 +350,6 @@
             /.navbar-static-side
         </nav>
 	</div>
-	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="asset/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
