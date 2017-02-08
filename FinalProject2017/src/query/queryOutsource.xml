@@ -2,4 +2,16 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="outsource">
+	<insert id="insert" parameterClass="outsource.OutsourceBean">
+		insert into transaction_outsource (transaction_outsource_id,client_id,employee_id,start_date,
+			end_date,is_gross, fee, created_by, created_date, changedBy, changedDate)
+		values (#transactionOutsourceId#,#clientId#,#employeeId#,to_date(#startDate#,'MM/dd/yyyy'), 
+			to_date(#endDate#,'MM/dd/yyyy'),#isGross#,#fee#,#createdBy#,sysdate,null,null)
+	</insert>
+	<update id="update" parameterClass="outsource.OutsourceBean">
+		update transaction_outsource
+		set fee = #fee#,
+			is_gross = #isGross#
+		where  transaction_outsource_id = #transactionOutsourceId#
+	</update>
 </sqlMap> 

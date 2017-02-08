@@ -3,22 +3,19 @@ package pettyCash;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.Paging;
+import utils.Filter;
+
 
 public class PettyCashManager {
 	public void insert(PettyCashBean input){
 		
 	}
-	public int getCount(){
-		int result=0;
-		return result;
-	}
-	public List getAllWithLimit(Paging input){
+	public List getAllWithFilter(Filter input){
 		List result = new ArrayList();
 		return result;
 	}
-//	public List getAll(){
-//		List result = new ArrayList();
-//		return result;
-//	}
+	public int getCurrentBalance(){
+		int result = 0;
+		return result;
+	}
 }
