@@ -12,7 +12,7 @@ public class PettyCashBean implements Serializable {
 	private String transactionDate;
 	private int isDebit;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 	public int getTransactionPettyCashId() {
 		return transactionPettyCashId;
 	}
@@ -68,10 +68,10 @@ public class PettyCashBean implements Serializable {
 		this.createdBy = createdBy;
 	}
 	public String getCreateDate() {
-		return createDate;
+		return createdDate;
 	}
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 	
 }
