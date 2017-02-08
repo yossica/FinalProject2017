@@ -17,6 +17,7 @@
 			phone_number = #phoneNumber#,
 			fax_number = #faxNumber#,
 			postal_code = #postalCode#,
+			is_enabled = #isEnabled#,
 			changed_by = #changedBy#, 
 			changed_date = sysdate
 		where client_id = #client_id#
@@ -58,7 +59,7 @@
 		from master_client 
 		order by client_id
     </select>
-    <select id="getMaxId" resultClass="client.ClientBean">
+    <select id="getMaxId" resultClass="java.lang.Integer">
 		select count(1)
 		from master_client
     </select>

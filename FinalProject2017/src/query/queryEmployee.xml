@@ -3,18 +3,6 @@
 
 <sqlMap namespace="employee">
 	
-	<select id="getAll" resultClass="employee.EmployeeBean">		
-		select employee_id as employeeId,
-			   name as name,
-			   email as email,
-			   is_enabled as isEnabled,
-			   created_by as createdBy,
-			   created_date as createdDate,
-			   changed_by as changedBy,
-			   changed_date as changeDate
-		from master_employee
-	</select>
-		
 	<insert id="insert" parameterClass="employee.EmployeeBean">
 		insert into master_employee 
 		(employee_id,name,email,isEnabled,createdBy,createdDate,changedBy,changeDate)
@@ -44,4 +32,20 @@
 		from master_employee
 		where employee_id = #employeeId#
 	</select>
+		
+	<select id="getAll" resultClass="employee.EmployeeBean">		
+		select employee_id as employeeId,
+			   name as name,
+			   email as email,
+			   is_enabled as isEnabled,
+			   created_by as createdBy,
+			   created_date as createdDate,
+			   changed_by as changedBy,
+			   changed_date as changeDate
+		from master_employee
+	</select>
+    <select id="getMaxId" resultClass="java.lang.Integer">
+		select count(1)
+		from master_employee
+    </select>	
 </sqlMap> 
