@@ -5,6 +5,7 @@ import java.util.List;
 
 public class MasterManager {
 	public List getAllCashFlowCategory(){
+		//hanya mengambil yang enabled
 		List result = new ArrayList();
 		return result;
 	}
@@ -13,6 +14,7 @@ public class MasterManager {
 		return result;
 	}
 	public List getAllInvoiceType(){
+		//hanya mengambil yang enabled
 		List result = new ArrayList();
 		return result;
 	}
