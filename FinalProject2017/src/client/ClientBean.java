@@ -12,7 +12,7 @@ public class ClientBean implements Serializable {
 	private String postalCode;
 	private int isEnabled;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 	private String changedBy;
 	private String changedDate;
 	
@@ -71,10 +71,10 @@ public class ClientBean implements Serializable {
 		this.createdBy = createdBy;
 	}
 	public String getCreateDate() {
-		return createDate;
+		return createdDate;
 	}
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 	public String getChangedBy() {
 		return changedBy;
