@@ -17,13 +17,7 @@
 			phone_number = #phoneNumber#,
 			fax_number = #faxNumber#,
 			postal_code = #postalCode#,
-			changed_by = #changedBy#, 
-			changed_date = sysdate
-		where client_id = #client_id#
-	</update>
-	<update id="toggleEnable" parameterClass="client.ClientBean">
-		update master_client set
-			is_enabled = #isEnabled#
+			is_enabled = #isEnabled#,
 			changed_by = #changedBy#, 
 			changed_date = sysdate
 		where client_id = #client_id#
@@ -64,5 +58,9 @@
 			to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from master_client 
 		order by client_id
+    </select>
+    <select id="getMaxId" resultClass="java.lang.Integer">
+		select count(1)
+		from master_client
     </select>
 </sqlMap> 
