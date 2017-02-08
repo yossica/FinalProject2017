@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class StatusInvoiceBean implements Serializable {
 	private int statusInvoiceId;
 	private String name;
-	private String from;
-	private String to;
+	private String fromId;
+	private String toId;
 	public int getStatusInvoiceId() {
 		return statusInvoiceId;
 	}
@@ -19,17 +19,18 @@ public class StatusInvoiceBean implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getFrom() {
-		return from;
+	public String getFromId() {
+		return fromId;
 	}
-	public void setFrom(String from) {
-		this.from = from;
+	public void setFromId(String fromId) {
+		this.fromId = fromId;
 	}
-	public String getTo() {
-		return to;
+	public String getToId() {
+		return toId;
 	}
-	public void setTo(String to) {
-		this.to = to;
+	public void setToId(String toId) {
+		this.toId = toId;
 	}
+	
 	
 }
