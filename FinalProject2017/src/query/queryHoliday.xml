@@ -2,4 +2,7 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="holiday">
+<insert id="">
+	<isParameterPresent></isParameterPresent>
+</insert>
 </sqlMap> 
