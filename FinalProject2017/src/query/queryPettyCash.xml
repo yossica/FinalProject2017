@@ -2,4 +2,44 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="pettyCash">
+
+	<select id="getAllWithFilter" parameterClass="java.util.Map">
+		select
+			transaction_petty_cash_id as transactionPettyCashId,
+			cash_flow_category_id as cashFlowCategoryId,
+			cash_flow_category_name as cashFlowCategoryName,
+			amount,
+			balance,
+			description,
+			transaction_date as transactionDate,
+			is_debit as isDebit,
+			created_by as createdBy,
+			created_date as createdDate
+		from transaction_petty_cash
+		where
+			transaction_date between to_date(#startDate#,'MM/dd/yyyy') and to_date(#endDate#,'MM/dd/yyyy')
+			<dynamic prepend="AND">
+				<isNotNull property="category">
+					<isNotEmpty property="category">
+						cash_flow_category_id = #category#
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>
+	</select>
+	
+	<select id="getCurrentBalance" resultClass="java.lang.Double">
+		select balance
+		from transaction_petty_cash
+		having max(created_date)
+	</select>
+
+	<insert id="insert">
+		insert into transaction_petty_cash (transaction_petty_cash_id, cash_flow_category_id,
+			amount, balance, description, transaction_date, 
+			is_debit, created_by, created_date)
+		values (#transactionPettyCashId#,#cashFlowCategoryId#,
+			#amount#,#balance#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
+			#isDebit#,#createdBy#, sysdate)
+	</insert>
+	
 </sqlMap> 
