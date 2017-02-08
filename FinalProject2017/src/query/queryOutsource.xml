@@ -8,10 +8,29 @@
 		values (#transactionOutsourceId#,#clientId#,#employeeId#,to_date(#startDate#,'MM/dd/yyyy'), 
 			to_date(#endDate#,'MM/dd/yyyy'),#isGross#,#fee#,#createdBy#,sysdate,null,null)
 	</insert>
+	
 	<update id="update" parameterClass="outsource.OutsourceBean">
 		update transaction_outsource
 		set fee = #fee#,
 			is_gross = #isGross#
 		where  transaction_outsource_id = #transactionOutsourceId#
 	</update>
+	
+	<select id="getById" resultClass="outsource.OutsourceBean" parameterClass="java.lang.Integer">
+		select 
+			transaction_outsource_id as transactionOutsourceId,
+			o.client_id as clientId,
+			c.name as clientName,
+			o.employee_id as employeeId,
+			e.name as employeeName,
+			start_date as startDate,
+			end_date as endDate,
+			is_gross as isGross,
+			fee as fee
+		from transaction_outsource o
+		join master_client c on (o.client_id=c.client_id)
+		join master_employee e on (o.employee_id=e.employee_id)
+		where transaction_outsource_id = #transactionOutsourceId#
+	</select>
+	
 </sqlMap> 
