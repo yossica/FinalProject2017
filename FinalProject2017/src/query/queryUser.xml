@@ -3,8 +3,8 @@
 
 <sqlMap namespace="user">
 	<update id="changePassword" parameterClass="java.lang.String">
-		update master_user set
-			password = #password#
+		update master_user
+		set password = #password#
 		where username = #userName#
 	</update>
 </sqlMap> 
