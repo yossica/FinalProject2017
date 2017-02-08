@@ -1,0 +1,22 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="statusInvoice">
+	<select id="getAll" resultClass="master.StatusInvoiceBean">	
+		select status_invoice_id as statusInvoiceId,
+				name as name,
+				form_id as fromId,
+				to_id as toId
+		from master_status_invoice
+	</select>
+	
+	<select id="getById" resultClass="master.StatusInvoiceBean"
+						 parameterClass="java.lang.Integer">
+		select status_invoice_id as statusInvoiceId,
+				name as name,
+				form_id as fromId,
+				to_id as toId
+		from master_status_invoice
+		where status_invoice_id = #statusInvoiceId#
+	 </select>
+</sqlMap> 
