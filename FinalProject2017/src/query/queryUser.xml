@@ -7,4 +7,11 @@
 		set password = #password#
 		where username = #userName#
 	</update>
+	
+	<select id="checkLogin" resultClass="java.lang.Integer" parameterClass="user.UserBean">
+		select count(*)
+		from master_user
+		where username = #userName#
+		and password = #password#
+	</select>
 </sqlMap> 

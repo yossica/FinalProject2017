@@ -9,6 +9,7 @@ public class GeneralInformationBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
+	
 	public String getKey() {
 		return key;
 	}
