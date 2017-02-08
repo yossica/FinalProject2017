@@ -4,28 +4,65 @@
 <sqlMap namespace="client">
 	<insert id="insert" parameterClass="client.ClientBean">
 		insert into master_client 
-		(client_id,name,address,city,phone_number,fax_number,postal_code,is_enabled,created_by,created_date,
-			changed_by, changed_date)
+		(client_id,name,address,city,phone_number,fax_number,postal_code,
+			is_enabled,created_by,created_date, changed_by, changed_date)
 		values (#clientId#,#name#,#address#,#city#,#phoneNumber#,#faxNumber#,
-				#postalCode#,#isEnabled#,#createdBy#,sysdate,#changedBy#,#changedDate#)
+				#postalCode#,#isEnabled#,#createdBy#,sysdate,null,null)
 	</insert>
 	<update id="update" parameterClass="client.ClientBean">
 		update master_client set
-		name = #name#,
-		address = #address#,
-		city = #city#,
-		phone_number = #phoneNumber#,
-		fax_number = #faxNumber#,
-		postal_code = #postalCode#,
-		changed_by = #changedBy#, 
-		changed_date = sysdate
+			name = #name#,
+			address = #address#,
+			city = #city#,
+			phone_number = #phoneNumber#,
+			fax_number = #faxNumber#,
+			postal_code = #postalCode#,
+			changed_by = #changedBy#, 
+			changed_date = sysdate
 		where client_id = #client_id#
 	</update>
 	<update id="toggleEnable" parameterClass="client.ClientBean">
 		update master_client set
-		is_enabled = #isEnabled#
-		changed_by = #changedBy#, 
-		changed_date = sysdate
+			is_enabled = #isEnabled#
+			changed_by = #changedBy#, 
+			changed_date = sysdate
 		where client_id = #client_id#
 	</update>
+	<select id="getById" resultClass="client.ClientBean"
+						parameterClass="java.lang.Integer">
+		select 
+			client_id as clientId,
+			name as name,
+			address as address,
+			city as city,
+			phone_number as phone_number,
+			fax_number as fax_number,
+			postal_code as postalCode,
+			is_enabled as isEnabled,
+			created_by as createdBy,
+			to_char(created_date, 'MM/dd/yyyy') as createdDate,
+			changed_by as changedBy,
+			to_char(changed_date, 'MM/dd/yyyy') as changedDate
+		from master_client 
+		where client_id = #clientId#
+		order by client_id
+    </select>
+    
+	<select id="getAll" resultClass="client.ClientBean">
+		select 
+			client_id as clientId,
+			name as name,
+			address as address,
+			city as city,
+			phone_number as phone_number,
+			fax_number as fax_number,
+			postal_code as postalCode,
+			is_enabled as isEnabled,
+			created_by as createdBy,
+			to_char(created_date, 'MM/dd/yyyy') as createdDate,
+			changed_by as changedBy,
+			to_char(changed_date, 'MM/dd/yyyy') as changedDate
+		from master_client 
+		order by client_id
+    </select>
 </sqlMap> 
