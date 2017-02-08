@@ -21,13 +21,6 @@
 			changed_date = sysdate
 		where client_id = #client_id#
 	</update>
-	<update id="toggleEnable" parameterClass="client.ClientBean">
-		update master_client set
-			is_enabled = #isEnabled#
-			changed_by = #changedBy#, 
-			changed_date = sysdate
-		where client_id = #client_id#
-	</update>
 	<select id="getById" resultClass="client.ClientBean"
 						parameterClass="java.lang.Integer">
 		select 
@@ -64,5 +57,9 @@
 			to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from master_client 
 		order by client_id
+    </select>
+    <select id="getMaxId" resultClass="client.ClientBean">
+		select count(1)
+		from master_client
     </select>
 </sqlMap> 
