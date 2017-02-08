@@ -22,7 +22,7 @@ Notice the use of the properties from the above resource -->
 	</dataSource>
 	<!-- <dataSource type="JNDI">
 	  <property name="context.java.naming.factory.initial" value="weblogic.jndi.WLInitialContextFactory"/>
-	  <property name="context.java.naming.provider.url" value="t3://localhost:7001" />
+	  <property name="context.java.naming.provider.url" value="t3://HENNYSENJAYA:7001" />
 	  <property name="DataSource" value="JNDITest"/>
 	</dataSource> -->
 
