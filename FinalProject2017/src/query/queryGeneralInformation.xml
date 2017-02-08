@@ -9,6 +9,7 @@
 			changed_date = sysdate
 		where key = #key#
 	</update>
+	
 	<select id="getByKey" resultClass="generalInformation.GeneralInformationBean"
 						parameterClass="java.lang.String">
 		select
@@ -21,6 +22,7 @@
 		from general_information
 		where key = #key#
 	</select>
+	
 	<select id="getAll" resultClass="generalInformation.GeneralInformationBean">
 		select
 			key as key,
