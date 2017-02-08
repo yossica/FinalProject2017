@@ -2,7 +2,7 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="user">
-	<update id="changePassword" parameterClass="java.lang.String">
+	<update id="changePassword" parameterClass="user.UserBean">
 		update master_user
 		set password = #password#
 		where username = #userName#

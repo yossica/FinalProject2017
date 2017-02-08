@@ -7,10 +7,10 @@ import java.util.Map;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class UserManager {
-	public void changePassword(String input) throws SQLException{
-		SqlMapClient smc = utils.IbatisHelper.getSqlMapInstance();
-		smc.update("user.changePassword", input);
+	public void changePassword(UserBean input) throws SQLException{
+		
 	}
+	
 	public int checkLogin(UserBean input){
 		int result = 0;
 		return result;
