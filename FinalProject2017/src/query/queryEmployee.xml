@@ -3,7 +3,7 @@
 
 <sqlMap namespace="employee">
 	
-	<select id="read" resultClass="employee.EmployeeBean">		
+	<select id="getAll" resultClass="employee.EmployeeBean">		
 		select employee_id as employeeId,
 			   name as name,
 			   email as email,
@@ -32,7 +32,16 @@
 		where employee_id = #employeeId#
 	</update>
 	
-	<delete id="delete" parameterClass="java.lang.Integer">
-		delete from master_employee where employee_id = #employeeId# 
-	</delete>
+	<select id="getById" resultClass="employee.EmployeeBean">		
+		select employee_id as employeeId,
+			   name as name,
+			   email as email,
+			   is_enabled as isEnabled,
+			   created_by as createdBy,
+			   created_date as createdDate,
+			   changed_by as changedBy,
+			   changed_date as changeDate
+		from master_employee
+		where employee_id = #employeeId#
+	</select>
 </sqlMap> 
