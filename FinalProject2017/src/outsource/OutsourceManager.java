@@ -11,9 +11,6 @@ public class OutsourceManager {
 	}
 	public void update(OutsourceBean input){
 		
-	}
-	public void toggleEnable(int id,int isEnable){
-		
 	}	
 	public OutsourceBean getById(int input){
 		OutsourceBean result = new OutsourceBean();
