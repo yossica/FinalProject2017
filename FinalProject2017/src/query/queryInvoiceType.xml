@@ -1,0 +1,30 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="invoiceType">
+	<select id="getAll" resultClass="master.InvoiceTypeBean">	
+		select invoice_type_id as invoiceTypeId,
+				name as name,
+				is_enabled as isEnabled,
+				created_by as createdBy,
+				created_date as createDate,
+				changed_by as changedBy,
+				changed_date as changedDate
+		from master_invoice_type
+		where is_enabled = 1
+	</select>
+	
+	<select id="getById" resultClass="master.InvoiceTypeBean"
+						 parameterClass="java.lang.Integer">
+		select invoice_type_id as invoiceTypeId,
+				name as name,
+				is_enabled as isEnabled,
+				created_by as createdBy,
+				created_date as createDate,
+				changed_by as changedBy,
+				changed_date as changedDate
+		from master_invoice_type
+		where is_enabled = 1
+			and invoice_type_id = #invoiceTypeId#
+	 </select>
+</sqlMap> 

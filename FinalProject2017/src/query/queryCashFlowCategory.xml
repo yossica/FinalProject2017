@@ -1,0 +1,36 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="cashFlowCategory">
+
+	<select id="getAll" resultClass="master.CashFlowCategoryBean">		
+		select cash_flow_category_id as cashFlowCategoryId,
+				name as name,
+				is_debit as isDebit,
+				is_enabled as isEnabled,
+				cash_flow_type as cashFlowType,
+				created_by as createdBy,
+				created_date as createDate,
+				changed_by as changedBy,
+				changed_date as changedDate
+		from master_cash_flow_category
+		where is_enabled = 1
+	</select>
+	
+	<select id="getById" resultClass="master.CashFlowCategoryBean"
+						 parameterClass="java.lang.Integer">		
+		select cash_flow_category_id as cashFlowCategoryId,
+				name as name,
+				is_debit as isDebit,
+				is_enabled as isEnabled,
+				cash_flow_type as cashFlowType,
+				created_by as createdBy,
+				created_date as createDate,
+				changed_by as changedBy,
+				changed_date as changedDate
+		from master_cash_flow_category
+		where is_enabled = 1
+			and cash_flow_category_id = #cashFlowCategoryId#			 
+	 </select>
+	 
+</sqlMap> 
