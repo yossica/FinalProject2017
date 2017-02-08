@@ -1,0 +1,34 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="generalInformation">
+	<update id="update" parameterClass="generalInformation.GeneralInformationBean">
+		update general_information set
+			value = #value#
+			changed_by = #changedBy#, 
+			changed_date = sysdate
+		where key = #key#
+	</update>
+	<select id="getByKey" resultClass="generalInformation.GeneralInformationBean"
+						parameterClass="java.lang.String">
+		select
+			key as key,
+			value as value,
+			created_by as createdBy,
+			created_date as createdDate,
+			change_by as cretedBy,
+			change_date as createdDate
+		from general_information
+		where key = #key#
+	</select>
+	<select id="getAll" resultClass="generalInformation.GeneralInformationBean">
+		select
+			key as key,
+			value as value,
+			created_by as createdBy,
+			created_date as createdDate,
+			change_by as cretedBy,
+			change_date as createdDate
+		from general_information
+	</select>
+</sqlMap> 

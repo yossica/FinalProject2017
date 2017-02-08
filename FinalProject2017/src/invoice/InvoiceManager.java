@@ -3,7 +3,8 @@ package invoice;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.Paging;
+import utils.Filter;
+
 
 public class InvoiceManager {
 	public void insert(InvoiceBean input){
@@ -12,18 +13,15 @@ public class InvoiceManager {
 	public void update(InvoiceBean input){
 		
 	}
-	public void toggleEnable(int id,int isEnable){
-		
-	}	
 	public InvoiceBean getById(int input){
 		InvoiceBean result = new InvoiceBean();
 		return result;
 	}
-	public int getCount(){
-		int result=0;
+	public List getDetailByIdHeader(int input){
+		List result = new ArrayList();
 		return result;
 	}
-	public List getAllWithLimit(Paging input){
+	public List getAllWithFilter(Filter input){
 		List result = new ArrayList();
 		return result;
 	}

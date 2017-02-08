@@ -1,0 +1,47 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="employee">
+	
+	<select id="getAll" resultClass="employee.EmployeeBean">		
+		select employee_id as employeeId,
+			   name as name,
+			   email as email,
+			   is_enabled as isEnabled,
+			   created_by as createdBy,
+			   created_date as createdDate,
+			   changed_by as changedBy,
+			   changed_date as changeDate
+		from master_employee
+	</select>
+		
+	<insert id="insert" parameterClass="employee.EmployeeBean">
+		insert into master_employee 
+		(employee_id,name,email,isEnabled,createdBy,createdDate,changedBy,changeDate)
+		values (#employeeId#,#name#,#email#,#isEnabled#,#createdBy#,sysdate,
+				null,null)
+	</insert>
+	
+	<update id="update" parameterClass="employee.EmployeeBean">
+		update master_employee set
+		name = #name#,
+		email = #email#,
+		isEnabled = #isEnabled#,
+		changedBy = #changedBy#, 
+		changeDate = sysdate
+		where employee_id = #employeeId#
+	</update>
+	
+	<select id="getById" resultClass="employee.EmployeeBean">		
+		select employee_id as employeeId,
+			   name as name,
+			   email as email,
+			   is_enabled as isEnabled,
+			   created_by as createdBy,
+			   created_date as createdDate,
+			   changed_by as changedBy,
+			   changed_date as changeDate
+		from master_employee
+		where employee_id = #employeeId#
+	</select>
+</sqlMap> 
