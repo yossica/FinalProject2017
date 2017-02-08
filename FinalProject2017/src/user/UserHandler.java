@@ -13,7 +13,14 @@ public class UserHandler extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		return mapping.findForward("login");
+		UserForm userForm = (UserForm) form;
+		UserManager userManager = new UserManager();
+		
+		if("login".equals(userForm.getTaskLogin()))
+		{
+			return mapping.findForward("login");
+		}
+		return null;
 		//change password
 		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
 		

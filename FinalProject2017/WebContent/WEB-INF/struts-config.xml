@@ -38,11 +38,7 @@
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
 		</action>
 		<action path="/invoice" name="invoiceForm" type="invoice.InvoiceHandler" scope="request">
-<<<<<<< HEAD
-			<forward name="invoice" path="/WEB-INF/jsp/invoice.jsp"></forward>
-=======
 			<forward name="success" path="/WEB-INF/jsp/invoice.jsp"></forward>
->>>>>>> refs/remotes/origin/master
 		</action>
 		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
