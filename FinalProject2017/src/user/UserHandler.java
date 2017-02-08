@@ -13,7 +13,7 @@ public class UserHandler extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		return mapping.findForward("success");
+		return mapping.findForward("login");
 		//change password
 		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
 		
