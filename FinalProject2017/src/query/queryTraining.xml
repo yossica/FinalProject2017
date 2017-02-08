@@ -30,7 +30,7 @@
 		is_gross = #isGross#,
 		is_invoice_created = #isInvoiceCreated#,
 		changed_by = #changedBy#, 
-		change_date = sysdate
+		changed_date = sysdate
 		where transaction_training_id = #transactionTrainingHeaderId#
 	</update>
 	
@@ -40,7 +40,7 @@
 		fee = #fee#,
 		is_settlement = #isSettlement#,
 		changed_by = #changedBy#, 
-		change_date = sysdate
+		changed_date = sysdate
 		where transaction_training_detail_id = #transactionTrainingDetailId#
 	</update>
 	
@@ -66,9 +66,9 @@
 				t.is_gross as isGross,
 				t.is_invoice_created as isInvoiceCreated,
 				t.created_by as createdBy,
-				t.created_date as createdDate,
+				to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
 				t.changed_by as changedBy,
-				t.changed_date as changedDate
+				to_char(t.changed_date, 'MM/dd/yyyy') as changedDate
 		from transaction_training_header t, master_client c
 		where t.client_id = c.client_id
 			and t.transaction_training_id = #transactionTrainingHeaderId#
@@ -82,9 +82,9 @@
 				fee as fee,
 				is_settlement as isSettlement,
 				created_by as createdBy,
-				created_date as createdDate,
+				to_char(created_date, 'MM/dd/yyyy') as createdDate,
 				changed_by as changedBy,
-				changed_date as changedDate
+				to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from transaction_training_detail
 		where transaction_training_id = #transactionTrainingHeaderId#
 	</select>
