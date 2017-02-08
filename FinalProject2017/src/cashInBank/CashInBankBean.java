@@ -13,7 +13,7 @@ public class CashInBankBean implements Serializable{
 	private String transactionDate;
 	private int isDebit;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 
 	public int getTransactionCashInBankId() {
 		return transactionCashInBankId;
@@ -69,11 +69,11 @@ public class CashInBankBean implements Serializable{
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public String getCreateDate() {
-		return createDate;
+	public String getCreatedDate() {
+		return createdDate;
 	}
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 	
 	

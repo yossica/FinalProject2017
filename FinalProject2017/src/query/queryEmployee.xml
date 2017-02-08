@@ -5,7 +5,7 @@
 	
 	<insert id="insert" parameterClass="employee.EmployeeBean">
 		insert into master_employee 
-		(employee_id,name,email,is_enabled,created_by,created_date,changed_by,change_date)
+		(employee_id,name,email,is_enabled,created_by,created_date,changed_by,changed_date)
 		values (#employeeId#,#name#,#email#,#isEnabled#,#createdBy#,sysdate,
 				null,null)
 	</insert>
@@ -16,7 +16,7 @@
 		email = #email#,
 		is_enabled = #isEnabled#,
 		changed_by = #changedBy#, 
-		change_date = sysdate
+		changed_date = sysdate
 		where employee_id = #employeeId#
 	</update>
 	
@@ -27,9 +27,9 @@
 			   email as email,
 			   is_enabled as isEnabled,
 			   created_by as createdBy,
-			   created_date as createdDate,
+			   to_char(created_date, 'MM/dd/yyyy') as createdDate,
 			   changed_by as changedBy,
-			   changed_date as changeDate
+			   to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from master_employee
 		where employee_id = #employeeId#
 	</select>
@@ -40,9 +40,9 @@
 			   email as email,
 			   is_enabled as isEnabled,
 			   created_by as createdBy,
-			   created_date as createdDate,
+			   to_char(created_date, 'MM/dd/yyyy') as createdDate,
 			   changed_by as changedBy,
-			   changed_date as changeDate
+			   to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from master_employee
 	</select>
     <select id="getMaxId" resultClass="java.lang.Integer">

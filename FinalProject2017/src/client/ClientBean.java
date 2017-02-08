@@ -70,7 +70,7 @@ public class ClientBean implements Serializable {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public String getCreateDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 	public void setCreatedDate(String createdDate) {
