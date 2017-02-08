@@ -12,9 +12,6 @@ public class EmployeeManager {
 	public void update(EmployeeBean input){
 		
 	}
-	public void toggleEnable(int id,int isEnable){
-		
-	}	
 	public EmployeeBean getById(int input){
 		EmployeeBean result = new EmployeeBean();
 		return result;
