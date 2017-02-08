@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class CashInBankBean implements Serializable{
 	private int transactionCashInBankId;
 	private String cashFlowCategoryId;
+	private String cashFlowCategoryName;
+	
 	private double amount;
 	private double balance;
 	private String description;
@@ -24,6 +26,12 @@ public class CashInBankBean implements Serializable{
 	}
 	public void setCashFlowCategoryId(String cashFlowCategoryId) {
 		this.cashFlowCategoryId = cashFlowCategoryId;
+	}
+	public String getCashFlowCategoryName() {
+		return cashFlowCategoryName;
+	}
+	public void setCashFlowCategoryName(String cashFlowCategoryName) {
+		this.cashFlowCategoryName = cashFlowCategoryName;
 	}
 	public double getAmount() {
 		return amount;
