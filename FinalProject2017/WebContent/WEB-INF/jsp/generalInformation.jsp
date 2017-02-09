@@ -7,6 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script>
+	function flyToPage(task)
+		{
+			document.forms[0].task.value = task;
+			document.forms[0].submit();
+		}
+</script>
 <title>General Information</title>
 </head>
 <body>
@@ -16,13 +23,31 @@
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header">General Information</h1>
-	    	</div>
-	    	<table>
-	    		
-	    	</table>
-	    	
-	    </div>        
+	            <h1 class="page-header">General Information List</h1>
+	            <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+		                     <tr>
+			            		<th>Key</th>
+			            		<th>Name</th>
+			            		<th>Action</th>
+			            	</tr>
+                            <tbody>
+                                	<tr>
+				            			<td></td>
+				            			<td></td>
+				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editGeneralInformation')"></td>
+				            		</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+	            <table border="1">
+	            	
+	            </table>
+	        </div>
+	    </div>       
     </div>
 </body>
 </html>
