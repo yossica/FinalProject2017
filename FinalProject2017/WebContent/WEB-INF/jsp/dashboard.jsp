@@ -95,7 +95,7 @@
                                     <a href="#">Profesional Services</a>
                                 </li>
                                 <li>
-                                    <a href="#">Clients</a>
+                                    <a href="#" onclick="javascript:flyToPage('client')">Clients</a>
                                 </li>
                                 <li>
                                     <a href="#">Employees</a>

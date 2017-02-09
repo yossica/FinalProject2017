@@ -31,6 +31,10 @@ public class IndexHandler extends Action{
 		{
 			return mapping.findForward("financeSummary");
 		}
+		else if("client".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("client");
+		}
 		else if("logout".equals(indexForm.getTask()))
 		{
 			request.getSession().removeAttribute("username");
