@@ -11,7 +11,7 @@
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
-	
+
 	<html:form action="/user" method="post"></html:form>
 	<div id="page-wrapper">
 	    <div class="row">
