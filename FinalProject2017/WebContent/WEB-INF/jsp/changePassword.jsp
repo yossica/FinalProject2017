@@ -10,8 +10,8 @@
 <script>
 	function flyToPage(task)
 	{
-		document.forms[0].task.value = task;
-		document.forms[0].submit();
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
 	}
 </script>
 <title>Change Password</title>
@@ -22,8 +22,8 @@
 	<html:form action="/user" method="post">
 	<html:hidden  name="userForm" property="task"/> 
 	<span>
-		<logic:notEmpty name="applicantForm" property="messageList">
-			<logic:iterate id="message" name="applicantForm" property="messageList">
+		<logic:notEmpty name="userForm" property="messageList">
+			<logic:iterate id="message" name="userForm" property="messageList">
 				<bean:write name="message" /> 
 			</logic:iterate>
 		</logic:notEmpty>
@@ -34,7 +34,7 @@
 	            <h1 class="page-header">Change Password</h1>
 	            <div class="col-lg-11">
 		            <button type="button" class="btn btn-primary ">Cancel</button>
-		            <button type="button" class="btn btn-primary ">Save</button>
+		            <button type="button" class="btn btn-primary " onclick="javascript:flyToPage('saveChangePassword')">Save</button>
 	            </div>
 	            <div class="col-lg-10">
 		            <div class="col-lg-9" style="border:solid 2px gray;margin-top:15px;">

@@ -19,29 +19,35 @@ public class UserHandler extends Action {
 		UserForm userForm = (UserForm) form;
 		UserManager userManager = new UserManager();
 		HttpSession session = request.getSession(true);
-		
-		if("login".equals(userForm.getTask())){
+
+		if ("login".equals(userForm.getTask())) {
 			UserBean userBean = new UserBean();
 			userBean.setUserName(userForm.getUserName());
 			userBean.setPassword(userForm.getPassword());
-			int count=userManager.checkLogin(userBean);
-			if(count>0)
-			{
+			int count = userManager.checkLogin(userBean);
+			if (count > 0) {
 				session.setAttribute("username", userBean.getUserName());
 				response.sendRedirect("/FinalProject2017/index.do");
+				return null;
 			}
-			return null;
-		}else if ("changePassword".equals(userForm.getTask())){
-			userForm.setUserName(session.getAttribute("username").toString());			
+			else {
+				userForm.setTask("");
+				return mapping.findForward("login");
+			}
+		} else if ("changePassword".equals(userForm.getTask())) {
+			System.out.println("user handler change password");
+			userForm.setUserName(session.getAttribute("username").toString());
+			userForm.setTask("");
 			return mapping.findForward("changePassword");
-		}else if("saveChangePassword".equals(userForm.getTask())){
-			//validasi login
-			//validasi new password dengan confirm password sama apa nggak
-			//update password
-			
+		} else if ("saveChangePassword".equals(userForm.getTask())) {
+			// validasi login
+			// validasi new password dengan confirm password sama apa nggak
+			// update password
+			System.out.println("masuk save change password");
 			userForm.getMessageList().add("Change Password Success");
+			userForm.setTask("");
 			return mapping.findForward("changePassword");
-		}else {
+		} else {
 			return mapping.findForward("login");
 		}
 	}
