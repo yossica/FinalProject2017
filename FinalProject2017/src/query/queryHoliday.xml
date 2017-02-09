@@ -2,7 +2,52 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="holiday">
-<insert id="">
-	<isParameterPresent></isParameterPresent>
-</insert>
+
+	<select id="getWorkingDays" parameterClass="java.lang.String">
+		<!-- &lt; adalah pengganti simbol < -->
+		select 
+			work_days-total_valid_holiday as total_workdays 
+		from (
+			select 
+				count(day_name) as work_days 
+			from (
+				select
+					(level - 1) day_nr,
+					(level + trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH') - 1) day_date,
+					to_char(level + trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH') - 1, 'd') as day_name
+				from dual
+				connect by level &lt;= ADD_MONTHS(trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH'), 1) - trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH')
+				order by day_nr
+			) all_date
+			where day_name not in ('1','7')
+			) work_day, (
+				select
+					count(1) as total_valid_holiday
+				from master_holiday
+				where
+					holiday_date between trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH') and add_months(trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH'), 1) - 1
+					and to_char(holiday_date,'d') not in ('1','7') --1=Sunday, 7=Saturday
+		) holiday
+	</select>
+	
+	<select id="getAll" resultClass="holiday.HolidayBean">
+		select
+			holiday_id as holidayId,
+			holiday_date as holidayDate,
+			name,
+			created_by as createdBy,
+			to_char(created_date, 'MM/dd/yyyy') as createdDate
+		from master_holiday
+	</select>
+	
+	<insert id="insert" parameterClass="holiday.HolidayBean">
+		insert into master_holiday (holiday_id, holiday_date, name, created_by, created_date)
+		values (#holidayId#,#holidayDate#,#name#,#createdBy#,sysdate)
+	</insert>
+	
+	<delete id="delete" parameterClass="java.lang.Integer">
+		delete from master_holiday
+		where holiday_id = #value#
+	</delete>
+	
 </sqlMap> 
