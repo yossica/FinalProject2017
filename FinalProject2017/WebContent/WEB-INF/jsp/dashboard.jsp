@@ -98,7 +98,7 @@
                                     <a href="#">Clients</a>
                                 </li>
                                 <li>
-                                    <a href="#">Employees</a>
+                                    <a href="#" onclick="javascript:flyToPage('employee')">Employees</a>
                                 </li>
                                 <li>
                                     <a href="#">Additional Training</a>
@@ -107,7 +107,7 @@
                                     <a href="#">General Information</a>
                                 </li>
                                 <li>
-                                    <a href="#">Holidays</a>
+                                    <a href="holiday.do">Holidays</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

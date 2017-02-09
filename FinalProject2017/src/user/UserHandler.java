@@ -34,6 +34,7 @@ public class UserHandler extends Action {
 				userForm.setTask("");
 				return mapping.findForward("login");
 			}
+
 		} else if ("changePassword".equals(userForm.getTask())) {
 			System.out.println("user handler change password");
 			userForm.setUserName(session.getAttribute("username").toString());

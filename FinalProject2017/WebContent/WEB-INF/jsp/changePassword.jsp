@@ -28,6 +28,7 @@
 			</logic:iterate>
 		</logic:notEmpty>
 	</span>
+	<html:form action="/user" method="post"></html:form>
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
