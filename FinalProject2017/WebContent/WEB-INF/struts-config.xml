@@ -37,6 +37,7 @@
 		</action>
 		<action path="/generalInformation" name="generalInformationForm" type="generalInformation.GeneralInformationHandler" scope="request">
 			<forward name="generalInformation" path="/WEB-INF/jsp/generalInformation.jsp"></forward>
+			<forward name="editGeneralInformation" path="/WEB-INF/jsp/editGeneralInformation.jsp"></forward>
 		</action>
 		<action path="/holiday" name="holidayForm" type="holiday.HolidayHandler" scope="request">
 			<forward name="holiday" path="/WEB-INF/jsp/holiday.jsp"></forward>

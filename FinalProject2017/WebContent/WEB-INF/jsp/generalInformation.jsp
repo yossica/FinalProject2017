@@ -10,16 +10,17 @@
 <script>
 	function flyToPage(task)
 		{
-			document.forms[0].task.value = task;
-			document.forms[0].submit();
+			document.forms[1].task.value = task;
+			document.forms[1].submit();
 		}
 </script>
 <title>General Information</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
-	
-	<html:form action="/generalInformation" method="post"></html:form>
+	<html:form action="/generalInformation" method="post">
+	<html:hidden property="task" name="generalInformationForm"/>
+	</html:form>
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">

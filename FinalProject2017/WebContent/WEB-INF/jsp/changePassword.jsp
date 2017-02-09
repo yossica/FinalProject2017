@@ -58,7 +58,7 @@
 			            	<div class="col-md-1">
 			            	:
 			            	</div>
-			            	<div class="col-md-8">
+			            	<div class="col-md-12">
 					            <html:password name="userForm" property="password"/>
 			            	</div>
                         </div>
