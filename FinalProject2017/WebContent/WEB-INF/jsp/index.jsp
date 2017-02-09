@@ -1,9 +1,9 @@
 <%-- Uncomment ketika mau buat redirect jika belum login
-	 harus dicopas ke semua page (ga bisa taro dashboard :( 
+	 harus dicopas ke semua page (ga bisa taro dashboard :( --%>
 <%
 	if(session.getAttribute("username") == null || "".equals(session.getAttribute("username")))
 		response.sendRedirect("/FinalProject2017/login.do");
-%> --%>
+%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
