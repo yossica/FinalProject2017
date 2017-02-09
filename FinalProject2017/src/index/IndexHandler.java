@@ -35,6 +35,14 @@ public class IndexHandler extends Action{
 		{
 			return mapping.findForward("changePassword");
     }
+    else if("holiday".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("holiday");
+		}
+		else if("employee".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("employee");
+		}
 		else if("logout".equals(indexForm.getTask()))
 		{
 			request.getSession().removeAttribute("username");
