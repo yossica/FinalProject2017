@@ -15,27 +15,39 @@ public class IndexHandler extends Action{
 			throws Exception {
 		IndexForm indexForm = (IndexForm) form;
 		
-		if("invoice".equals(indexForm.getTask()))
+		if("invoice".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("invoice");
 		}
-		else if("pettyCash".equals(indexForm.getTask()))
+		else if("pettyCash".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("pettyCash");
 		}
-		else if("cashInBank".equals(indexForm.getTask()))
+		else if("cashInBank".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("cashInBank");
 		}
-		else if("financeSummary".equals(indexForm.getTask()))
+		else if("financeSummary".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("financeSummary");
 		}
-		else if("client".equals(indexForm.getTask()))
+		else if("client".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("client");
 		}
-		else if("logout".equals(indexForm.getTask()))
+		else if("changePassword".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("changePassword");
+		}
+		else if("employee".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("employee");
+		}
+		else if("holiday".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("holiday");
+		}
+		else if("logout".equals(indexForm.getTaskIndex()))
 		{
 			request.getSession().removeAttribute("username");
 			return mapping.findForward("success");
