@@ -7,6 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script>
+	function flyToPage(task)
+	{
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
+	}
+</script>
 <title>Finance Solution</title>
 </head>
 <body>
@@ -37,7 +44,7 @@
 				            			<td><bean:write name="client" property="phoneNumber"/></td>
 				            			<td><bean:write name="client" property="faxNumber"/></td>
 				            			<td><bean:write name="client" property="postalCode"/></td>
-				            			<td><input type="button" value="Edit" class="btn btn-primary"></td>
+				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('edit')"></td>
 				            		</tr>
 				            	</logic:iterate>
                             </tbody>
@@ -48,7 +55,7 @@
 	            <table border="1">
 	            	
 	            </table>
-	            <button type="button" class="btn btn-primary pull-right">Create</button>
+	            <button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('create')">Create</button>
 	        </div>
 	    </div>
     </div>
