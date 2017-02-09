@@ -1,5 +1,7 @@
 package user;
 
+import index.IndexForm;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ public class UserHandler extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+    
 		UserForm userForm = (UserForm) form;
 		UserManager userManager = new UserManager();
 		HttpSession session = request.getSession(true);
@@ -36,6 +39,16 @@ public class UserHandler extends Action {
 		//change password
 		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
 		
+		UserForm userForm = (UserForm) form;
+		if("changePassword".equals(userForm.getTask()))
+		{
+			return mapping.findForward("changePassword");
+		}
+		else
+		{
+			//return mapping.findForward("success");
+			return mapping.findForward("login");
+		}
 	}
 
 }
