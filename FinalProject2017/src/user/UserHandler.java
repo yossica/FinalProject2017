@@ -16,7 +16,6 @@ public class UserHandler extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-    
 		UserForm userForm = (UserForm) form;
 		UserManager userManager = new UserManager();
 		HttpSession session = request.getSession(true);
@@ -32,7 +31,10 @@ public class UserHandler extends Action {
 				response.sendRedirect("/FinalProject2017/index.do");
 			}
 			return null;
+		}else if ("changePassword".equals(userForm.getPassword())){
+			return mapping.findForward("changePassword");
 		}
+<<<<<<< HEAD
 		else if("changePassword".equals(userForm.getTaskLogin()))
 		{
 			return mapping.findForward("changePassword");
@@ -41,6 +43,13 @@ public class UserHandler extends Action {
 			return mapping.findForward("login");
 		}
 		
+=======
+		else {
+			return mapping.findForward("login");
+		}
+		//change password
+		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
+>>>>>>> refs/remotes/origin/master
 	}
 
 }

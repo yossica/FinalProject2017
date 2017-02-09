@@ -21,8 +21,12 @@
 			<forward name="financeSummary" path="/WEB-INF/jsp/financeSummary.jsp"></forward>
 			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>
 			<forward name="cashInBank" path="/WEB-INF/jsp/cashInBank.jsp"></forward>
+<<<<<<< HEAD
 			<forward name="changePassword" path="/user.do"></forward>
 			<forward name="holiday" path="/holiday.do"></forward>
+=======
+			<forward name="changePassword" path="/user.do?taskLogin=changePassword"></forward>
+>>>>>>> refs/remotes/origin/master
 		</action>
 		<action path="/cashInBank" name="cashInBankForm" type="cashInBank.CashInBankHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
