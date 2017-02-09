@@ -7,12 +7,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script>
+	function flyToPage(task)
+	{
+		document.forms[0].task.value = task;
+		document.forms[0].submit();
+	}
+</script>
 <title>Change Password</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
 	
-	<html:form action="/user" method="post"></html:form>
+	<html:form action="/user" method="post">
+	<html:hidden  name="userForm" property="task"/> 
+	<span>
+		<logic:notEmpty name="applicantForm" property="messageList">
+			<logic:iterate id="message" name="applicantForm" property="messageList">
+				<bean:write name="message" /> 
+			</logic:iterate>
+		</logic:notEmpty>
+	</span>
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
@@ -31,7 +46,7 @@
 			            	:
 			            	</div>
 			            	<div class="col-md-8">
-					            username diambil dari db terus di readonly
+					            <html:text name="userForm" property="userName" readonly="true"/>
 			            	</div>
                         </div>
                         <br/>
@@ -43,7 +58,7 @@
 			            	:
 			            	</div>
 			            	<div class="col-md-8">
-					            <input type="password" />
+					            <html:password name="userForm" property="password"/>
 			            	</div>
                         </div>
                         <br/>
@@ -55,7 +70,7 @@
 			            	:
 			            	</div>
 			            	<div class="col-md-8">
-					            <input type="password" />
+					            <html:password name="userForm" property="newPassword"/>
 			            	</div>
                         </div>
                         <br/>
@@ -67,16 +82,14 @@
 			            	:
 			            	</div>
 			            	<div class="col-md-8">
-					            <input type="password" />
+					            <html:password name="userForm" property="confirmPassword"/>
 			            	</div>
                         </div>
-                        
-		            	
 		            </div>
 	            </div>
 	        </div>
-	        <!-- /.col-lg-12 -->
 	    </div>
     </div>
+    </html:form>
 </body>
 </html>

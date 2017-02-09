@@ -21,7 +21,7 @@
 			<forward name="financeSummary" path="/WEB-INF/jsp/financeSummary.jsp"></forward>
 			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>
 			<forward name="cashInBank" path="/WEB-INF/jsp/cashInBank.jsp"></forward>
-			<forward name="changePassword" path="/user.do?taskLogin=changePassword"></forward>
+			<forward name="changePassword" path="/user.do?task=changePassword"></forward>
 		</action>
 		<action path="/cashInBank" name="cashInBankForm" type="cashInBank.CashInBankHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>

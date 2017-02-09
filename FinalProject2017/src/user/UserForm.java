@@ -1,12 +1,18 @@
 package user;
 
+import java.util.List;
+
 import org.apache.struts.action.ActionForm;
 
 public class UserForm extends ActionForm {
 
-	private String taskLogin;
+	private String task;
+	private List messageList;
 	private String userName;
 	private String password;	
+	
+	private String newPassword;
+	private String confirmPassword;
   
 	public String getUserName() {
 		return userName;
@@ -20,10 +26,31 @@ public class UserForm extends ActionForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getTaskLogin() {
-		return taskLogin;
+	public String getTask() {
+		return task;
 	}
-	public void setTaskLogin(String taskLogin) {
-		this.taskLogin = taskLogin;
-	}	
+	public void setTask(String task) {
+		this.task = task;
+	}
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	public List getMessageList() {
+		return messageList;
+	}
+	public void setMessageList(List messageList) {
+		this.messageList = messageList;
+	}
+	
+
+	
 }
