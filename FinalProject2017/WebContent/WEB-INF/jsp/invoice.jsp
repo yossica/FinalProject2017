@@ -124,6 +124,32 @@
 	        </div>
 	        <!-- /.col-lg-12 -->
 	    </div>
+	    <div class="panel-body">
+	        <div class="table-responsive">
+	        	<table class="table table-hover">
+	            	<tr>
+				   		<th>Client</th>
+				   		<th>Period</th>
+				   		<th>Service</th>
+				   		<th>Invoice Date</th>
+				   		<th>Status</th>
+				   		<th>Action</th>
+				   	</tr>
+	                <tbody>
+	                <tr>
+	                	<td>Client A</td>
+	                	<td>Jan 2016</td>
+	                	<td>Professional Service</td>
+	                	<td>02/02/16</td>
+	                	<td>Created</td>
+	                	<td><input type="button" value="View" class="btn btn-primary">
+	                		<input type="button" value="Change Status" class="btn btn-primary"></td>
+	                </tr>
+	                </tbody>
+	            </table>
+	        </div>
+        <!-- /.table-responsive -->
+    	</div>
     </div>
 </body>
 </html>
