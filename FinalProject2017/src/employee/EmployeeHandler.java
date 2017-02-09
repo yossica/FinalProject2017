@@ -13,6 +13,10 @@ public class EmployeeHandler extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		return mapping.findForward("success");
+		EmployeeForm ef = (EmployeeForm) form;
+		EmployeeManager em = new EmployeeManager();
+		
+		ef.setListEmployee(em.getAll());
+		return mapping.findForward("employee");
 	}
 }
