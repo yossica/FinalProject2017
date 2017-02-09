@@ -13,6 +13,14 @@ public class GeneralInformationHandler  extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		return mapping.findForward("success");
+		GeneralInformationForm generalInformationForm = (GeneralInformationForm) form;
+		if("editGeneralInformation".equals(generalInformationForm.getTask()))
+		{
+			return mapping.findForward("editGeneralInformation");
+		}
+		else
+		{
+		return mapping.findForward("generalInformation");
+		}
 	}
 }
