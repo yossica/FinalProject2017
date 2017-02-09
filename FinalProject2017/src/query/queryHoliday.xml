@@ -36,7 +36,7 @@
 			holiday_date as holidayDate,
 			name,
 			created_by as createdBy,
-			created_date as createdDate
+			to_char(created_date, 'MM/dd/yyyy') as createdDate
 		from master_holiday
 	</select>
 	

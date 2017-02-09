@@ -10,7 +10,7 @@ public class EmployeeBean implements Serializable {
 	private String createdBy;
 	private String createdDate;
 	private String changedBy;
-	private String changeDate;
+	private String changedDate;
 	public int getEmployeeId() {
 		return employeeId;
 	}
@@ -53,11 +53,11 @@ public class EmployeeBean implements Serializable {
 	public void setChangedBy(String changedBy) {
 		this.changedBy = changedBy;
 	}
-	public String getChangeDate() {
-		return changeDate;
+	public String getChangedDate() {
+		return changedDate;
 	}
-	public void setChangeDate(String changeDate) {
-		this.changeDate = changeDate;
+	public void setChangedDate(String changedDate) {
+		this.changedDate = changedDate;
 	}
 	
 }

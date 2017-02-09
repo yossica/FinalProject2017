@@ -15,7 +15,7 @@ public class TrainingBean implements Serializable {
 	private int isGross;
 	private int isInvoiceCreated;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 	private String changedBy;
 	private String changedDate;
 
@@ -101,12 +101,12 @@ public class TrainingBean implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public String getCreateDate() {
-		return createDate;
+	public String getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getChangedBy() {

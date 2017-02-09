@@ -24,7 +24,7 @@ public class InvoiceBean implements Serializable {
 	private double totalGross;
 	private String notes;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 	private String changedBy;
 	private String changedDate;
 	
@@ -167,12 +167,12 @@ public class InvoiceBean implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public String getCreateDate() {
-		return createDate;
+	public String getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
 	public String getChangedBy() {
