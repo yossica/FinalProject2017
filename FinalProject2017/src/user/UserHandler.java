@@ -33,22 +33,14 @@ public class UserHandler extends Action {
 			}
 			return null;
 		}
-		else {
-			return mapping.findForward("login");
-		}
-		//change password
-		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
-		
-		UserForm userForm = (UserForm) form;
-		if("changePassword".equals(userForm.getTask()))
+		else if("changePassword".equals(userForm.getTaskLogin()))
 		{
 			return mapping.findForward("changePassword");
 		}
-		else
-		{
-			//return mapping.findForward("success");
+		else {
 			return mapping.findForward("login");
 		}
+		
 	}
 
 }
