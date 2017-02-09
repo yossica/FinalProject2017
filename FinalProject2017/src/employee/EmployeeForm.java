@@ -11,7 +11,7 @@ public class EmployeeForm extends ActionForm{
 	private String name;
 	private String email;
 	
-	private List listEmployee;
+	private List employeeList;
 
 	public String getTask() {
 		return task;
@@ -45,12 +45,12 @@ public class EmployeeForm extends ActionForm{
 		this.email = email;
 	}
 
-	public List getListEmployee() {
-		return listEmployee;
+	public List getEmployeeList() {
+		return employeeList;
 	}
 
-	public void setListEmployee(List listEmployee) {
-		this.listEmployee = listEmployee;
+	public void setEmployeeList(List employeeList) {
+		this.employeeList = employeeList;
 	}
 	
 }
