@@ -107,7 +107,7 @@
                                     <a href="#">General Information</a>
                                 </li>
                                 <li>
-                                    <a href="holiday.do">Holidays</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('holiday')">Holidays</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
