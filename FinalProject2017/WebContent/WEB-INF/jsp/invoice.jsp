@@ -14,11 +14,13 @@
 	<html:form action="/invoice" method="post"></html:form>
 	<div id="page-wrapper">
 	    <div class="row">
+	    	<bean:write name="invoiceForm" property="task"/>
+	    	<bean:write name="invoiceForm" property="message"/>
 	        <div class="col-lg-12">
 	            <h1 class="page-header">Invoice List</h1>
 	            <div class="col-lg-11">
-		            <button type="button" class="btn btn-outline btn-success">Print</button>
-		            <button type="button" class="btn btn-outline btn-success">Create</button>
+		            <button type="button" class="btn btn-outline btn-primary">Print</button>
+		            <button type="button" class="btn btn-primary">Create</button>
 	            </div>
 	            <div class="col-lg-10">
 		            <div class="col-lg-9" style="border:solid 2px gray;margin-top:15px;">
