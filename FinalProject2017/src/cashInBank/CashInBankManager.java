@@ -14,14 +14,12 @@ import utils.Filter;
 import utils.IbatisHelper;
 
 public class CashInBankManager {
+	
 	public void insert(CashInBankBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		
 		try {
 			ibatis.startTransaction();
-			
 			ibatis.insert("cashInBank.insert", input);
-			
 			ibatis.commitTransaction();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,11 +31,11 @@ public class CashInBankManager {
 			}
 		}
 	}
+	
 	public List getAllWithFilter(Filter input){
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		Map paramMap = new HashMap();
-		
 		try {		
 			paramMap.put("startDate", input.getStartDate());
 			paramMap.put("endDate", input.getEndDate());
@@ -51,6 +49,7 @@ public class CashInBankManager {
 		} 
 		return result;
 	}
+	
 	public double getCurrentBalance(){
 		double result = 0;
 		
