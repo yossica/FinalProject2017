@@ -98,7 +98,7 @@
                                     <a href="#">Clients</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="javascript:flyToPage('employee')">Employees</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('employee')">Employees</a>
                                 </li>
                                 <li>
                                     <a href="#">Additional Training</a>
