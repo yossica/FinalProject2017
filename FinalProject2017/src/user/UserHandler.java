@@ -1,5 +1,7 @@
 package user;
 
+import index.IndexForm;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,13 +31,14 @@ public class UserHandler extends Action {
 				response.sendRedirect("/FinalProject2017/index.do");
 			}
 			return null;
+		}else if ("changePassword".equals(userForm.getPassword())){
+			return mapping.findForward("changePassword");
 		}
 		else {
 			return mapping.findForward("login");
 		}
 		//change password
 		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
-		
 	}
 
 }
