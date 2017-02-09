@@ -20,7 +20,7 @@
 			is_enabled = #isEnabled#,
 			changed_by = #changedBy#, 
 			changed_date = sysdate
-		where client_id = #client_id#
+		where client_id = #clientId#
 	</update>
 	<select id="getById" resultClass="client.ClientBean"
 						parameterClass="java.lang.Integer">

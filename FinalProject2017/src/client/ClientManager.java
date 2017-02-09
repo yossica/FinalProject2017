@@ -11,6 +11,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 
 public class ClientManager {
+	
 	public void insert(ClientBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
@@ -35,6 +36,7 @@ public class ClientManager {
 			}
 		}
 	}
+	
 	public void update(ClientBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
@@ -64,10 +66,12 @@ public class ClientManager {
 		}
 		return result;
 	}
+	
 	public List getAllWithFilter(Filter input){
 		List result = new ArrayList();
 		return result;
 	}
+	
 	public List getAll (){
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
