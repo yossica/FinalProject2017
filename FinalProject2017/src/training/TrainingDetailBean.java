@@ -9,7 +9,7 @@ public class TrainingDetailBean implements Serializable {
 	private double fee;
 	private int isSettlement;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 	private String changedBy;
 	private String changedDate;
 

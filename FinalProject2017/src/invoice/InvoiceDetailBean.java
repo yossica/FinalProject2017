@@ -12,7 +12,7 @@ public class InvoiceDetailBean implements Serializable {
 	private int manDays;
 	private String notes;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 	private String changedBy;
 	private String changedDate;
 	

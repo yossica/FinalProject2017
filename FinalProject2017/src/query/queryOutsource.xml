@@ -23,8 +23,8 @@
 			c.name as clientName,
 			o.employee_id as employeeId,
 			e.name as employeeName,
-			start_date as startDate,
-			end_date as endDate,
+			to_char(start_date, 'MM/dd/yyyy') as startDate,
+			to_char(end_date, 'MM/dd/yyyy') as endDate,
 			is_gross as isGross,
 			fee as fee
 		from transaction_outsource o
