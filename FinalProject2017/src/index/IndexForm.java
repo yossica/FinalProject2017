@@ -3,13 +3,13 @@ package index;
 import org.apache.struts.action.ActionForm;
 
 public class IndexForm  extends ActionForm{
-	private String task;
+	private String taskIndex;
 
-	public String getTask() {
-		return task;
+	public String getTaskIndex() {
+		return taskIndex;
 	}
 
-	public void setTask(String task) {
-		this.task = task;
+	public void setTaskIndex(String taskIndex) {
+		this.taskIndex = taskIndex;
 	}
 }

@@ -20,9 +20,9 @@
     <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
     
 <script>
-	function flyToPage(task)
+	function flyToPageIndex(taskIndex)
 	{
-		document.forms[0].task.value = task;
+		document.forms[0].taskIndex.value = taskIndex;
 		document.forms[0].submit();
 	}
 </script>
@@ -30,7 +30,7 @@
 </head>
 <body>
 <html:form action="/index" method="post">
-	<html:hidden property="task" name="indexForm"/>
+	<html:hidden property="taskIndex" name="indexForm"/>
 	<div id="wrapper">
 
         <!-- Navigation -->
@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#" onclick="javascript:flyToPage('index')"><img src="asset/image/ace-logo.png" height="50px"/> Finance Solution Ver. 1.0</a>
+                <a class="navbar-brand" href="#" onclick="javascript:flyToPageIndex('index')"><img src="asset/image/ace-logo.png" height="50px"/> Finance Solution Ver. 1.0</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -53,10 +53,10 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#" onclick="javascript:flyToPage('changePassword')"><i class="fa fa-user fa-fw"></i> Change Password</a>
+                        <li><a href="#" onclick="javascript:flyToPageIndex('changePassword')"><i class="fa fa-user fa-fw"></i> Change Password</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#" onclick="javascript:flyToPage('logout')"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="#" onclick="javascript:flyToPageIndex('logout')"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -69,22 +69,22 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="#" onclick="javascript:flyToPage('index')"><i class="fa fa-home fa-fw"></i> Home</a>
+                            <a href="#" onclick="javascript:flyToPageIndex('index')"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="#" onclick="javascript:flyToPage('invoice')"><i class="fa fa-files-o fa-fw"></i> Invoice</a>
+                            <a href="#" onclick="javascript:flyToPageIndex('invoice')"><i class="fa fa-files-o fa-fw"></i> Invoice</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-money fa-fw"></i> Finance<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#" onclick="javascript:flyToPage('financeSummary')">Finance Summary</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('financeSummary')">Finance Summary</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="javascript:flyToPage('cashInBank')">Cash in Bank</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('cashInBank')">Cash in Bank</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="javascript:flyToPage('pettyCash')">Petty Cash</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('pettyCash')">Petty Cash</a>
                                 </li> 
                             </ul>
                         </li>
@@ -107,7 +107,7 @@
                                     <a href="#" onclick="javascript:flyToPage('generalInformation')">General Information</a>
                                 </li>
                                 <li>
-                                    <a href="#">Holidays</a>
+                                    <a href="holiday.do">Holidays</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

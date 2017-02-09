@@ -12,14 +12,14 @@
 	<link rel="stylesheet" href="asset/bootstrap/css/styleLogin.css">
 <script>
 	function flyToPage(task){
-		document.forms[0].taskLogin.value = task;
+		document.forms[0].task.value = task;
 		document.forms[0].submit();
 	}
 </script>
 </head>
 <body>
 <html:form action="/user" method="post">
-	<html:hidden property="taskLogin" name="userForm"/>
+	<html:hidden property="task" name="userForm"/>
 	<div class="login-form">
      <h1>Finance Solution</h1>
      <div class="form-group ">
