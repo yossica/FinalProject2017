@@ -25,107 +25,131 @@
 		            </div>
 	            </div>
 	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
-		            <div class="col-lg-11">
-		            	<div class="row" style="margin-top:10px;">
-			            	<div class="col-md-10">
-				            	<div class="col-md-1">
-				            	Client
-				            	</div>
-				            	<div class="col-md-8">
-						            <select class="form-control-client">
-			                            <option>1</option>
-			                            <option>2</option>
-			                            <option>3</option>
-			                            <option>4</option>
-			                            <option>5</option>
-			                        </select>
-				            	</div>
-				            </div>
-                        </div>
-                        <div class="col-md-10" style="margin-top:10px;">
-		            	<div class="row">
+	            	<div class="row" style="margin-top:10px;">
+		            	<div class="col-md-10" style="padding-right:1%">
 			            	<div class="col-md-1">
-			            		From 
+			            	Client
 			            	</div>
-			            	<div class="col-md-3">
+			            	<div class="col-md-11">
+					            <select class="form-control-client">
+		                            <option>1</option>
+		                            <option>2</option>
+		                            <option>3</option>
+		                            <option>4</option>
+		                            <option>5</option>
+		                        </select>
+			            	</div>
+			            </div>
+                       </div>
+                       <div class="col-md-10" style="margin-top:10px;">
+	            	<div class="row">
+		            	<div class="col-md-1">
+		            		From 
+		            	</div>
+		            	<div class="col-md-3">
+			            	<select class="form-control">
+	                            <option>Select</option>
+	                            <option>January</option>
+	                            <option>February</option>
+	                            <option>March</option>
+	                            <option>April</option>
+	                            <option>June</option>
+	                            <option>July</option>
+	                            <option>August</option>
+	                            <option>September</option>
+	                            <option>October</option>
+	                            <option>November</option>
+	                            <option>December</option>
+	                        </select>
+	                     </div>
+	                     <div class="col-md-2">
+	                        <select class="form-control">
+	                            <option>Select</option>
+	                            <option>2</option>
+	                            <option>3</option>
+	                            <option>4</option>
+	                            <option>5555</option>
+	                        </select>
+                        </div>
+                        <div class="col-md-1">
+                        	To
+                        </div>
+                        <div class="col-md-3">
+	                        <select class="form-control">
+	                            <option>Select</option>
+	                            <option>January</option>
+	                            <option>February</option>
+	                            <option>March</option>
+	                            <option>April</option>
+	                            <option>June</option>
+	                            <option>July</option>
+	                            <option>August</option>
+	                            <option>September</option>
+	                            <option>October</option>
+	                            <option>November</option>
+	                            <option>December</option>
+	                        </select>
+	                    </div>
+	                    <div class="col-md-2">
+	                        <select class="form-control">
+	                            <option>Select</option>
+	                            <option>2</option>
+	                            <option>3</option>
+	                            <option>4</option>
+	                            <option>5555</option>
+	                        </select>
+	                    </div>
+	              	</div>
+	              	</div>
+	              	<div class="col-md-10" style="margin-top:10px;">   
+	                    <div class="row">
+		                    <div class="col-md-1">   
+				            	Status
+				            </div>
+				            <div class="col-md-3">  
 				            	<select class="form-control">
 		                            <option>Select</option>
-		                            <option>January</option>
-		                            <option>February</option>
-		                            <option>March</option>
-		                            <option>April</option>
-		                            <option>June</option>
-		                            <option>July</option>
-		                            <option>August</option>
-		                            <option>September</option>
-		                            <option>October</option>
-		                            <option>November</option>
-		                            <option>December</option>
+		                            <option>Created</option>
+		                            <option>Sent</option>
+		                            <option>Paid</option>
+		                            <option>Canceled</option>
 		                        </select>
-		                     </div>
-		                     <div class="col-md-2">
-		                        <select class="form-control">
-		                            <option>Select</option>
-		                            <option>2</option>
-		                            <option>3</option>
-		                            <option>4</option>
-		                            <option>5555</option>
-		                        </select>
-	                        </div>
-	                        <div class="col-md-1">
-	                        	To
-	                        </div>
-	                        <div class="col-md-3">
-		                        <select class="form-control">
-		                            <option>Select</option>
-		                            <option>January</option>
-		                            <option>February</option>
-		                            <option>March</option>
-		                            <option>April</option>
-		                            <option>June</option>
-		                            <option>July</option>
-		                            <option>August</option>
-		                            <option>September</option>
-		                            <option>October</option>
-		                            <option>November</option>
-		                            <option>December</option>
-		                        </select>
-		                    </div>
-		                    <div class="col-md-2">
-		                        <select class="form-control">
-		                            <option>Select</option>
-		                            <option>2</option>
-		                            <option>3</option>
-		                            <option>4</option>
-		                            <option>5555</option>
-		                        </select>
-		                    </div>
-		              	</div>
-		              	</div>
-		              	<div class="col-md-10" style="margin-top:10px;">   
-		                    <div class="row">
-			                    <div class="col-md-1">   
-					            	Status
-					            </div>
-					            <div class="col-md-3">  
-					            	<select class="form-control">
-			                            <option>Select</option>
-			                            <option>Created</option>
-			                            <option>Sent</option>
-			                            <option>Paid</option>
-			                            <option>Canceled</option>
-			                        </select>
-				            	</div>
 			            	</div>
-	        			</div>
-	        			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-	        				<button type="button" class="btn btn-primary">Filter</button>
-	        			</div>
-	        		</div>
-	        	</div>
+		            	</div>
+        			</div>
+        			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
+        				<button type="button" class="btn btn-primary">Filter</button>
+        			</div>
+        		</div>
 	        </div>
 	        <!-- /.col-lg-12 -->
 	    </div>
+	    <div class="panel-body">
+	        <div class="table-responsive">
+	        	<table class="table table-hover">
+	            	<tr>
+				   		<th>Client</th>
+				   		<th>Period</th>
+				   		<th>Service</th>
+				   		<th>Invoice Date</th>
+				   		<th>Status</th>
+				   		<th>Action</th>
+				   	</tr>
+	                <tbody>
+	                <tr>
+	                	<td>Client A</td>
+	                	<td>Jan 2016</td>
+	                	<td>Professional Service</td>
+	                	<td>02/02/16</td>
+	                	<td>Created</td>
+	                	<td><input type="button" value="View" class="btn btn-primary">
+	                		<input type="button" value="Change Status" class="btn btn-primary"></td>
+	                </tr>
+	                </tbody>
+	            </table>
+	        </div>
+        <!-- /.table-responsive -->
+    	</div>
     </div>
 </body>
 </html>
