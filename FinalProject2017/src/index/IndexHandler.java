@@ -31,6 +31,10 @@ public class IndexHandler extends Action{
 		{
 			return mapping.findForward("financeSummary");
 		}
+		else if("employee".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("employee");
+		}
 		else if("changePassword".equals(indexForm.getTask()))
 		{
 			return mapping.findForward("changePassword");
