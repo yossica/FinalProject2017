@@ -32,23 +32,14 @@ public class UserHandler extends Action {
 				response.sendRedirect("/FinalProject2017/index.do");
 			}
 			return null;
+		}else if ("changePassword".equals(userForm.getPassword())){
+			return mapping.findForward("changePassword");
 		}
 		else {
 			return mapping.findForward("login");
 		}
 		//change password
 		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
-		
-		UserForm userForm = (UserForm) form;
-		if("changePassword".equals(userForm.getTask()))
-		{
-			return mapping.findForward("changePassword");
-		}
-		else
-		{
-			//return mapping.findForward("success");
-			return mapping.findForward("login");
-		}
 	}
 
 }
