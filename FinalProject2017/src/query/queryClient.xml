@@ -4,7 +4,7 @@
 <sqlMap namespace="client">
 	<insert id="insert" parameterClass="client.ClientBean">
 		insert into master_client 
-		(client_id,name,address,city,phone_number,fax_number,postal_code,
+			(client_id,name,address,city,phone_number,fax_number,postal_code,
 			is_enabled,created_by,created_date, changed_by, changed_date)
 		values (#clientId#,#name#,#address#,#city#,#phoneNumber#,#faxNumber#,
 				#postalCode#,#isEnabled#,#createdBy#,sysdate,null,null)

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class TrainingBean implements Serializable {
+	private int transactionTrainingDetailId;
 	private int transactionTrainingHeaderId;
 	private int clientId;
 	private String clientName;
@@ -14,10 +15,12 @@ public class TrainingBean implements Serializable {
 	private String description;
 	private int isGross;
 	private int isInvoiceCreated;
+	private int isSettlement;
 	private String createdBy;
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
+	private int fee;
 
 	private List<TrainingDetailBean> detailList;
 
@@ -131,6 +134,30 @@ public class TrainingBean implements Serializable {
 
 	public void setDetailList(List<TrainingDetailBean> detailList) {
 		this.detailList = detailList;
+	}
+
+	public int getTransactionTrainingDetailId() {
+		return transactionTrainingDetailId;
+	}
+
+	public void setTransactionTrainingDetailId(int transactionTrainingDetailId) {
+		this.transactionTrainingDetailId = transactionTrainingDetailId;
+	}
+
+	public int getFee() {
+		return fee;
+	}
+
+	public void setFee(int fee) {
+		this.fee = fee;
+	}
+
+	public int getIsSettlement() {
+		return isSettlement;
+	}
+
+	public void setIsSettlement(int isSettlement) {
+		this.isSettlement = isSettlement;
 	}
 	
 }
