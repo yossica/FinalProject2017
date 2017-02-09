@@ -27,7 +27,7 @@
        <i class="fa fa-user"></i>
      </div>
      <div class="form-group log-status">
-       <input type="password" class="form-control" placeholder="Password" id="Passwod" name="password">
+       <input type="password" class="form-control" placeholder="Password" id="Password" name="password">
        <i class="fa fa-lock"></i>
      </div>
       <span class="alert">Invalid Credentials</span>
