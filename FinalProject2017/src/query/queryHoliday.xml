@@ -40,6 +40,11 @@
 		from master_holiday
 	</select>
 	
+	<select id="getMaxId" resultClass="java.lang.Integer">
+		select count(1)
+		from master_holiday
+    </select>
+	
 	<insert id="insert" parameterClass="holiday.HolidayBean">
 		insert into master_holiday (holiday_id, holiday_date, name, created_by, created_date)
 		values (#holidayId#,#holidayDate#,#name#,#createdBy#,sysdate)
