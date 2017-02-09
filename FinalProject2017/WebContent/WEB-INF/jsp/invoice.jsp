@@ -14,16 +14,18 @@
 	<html:form action="/invoice" method="post"></html:form>
 	<div id="page-wrapper">
 	    <div class="row">
-	    	<bean:write name="invoiceForm" property="task"/>
-	    	<bean:write name="invoiceForm" property="message"/>
+	    	<%-- <bean:write name="invoiceForm" property="task"/>
+	    	<bean:write name="invoiceForm" property="message"/> --%>
 	        <div class="col-lg-12">
 	            <h1 class="page-header">Invoice List</h1>
-	            <div class="col-lg-11">
-		            <button type="button" class="btn btn-outline btn-primary pull-right">Print</button>
-		            <button type="button" class="btn btn-primary pull-right">Create</button>
+	            <div class="panel-body" style="padding-right:0;">
+		            <div class="pull-right">
+			            <button type="button" class="btn btn-primary">Print</button>
+			            <button type="button" class="btn btn-primary">Create</button>
+		            </div>
 	            </div>
-	            <div class="col-lg-12">
-		            <div class="col-lg-11" style="border:solid 2px gray;margin-top:15px;">
+	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
+		            <div class="col-lg-11">
 		            	<div class="row" style="margin-top:10px;">
 			            	<div class="col-md-10">
 				            	<div class="col-md-1">
@@ -117,9 +119,7 @@
 			            	</div>
 	        			</div>
 	        			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-	        				<p align="right">
 	        				<button type="button" class="btn btn-primary">Filter</button>
-	        				</p>
 	        			</div>
 	        		</div>
 	        	</div>
