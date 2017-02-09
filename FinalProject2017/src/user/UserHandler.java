@@ -16,7 +16,6 @@ public class UserHandler extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-    
 		UserForm userForm = (UserForm) form;
 		UserManager userManager = new UserManager();
 		HttpSession session = request.getSession(true);
