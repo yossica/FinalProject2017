@@ -14,7 +14,7 @@ public class InvoiceHandler extends Action{
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		InvoiceForm invForm = (InvoiceForm) form;
-		invForm.setTask("testing from invoice handler");
+		invForm.setMessage("testing from invoice handler");
 		return mapping.findForward("invoice");
 	}
 

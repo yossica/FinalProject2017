@@ -17,7 +17,7 @@
 	<action-mappings>
 		<action path="/index" name="indexForm" type="index.IndexHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
-			<forward name="invoice" path="/invoice.do"></forward>
+			<forward name="invoice" path="/invoice.do?task=invoice"></forward>
 			<forward name="financeSummary" path="/WEB-INF/jsp/financeSummary.jsp"></forward>
 			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>
 			<forward name="cashInBank" path="/WEB-INF/jsp/cashInBank.jsp"></forward>
