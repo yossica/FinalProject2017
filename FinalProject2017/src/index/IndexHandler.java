@@ -31,16 +31,17 @@ public class IndexHandler extends Action{
 		{
 			return mapping.findForward("financeSummary");
 		}
-<<<<<<< HEAD
+
 		else if("changePassword".equals(indexForm.getTask()))
 		{
 			return mapping.findForward("changePassword");
-=======
+		}
+
 		else if("logout".equals(indexForm.getTask()))
 		{
 			request.getSession().removeAttribute("username");
 			return mapping.findForward("success");
->>>>>>> refs/remotes/origin/master
+
 		}
 		else
 		{
