@@ -31,13 +31,10 @@ public class UserHandler extends Action {
 				response.sendRedirect("/FinalProject2017/index.do");
 			}
 			return null;
-		}
 
-		else if("changePassword".equals(userForm.getTaskLogin()))
-		{
+		}else if ("changePassword".equals(userForm.getPassword())){
 			return mapping.findForward("changePassword");
 		}
-
 		else {
 			return mapping.findForward("login");
 		}
