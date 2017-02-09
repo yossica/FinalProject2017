@@ -104,7 +104,7 @@
                                     <a href="#">Additional Training</a>
                                 </li>
                                 <li>
-                                    <a href="#">General Information</a>
+                                    <a href="#" onclick="javascript:flyToPage('generalInformation')">General Information</a>
                                 </li>
                                 <li>
                                     <a href="#">Holidays</a>
