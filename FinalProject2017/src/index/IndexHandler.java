@@ -13,7 +13,33 @@ public class IndexHandler extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		return mapping.findForward("success");
+		IndexForm indexForm = (IndexForm) form;
+		
+		if("invoice".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("invoice");
+		}
+		else if("pettyCash".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("pettyCash");
+		}
+		else if("cashInBank".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("cashInBank");
+		}
+		else if("financeSummary".equals(indexForm.getTask()))
+		{
+			return mapping.findForward("financeSummary");
+		}
+		else if("logout".equals(indexForm.getTask()))
+		{
+			request.getSession().removeAttribute("username");
+			return mapping.findForward("success");
+		}
+		else
+		{
+			return mapping.findForward("success");
+		}
 	}
 
 }

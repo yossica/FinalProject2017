@@ -7,8 +7,9 @@ public class CashFlowCategoryBean implements Serializable {
 	private String name;
 	private int isDebit;
 	private int isEnabled;
+	private String cashFlowType;
 	private String createdBy;
-	private String createDate;
+	private String createdDate;
 	private String changedBy;
 	private String changedDate;
 	public String getCashFlowCategoryId() {
@@ -35,17 +36,23 @@ public class CashFlowCategoryBean implements Serializable {
 	public void setIsEnabled(int isEnabled) {
 		this.isEnabled = isEnabled;
 	}
+	public String getCashFlowType() {
+		return cashFlowType;
+	}
+	public void setCashFlowType(String cashFlowType) {
+		this.cashFlowType = cashFlowType;
+	}
 	public String getCreatedBy() {
 		return createdBy;
 	}
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public String getCreateDate() {
-		return createDate;
+	public String getCreatedDate() {
+		return createdDate;
 	}
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 	public String getChangedBy() {
 		return changedBy;

@@ -2,9 +2,16 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="user">
-	<update id="changePassword" parameterClass="java.lang.String">
-		update master_user set
-			password = #password#
+	<update id="changePassword" parameterClass="user.UserBean">
+		update master_user
+		set password = #password#
 		where username = #userName#
 	</update>
+	
+	<select id="checkLogin" resultClass="java.lang.Integer" parameterClass="user.UserBean">
+		select count(*)
+		from master_user
+		where username = #userName#
+		and password = #password#
+	</select>
 </sqlMap> 

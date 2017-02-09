@@ -3,21 +3,9 @@
 
 <sqlMap namespace="employee">
 	
-	<select id="read" resultClass="employee.EmployeeBean">		
-		select employee_id as employeeId,
-			   name as name,
-			   email as email,
-			   is_enabled as isEnabled,
-			   created_by as createdBy,
-			   created_date as createdDate,
-			   changed_by as changedBy,
-			   changed_date as changeDate
-		from master_employee
-	</select>
-		
 	<insert id="insert" parameterClass="employee.EmployeeBean">
 		insert into master_employee 
-		(employee_id,name,email,isEnabled,createdBy,createdDate,changedBy,changeDate)
+		(employee_id,name,email,is_enabled,created_by,created_date,changed_by,changed_date)
 		values (#employeeId#,#name#,#email#,#isEnabled#,#createdBy#,sysdate,
 				null,null)
 	</insert>
@@ -26,13 +14,39 @@
 		update master_employee set
 		name = #name#,
 		email = #email#,
-		isEnabled = #isEnabled#,
-		changedBy = #changedBy#, 
-		changeDate = sysdate
+		is_enabled = #isEnabled#,
+		changed_by = #changedBy#, 
+		changed_date = sysdate
 		where employee_id = #employeeId#
 	</update>
 	
-	<delete id="delete" parameterClass="java.lang.Integer">
-		delete from master_employee where employee_id = #employeeId# 
-	</delete>
+	<select id="getById" resultClass="employee.EmployeeBean"
+						 parameterClass="java.lang.Integer">		
+		select employee_id as employeeId,
+			   name as name,
+			   email as email,
+			   is_enabled as isEnabled,
+			   created_by as createdBy,
+			   to_char(created_date, 'MM/dd/yyyy') as createdDate,
+			   changed_by as changedBy,
+			   to_char(changed_date, 'MM/dd/yyyy') as changedDate
+		from master_employee
+		where employee_id = #employeeId#
+	</select>
+		
+	<select id="getAll" resultClass="employee.EmployeeBean">		
+		select employee_id as employeeId,
+			   name as name,
+			   email as email,
+			   is_enabled as isEnabled,
+			   created_by as createdBy,
+			   to_char(created_date, 'MM/dd/yyyy') as createdDate,
+			   changed_by as changedBy,
+			   to_char(changed_date, 'MM/dd/yyyy') as changedDate
+		from master_employee
+	</select>
+    <select id="getMaxId" resultClass="java.lang.Integer">
+		select count(1)
+		from master_employee
+    </select>	
 </sqlMap> 
