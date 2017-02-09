@@ -1,12 +1,38 @@
 package training;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
+
 import utils.Filter;
+import utils.IbatisHelper;
 
 public class TrainingManager {
 	public void insert(TrainingBean input){
+//		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+//		try{
+//			ibatis.startTransaction();
+//			Integer maxId = (Integer) ibatis.queryForObject("employee.getMaxId", null);
+//            if(maxId==null){
+//            	maxId = 1;
+//            }else{
+//            	maxId++;
+//            }
+//            input.setEmployeeId(maxId);
+//            ibatis.insert("employee.insert", input);
+//            ibatis.commitTransaction();
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}finally{
+//            try {
+//				ibatis.endTransaction();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 	}
 	public void update(TrainingBean input){

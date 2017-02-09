@@ -2,4 +2,98 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="training">
+	<insert id="insertHeader" parameterClass="training.TrainingBean">
+		insert into transaction_training_header 
+		(transaction_training_id,client_id,dp_invoice_id,training_start_date,training_end_date,
+		description,is_gross,is_invoice_created,created_by,created_date,changed_by,changed_date)
+		values (#transactionTrainingHeaderId#,#clientId#,#dpInvoiceId#,#trainingStartDate#,
+				#trainingEndDate#,#description#,#isGross#,#isInvoiceCreated#,#createdBy#,sysdate,
+				null,null)
+	</insert>
+	
+	<insert id="insertDetail" parameterClass="training.TrainingBean">
+		insert into transaction_training_detail 
+		(transaction_training_detail_id,transaction_training_id,description,fee,is_settlement,
+		created_by,created_date,changed_by,changed_date)
+		values (#transactionTrainingDetailId#,#transactionTrainingHeaderId#,#description#,
+				#fee#,#isSettlement#,#createdBy#,sysdate,
+				null,null)
+	</insert>
+	
+	<update id="updateHeader" parameterClass="training.TrainingBean">
+		update transaction_training_header set
+		client_id = #clientId#,
+		dp_invoice_id = #dpInvoiceId#
+		training_start_date = #trainingStartDate#,
+		training_end_date = #trainingEndDate#,
+		description = #description#,
+		is_gross = #isGross#,
+		is_invoice_created = #isInvoiceCreated#,
+		changed_by = #changedBy#, 
+		changed_date = sysdate
+		where transaction_training_id = #transactionTrainingHeaderId#
+	</update>
+	
+	<update id="updateDetail" parameterClass="training.TrainingBean">
+		update transaction_training_detail set
+		description = #description#,
+		fee = #fee#,
+		is_settlement = #isSettlement#,
+		changed_by = #changedBy#, 
+		changed_date = sysdate
+		where transaction_training_detail_id = #transactionTrainingDetailId#
+	</update>
+	
+	<delete id="deleteHeader" parameterClass="java.lang.Integer">
+		delete from transaction_training_header
+			where transaction_training_id = #transactionTrainingHeaderId#
+	</delete>
+	
+	<delete id="deleteDetail" parameterClass="java.lang.Integer">
+		delete from transaction_training_detail
+			where transaction_training_detail_id = #transactionTrainingDetailId#
+	</delete>
+	
+	<select id="getById" resultClass="training.TrainingBean"
+						 parameterClass="java.lang.Integer">
+		 select t.transaction_training_id as transactionTrainingHeaderId,
+		 		t.client_id as clientId,
+		 		c.name as clientName,
+		 		t.dp_invoice_id as dpInvoiceId,
+		 		t.training_start_date as trainingStartDate,
+		 		t.training_end_date as trainingEndDate,
+				t.description as description,
+				t.is_gross as isGross,
+				t.is_invoice_created as isInvoiceCreated,
+				t.created_by as createdBy,
+				to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
+				t.changed_by as changedBy,
+				to_char(t.changed_date, 'MM/dd/yyyy') as changedDate
+		from transaction_training_header t, master_client c
+		where t.client_id = c.client_id
+			and t.transaction_training_id = #transactionTrainingHeaderId#
+	</select>
+	
+	<select id="getDetailByIdHeader" resultClass="training.TrainingDetailBean"
+						 			parameterClass="java.lang.Integer">
+		select transaction_training_detail_id as transactionTrainingDetailId,
+				transaction_training_id as transactionTrainingHeaderId,
+				description as description,
+				fee as fee,
+				is_settlement as isSettlement,
+				created_by as createdBy,
+				to_char(created_date, 'MM/dd/yyyy') as createdDate,
+				changed_by as changedBy,
+				to_char(changed_date, 'MM/dd/yyyy') as changedDate
+		from transaction_training_detail
+		where transaction_training_id = #transactionTrainingHeaderId#
+	</select>
+    <select id="getMaxHeaderId" resultClass="java.lang.Integer">
+		select count(1)
+		from transaction_training_header
+    </select>	
+    <select id="getMaxDetailId" resultClass="java.lang.Integer">
+		select count(1)
+		from transaction_training_detail
+    </select>	
 </sqlMap> 

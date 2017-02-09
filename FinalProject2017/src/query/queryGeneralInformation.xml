@@ -16,9 +16,9 @@
 			key as key,
 			value as value,
 			created_by as createdBy,
-			created_date as createdDate,
-			change_by as cretedBy,
-			change_date as createdDate
+			to_char(created_date, 'MM/dd/yyyy') as createdDate,
+			changed_by as changedBy,
+			to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from general_information
 		where key = #key#
 	</select>
@@ -28,9 +28,9 @@
 			key as key,
 			value as value,
 			created_by as createdBy,
-			created_date as createdDate,
-			change_by as cretedBy,
-			change_date as createdDate
+			to_char(created_date, 'MM/dd/yyyy') as createdDate,
+			changed_by as changedBy,
+			to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from general_information
 	</select>
 </sqlMap> 

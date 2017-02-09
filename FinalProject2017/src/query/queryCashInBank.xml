@@ -4,6 +4,8 @@
 <sqlMap namespace="cashInBank">
 
 	<select id="getAllWithFilter" parameterClass="java.util.Map">
+		<!-- created date nanti ditampilkan sebagai transaction date,
+		jadi harus lengkap sama jam biar jelas yang mana yang transaksi terakhirnya -->
 		select
 			transaction_cash_in_bank_id as transactionCashInBankId,
 			cash_flow_category_id as cashFlowCategoryId,
@@ -11,13 +13,13 @@
 			amount,
 			balance,
 			description,
-			transaction_date as transactionDate,
+			to_char(transaction_date, 'MM/dd/yyyy') as transactionDate,
 			is_debit as isDebit,
 			created_by as createdBy,
-			created_date as createdDate
+			to_char(created_date, 'MM/dd/yyyy hh:mm:ss') as createdDate
 		from transaction_cash_in_bank
 		where
-			transaction_date between to_date(#startDate#,'MM/dd/yyyy') and to_date(#endDate#,'MM/dd/yyyy')
+			created_date between to_date(#startDate#,'MM/dd/yyyy') and to_date(#endDate#,'MM/dd/yyyy')
 			<dynamic prepend="AND">
 				<isNotNull property="category">
 					<isNotEmpty property="category">
