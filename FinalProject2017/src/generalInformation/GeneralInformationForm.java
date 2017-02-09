@@ -3,6 +3,7 @@ package generalInformation;
 import org.apache.struts.action.ActionForm;
 
 public class GeneralInformationForm extends ActionForm{
+	private String task;
 	private String key;
 	private String value;
 	private String createdBy;
@@ -10,6 +11,12 @@ public class GeneralInformationForm extends ActionForm{
 	private String changedBy;
 	private String changedDate;
 	
+	public String getTask() {
+		return task;
+	}
+	public void setTask(String task) {
+		this.task = task;
+	}
 	public String getKey() {
 		return key;
 	}
@@ -46,4 +53,5 @@ public class GeneralInformationForm extends ActionForm{
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
 	}
+	
 }
