@@ -33,25 +33,24 @@
 	    <div class="row">
 	        <div class="col-lg-12">
 	            <h1 class="page-header">Change Password</h1>
-	            <div class="col-lg-11">
-		            <button type="button" class="btn btn-primary ">Cancel</button>
-		            <button type="button" class="btn btn-primary " onclick="javascript:flyToPage('saveChangePassword')">Save</button>
-	            </div>
-	            <div class="col-lg-10">
-		            <div class="col-lg-9" style="border:solid 2px gray;margin-top:15px;">
-		            	<div class="row">
-			            	<div class="col-md-2">
-			            	Username
-			            	</div>
-			            	<div class="col-md-1">
-			            	:
-			            	</div>
-			            	<div class="col-md-8">
-					            <html:text name="userForm" property="userName" readonly="true"/>
-			            	</div>
-                        </div>
+	           
+	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
+		            <div class="col-lg-11">
+			            	<div class="row" style="margin-top:10px;">
+				            	<div class="col-md-2">
+				            	Username
+				            	</div>
+				            	<div class="col-md-1">
+				            	:
+				            	</div>
+				            	<div class="col-md-8">
+				            		<html:text name="userForm" property="userName" readonly="true"/>
+				            	</div>
+				            </div>
+                        
                         <br/>
                         <div class="row">
+                       
 			            	<div class="col-md-2">
 			            	Password
 			            	</div>
@@ -61,6 +60,7 @@
 			            	<div class="col-md-8">
 					            <html:password name="userForm" property="password"/>
 			            	</div>
+			            
                         </div>
                         <br/>
                         <div class="row">
@@ -82,10 +82,18 @@
 			            	<div class="col-md-1">
 			            	:
 			            	</div>
-			            	<div class="col-md-8">
+			            	<div class="col-md-8" style="margin-bottom:10px;">
 					            <html:password name="userForm" property="confirmPassword"/>
 			            	</div>
                         </div>
+                         <div class="panel-body" style="padding-left:0;">
+		            <div class="pull-left">
+			         	<button type="button" class="btn btn-primary ">Cancel</button>
+		            	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('saveChangePassword')">Save</button>
+	            
+		            </div>
+	            </div>
+                        
 		            </div>
 	            </div>
 	        </div>
