@@ -20,7 +20,7 @@ public class UserHandler extends Action {
 		UserManager userManager = new UserManager();
 		HttpSession session = request.getSession(true);
 		
-		if("login".equals(userForm.getTaskLogin())){
+		if("login".equals(userForm.getTask())){
 			UserBean userBean = new UserBean();
 			userBean.setUserName(userForm.getUserName());
 			userBean.setPassword(userForm.getPassword());
@@ -31,14 +31,19 @@ public class UserHandler extends Action {
 				response.sendRedirect("/FinalProject2017/index.do");
 			}
 			return null;
-		}else if ("changePassword".equals(userForm.getPassword())){
+		}else if ("changePassword".equals(userForm.getTask())){
+			userForm.setUserName(session.getAttribute("username").toString());			
 			return mapping.findForward("changePassword");
-		}
-		else {
+		}else if("saveChangePassword".equals(userForm.getTask())){
+			//validasi login
+			//validasi new password dengan confirm password sama apa nggak
+			//update password
+			
+			userForm.getMessageList().add("Change Password Success");
+			return mapping.findForward("changePassword");
+		}else {
 			return mapping.findForward("login");
 		}
-		//change password
-		//cek login dulu biar pastiin old passwordnya sama kaya old password yg di input
 	}
 
 }
