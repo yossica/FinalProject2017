@@ -32,7 +32,9 @@ public class UserHandler extends Action {
 			}
 			return null;
 
-		}else if ("changePassword".equals(userForm.getPassword())){
+		}
+		else if("changePassword".equals(userForm.getTaskLogin()))
+		{
 			return mapping.findForward("changePassword");
 		}
 		else {
