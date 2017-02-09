@@ -39,6 +39,10 @@ public class IndexHandler extends Action{
 		{
 			return mapping.findForward("employee");
 		}
+		else if("generalInformation".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("generalInformation");
+		}
 		else if("holiday".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("holiday");
@@ -48,6 +52,7 @@ public class IndexHandler extends Action{
 			return mapping.findForward("outsource");
 		}
 		else if("logout".equals(indexForm.getTaskIndex()))
+
 		{
 			request.getSession().removeAttribute("username");
 			return mapping.findForward("success");
