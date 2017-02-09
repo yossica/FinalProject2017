@@ -75,7 +75,7 @@
 				           	<br/><button type="button" class="btn btn-primary" onclick="javascript:insertHoliday()">Insert CSV</button>
 			  			</div>
 			  			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
-			  				error messages here
+			  				<!-- ngga pakai messageList soalnya ngga divalidasi di handler -->
 			  			</div>
 		            </div>
 		            <div class="col-lg-10">
@@ -90,11 +90,16 @@
 							            </tr>
 							        </thead>
 							        <tbody>
-							            <tr>
-							                <td>15 FEB 2017</td>
-							                <td>Pilkada DKI Jakarta</td>
-							                <td><a href="#" onclick="javascript:deleteHoliday('',)">X</a></td>
-							            </tr>         
+							        	<logic:notEmpty property="holidayList" name="holidayForm">
+							        		<logic:iterate id="holiday" property="holidayList" name="holidayForm">
+							        			<tr>
+									                <td><bean:write name="holiday" property="holidayDate"/></td>
+									                <td><bean:write name="holiday" property="name" format="#"/></td>
+									                <td><a href="#" onclick="javascript:deleteHoliday('<bean:write name="holiday" property="holidayDate"/>-<bean:write name="holiday" property="name"/>',<bean:write name="holiday" property="holidayId" format="#"/>)">X</a></td>
+									            </tr>  
+							        		</logic:iterate>
+							        	</logic:notEmpty>
+							                   
 							         </tbody>
 		                		</table>
 		                	</div>

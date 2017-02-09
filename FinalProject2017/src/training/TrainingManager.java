@@ -15,6 +15,7 @@ import utils.Filter;
 import utils.IbatisHelper;
 
 public class TrainingManager {
+	
 	public void insert(TrainingBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
@@ -28,7 +29,6 @@ public class TrainingManager {
             }
             input.setTransactionTrainingHeaderId(maxIdHeader);
             ibatis.insert("training.insertHeader", input);
-            ibatis.commitTransaction();
             
             //masukin data detail
             for(int i = 0; i<input.getDetailList().size();i++){
@@ -41,9 +41,9 @@ public class TrainingManager {
 	            }
 		        input.getDetailList().get(i).setTransactionTrainingDetailId(maxIdDetail);
 		        input.getDetailList().get(i).setTransactionTrainingHeaderId(maxIdHeader);
-	            ibatis.insert("training.insertHeader", input.getDetailList().get(i));
-	            ibatis.commitTransaction();
+	            ibatis.insert("training.insertDetail", input.getDetailList().get(i));
             }
+            ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -55,6 +55,32 @@ public class TrainingManager {
 		}
 		
 	}
+	
+	public void insertDetail(TrainingDetailBean input){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try{
+	        ibatis.startTransaction();
+	        Integer maxIdDetail = (Integer) ibatis.queryForObject("training.getMaxDetailId", null);
+            if(maxIdDetail==null){
+            	maxIdDetail = 1;
+            }else{
+            	maxIdDetail++;
+            }
+            input.setTransactionTrainingDetailId(maxIdDetail);
+	        
+            ibatis.insert("training.insertDetail", input);
+            ibatis.commitTransaction();            
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void update(TrainingBean input){
 		//kalo invoice DP berubah, maka ada update di settlement 
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -81,6 +107,7 @@ public class TrainingManager {
 			}
 		}
 	}
+	
 	public void delete (int input){
 		//kalo DP batal, header dan detail di delete
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -107,6 +134,7 @@ public class TrainingManager {
 			}
 		}
 	}
+	
 	public void deleteDetail(int input){
 		//kalo additionalnya di hapus
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -127,6 +155,7 @@ public class TrainingManager {
 			}
 		}
 	}
+	
 	public TrainingBean getById(int input){
 		TrainingBean result = new TrainingBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -145,6 +174,7 @@ public class TrainingManager {
 		}
 		return result;
 	}
+	
 	public TrainingDetailBean getDetailById(int input){
 		TrainingDetailBean result = new TrainingDetailBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -156,6 +186,7 @@ public class TrainingManager {
 		}
 		return result;
 	}
+	
 	public List getDetailByIdHeader(int input){
 		//saat tambah additional training, biar datanya ke udpate
 		List result = new ArrayList();
@@ -168,6 +199,7 @@ public class TrainingManager {
 		}
 		return result;
 	}
+	
 	public List getAllWithFilter(Filter input){
 		List<TrainingBean> result  = new ArrayList<TrainingBean>();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -192,4 +224,5 @@ public class TrainingManager {
 		} 
 		return result;
 	}
+	
 }
