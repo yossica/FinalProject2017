@@ -22,7 +22,6 @@
 			<forward name="employee" path="/employee.do"></forward>
 			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>
 			<forward name="cashInBank" path="/WEB-INF/jsp/cashInBank.jsp"></forward>
-			<forward name="changePassword" path="/user.do"></forward>
 			<forward name="holiday" path="/holiday.do"></forward>
 			<forward name="changePassword" path="/user.do?task=changePassword"></forward>
 		</action>
