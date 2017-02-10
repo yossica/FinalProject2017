@@ -16,7 +16,11 @@ public class EmployeeHandler extends Action{
 		EmployeeForm ef = (EmployeeForm) form;
 		EmployeeManager em = new EmployeeManager();
 		
-		ef.setListEmployee(em.getAll());
-		return mapping.findForward("employee");
+		if ("formEmployee".equals(ef.getTask())) {
+			return mapping.findForward("formEmployee");
+		} else {
+			ef.setListEmployee(em.getAll());
+			return mapping.findForward("employee");
+		}
 	}
 }
