@@ -85,7 +85,7 @@
 				            	:
 				            	</div>
 				            	<div class="col-md-8">
-						            <html:text property="fee" name="trainingForm" styleClass="form-control" format="#"/>
+						            <html:text property="fee" name="trainingForm" styleClass="form-control"/>
 				            	</div>
 	                        </div>
 	                        <br/>
