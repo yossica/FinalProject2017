@@ -39,6 +39,10 @@ public class IndexHandler extends Action{
 		{
 			return mapping.findForward("employee");
 		}
+		else if("additionalTraining".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("additionalTraining");
+		}
 		else if("generalInformation".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("generalInformation");
