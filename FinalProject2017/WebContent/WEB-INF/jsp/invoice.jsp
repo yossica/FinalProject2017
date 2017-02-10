@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
+<%@ page import="java.util.Calendar" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -50,7 +51,7 @@
 		            		From 
 		            	</div>
 		            	<div class="col-md-3">
-			            	<select class="form-control">
+			            	<select class="form-control" name="monthFrom">
 	                            <option>Select</option>
 	                            <option>January</option>
 	                            <option>February</option>
@@ -66,19 +67,23 @@
 	                        </select>
 	                     </div>
 	                     <div class="col-md-2">
-	                        <select class="form-control">
-	                            <option>Select</option>
-	                            <option>2</option>
-	                            <option>3</option>
-	                            <option>4</option>
-	                            <option>5555</option>
+	                        <select class="form-control" name="yearFrom">
+	                        	<option>Select</option>
+	                        	<%
+	                        		int year = Calendar.getInstance().get(Calendar.YEAR);
+	                        		for(int i=2000;i<=year;i++){
+	                        		%>
+	                        			<option><%= i %></option>
+	                        		<% 
+	                        		}
+	                        	%>
 	                        </select>
                         </div>
                         <div class="col-md-1">
                         	To
                         </div>
                         <div class="col-md-3">
-	                        <select class="form-control">
+	                        <select class="form-control" name="monthTo">
 	                            <option>Select</option>
 	                            <option>January</option>
 	                            <option>February</option>
@@ -94,12 +99,16 @@
 	                        </select>
 	                    </div>
 	                    <div class="col-md-2">
-	                        <select class="form-control">
+	                        <select class="form-control" name="yearTo">
 	                            <option>Select</option>
-	                            <option>2</option>
-	                            <option>3</option>
-	                            <option>4</option>
-	                            <option>5555</option>
+	                        	<%
+	                        		year = Calendar.getInstance().get(Calendar.YEAR);
+	                        		for(int i=2000;i<=year;i++){
+	                        		%>
+	                        			<option><%= i %></option>
+	                        		<% 
+	                        		}
+	                        	%>
 	                        </select>
 	                    </div>
 	              	</div>
