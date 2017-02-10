@@ -27,11 +27,13 @@
        <i class="fa fa-user"></i>
      </div>
      <div class="form-group log-status">
-       <input type="password" class="form-control" placeholder="Password" id="Password" name="password">
+       <input type="password" class="form-control" placeholder="Password" id="Password" name="password" 
+              onkeydown = "if (event.keyCode == 13)
+                        document.getElementById('btnSubmit').click()">
        <i class="fa fa-lock"></i>
      </div>
       <span class="alert">Invalid Credentials</span>
-     <button type="button" class="log-btn" onclick="javascript:flyToPage('login')">Log in</button>
+     <button type="button" id="btnSubmit" class="log-btn" onclick="javascript:flyToPage('login')">Log in</button>
    </div>
   <script src="asset/jquery/jquery.min.js"></script>
   <script src="asset/js/index.js"></script>
