@@ -14,6 +14,14 @@ public class HolidayManager {
 		
 		try {
 			ibatis.startTransaction();
+			Integer maxIdHoliday = (Integer) ibatis.queryForObject("holiday.getMaxId", null);
+			if(maxIdHoliday == null){
+				maxIdHoliday = 1;
+			}
+			else {
+				maxIdHoliday++;
+			}
+			input.setHolidayId(maxIdHoliday);
 			
 			ibatis.insert("holiday.insert", input);
 			
