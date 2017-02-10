@@ -29,10 +29,16 @@ public class HolidayHandler extends Action{
 				holidayManager.insert(holidayBean);
 			}
 			holidayForm.setHolidayList(holidayManager.getAll());
+			holidayForm.setHolidayCsv("");
+			holidayForm.getMessageList().add("All Data successfully inserted!");
 			return mapping.findForward("holiday");
 		}
 		else if("delete".equals(holidayForm.getTask())){
 			holidayManager.delete(holidayForm.getHolidayId());
+
+			holidayForm.setHolidayList(holidayManager.getAll());
+			holidayForm.setHolidayCsv("");
+			holidayForm.getMessageList().add("Data successfully deleted!");
 			return mapping.findForward("holiday");
 		}
 		else{

@@ -1,5 +1,6 @@
 package holiday;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
@@ -7,6 +8,7 @@ import org.apache.struts.action.ActionForm;
 public class HolidayForm extends ActionForm{
 	private String task;
 	private String holidayCsv;
+	private List messageList;
 	
 	private int holidayId;
 	private List holidayList;
@@ -21,6 +23,15 @@ public class HolidayForm extends ActionForm{
 	}
 	public void setHolidayCsv(String holidayCsv) {
 		this.holidayCsv = holidayCsv;
+	}	
+	public List getMessageList() {
+		if(messageList == null){
+			messageList = new ArrayList();
+		}
+		return messageList;
+	}
+	public void setMessageList(List messageList) {
+		this.messageList = messageList;
 	}
 	public int getHolidayId() {
 		return holidayId;

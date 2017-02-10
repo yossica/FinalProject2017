@@ -14,16 +14,26 @@ public class HolidayManager {
 		
 		try {
 			ibatis.startTransaction();
-			Integer maxIdHoliday = (Integer) ibatis.queryForObject("holiday.getMaxId", null);
-			if(maxIdHoliday == null){
-				maxIdHoliday = 1;
+			//if exists = update
+			Integer holidayId = (Integer) ibatis.queryForObject("holiday.getIdByDate", input.getHolidayDate());
+			if(holidayId == null){
+				//no = insert
+				holidayId = (Integer) ibatis.queryForObject("holiday.getMaxId", null);
+				if(holidayId == null){
+					holidayId = 1;
+				}
+				else {
+					holidayId++;
+				}
+				input.setHolidayId(holidayId);
+				
+				ibatis.insert("holiday.insert", input);
 			}
 			else {
-				maxIdHoliday++;
+				input.setHolidayId(holidayId);
+				
+				ibatis.update("holiday.update", input);
 			}
-			input.setHolidayId(maxIdHoliday);
-			
-			ibatis.insert("holiday.insert", input);
 			
 			ibatis.commitTransaction();
 		} catch (Exception e) {
