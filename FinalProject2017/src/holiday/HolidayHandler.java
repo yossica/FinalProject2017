@@ -25,7 +25,7 @@ public class HolidayHandler extends Action{
 				HolidayBean holidayBean = new HolidayBean();
 				holidayBean.setCreatedBy((String)session.getAttribute("username"));
 				holidayBean.setHolidayDate(column[0]);
-				holidayBean.setName(column[1]);
+				holidayBean.setName(column[1].trim());
 				holidayManager.insert(holidayBean);
 			}
 			holidayForm.setHolidayList(holidayManager.getAll());
