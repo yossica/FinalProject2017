@@ -8,10 +8,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Invoice</title>
+<script>
+	function flyToPage(task)
+	{
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
-	<html:form action="/invoice" method="post"></html:form>
+	<html:form action="/invoice" method="post">
 	<div id="page-wrapper">
 	    <div class="row">
 	    	<%-- <bean:write name="invoiceForm" property="task"/>
@@ -31,17 +38,13 @@
 			            	Client
 			            	</div>
 			            	<div class="col-md-11">
-					            <select class="form-control-client">
-		                            <option>1</option>
-		                            <option>2</option>
-		                            <option>3</option>
-		                            <option>4</option>
-		                            <option>5</option>
-		                        </select>
+				            	<html:select property="clientId" name="invoiceForm" styleClass="form-control-client">
+									<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
+								</html:select>
 			            	</div>
 			            </div>
                        </div>
-                       <div class="col-md-10" style="margin-top:10px;">
+                <div class="col-md-10" style="margin-top:10px;">
 	            	<div class="row">
 		            	<div class="col-md-1">
 		            		From 
@@ -151,5 +154,6 @@
         <!-- /.table-responsive -->
     	</div>
     </div>
+    </html:form>
 </body>
 </html>
