@@ -38,13 +38,13 @@
 			            	Client
 			            	</div>
 			            	<div class="col-md-11">
-				            	<html:select property="client" name="invoiceForm">
-									<html:optionsCollection name="invoiceForm" property="listOfClient" label="jobName" value="jobId"/>
+				            	<html:select property="clientId" name="invoiceForm" styleClass="form-control-client">
+									<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 								</html:select>
 			            	</div>
 			            </div>
                        </div>
-                       <div class="col-md-10" style="margin-top:10px;">
+                <div class="col-md-10" style="margin-top:10px;">
 	            	<div class="row">
 		            	<div class="col-md-1">
 		            		From 
