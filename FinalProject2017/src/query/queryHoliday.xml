@@ -33,21 +33,36 @@
 	<select id="getAll" resultClass="holiday.HolidayBean">
 		select
 			holiday_id as holidayId,
-			holiday_date as holidayDate,
+			to_char(holiday_date, 'MM/dd/yyyy') as holidayDate,
 			name,
 			created_by as createdBy,
 			to_char(created_date, 'MM/dd/yyyy') as createdDate
 		from master_holiday
+		order by holiday_date
 	</select>
 	
 	<select id="getMaxId" resultClass="java.lang.Integer">
 		select count(1)
 		from master_holiday
     </select>
+    
+    <select id="getIdByDate" resultClass="java.lang.Integer" parameterClass="java.lang.String">
+		select holiday_id
+		from master_holiday
+		where holiday_date = to_date(#value#,'MM/dd/yyyy')
+    </select>
 	
 	<insert id="insert" parameterClass="holiday.HolidayBean">
 		insert into master_holiday (holiday_id, holiday_date, name, created_by, created_date)
-		values (#holidayId#,#holidayDate#,#name#,#createdBy#,sysdate)
+		values (#holidayId#,to_date(#holidayDate#,'MM/dd/yyyy'),#name#,#createdBy#,sysdate)
+	</insert>
+	
+	<insert id="update" parameterClass="holiday.HolidayBean">
+		update master_holiday
+		set name = #name#,
+			created_by = #createdBy#,
+			created_date = sysdate
+		where holiday_id = #holidayId#
 	</insert>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">

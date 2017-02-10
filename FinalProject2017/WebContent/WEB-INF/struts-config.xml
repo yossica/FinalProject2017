@@ -26,7 +26,7 @@
 			<forward name="holiday" path="/holiday.do"></forward>
 			<forward name="outsource" path="/outsource.do"></forward>
 			<forward name="changePassword" path="/user.do?task=changePassword"></forward>
-			<forward name="holiday" path="/training.do?task=additionalTraining"></forward>			
+			<forward name="additionalTraining" path="/training.do?task=additionalTraining"></forward>			
 		</action>
 		<action path="/cashInBank" name="cashInBankForm" type="cashInBank.CashInBankHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
