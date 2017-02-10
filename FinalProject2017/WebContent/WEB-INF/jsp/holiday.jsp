@@ -75,7 +75,7 @@
 		            <h1 class="page-header">Holiday List</h1>
 		            <div class="col-lg-11">
 		            	<div class="col-md-8">
-				            <html:textarea property="holidayCsv" name="holidayForm" styleClass="form-control" style="width:80%;height:200px"></html:textarea>
+				            <html:textarea property="holidayCsv" name="holidayForm" styleClass="form-control" style="width:80%;height:150px"></html:textarea>
 				            
 				           	<br/>
 				           	<div class="col-lg-12" style="padding:0px">
@@ -98,7 +98,7 @@
 		            </div>
 		            <div class="col-lg-10">
 			            <div class="panel-body">
-							<div class="table-responsive" style="overflow: auto;">
+							<div class="table-responsive" style="height:200px;overflow:auto;">
 							    <table class="table table-hover">
 							        <thead>
 							            <tr>
