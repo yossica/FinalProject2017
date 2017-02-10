@@ -8,12 +8,20 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import client.ClientManager;
+
 public class OutsourceHandler extends Action{
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		return mapping.findForward("success");
+		
+		OutsourceForm outsourceForm = (OutsourceForm) form;
+		OutsourceManager outsourceManager = new OutsourceManager();
+		ClientManager clientManager = new ClientManager();
+		outsourceForm.setClientList(clientManager.getAll());
+		
+		return mapping.findForward("outsource");
 	}
 
 }

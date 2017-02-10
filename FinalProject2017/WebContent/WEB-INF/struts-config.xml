@@ -24,6 +24,7 @@
 			<forward name="cashInBank" path="/WEB-INF/jsp/cashInBank.jsp"></forward>
 			<forward name="generalInformation" path="/generalInformation.do"></forward>
 			<forward name="holiday" path="/holiday.do"></forward>
+			<forward name="outsource" path="/outsource.do"></forward>
 			<forward name="changePassword" path="/user.do?task=changePassword"></forward>
 			<forward name="additionalTraining" path="/training.do?task=additionalTraining"></forward>			
 		</action>
@@ -48,7 +49,7 @@
 			<forward name="invoice" path="/WEB-INF/jsp/invoice.jsp"></forward>
 		</action>
 		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
-			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+			<forward name="outsource" path="/WEB-INF/jsp/outsource.jsp"></forward>
 		</action>
 		<action path="/pettyCash" name="pettyCashForm" type="pettyCash.PettyCashHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
