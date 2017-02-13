@@ -38,6 +38,11 @@
 						error += "Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid, description must be filled\n";
 					}
 				}
+				else {
+					if(!isDateValid){
+						error += "Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid\n";
+					}
+				}
 			}
 		}
 		if(error.length != 0){
@@ -54,7 +59,7 @@
 	    return regex.test(dat);
 	}
 	function flyToPage(task){
-		document.forms[1].task.value = id;
+		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
 </script>
@@ -70,17 +75,30 @@
 		            <h1 class="page-header">Holiday List</h1>
 		            <div class="col-lg-11">
 		            	<div class="col-md-8">
-				            <html:textarea property="holidayCsv" name="holidayForm" styleClass="form-control" style="width:80%;height:200px"></html:textarea>
+				            <html:textarea property="holidayCsv" name="holidayForm" styleClass="form-control" style="width:80%;height:150px"></html:textarea>
 				            
-				           	<br/><button type="button" class="btn btn-primary" onclick="javascript:insertHoliday()">Insert CSV</button>
+				           	<br/>
+				           	<div class="col-lg-12" style="padding:0px">
+				           	<div class="col-md-2" style="padding:0px">
+				           		<button type="button" class="btn btn-primary" onclick="javascript:insertHoliday()">Insert CSV</button>
+				           	</div>
+				           	<div class="col-md-8" style="margin-left:10px;float:left">
+				           		Format: Date(MM/dd/yyyy),Description<br/>Example:<br/>01/01/2017,New Year<br/>12/31/2017,New Year's Eve
+				           	</div>
+				           	<div style="clear:both"></div>
+				           	</div>
 			  			</div>
 			  			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
-			  				<!-- ngga pakai messageList soalnya ngga divalidasi di handler -->
+			  				<logic:notEmpty name="holidayForm" property="messageList">
+								<logic:iterate id="message" name="holidayForm" property="messageList">
+									<bean:write name="message" /> 
+								</logic:iterate>
+							</logic:notEmpty>
 			  			</div>
 		            </div>
 		            <div class="col-lg-10">
 			            <div class="panel-body">
-							<div class="table-responsive" style="overflow: auto;">
+							<div class="table-responsive" style="height:200px;overflow:auto;">
 							    <table class="table table-hover">
 							        <thead>
 							            <tr>
