@@ -8,12 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Petty Cash</title>
-	<!-- <script type="text/javascript">
-	    $(function (){
-	        $('#datetimepicker1').datetimepicker();
-	        $('#datetimepicker2').datetimepicker();
-	    });
-	</script> -->
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
@@ -29,50 +23,33 @@
                 <button type="button" class="btn btn-primary pull-right">Balancing</button><br /><br />
 	        </div>
 		</div>
-		 <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
-           	<div class="row" style="margin-top:10px;">
-            	<div class="col-md-10" style="padding-right:1%">
-	            	<div class="col-md-1">
-				    Category
-	            	</div>
-	            	<div class="col-md-11">
-		            	<select class="form-control">
+		<div style="border:1px solid black; padding: 1%; border-radius: 10px; background-color: #EFEFEF;">
+			<div class="row">
+		    	<div class="col-lg-12">
+		                Category<br />
+		                <select class="form-control" style="width:50%;">
 		                    <option>1</option>
 		                    <option>2</option>
 		                </select><br />
-	            	</div>
-	            </div>
-            </div>
-            <div class="row" style="margin-top:10px;">
-            	<div class="col-md-10" style="padding-right:1%">
-	            	<div class="col-md-1">
-				    From
-	            	</div>
-	            	<div class="col-md-3">
-		            	<div class='input-group date' id="datetimepicker1">
-		                    <input type='text' class="form-control" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-	                	</div>
-	            	</div>
-	            	<div class="col-md-1">
-				    To
-	            	</div>
-	            	<div class="col-md-3">
-		            	<div class='input-group date' id="datetimepicker1">
-		                    <input type='text' class="form-control" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-	                	</div>
-	            	</div>
-	            	<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-        				<button type="button" class="btn btn-primary">Filter</button>
-        			</div>
-	            </div>
-            </div>
-        </div>
+		        </div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-lg-3">
+		    		From<br />
+		    		<input type="date" class="form-control" style="width:100%;">
+		    	</div>
+		    	<div class="col-lg-3">
+		    		To<br />
+		    		<input type="date" class="form-control" style="width:100%;">
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-lg-6">
+		    		<br />
+		    		<button type="button" class="btn btn-primary">Filter</button>
+		    	</div>
+		    </div>
+	    </div>
         <div class="row">
 	    	<div class="col-lg-12">
 	    		<div class="panel-body">
