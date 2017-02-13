@@ -67,7 +67,6 @@ public class IndexHandler extends Action{
 			return mapping.findForward("outsource");
 		}
 		else if("logout".equals(indexForm.getTaskIndex()))
-
 		{
 			request.getSession().removeAttribute("username");
 			return mapping.findForward("success");
