@@ -1,0 +1,36 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="financeSummary">
+	<select id="getAll" resultClass="master.FinanceSummaryBean">	
+		select c.period, 
+			cash_in_bank_expense as cashInBankExpense, 
+			petty_cash_expense as pettyCashExpense
+		from (
+		    select period, sum(amount) as cash_in_bank_expense
+		    from (
+		        select trim(to_char(transaction_date,'Month')) || ' ' || extract(year from transaction_date) as period, 
+		            case is_debit
+		                when 0 then amount * -1
+		                when 1 then amount
+		            end as amount, is_debit
+		        from transaction_cash_in_bank
+		        where cash_flow_category_id not in ('0c-bal', '1c-trf')
+		    ) cash_in_bank_transaction
+		    group by period
+		) c full outer join (    
+		    select period, sum(amount) as petty_cash_expense
+		    from (
+		        select trim(to_char(transaction_date,'Month')) || ' ' || extract(year from transaction_date) as period, 
+		            case is_debit
+		                when 0 then amount * -1
+		                when 1 then amount
+		            end as amount, is_debit
+		        from transaction_petty_cash
+		        where cash_flow_category_id not in ('0p-bal', '0p-trf')
+		    ) petty_cash_transaction
+		    group by period
+		) p on c.period = p.period
+	</select>
+	
+</sqlMap> 

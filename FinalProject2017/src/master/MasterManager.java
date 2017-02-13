@@ -106,4 +106,15 @@ public class MasterManager {
 		}
 		return result;
 	}
+	
+	public List getAllFinanceSummary(){
+		List result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("financeSummary.getAll", null);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
