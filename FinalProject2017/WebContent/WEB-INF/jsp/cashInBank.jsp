@@ -7,14 +7,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cash In Bank</title>
+<title>Cash in Bank</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Cash In Bank</h1>
+				<h1 class="page-header">Cash in Bank</h1>
 			</div>
 		</div>
 		<div class="row" style="margin-top: 1%;">
