@@ -8,19 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Petty Cash</title>
-<!-- <script type="text/javascript" src="asset/jquery/jquery.js"></script>
-<script type="text/javascript" src="asset/datetimepicker/js/moment.js"></script>
-<script type="text/javascript" src="asset/datetimepicker/js/transition.js"></script>
-<script type="text/javascript" src="asset/datetimepicker/js/collapse.js"></script>
-<script type="text/javascript" src="asset/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="asset/datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<link href="asset/datetimepicker/css/bootstrap-datetimepicker.css" type="text/css" rel="stylesheet" media="all"> -->
-<script type="text/javascript">
-    $(function (){
-        $('#datetimepicker1').datetimepicker();
-        $('#datetimepicker2').datetimepicker();
-    });
-</script>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
