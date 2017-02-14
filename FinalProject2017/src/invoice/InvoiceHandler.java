@@ -12,8 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import client.ClientForm;
 import client.ClientManager;
+import client.ClientBean;
 
 public class InvoiceHandler extends Action{
 	@Override
@@ -23,9 +23,17 @@ public class InvoiceHandler extends Action{
 		InvoiceForm invoiceForm = (InvoiceForm) form;
 		InvoiceManager invoiceManager = new InvoiceManager();
 		ClientManager clientManager = new ClientManager();
-		
-		List clientList=clientManager.getAll();
-		invoiceForm.setClientList(clientList);
-		return mapping.findForward("invoice");
+		invoiceForm.setClientList(clientManager.getAll());
+		if ("createInvoice".equals(invoiceForm.getTask())){
+			return mapping.findForward("createInvoice");
+		}else if ("createInvoicePS".equals(invoiceForm.getTask())) {
+			return mapping.findForward("createInvoicePS");
+		}else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
+			return mapping.findForward("createInvoiceHH");
+		}else if ("createInvoiceTR".equals(invoiceForm.getTask())) {
+			return mapping.findForward("createInvoiceTR");
+		}else {
+			return mapping.findForward("invoice");
+		}
 	}
 }
