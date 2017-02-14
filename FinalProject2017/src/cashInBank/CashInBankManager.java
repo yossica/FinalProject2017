@@ -50,8 +50,8 @@ public class CashInBankManager {
 		return result;
 	}
 	
-	public double getCurrentBalance(){
-		double result = 0;
+	public Double getCurrentBalance(){
+		Double result = 0d;
 		
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		
@@ -61,6 +61,9 @@ public class CashInBankManager {
 			e.printStackTrace();
 		} 
 		
-		return result;
+		if(result == null)
+			return 0d;
+		else
+			return result;
 	}
 }
