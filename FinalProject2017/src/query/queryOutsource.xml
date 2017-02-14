@@ -11,8 +11,11 @@
 	
 	<update id="update" parameterClass="outsource.OutsourceBean">
 		update transaction_outsource
-		set fee = #fee#,
-			is_gross = #isGross#
+		set end_date = #endDate#,
+			fee = #fee#,
+			is_gross = #isGross#,
+			changed_by = #changedBy#,
+			changed_date = sysdate
 		where  transaction_outsource_id = #transactionOutsourceId#
 	</update>
 	
@@ -31,6 +34,48 @@
 		join master_client c on (o.client_id=c.client_id)
 		join master_employee e on (o.employee_id=e.employee_id)
 		where transaction_outsource_id = #transactionOutsourceId#
+	</select>
+	
+	<select id="getAllWithFilter" resultClass="outsource.OutsourceBean"
+									parameterClass="java.util.Map">
+		select 
+			transaction_outsource_id as transactionOutsourceId,
+			o.client_id as clientId,
+			c.name as clientName,
+			o.employee_id as employeeId,
+			e.name as employeeName,
+			to_char(start_date, 'MM/dd/yyyy') as startDate,
+			to_char(end_date, 'MM/dd/yyyy') as endDate,
+			is_gross as isGross,
+			fee as fee
+		from transaction_outsource o,
+			 master_client c,
+			 master_employee e
+		where o.client_id=c.client_id
+			and o.employee_id=e.employee_id
+			<dynamic prepend="AND">
+				<isNotNull property="client">
+					<isNotEmpty property="client">
+						o.client_id = #client#
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>
+			<dynamic prepend="AND">
+				<isNotNull property="month">
+					<isNotEmpty property="month">
+						to_char(start_date,'mm') &lt;= #month#
+			            and to_char(end_date,'mm')&gt;=#month#
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>
+			<dynamic prepend="AND">
+				<isNotNull property="year">
+					<isNotEmpty property="year">
+			            to_char(start_date,'yyyy')&lt;=#year#
+			            and to_char(end_date,'yyyy')&gt;=#year#
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>
 	</select>
 	
 </sqlMap> 
