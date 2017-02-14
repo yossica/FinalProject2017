@@ -10,13 +10,13 @@ public class EmployeeForm extends ActionForm{
 	private int employeeId;
 	private String name;
 	private String email;
+	private int isEnabled;
 	
 	private List employeeList;
 
 	public String getTask() {
 		return task;
 	}
-
 	public void setTask(String task) {
 		this.task = task;
 	}
@@ -24,33 +24,33 @@ public class EmployeeForm extends ActionForm{
 	public int getEmployeeId() {
 		return employeeId;
 	}
-
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	public int getIsEnabled() {
+		return isEnabled;
+	}
+	public void setIsEnabled(int isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	
 	public List getEmployeeList() {
 		return employeeList;
 	}
-
+	
 	public void setEmployeeList(List employeeList) {
 		this.employeeList = employeeList;
 	}
-	
 }
