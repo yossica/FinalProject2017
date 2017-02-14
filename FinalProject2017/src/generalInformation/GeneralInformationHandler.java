@@ -14,13 +14,16 @@ public class GeneralInformationHandler  extends Action{
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		GeneralInformationForm generalInformationForm = (GeneralInformationForm) form;
+		GeneralInformationManager generalInformationManager = new GeneralInformationManager();
 		if("editGeneralInformation".equals(generalInformationForm.getTask()))
 		{
 			return mapping.findForward("editGeneralInformation");
 		}
 		else
 		{
+		generalInformationForm.setListGeneralInformation(generalInformationManager.getAll());
 		return mapping.findForward("generalInformation");
+		//sampe sini tinggal di jspnya aja 
 		}
 	}
 }

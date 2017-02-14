@@ -31,14 +31,20 @@
 		                     <tr>
 			            		<th>Key</th>
 			            		<th>Name</th>
+			            		<th>Data Type</th>
+			            		<th>Length</th>
 			            		<th>Action</th>
 			            	</tr>
                             <tbody>
+                            	 <logic:iterate id="generalInformation" name="generalInformationForm" property="listGeneralInformation">
                                 	<tr>
-				            			<td></td>
-				            			<td></td>
+				            			<td><bean:write name="generalInformation" property="key"/></td>
+				            			<td><bean:write name="generalInformation" property="value"/></td>
+				            			<td><bean:write name="generalInformation" property="dataType"/></td>
+				            			<td><bean:write name="generalInformation" property="length"/></td>
 				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editGeneralInformation')"></td>
 				            		</tr>
+				            	</logic:iterate>
                             </tbody>
                         </table>
                     </div>

@@ -51,4 +51,6 @@ public class GeneralInformationManager {
 		}
 		return result;
 	}
+	
+	
 }

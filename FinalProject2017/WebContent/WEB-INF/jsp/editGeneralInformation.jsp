@@ -34,9 +34,8 @@
 				            	<div class="col-md-1">
 				            	:
 				            	</div>
-				            	<div class="col-md-8">
-				            		di key read only
-				            		<%-- <html:text name="userForm" property="userName" readonly="true"/> --%>
+				            	<div class="col-md-8" style="margin-bottom:10px;">
+				            		<html:text name="generalInformationForm" property="key" readonly="true"/>
 				            	</div>
 				            </div>
                         
@@ -54,6 +53,31 @@
 			            	</div>
                         </div>
                       
+                      	<div class="row">
+			            	<div class="col-md-2">
+			            	Data Type
+			            	</div>
+			            	<div class="col-md-1">
+			            	:
+			            	</div>
+			            	<div class="col-md-8" style="margin-bottom:10px;">
+			            		data type
+					            <%-- <html:password name="userForm" property="confirmPassword"/> --%>
+			            	</div>
+                        </div>
+                        
+                        <div class="row">
+			            	<div class="col-md-2">
+			            	Length
+			            	</div>
+			            	<div class="col-md-1">
+			            	:
+			            	</div>
+			            	<div class="col-md-8" style="margin-bottom:10px;">
+			            		length
+					            <%-- <html:password name="userForm" property="confirmPassword"/> --%>
+			            	</div>
+                        </div>
            
                          <div class="panel-body" style="padding-left:0;">
 				            <div class="pull-left">
