@@ -32,18 +32,12 @@ public class CashInBankManager {
 		}
 	}
 	
-	public List getAllWithFilter(Filter input){
-		List result = new ArrayList();
+	public List getAllWithFilter(Map input){
+		List result = null;
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		Map paramMap = new HashMap();
-		try {		
-			paramMap.put("startDate", input.getStartDate());
-			paramMap.put("endDate", input.getEndDate());
-			if(input.getBean() instanceof PettyCashBean){
-				PettyCashBean bean = (PettyCashBean) input.getBean();
-				paramMap.put("category", bean.getCashFlowCategoryId());
-			}
-			result = ibatis.queryForList("cashInBank.getAllWithFilter", paramMap);			
+	
+		try {					
+			result = ibatis.queryForList("cashInBank.getAllWithFilter", input);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

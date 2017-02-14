@@ -30,6 +30,7 @@ Notice the use of the properties from the above resource -->
 </transactionManager>
 <!-- Identify all SQL Map XML files to be loaded by this SQL map. Notice the paths
 are relative to the classpath. For now, we only have one� -->
+<sqlMap resource="query/queryCashFlowCategory.xml" />
 <sqlMap resource="query/queryCashInBank.xml" />
 <sqlMap resource="query/queryClient.xml" />
 <sqlMap resource="query/queryEmployee.xml" />
