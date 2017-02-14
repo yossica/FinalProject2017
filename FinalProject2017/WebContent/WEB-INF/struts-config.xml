@@ -48,6 +48,9 @@
 		<action path="/invoice" name="invoiceForm" type="invoice.InvoiceHandler" scope="request">
 			<forward name="invoice" path="/WEB-INF/jsp/invoice.jsp"></forward>
 			<forward name="createInvoice" path="/WEB-INF/jsp/createInvoice.jsp"></forward>
+			<forward name="createInvoicePS" path="/WEB-INF/jsp/createInvoicePS.jsp"></forward>
+			<forward name="createInvoiceHH" path="/WEB-INF/jsp/createInvoiceHH.jsp"></forward>
+			<forward name="createInvoiceTR" path="/WEB-INF/jsp/createInvoiceTR.jsp"></forward>
 		</action>
 		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
 			<forward name="outsource" path="/WEB-INF/jsp/outsource.jsp"></forward>
