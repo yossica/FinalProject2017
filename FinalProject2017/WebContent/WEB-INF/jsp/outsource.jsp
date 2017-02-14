@@ -1,153 +1,148 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
+<%@ page import="java.util.Calendar"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script>
-	function flyToPage(task)
-	{
+	function flyToPage(task) {
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
+	}
+	function flyToUpdate(id) {
+		document.forms[1].transactionOutsourceId.value = id;
+		flyToPage('update');
+	}
+	function flyToUpdate(id) {
+		document.forms[1].transactionOutsourceId.value = id;
+		flyToPage('mutation');
+	}
+	function flyToUpdate(id) {
+		document.forms[1].transactionOutsourceId.value = id;
+		flyToPage('end');
 	}
 </script>
 <title>Finance Solution</title>
 </head>
 <body>
-	<jsp:include page="dashboard.jsp"/>
+	<jsp:include page="dashboard.jsp" />
 	<html:form action="/outsource" method="post">
-	<html:hidden name="outsourceForm" property="task"/>
-	<div id="page-wrapper">
-	    <div class="row">
-	    	<bean:write name="outsourceForm" property="task"/>
-		<span>
-			<logic:notEmpty name="outsourceForm" property="messageList">
-				<logic:iterate id="message" name="outsourceForm" property="messageList">
-					<bean:write name="message" /> 
-				</logic:iterate>
-			</logic:notEmpty>
-		</span>
-	        <div class="col-lg-12">
-	            <h1 class="page-header">Outsource List</h1>
-	            <div class="panel-body" style="padding-right:0;">
-		            <div class="pull-right">
-			            <button type="button" class="btn btn-primary">Create</button>
-		            </div>
-	            </div>
-	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
-	            	<div class="row" style="margin-top:10px;">
-		            	<div class="col-md-10" style="padding-right:1%">
-			            	<div class="col-md-1">
-			            	Client
-			            	</div>
-			            	<div class="col-md-11">
-					            <select class="form-control-client">
-		                            <option>1</option>
-		                            <option>2</option>
-		                            <option>3</option>
-		                            <option>4</option>
-		                            <option>5</option>
-		                        </select>
-			            	</div>
-			            </div>
-                       </div>
-                       <div class="col-md-10" style="margin-top:10px;">
-	            	<div class="row">
-		            	<div class="col-md-1">
-		            		From 
-		            	</div>
-		            	<div class="col-md-3">
-			            	<select class="form-control">
-	                            <option>Select</option>
-	                            <option>January</option>
-	                            <option>February</option>
-	                            <option>March</option>
-	                            <option>April</option>
-	                            <option>June</option>
-	                            <option>July</option>
-	                            <option>August</option>
-	                            <option>September</option>
-	                            <option>October</option>
-	                            <option>November</option>
-	                            <option>December</option>
-	                        </select>
-	                     </div>
-	                     <div class="col-md-2">
-	                        <select class="form-control">
-	                            <option>Select</option>
-	                            <option>2</option>
-	                            <option>3</option>
-	                            <option>4</option>
-	                            <option>5555</option>
-	                        </select>
-                        </div>
-                        <div class="col-md-1">
-                        	To
-                        </div>
-                        <div class="col-md-3">
-	                        <select class="form-control">
-	                            <option>Select</option>
-	                            <option>January</option>
-	                            <option>February</option>
-	                            <option>March</option>
-	                            <option>April</option>
-	                            <option>June</option>
-	                            <option>July</option>
-	                            <option>August</option>
-	                            <option>September</option>
-	                            <option>October</option>
-	                            <option>November</option>
-	                            <option>December</option>
-	                        </select>
-	                    </div>
-	                    <div class="col-md-2">
-	                        <select class="form-control">
-	                            <option>Select</option>
-	                            <option>2</option>
-	                            <option>3</option>
-	                            <option>4</option>
-	                            <option>5555</option>
-	                        </select>
-	                    </div>
-	              	</div>
-	              	</div>
-        			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-        				<button type="button" class="btn btn-primary">Filter</button>
-        			</div>
-        		</div>
-	        </div>
-	        <!-- /.col-lg-12 -->
-	    </div>
-	     <div class="panel-body">
-	        <div class="table-responsive">
-	        	<table class="table table-hover">
-	            	<tr>
-				   		<th>Client</th>
-				   		<th>Period</th>
-				   		<th>Service</th>
-				   		<th>Invoice Date</th>
-				   		<th>Status</th>
-				   		<th>Action</th>
-				   	</tr>
-	                <tbody>
-	                <tr>
-	                	<td>Client A</td>
-	                	<td>Jan 2016</td>
-	                	<td>Professional Service</td>
-	                	<td>02/02/16</td>
-	                	<td>Created</td>
-	                	<td><input type="button" value="View" class="btn btn-primary">
-	                		<input type="button" value="Change Status" class="btn btn-primary"></td>
-	                </tr>
-	                </tbody>
-	            </table>
-	        </div>
-        <!-- /.table-responsive -->
-    	</div>
-    </div>
+		<html:hidden name="outsourceForm" property="task" />
+		<html:hidden name="outsourceForm" property="transactionOutsourceId" />
+		<div id="page-wrapper">
+			<div class="row">
+				<bean:write name="outsourceForm" property="task" />
+				<span> <logic:notEmpty name="outsourceForm"
+						property="messageList">
+						<logic:iterate id="message" name="outsourceForm"
+							property="messageList">
+							<bean:write name="message" />
+						</logic:iterate>
+					</logic:notEmpty>
+				</span>
+				<div class="col-lg-12">
+					<h1 class="page-header">Outsource List</h1>
+					<div class="panel-body" style="padding-right: 0;">
+						<div class="pull-right">
+							<button type="button" class="btn btn-primary">Create</button>
+						</div>
+					</div>
+					<div class="col-lg-12"
+						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF;">
+						<div class="row" style="margin-top: 10px;">
+							<div class="col-md-10" style="padding-right: 1%">
+								<div class="col-md-1">Client</div>
+								<div class="col-md-11">
+									<html:select name="outsourceForm" property="filterClient"
+										styleClass="form-control-client" size="1">
+										<html:option value="">Select All</html:option>
+										<html:optionsCollection name="outsourceForm"
+											property="optClientList" value="clientId" label="name" />
+									</html:select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-10" style="margin-top: 10px;">
+							<div class="row">
+								<div class="col-md-1">Period</div>
+								<div class="col-md-3">
+									<html:select name="outsourceForm" property="filterMonth"
+										styleClass="form-control" size="1">
+										<html:option value="">Select All</html:option>
+										<html:option value="01">January</html:option>
+										<html:option value="02">February</html:option>
+										<html:option value="03">March</html:option>
+										<html:option value="04">April</html:option>
+										<html:option value="05">May</html:option>
+										<html:option value="06">June</html:option>
+										<html:option value="07">July</html:option>
+										<html:option value="08">August</html:option>
+										<html:option value="09">September</html:option>
+										<html:option value="10">October</html:option>
+										<html:option value="11">November</html:option>
+										<html:option value="12">December</html:option>
+									</html:select>
+								</div>
+								<div class="col-md-2">
+									<html:select name="outsourceForm" property="filterYear"
+										styleClass="form-control-client" size="1">
+										<html:option value="">Select All</html:option>
+										<html:optionsCollection name="outsourceForm"
+											property="optYear" value="value" label="label" />
+									</html:select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12"
+							style="margin-top: 10px; margin-bottom: 10px;">
+							<button type="button" class="btn btn-primary"
+								onclick="javascript:flyToPage('filter')">Filter</button>
+						</div>
+					</div>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tr>
+							<th>Client</th>
+							<th>Employee</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Fee</th>
+							<th>Action</th>
+						</tr>
+						<tbody>
+							<logic:notEmpty property="outsourceList" name="outsourceForm">
+								<logic:iterate id="outsource" property="outsourceList"
+									name="outsourceForm">
+									<tr>
+										<td><bean:write property="clientName" name="outsource" /></td>
+										<td><bean:write property="employeeName" name="outsource" /></td>
+										<td><bean:write property="startDate" name="outsource" /></td>
+										<td><bean:write property="endDate" name="outsource" /></td>
+										<td><bean:write property="fee" name="outsource"
+												format="#" /></td>
+										<td><button type="button" class="btn btn-primary"
+												onclick="javascript:flyToUpdate('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">Edit</button>
+											<button type="button" class="btn btn-primary"
+												onclick="javascript:flyToUpdate('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">Mutation</button>
+											<button type="button" class="btn btn-primary"
+												onclick="javascript:flyToUpdate('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">End</button></td>
+									</tr>
+								</logic:iterate>
+							</logic:notEmpty>
+						</tbody>
+					</table>
+				</div>
+				<!-- /.table-responsive -->
+			</div>
+		</div>
 	</html:form>
 </body>
 </html>

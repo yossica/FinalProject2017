@@ -38,6 +38,7 @@ are relative to the classpath. For now, we only have one� -->
 <sqlMap resource="query/queryGeneralInformation.xml" />
 <sqlMap resource="query/queryHoliday.xml" />
 <sqlMap resource="query/queryInvoice.xml" />
+<sqlMap resource="query/queryInvoiceType.xml" />
 <sqlMap resource="query/queryOutsource.xml" />
 <sqlMap resource="query/queryPettyCash.xml" />
 <sqlMap resource="query/queryTraining.xml" />
