@@ -11,6 +11,46 @@
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
-	
+	<div id="page-wrapper">
+	    <div class="row">
+	        <div class="col-lg-12">
+	            <h1 class="page-header">Expense Summary</h1>
+	           
+	            <div class="col-lg-10">
+	            	<div class="col-md-6">Current Date: <%= new java.util.Date() %></div>
+	            </div>
+	            <div class="col-lg-10">
+	            	<div class="col-md-6">Cash in Bank Balance: <bean:write name="indexForm" property="cashInBankBalance" format="#"/></div>
+	            	<div class="col-md-6" style="text-align:right">Petty Cash Balance: <bean:write name="indexForm" property="pettyCashBalance" format="#"/></div>
+	            </div>
+	            <div class="col-lg-10">
+		            <div class="panel-body">
+						<div class="table-responsive" style="height:200px;overflow:auto;">
+						    <table class="table table-hover">
+						        <thead>
+						            <tr>
+						                <th>Period</th>
+						                <th>Cash In Bank Expense</th>
+						                <th>Petty Cash Expense</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						        	<logic:notEmpty property="financeSummaryList" name="indexForm">
+						        		<logic:iterate id="financeSummary" property="financeSummaryList" name="indexForm">
+						        			<tr>
+								                <td><bean:write name="financeSummary" property="period"/></td>
+								                <td><bean:write name="financeSummary" property="cashInBankExpense" format="#"/></td>
+								                <td><bean:write name="financeSummary" property="pettyCashExpense" format="#"/></td>
+								            </tr>  
+						        		</logic:iterate>
+						        	</logic:notEmpty>						                   
+						         </tbody>
+	                		</table>
+	                	</div>
+	        		</div>
+	            </div>
+	        </div>
+	    </div>
+    </div>
 </body>
 </html>
