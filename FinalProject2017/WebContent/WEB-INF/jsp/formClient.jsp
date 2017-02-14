@@ -7,11 +7,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Finance Solution</title>
+<script>
+	function flyToPage(task)
+	{
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
+	}
+</script>
+<title>Client</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/client" method="post">
+	<html:hidden property="task" name="clientForm"/>
 	<div id="page-wrapper">
     	<div class="row">
 	        <div class="col-lg-12">
@@ -19,29 +27,32 @@
 	            <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-hover">
-		                     <tr>
-			            		<td>Client Name</td>
-			            		<td><html:text property="name"></html:text></td>
-			       <!--      		<th>Address</th>
-			            		<th>City</th>
-			            		<th>Phone</th>
-			            		<th>Fax</th>
-			            		<th>Postal Code</th>
-			            		<th>Action</th> -->
-			            	</tr>
-                            <tbody>
-                                <logic:iterate id="client" name="clientForm" property="listClient">
-				            		<tr>
-				            			<td><bean:write name="client" property="name"/></td>
-				            			<td><bean:write name="client" property="address"/></td>
-				            			<td><bean:write name="client" property="city"/></td>
-				            			<td><bean:write name="client" property="phoneNumber"/></td>
-				            			<td><bean:write name="client" property="faxNumber"/></td>
-				            			<td><bean:write name="client" property="postalCode"/></td>
-				            			<td><input type="button" value="Edit" class="btn btn-primary"></td>
-				            		</tr>
-				            	</logic:iterate>
-                            </tbody>
+                        	<tbody>
+									<tr>
+										<td>Client Name</td>
+										<td><html:text name="clientForm" property="name"/></td>
+									</tr>
+									<tr>
+										<td>Address</td>
+										<td><html:text name="clientForm" property="address"/></td>
+									</tr>
+									<tr>
+										<td>City</td>
+										<td><html:text name="clientForm" property="city"/></td>
+									</tr>
+									<tr>
+										<td>Phone</td>
+										<td><html:text name="clientForm" property="phoneNumber"/></td>
+									</tr>
+									<tr>
+										<td>Fax</td>
+										<td><html:text name="clientForm" property="faxNumber"/></td>
+									</tr>
+									<tr>
+										<td>Postal Code</td>
+										<td><html:text name="clientForm" property="postalCode"/></td>
+									</tr>
+								</tbody>
                         </table>
                     </div>
                     <!-- /.table-responsive -->
@@ -49,7 +60,7 @@
 	            <table border="1">
 	            	
 	            </table>
-	            <button type="button" class="btn btn-primary pull-right">Create</button>
+	            <button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('insert')">Save</button>
 	        </div>
 	    </div>
     </div>

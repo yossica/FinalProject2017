@@ -19,6 +19,7 @@
 <body>
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/client" method="post">
+	<html:hidden property="task" name="clientForm"/>
 	<div id="page-wrapper">
     	<div class="row">
 	        <div class="col-lg-12">
@@ -55,7 +56,7 @@
 	            <table border="1">
 	            	
 	            </table>
-	            <button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('create')">Create</button>
+	            <button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('formClient')">Add New Client</button>
 	        </div>
 	    </div>
     </div>

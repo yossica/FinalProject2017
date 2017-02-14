@@ -22,11 +22,8 @@
 			<forward name="employee" path="/employee.do"></forward>
 			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>
 			<forward name="cashInBank" path="/WEB-INF/jsp/cashInBank.jsp"></forward>
-<<<<<<< HEAD
 			<forward name="client" path="/client.do"></forward>
-=======
 			<forward name="generalInformation" path="/generalInformation.do"></forward>
->>>>>>> refs/remotes/origin/master
 			<forward name="holiday" path="/holiday.do"></forward>
 			<forward name="changePassword" path="/user.do?task=changePassword"></forward>
 		</action>
@@ -35,6 +32,7 @@
 		</action>
 		<action path="/client" name="clientForm" type="client.ClientHandler" scope="request">
 			<forward name="client" path="/WEB-INF/jsp/client.jsp"></forward>
+			<forward name="formClient" path="/WEB-INF/jsp/formClient.jsp"></forward>
 		</action>
 		<action path="/employee" name="employeeForm" type="employee.EmployeeHandler" scope="request">
 			<forward name="employee" path="/WEB-INF/jsp/employee.jsp"></forward>
