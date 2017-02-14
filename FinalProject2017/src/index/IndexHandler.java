@@ -3,10 +3,15 @@ package index;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import master.MasterManager;
+
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import cashInBank.CashInBankManager;
+import pettyCash.PettyCashManager;
 
 public class IndexHandler extends Action{
 	@Override
@@ -29,6 +34,12 @@ public class IndexHandler extends Action{
 		}
 		else if("financeSummary".equals(indexForm.getTaskIndex()))
 		{
+			MasterManager masterManager = new MasterManager();
+			PettyCashManager pettyCashManager = new PettyCashManager();
+			CashInBankManager cashInBankManager = new CashInBankManager();
+			indexForm.setFinanceSummaryList(masterManager.getAllFinanceSummary());
+			indexForm.setCashInBankBalance(cashInBankManager.getCurrentBalance());
+			indexForm.setPettyCashBalance(pettyCashManager.getCurrentBalance());
 			return mapping.findForward("financeSummary");
 		}
 		else if("client".equals(indexForm.getTaskIndex()))
@@ -60,7 +71,6 @@ public class IndexHandler extends Action{
 			return mapping.findForward("outsource");
 		}
 		else if("logout".equals(indexForm.getTaskIndex()))
-
 		{
 			request.getSession().removeAttribute("username");
 			return mapping.findForward("success");
