@@ -142,6 +142,7 @@
 	        <div class="table-responsive">
 	        	<table class="table table-hover">
 	            	<tr>
+	            		<th>Invoice No.</th>
 				   		<th>Client</th>
 				   		<th>Period</th>
 				   		<th>Service</th>
@@ -151,6 +152,7 @@
 				   	</tr>
 	                <tbody>
 	                <tr>
+	                	<td>Inv No</td>
 	                	<td>Client A</td>
 	                	<td>Jan 2016</td>
 	                	<td>Professional Service</td>
