@@ -40,74 +40,71 @@
 			</logic:notEmpty>
 		</span>
 		<div id="page-wrapper">
-		    <div class="row">
-		        <div class="col-lg-12">
-		            <h1 class="page-header">Add Additional Training</h1>
-		            <div class="col-lg-10">
-			            <div class="col-lg-9" style="border:solid 2px gray;margin-top:15px;">
-			            	<div class="row">
-				            	<div class="col-md-2">
-				            	Client
-				            	</div>
-				            	<div class="col-md-1">
-				            	:
-				            	</div>
-				            	<div class="col-md-8">
-						            <html:select property="clientId" name="trainingForm" 
-						            	styleClass="form-control" onchange="javascript:flyToPage('loadTrainingHeader')">
-										<html:optionsCollection name="trainingForm" property="clientList" label="name" value="clientId"/>
-									</html:select>
-				            	</div>
-	                        </div>
-	                        <br/>
-	                        <div class="row">
-				            	<div class="col-md-2">
-				            	Training
-				            	</div>
-				            	<div class="col-md-1">
-				            	:
-				            	</div>
-				            	<div class="col-md-8">
-				            		<html:select property="transactionTrainingHeaderId" name="trainingForm" 
-				            			styleClass="form-control" onchange="javascript:flyToPage('loadTrainingDetail')">
-				            			<logic:notEmpty name="trainingForm" property="trainingHeaderList">	
-											<html:optionsCollection name="trainingForm" property="trainingHeaderList" label="description" value="transactionTrainingHeaderId"/>
-										</logic:notEmpty>
-									</html:select>
-				            	</div>
-	                        </div>
-	                        <br/>
-	                        <div class="row">
-				            	<div class="col-md-2">
-				            	Fee
-				            	</div>
-				            	<div class="col-md-1">
-				            	:
-				            	</div>
-				            	<div class="col-md-8">
-						            <html:text property="fee" name="trainingForm" styleClass="form-control"/>
-				            	</div>
-	                        </div>
-	                        <br/>
-	                        <div class="row">
-				            	<div class="col-md-2">
-				            	Notes
-				            	</div>
-				            	<div class="col-md-1">
-				            	:
-				            	</div>
-				            	<div class="col-md-8">
-						            <html:textarea property="description" name="trainingForm" styleClass="form-control" style="height:100px">
-						            </html:textarea>
-				            	</div>
-	                        </div>
-			            </div>
-		            </div>	            
-		            <div class="col-lg-11">
-			            <button type="button" class="btn btn-primary" onclick="javascript:insert()">Add</button>
-		            </div>
-		            <div class="col-lg-10">
-						<div class="table-responsive" style="overflow: auto;">
+			<div class="row">
+	            <div class="col-lg-12">
+	                <h1 class="page-header">Add Additional Training</h1>
+	            </div>
+	        </div>
+	        <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
+           		<div class="row" style="margin-top:10px;">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-1">
+		            		Client
+		            	</div>
+		            	<div class="col-md-8">
+				            <html:select property="clientId" name="trainingForm" 
+				            	styleClass="form-control" onchange="javascript:flyToPage('loadTrainingHeader')">
+								<html:optionsCollection name="trainingForm" property="clientList" label="name" value="clientId"/>
+							</html:select>
+		            	</div>
+            		</div>
+            	</div>
+            	<div class="row" style="margin-top:10px;">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-1">
+            				Training
+            			</div>
+            			<div class="col-md-8">
+		            		<html:select property="transactionTrainingHeaderId" name="trainingForm" 
+		            			styleClass="form-control" onchange="javascript:flyToPage('loadTrainingDetail')">
+		            			<logic:notEmpty name="trainingForm" property="trainingHeaderList">	
+									<html:optionsCollection name="trainingForm" property="trainingHeaderList" label="description" value="transactionTrainingHeaderId"/>
+								</logic:notEmpty>
+							</html:select>
+				        </div>
+            		</div>
+            	</div>
+            	<div class="row" style="margin-top:10px;">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-1">
+            				Fee
+            			</div>
+            			<div class="col-md-8">
+		            		<html:text property="fee" name="trainingForm" styleClass="form-control"/>
+				        </div>
+            		</div>
+            	</div>
+            	<div class="row" style="margin-top:10px;margin-bottom:10px;">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-1">
+            				Notes
+            			</div>
+            			<div class="col-md-8">
+		            		 <html:textarea property="description" name="trainingForm" styleClass="form-control" style="height:100px">
+						     </html:textarea>
+				        </div>
+            		</div>
+            	</div>
+            </div>
+            <div class="row">
+		    	<div class="col-lg-12">
+			    	<div class="panel-body" style="padding-bottom:0;">
+			    		<div class="col-md-12">
+			        		<button type="button" class="btn btn-primary" onclick="javascript:insert()">Add</button>
+			        	</div>
+			        </div>
+		    		<div class="panel-body">
+		    			<div class="table-responsive" style="overflow: auto;">
 							<table class="table table-hover">
 								<thead>
 									<tr>
@@ -126,7 +123,6 @@
 											</tr>
 								        </logic:iterate>
 								    </logic:notEmpty>
-									
 								</tbody>
 							</table>
 						</div>

@@ -51,8 +51,8 @@ public class PettyCashManager {
 		
 		return result;
 	}
-	public double getCurrentBalance(){
-		double result = 0;
+	public Double getCurrentBalance(){
+		Double result = 0d;
 		
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		
@@ -62,6 +62,9 @@ public class PettyCashManager {
 			e.printStackTrace();
 		} 
 		
-		return result;
+		if(result == null)
+			return 0d;
+		else
+			return result;
 	}
 }
