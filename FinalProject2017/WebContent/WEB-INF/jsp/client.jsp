@@ -31,7 +31,7 @@
 					<h1 class="page-header">Client List</h1>
 					<div class="panel-body">
 						<div class="table-responsive">
-							<button type="button" class="btn btn-primary pull-left"
+							<button type="button" class="btn btn-primary pull-right"
 								onclick="javascript:flyToPage('create')">Create</button>
 							<table class="table table-hover">
 								<tr>
