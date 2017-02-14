@@ -11,8 +11,11 @@
 	
 	<update id="update" parameterClass="outsource.OutsourceBean">
 		update transaction_outsource
-		set fee = #fee#,
-			is_gross = #isGross#
+		set end_date = #endDate#,
+			fee = #fee#,
+			is_gross = #isGross#,
+			changed_by = #changedBy#,
+			changed_date = sysdate
 		where  transaction_outsource_id = #transactionOutsourceId#
 	</update>
 	
@@ -33,6 +36,46 @@
 		where transaction_outsource_id = #transactionOutsourceId#
 	</select>
 	
+	<select id="getMinStartDate" resultClass="outsource.OutsourceBean">
+		select 
+            clientId,
+            clientName, 
+            extract(year from add_months(trunc(startDate,'MM'),-1) ) || 
+            trim(to_char(extract(month from add_months(trunc(startDate,'MM'),-1) ),'00')) as startDate
+        from (
+            select
+                t.client_id as clientId,
+                c.name as clientName,
+                min(t.start_date) as startDate
+            from
+                transaction_outsource t,
+                master_client c
+            where 
+                c.client_id = t.client_id
+            group by
+                t.client_id, c.name
+         )
+	</select>
+	
+	<select id="checkContract" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		select
+		    count(1)
+		from
+		    transaction_outsource
+		where
+		    start_date &lt;= last_day(trunc(to_date(#exampleDate#,'MM/dd/yyyy'),'mm'))
+   			and end_date &gt;= trunc(to_date(#exampleDate#,'MM/dd/yyyy'),'mm')
+		    and client_id = #clientId#
+	</select>
+	
+	<select id="getPeriod" resultClass="java.lang.String">
+		select 
+			extract(year from add_months(trunc(sysdate,'mm'),-1) ) ||
+			trim(to_char(extract(month from add_months(trunc(sysdate,'mm'),-1) ),'00')) 
+		from 
+			dual
+	</select>
+
 	<select id="getAllWithFilter" resultClass="outsource.OutsourceBean"
 									parameterClass="java.util.Map">
 		select 

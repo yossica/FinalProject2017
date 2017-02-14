@@ -2,4 +2,42 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="invoice">
+	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">
+		select
+            c.name as clientName,
+            i.name as invoiceTypeName,
+            t.invoice_number as invoiceNumber,
+            to_char(t.invoice_date,'MM/dd/yyyy') as invoiceDate
+        from
+            transaction_invoice_header t,master_client c,master_invoice_type i
+        where
+            t.client_id = c.client_id and
+            t.status_invoice_id=1 and
+            t.invoice_type_id = i.invoice_type_id
+	</select>
+	
+	<select id="getSentOutsourceRemainderList" resultClass="invoice.InvoiceBean">
+		select
+            c.name as clientName,
+            i.name as invoiceTypeName,
+            t.invoice_number as invoiceNumber,
+            to_char(t.invoice_date,'MM/dd/yyyy') as invoiceDate
+        from
+            transaction_invoice_header t,master_client c,master_invoice_type i
+        where
+            t.client_id = c.client_id and
+            t.status_invoice_id=2 and
+            t.invoice_type_id = i.invoice_type_id
+	</select>
+	
+	<select id="checkInvoice" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		select
+		    count(1)
+		from
+		    transaction_invoice_header
+		where
+		    period_month = #periodMonth#
+		    and period_year = #periodYear#
+		    and client_id = #clientId#
+	</select>
 </sqlMap> 
