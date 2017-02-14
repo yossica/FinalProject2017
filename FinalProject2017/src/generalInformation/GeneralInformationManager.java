@@ -31,6 +31,7 @@ public class GeneralInformationManager {
 	public GeneralInformationBean getByKey(String input){
 		GeneralInformationBean result = new GeneralInformationBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		
 		try {
 			result = (GeneralInformationBean) ibatis.queryForObject("generalInformation.getByKey", input);
 		} catch (Exception e) {

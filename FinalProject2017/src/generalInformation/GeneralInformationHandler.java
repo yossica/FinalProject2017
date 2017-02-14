@@ -15,15 +15,34 @@ public class GeneralInformationHandler  extends Action{
 			throws Exception {
 		GeneralInformationForm generalInformationForm = (GeneralInformationForm) form;
 		GeneralInformationManager generalInformationManager = new GeneralInformationManager();
-		if("editGeneralInformation".equals(generalInformationForm.getTask()))
+		if("update".equals(generalInformationForm.getTask()))
 		{
+			generalInformationForm.setTask("save"+generalInformationForm.getTask());
+			GeneralInformationBean generalInformationBean = generalInformationManager.getByKey(generalInformationForm.getKey());
+			generalInformationForm.setValue(generalInformationBean.getValue());
+			generalInformationForm.setDataType(generalInformationBean.getDataType());
+			generalInformationForm.setLength(generalInformationBean.getLength());
+			
+			generalInformationManager.getByKey(generalInformationForm.getKey());
 			return mapping.findForward("editGeneralInformation");
 		}
+		else if ("saveupdate".equals(generalInformationForm.getTask()))
+		{
+			GeneralInformationBean generalInformationBean = new GeneralInformationBean();
+			generalInformationBean.setKey(generalInformationForm.getKey());
+			generalInformationBean.setValue(generalInformationForm.getValue());
+			generalInformationBean.setDataType(generalInformationForm.getDataType());
+			generalInformationBean.setLength(generalInformationForm.getLength());
+			
+			
+			generalInformationForm.setListGeneralInformation(generalInformationManager.getAll());
+			return mapping.findForward("generalInformation");
+		}
+		
 		else
 		{
 		generalInformationForm.setListGeneralInformation(generalInformationManager.getAll());
 		return mapping.findForward("generalInformation");
-		//sampe sini tinggal di jspnya aja 
 		}
 	}
 }

@@ -13,6 +13,11 @@
 			document.forms[0].task.value = task;
 			document.forms[0].submit();
 		}
+	
+	function flyToSave()
+	{
+		document.forms[0].submit();
+	}
 </script>
 <title>General Information</title>
 </head>
@@ -48,8 +53,7 @@
 			            	:
 			            	</div>
 			            	<div class="col-md-8" style="margin-bottom:10px;">
-			            		disini value key yang bisa diupdate
-					            <%-- <html:password name="userForm" property="confirmPassword"/> --%>
+			            		<html:text name="generalInformationForm" property="value" />
 			            	</div>
                         </div>
                       
@@ -61,8 +65,7 @@
 			            	:
 			            	</div>
 			            	<div class="col-md-8" style="margin-bottom:10px;">
-			            		data type
-					            <%-- <html:password name="userForm" property="confirmPassword"/> --%>
+					            <html:text name="generalInformationForm" property="dataType" readonly="true"/>
 			            	</div>
                         </div>
                         
@@ -74,15 +77,14 @@
 			            	:
 			            	</div>
 			            	<div class="col-md-8" style="margin-bottom:10px;">
-			            		length
-					            <%-- <html:password name="userForm" property="confirmPassword"/> --%>
+			            		<html:text name="generalInformationForm" property="length" readonly="true"/>
 			            	</div>
                         </div>
            
-                         <div class="panel-body" style="padding-left:0;">
+                        <div class="panel-body" style="padding-left:0;">
 				            <div class="pull-left">
-					         	<button type="button" class="btn btn-primary ">Cancel</button>
-				            	<button type="button" class="btn btn-primary ">Save</button>
+					         	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>
+				            	<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>
 			            
 				            </div>
 	            		</div>
