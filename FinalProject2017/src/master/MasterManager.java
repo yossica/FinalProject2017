@@ -65,7 +65,6 @@ public class MasterManager {
 		try {
 			result = ibatis.queryForList("invoiceType.getAll", null);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
@@ -102,6 +101,17 @@ public class MasterManager {
 			result = (StatusInvoiceBean) ibatis.queryForObject("statusInvoice.getById", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List getAllFinanceSummary(){
+		List result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("financeSummary.getAll", null);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;

@@ -14,7 +14,7 @@ public class GeneralInformationManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
-            ibatis.update("generalInformation.udpate", input);
+            ibatis.update("generalInformation.update", input);
             ibatis.commitTransaction();
 
 		} catch (SQLException e) {
@@ -31,6 +31,7 @@ public class GeneralInformationManager {
 	public GeneralInformationBean getByKey(String input){
 		GeneralInformationBean result = new GeneralInformationBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		
 		try {
 			result = (GeneralInformationBean) ibatis.queryForObject("generalInformation.getByKey", input);
 		} catch (Exception e) {
@@ -51,4 +52,6 @@ public class GeneralInformationManager {
 		}
 		return result;
 	}
+	
+	
 }

@@ -13,7 +13,6 @@
 		from master_invoice_type
 		where is_enabled = 1
 	</select>
-	
 	<select id="getById" resultClass="master.InvoiceTypeBean"
 						 parameterClass="java.lang.Integer">
 		select invoice_type_id as invoiceTypeId,
