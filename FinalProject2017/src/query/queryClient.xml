@@ -59,6 +59,26 @@
 		from master_client 
 		order by client_id
     </select>
+    
+    <select id="getAllEnabled" resultClass="client.ClientBean">
+		select 
+			client_id as clientId,
+			name as name,
+			address as address,
+			city as city,
+			phone_number as phone_number,
+			fax_number as fax_number,
+			postal_code as postalCode,
+			is_enabled as isEnabled,
+			created_by as createdBy,
+			to_char(created_date, 'MM/dd/yyyy') as createdDate,
+			changed_by as changedBy,
+			to_char(changed_date, 'MM/dd/yyyy') as changedDate
+		from master_client 
+		where is_enabled = 1
+		order by client_id
+    </select>
+    
     <select id="getMaxId" resultClass="java.lang.Integer">
 		select count(1)
 		from master_client

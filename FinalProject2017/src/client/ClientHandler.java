@@ -13,6 +13,7 @@ public class ClientHandler extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+
 		ClientForm clientForm = (ClientForm) form;
 		ClientManager clientManager = new ClientManager();
 
@@ -32,5 +33,6 @@ public class ClientHandler extends Action {
 		} else {
 			return mapping.findForward("client");
 		}
+
 	}
 }

@@ -43,6 +43,10 @@ public class IndexHandler extends Action{
 		{
 			return mapping.findForward("employee");
 		}
+		else if("additionalTraining".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("additionalTraining");
+		}
 		else if("generalInformation".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("generalInformation");
@@ -50,6 +54,10 @@ public class IndexHandler extends Action{
 		else if("holiday".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("holiday");
+		}
+		else if("outsource".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("outsource");
 		}
 		else if("logout".equals(indexForm.getTaskIndex()))
 

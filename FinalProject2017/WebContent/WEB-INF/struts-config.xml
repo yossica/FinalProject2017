@@ -25,7 +25,9 @@
 			<forward name="client" path="/client.do"></forward>
 			<forward name="generalInformation" path="/generalInformation.do"></forward>
 			<forward name="holiday" path="/holiday.do"></forward>
+			<forward name="outsource" path="/outsource.do"></forward>
 			<forward name="changePassword" path="/user.do?task=changePassword"></forward>
+			<forward name="additionalTraining" path="/training.do?task=additionalTraining"></forward>			
 		</action>
 		<action path="/cashInBank" name="cashInBankForm" type="cashInBank.CashInBankHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
@@ -36,6 +38,7 @@
 		</action>
 		<action path="/employee" name="employeeForm" type="employee.EmployeeHandler" scope="request">
 			<forward name="employee" path="/WEB-INF/jsp/employee.jsp"></forward>
+			<forward name="formEmployee" path="/WEB-INF/jsp/formEmployee.jsp"></forward>
 		</action>
 		<action path="/generalInformation" name="generalInformationForm" type="generalInformation.GeneralInformationHandler" scope="request">
 			<forward name="generalInformation" path="/WEB-INF/jsp/generalInformation.jsp"></forward>
@@ -48,13 +51,13 @@
 			<forward name="invoice" path="/WEB-INF/jsp/invoice.jsp"></forward>
 		</action>
 		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
-			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+			<forward name="outsource" path="/WEB-INF/jsp/outsource.jsp"></forward>
 		</action>
 		<action path="/pettyCash" name="pettyCashForm" type="pettyCash.PettyCashHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
 		</action>
 		<action path="/training" name="trainingForm" type="training.TrainingHandler" scope="request">
-			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+			<forward name="additionalTraining" path="/WEB-INF/jsp/additionalTraining.jsp"></forward>
 		</action>
 		<action path="/user" name="userForm" type="user.UserHandler" scope="request">
 			<forward name="login" path="/WEB-INF/jsp/login.jsp"></forward>
