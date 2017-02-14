@@ -16,6 +16,7 @@ public class GeneralInformationForm extends ActionForm{
 	private String changedDate;
 	
 	private List listGeneralInformation;
+	private List messageList;
 	
 	public String getTask() {
 		return task;
@@ -76,6 +77,12 @@ public class GeneralInformationForm extends ActionForm{
 	}
 	public void setListGeneralInformation(List listGeneralInformation) {
 		this.listGeneralInformation = listGeneralInformation;
+	}
+	public List getMessageList() {
+		return messageList;
+	}
+	public void setMessageList(List messageList) {
+		this.messageList = messageList;
 	}
 	
 }

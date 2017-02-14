@@ -16,7 +16,27 @@
 	
 	function flyToSave()
 	{
-		document.forms[1].submit();
+		//validasi belum sempurna
+		var dType = document.forms[1].dataType.value;
+		var k = document.forms[1].key.value;
+		var val = document.forms[1].value.value;
+		if(dType=="String"){
+			if(k=="name" && val.length>50){
+				alert("eror ni");
+				
+			}
+		}
+		if(dType=="Integer"){
+			if(!val.match(number)){	
+				if(k=="tax" && val.length>2){
+					alert("Too Long");
+				}
+			}
+		}
+		
+		if(confirm("Are you sure to update ?")){
+			document.forms[1].submit();
+		}
 	}
 </script>
 <title>General Information</title>

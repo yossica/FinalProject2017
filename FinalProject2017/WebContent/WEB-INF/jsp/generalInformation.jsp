@@ -47,7 +47,7 @@
 				            			<td><bean:write name="generalInformation" property="key"/></td>
 				            			<td><bean:write name="generalInformation" property="value"/></td>
 				            			<td><bean:write name="generalInformation" property="dataType"/></td>
-				            			<td><bean:write name="generalInformation" property="length"/></td>
+				            			<td><bean:write name="generalInformation" property="length" format="#"/></td>
 				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToUpdate('<bean:write name="generalInformation" property="key"/>')"></td>
 				            		</tr>
 				            	</logic:iterate>
