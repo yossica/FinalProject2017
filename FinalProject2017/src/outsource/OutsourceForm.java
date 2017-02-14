@@ -8,6 +8,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import client.ClientBean;
+import employee.EmployeeBean;
 
 public class OutsourceForm extends ActionForm{
 	private int transactionOutsourceId;
@@ -30,9 +31,19 @@ public class OutsourceForm extends ActionForm{
 	
 	private List<ClientBean> optClientList;
 	private List<LabelValueBean> optYear;
+	private List<EmployeeBean> optEmployeeList;
 	
 	private List<OutsourceBean> outsourceList;
 		
+	
+	public List<EmployeeBean> getOptEmployeeList() {
+		return optEmployeeList;
+	}
+
+	public void setOptEmployeeList(List<EmployeeBean> optEmployeeList) {
+		this.optEmployeeList = optEmployeeList;
+	}
+
 	public List<OutsourceBean> getOutsourceList() {
 		return outsourceList;
 	}
