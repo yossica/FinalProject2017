@@ -20,6 +20,7 @@
 <body>
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/invoice" method="post">
+	<html:hidden property="task" name="invoiceForm"/>
 	<div id="page-wrapper">
 	    <div class="row">
 	    	<%-- <bean:write name="invoiceForm" property="task"/>
@@ -29,7 +30,7 @@
 	            <div class="panel-body" style="padding-right:0;">
 		            <div class="pull-right">
 			            <button type="button" class="btn btn-primary">Print</button>
-			            <button type="button" class="btn btn-primary">Create</button>
+			            <button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Create</button>
 		            </div>
 	            </div>
 	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
