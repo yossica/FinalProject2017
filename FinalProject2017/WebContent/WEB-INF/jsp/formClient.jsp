@@ -22,10 +22,11 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/client" method="post">
 		<html:hidden property="task" name="clientForm" />
+		<html:hidden property="clientId" name="clientForm"/>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Create New Client Record</h1>
+					<h1 class="page-header">Create / Edit New Client Record</h1>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-hover">
