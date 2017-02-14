@@ -83,16 +83,4 @@ public class ClientManager {
 		}
 		return result;
 	}
-	
-	public List getAllEnabled (){
-		List result = new ArrayList();
-		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		try {
-			result = ibatis.queryForList("client.getAllEnabled", null);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-	}
 }
