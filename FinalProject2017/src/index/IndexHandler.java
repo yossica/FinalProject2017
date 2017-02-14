@@ -42,6 +42,10 @@ public class IndexHandler extends Action{
 			indexForm.setPettyCashBalance(pettyCashManager.getCurrentBalance());
 			return mapping.findForward("financeSummary");
 		}
+		else if("client".equals(indexForm.getTaskIndex()))
+		{
+			return mapping.findForward("client");
+		}
 		else if("changePassword".equals(indexForm.getTaskIndex()))
 		{
 			return mapping.findForward("changePassword");
