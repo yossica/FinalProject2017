@@ -3,6 +3,7 @@ package outsource;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -58,6 +59,57 @@ public class OutsourceManager {
 	
 	public List getAllWithFilter(Filter input){
 		List result = new ArrayList();
+		return result;
+	}
+	
+	public List getListedRemainderList(){
+		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("outsource.getListedRemainderList", null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List getMinStartDate() {
+		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("outsource.getMinStartDate", null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public String getPeriod() {
+		String result=null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (String) ibatis.queryForObject("outsource.getPeriod", null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public Integer checkContract(Map input){
+		Integer result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (Integer) ibatis.queryForObject("outsource.checkContract", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(result == null){
+			return 0;
+		}
 		return result;
 	}
 }
