@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.struts.action.ActionForm;
 
 public class InvoiceForm extends ActionForm{
+	
+	private InvoiceBean invoiceBean = new InvoiceBean();
+	
 	private String task;
 	private String message;
 	private String clientId;
@@ -13,7 +16,14 @@ public class InvoiceForm extends ActionForm{
 	private String monthTo;
 	private String yearTo;
 	private List clientList;
+	private List invoiceTypeList;
 	
+	public InvoiceBean getInvoiceBean() {
+		return invoiceBean;
+	}
+	public void setInvoiceBean(InvoiceBean invoiceBean) {
+		this.invoiceBean = invoiceBean;
+	}
 	public String getClientId() {
 		return clientId;
 	}
@@ -26,7 +36,12 @@ public class InvoiceForm extends ActionForm{
 	public void setClientList(List clientList) {
 		this.clientList = clientList;
 	}
-	
+	public List getInvoiceTypeList() {
+		return invoiceTypeList;
+	}
+	public void setInvoiceTypeList(List invoiceTypeList) {
+		this.invoiceTypeList = invoiceTypeList;
+	}
 	public String getTask() {
 		return task;
 	}

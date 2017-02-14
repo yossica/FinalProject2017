@@ -61,7 +61,7 @@
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-2">Invoice Date</div>
 					<div class="col-md-5">
-						<input type="date" class="form-control" style="width: 100%;">
+						<input type="date" class="form-control" style="width: 100%;" name="invoiceBean.invoiceDate">
 					</div>
 				</div>
 			</div>
@@ -69,7 +69,7 @@
 				<div class="row">
 					<div class="col-md-2">Client</div>
 					<div class="col-md-5">
-						<html:select property="clientId" name="invoiceForm" styleClass="form-control-client">
+						<html:select property="invoiceBean.clientId" name="invoiceForm" styleClass="form-control-client">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 						</html:select>
@@ -80,13 +80,10 @@
 				<div class="row">
 					<div class="col-md-2">Contract Services</div>
 					<div class="col-md-5">
-						<select class="form-control" onchange="javascript:onchangeContractServices()" id="contractServices">
+						<html:select property="invoiceBean.invoiceTypeId" name="invoiceForm" styleClass="form-control-client" styleId="contractServices" onchange="javascript:onchangeContractServices()">
 							<option selected disabled>Select</option>
-							<option value="1">Professional Service</option>
-							<option value="2">Head Hunter</option>
-							<option value="3">Training</option>
-							<option value="4">Other</option>
-						</select>
+							<html:optionsCollection name="invoiceForm" property="invoiceTypeList" label="name" value="invoiceTypeId"/>
+						</html:select>
 					</div>
 				</div>
 			</div>
@@ -148,11 +145,11 @@
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
-								<input type="radio" name="taxRadio" id="taxOption1" value="option1" checked>Include
+								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
 						    </label>
 						    &nbsp;
 						    <label>
-								<input type="radio" name="taxRadio" id="taxOption2" value="option2">Exclude
+						    	<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
 						    </label>
 						</div>
 					</div>
@@ -162,7 +159,7 @@
 				<div class="row">
 					<div class="col-md-2">Invoice Notes</div>
 					<div class="col-md-5">
-						<textarea class="form-control" rows="3"></textarea>
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
 					</div>
 				</div>
 			</div>
