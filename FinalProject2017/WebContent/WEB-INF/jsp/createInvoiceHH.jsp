@@ -22,7 +22,47 @@
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Create Invoice HeadHunter / Other</h1>
+				<h1 class="page-header">Create Invoice (Cont)</h1>
+			</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-10" style="padding-right: 1%">
+					<div class="col-md-2">Invoice Date</div>
+					<div class="col-md-5">
+						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-10" style="padding-right: 1%">
+					<div class="col-md-2">Client</div>
+					<div class="col-md-5">
+						<bean:write name="invoiceForm" property="invoiceBean.clientId" format="#"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-2">Contract Service</div>
+					<div class="col-md-5">
+						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeId" format="#"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-2">Period</div>
+					<div class="col-md-5">
+						Bulan Tahun pembuatan
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-2">Tax</div>
+					<div class="col-md-5">
+						<bean:write name="invoiceForm" property="invoiceBean.isGross" format="#"/>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

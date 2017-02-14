@@ -224,5 +224,17 @@ public class TrainingManager {
 		} 
 		return result;
 	}
+
+	public List getListedTrainingRemainderList() {
+		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("training.getListedTrainingRemainderList", null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

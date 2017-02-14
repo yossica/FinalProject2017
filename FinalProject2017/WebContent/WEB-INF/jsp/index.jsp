@@ -42,15 +42,36 @@
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
-	                                        <tr>
-	                                            <td>Client A</td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td>Client B</td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td>Client C</td>
-	                                        </tr>
+	                                    <logic:notEmpty name="indexForm" property="listedRemainderList">
+	                                        <logic:iterate id="list" name="indexForm" property="listedRemainderList">
+		                                        <tr>
+		                                        	<td>
+		                                        	<bean:write name="list" property="clientName"/> - Professional Service<br>
+		                                        	Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
+		                                        	<p align="right"><bean:write name="list" property="invoiceDate"/></p>
+		                                        	</td>
+		                                        </tr>
+	                                        </logic:iterate>
+	                                    </logic:notEmpty>
+	                                    <logic:notEmpty name="indexForm" property="listedTrainingRemainderList">
+	                                        <logic:iterate id="list" name="indexForm" property="listedTrainingRemainderList">
+		                                        <tr>
+		                                        	<td>
+		                                        	<bean:write name="list" property="clientName"/> - Training Settlement<br>
+		                                        	Description : <bean:write name="list" property="description"/>
+		                                        	</td>
+		                                        </tr>
+	                                        </logic:iterate>
+	                                    </logic:notEmpty>
+	                                    <logic:empty name="indexForm" property="listedRemainderList">
+	                                    	<logic:empty name="indexForm" property="listedTrainingRemainderList">
+		                                    	<tr>
+		                                    		<td>
+		                                    			Empty List Listed
+		                                    		</td>
+		                                    	</tr>
+	                                    	</logic:empty>
+	                                    </logic:empty>
 	                                    </tbody>
 	                                </table>
 	                            </div>
@@ -70,15 +91,24 @@
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
-	                                        <tr>
-	                                            <td>Client A</td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td>Client B</td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td>Client C</td>
-	                                        </tr>
+	                                    <logic:notEmpty name="indexForm" property="createdRemainderList">
+	                                        <logic:iterate id="list" name="indexForm" property="createdRemainderList">
+		                                        <tr>
+		                                        	<td>
+		                                        	<bean:write name="list" property="clientName"/> - <bean:write name="list" property="invoiceTypeName"/><br>
+		                                        	<bean:write name="list" property="invoiceNumber"/>
+		                                        	<p align="right"><bean:write name="list" property="invoiceDate"/></p>
+		                                        	</td>
+		                                        </tr>
+	                                        </logic:iterate>
+	                                    </logic:notEmpty>
+	                                    <logic:empty name="indexForm" property="createdRemainderList">
+	                                    	<tr>
+	                                    		<td>
+	                                    			Empty List
+	                                    		</td>
+	                                    	</tr>
+	                                    </logic:empty>
 	                                    </tbody>
 	                                </table>
 	                            </div>
@@ -91,22 +121,24 @@
                     <div class="col-lg-2" style="width:350px">
 	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
-	                            Unpaid
+	                            Sent
 	                        </div>
 	                        <!-- /.panel-heading -->
 	                        <div class="panel-body">
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
-	                                        <tr>
-	                                            <td>Client A</td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td>Client B</td>
-	                                        </tr>
-	                                        <tr>
-	                                            <td>Client C</td>
-	                                        </tr>
+		                                    <logic:notEmpty name="indexForm" property="createdRemainderList">
+		                                        <logic:iterate id="list" name="indexForm" property="sentOutsourceRemainderList">
+			                                        <tr>
+			                                        	<td>
+			                                        	<bean:write name="list" property="clientName"/> - <bean:write name="list" property="invoiceTypeName"/><br>
+			                                        	<bean:write name="list" property="invoiceNumber"/>
+			                                        	<p align="right"><bean:write name="list" property="invoiceDate"/></p>
+			                                        	</td>
+			                                        </tr>
+		                                        </logic:iterate>
+		                                    </logic:notEmpty>
 	                                    </tbody>
 	                                </table>
 	                            </div>
