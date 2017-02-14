@@ -26,6 +26,10 @@ public class InvoiceHandler extends Action{
 		
 		List clientList=clientManager.getAll();
 		invoiceForm.setClientList(clientList);
-		return mapping.findForward("invoice");
+		if ("createInvoice".equals(invoiceForm.getTask())){
+			return mapping.findForward("createInvoice");
+		}else {
+			return mapping.findForward("invoice");
+		}
 	}
 }
