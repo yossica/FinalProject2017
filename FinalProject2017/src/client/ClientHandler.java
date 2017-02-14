@@ -2,6 +2,7 @@ package client;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -16,6 +17,7 @@ public class ClientHandler extends Action {
 
 		ClientForm clientForm = (ClientForm) form;
 		ClientManager clientManager = new ClientManager();
+		HttpSession session = request.getSession();
 
 		clientForm.setListClient(clientManager.getAll());
 		if ("formClient".equals(clientForm.getTask())) {
@@ -28,7 +30,10 @@ public class ClientHandler extends Action {
 			clientBean.setPhoneNumber(clientForm.getPhoneNumber());
 			clientBean.setFaxNumber(clientForm.getFaxNumber());
 			clientBean.setPostalCode(clientForm.getPostalCode());
-		/*	clientBean.setCreatedBy();*/
+			clientBean.setIsEnabled(1);
+			clientBean.setCreatedBy((String) session.getAttribute("username"));
+			clientManager.insert(clientBean);
+			clientForm.setListClient(clientManager.getAll());
 			return mapping.findForward("client");
 		} else {
 			return mapping.findForward("client");

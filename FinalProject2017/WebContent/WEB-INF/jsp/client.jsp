@@ -13,13 +13,19 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	function flyToUpdate(task,clientId)
+	{
+		document.form[1].clientId.value = clientId;
+		flyToPage("update");
+	}
 </script>
-<title>Finance Solution</title>
+<title>Client</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/client" method="post">
 	<html:hidden property="task" name="clientForm"/>
+	<html:hidden property="clientId" name="clientForm"/>
 	<div id="page-wrapper">
     	<div class="row">
 	        <div class="col-lg-12">
@@ -45,7 +51,7 @@
 				            			<td><bean:write name="client" property="phoneNumber"/></td>
 				            			<td><bean:write name="client" property="faxNumber"/></td>
 				            			<td><bean:write name="client" property="postalCode"/></td>
-				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('edit')"></td>
+				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToUpdate(clientId)"></td>
 				            		</tr>
 				            	</logic:iterate>
                             </tbody>
