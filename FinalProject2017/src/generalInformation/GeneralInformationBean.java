@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class GeneralInformationBean implements Serializable {
 	private String key;
 	private String value;
+	private String dataType;
+	private Integer length;
 	private String createdBy;
 	private String createdDate;
 	private String changedBy;
@@ -45,6 +47,18 @@ public class GeneralInformationBean implements Serializable {
 	}
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
+	}
+	public String getDataType() {
+		return dataType;
+	}
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+	public Integer getLength() {
+		return length;
+	}
+	public void setLength(Integer length) {
+		this.length = length;
 	}
 	
 }

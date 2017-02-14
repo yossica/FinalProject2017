@@ -1,15 +1,22 @@
 package generalInformation;
 
+import java.util.List;
+
 import org.apache.struts.action.ActionForm;
 
 public class GeneralInformationForm extends ActionForm{
 	private String task;
 	private String key;
 	private String value;
+	private String dataType;
+	private Integer length;
 	private String createdBy;
 	private String createDate;
 	private String changedBy;
 	private String changedDate;
+	
+	private List listGeneralInformation;
+	private List messageList;
 	
 	public String getTask() {
 		return task;
@@ -52,6 +59,30 @@ public class GeneralInformationForm extends ActionForm{
 	}
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
+	}
+	public String getDataType() {
+		return dataType;
+	}
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+	public Integer getLength() {
+		return length;
+	}
+	public void setLength(Integer length) {
+		this.length = length;
+	}
+	public List getListGeneralInformation() {
+		return listGeneralInformation;
+	}
+	public void setListGeneralInformation(List listGeneralInformation) {
+		this.listGeneralInformation = listGeneralInformation;
+	}
+	public List getMessageList() {
+		return messageList;
+	}
+	public void setMessageList(List messageList) {
+		this.messageList = messageList;
 	}
 	
 }
