@@ -14,7 +14,7 @@ public class GeneralInformationManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
-            ibatis.update("generalInformation.udpate", input);
+            ibatis.update("generalInformation.update", input);
             ibatis.commitTransaction();
 
 		} catch (SQLException e) {

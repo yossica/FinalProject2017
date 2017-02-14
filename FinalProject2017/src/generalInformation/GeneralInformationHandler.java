@@ -2,6 +2,7 @@ package generalInformation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -15,6 +16,8 @@ public class GeneralInformationHandler  extends Action{
 			throws Exception {
 		GeneralInformationForm generalInformationForm = (GeneralInformationForm) form;
 		GeneralInformationManager generalInformationManager = new GeneralInformationManager();
+		HttpSession session = request.getSession();
+		
 		if("update".equals(generalInformationForm.getTask()))
 		{
 			generalInformationForm.setTask("save"+generalInformationForm.getTask());
@@ -31,9 +34,8 @@ public class GeneralInformationHandler  extends Action{
 			GeneralInformationBean generalInformationBean = new GeneralInformationBean();
 			generalInformationBean.setKey(generalInformationForm.getKey());
 			generalInformationBean.setValue(generalInformationForm.getValue());
-			generalInformationBean.setDataType(generalInformationForm.getDataType());
-			generalInformationBean.setLength(generalInformationForm.getLength());
-			
+			generalInformationBean.setChangedBy((String) session.getAttribute("username"));
+			generalInformationManager.update(generalInformationBean);
 			
 			generalInformationForm.setListGeneralInformation(generalInformationManager.getAll());
 			return mapping.findForward("generalInformation");

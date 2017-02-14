@@ -8,12 +8,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script>
-	function flyToPage(key)
-		{
-			document.forms[1].task.value = "update";
-			document.forms[1].key.value = key;
-			document.forms[1].submit();
-		}
+	
+	function flyToPage(task){
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
+	}
+	
+	function flyToUpdate(id){
+		document.forms[1].key.value = id;
+		flyToPage("update");
+	}
 </script>
 <title>General Information</title>
 </head>
@@ -22,7 +26,7 @@
 	<html:form action="/generalInformation" method="post">
 	<html:hidden property="task" name="generalInformationForm"/>
 	<html:hidden property="key" name="generalInformationForm"/>
-	</html:form>
+	
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
@@ -44,7 +48,7 @@
 				            			<td><bean:write name="generalInformation" property="value"/></td>
 				            			<td><bean:write name="generalInformation" property="dataType"/></td>
 				            			<td><bean:write name="generalInformation" property="length"/></td>
-				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('<bean:write name="generalInformation" property="key"/>')"></td>
+				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToUpdate('<bean:write name="generalInformation" property="key"/>')"></td>
 				            		</tr>
 				            	</logic:iterate>
                             </tbody>
@@ -58,5 +62,6 @@
 	        </div>
 	    </div>       
     </div>
+    </html:form>
 </body>
 </html>
