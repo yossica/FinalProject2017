@@ -41,6 +41,7 @@
 			            	</div>
 			            	<div class="col-md-11">
 				            	<html:select property="clientId" name="invoiceForm" styleClass="form-control-client">
+									<option selected disabled>Select</option>
 									<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 								</html:select>
 			            	</div>
