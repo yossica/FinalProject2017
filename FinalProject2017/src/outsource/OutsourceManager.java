@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
-import utils.Filter;
 import utils.IbatisHelper;
 
 public class OutsourceManager {
@@ -57,8 +56,15 @@ public class OutsourceManager {
 		return result;
 	}
 	
-	public List getAllWithFilter(Filter input){
+	public List getAllWithFilter(Map input){
 		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (List) ibatis.queryForList("outsource.getAllWithFilter", input);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		return result;
 	}
 	

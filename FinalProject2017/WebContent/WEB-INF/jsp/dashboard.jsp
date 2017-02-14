@@ -95,7 +95,7 @@
                                     <a href="#" onclick="javascript:flyToPageIndex('outsource')">Profesional Services</a>
                                 </li>
                                 <li>
-                                    <a href="#">Clients</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('client')">Clients</a>
                                 </li>
                                 <li>
                                     <a href="#" onclick="javascript:flyToPageIndex('employee')">Employees</a>
