@@ -92,7 +92,7 @@
                             <a href="#"><i class="fa fa-wrench fa-fw"></i>Manager<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Profesional Services</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('outsource')">Profesional Services</a>
                                 </li>
                                 <li>
                                     <a href="#">Clients</a>
@@ -101,7 +101,7 @@
                                     <a href="#" onclick="javascript:flyToPageIndex('employee')">Employees</a>
                                 </li>
                                 <li>
-                                    <a href="#">Additional Training</a>
+                                    <a href="#" onclick="javascript:flyToPageIndex('additionalTraining')">Additional Training</a>
                                 </li>
                                 <li>
                                     <a href="#" onclick="javascript:flyToPageIndex('generalInformation')">General Information</a>
