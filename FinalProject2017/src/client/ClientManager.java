@@ -41,7 +41,6 @@ public class ClientManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
-            ibatis.update("client.udpate", input);
             ibatis.commitTransaction();
 
 		} catch (SQLException e) {
@@ -77,18 +76,6 @@ public class ClientManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
 			result = ibatis.queryForList("client.getAll", null);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	public List getAllEnabled (){
-		List result = new ArrayList();
-		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		try {
-			result = ibatis.queryForList("client.getAllEnabled", null);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
