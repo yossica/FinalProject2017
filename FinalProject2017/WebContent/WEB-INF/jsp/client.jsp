@@ -8,14 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script>
-	function flyToPage(task)
-	{
+	function flyToPage(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
-	function flyToUpdate(task,clientId)
-	{
-		document.form[1].clientId.value = clientId;
+	
+	function flyToUpdate(clientId){
+		document.forms[1].clientId.value = clientId;
 		flyToPage("update");
 	}
 </script>
@@ -51,7 +50,7 @@
 				            			<td><bean:write name="client" property="phoneNumber"/></td>
 				            			<td><bean:write name="client" property="faxNumber"/></td>
 				            			<td><bean:write name="client" property="postalCode"/></td>
-				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToUpdate(clientId)"></td>
+				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToUpdate('<bean:write name="client" property="clientId" format="#"/>')"></td>
 				            		</tr>
 				            	</logic:iterate>
                             </tbody>
@@ -62,7 +61,7 @@
 	            <table border="1">
 	            	
 	            </table>
-	            <button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('formClient')">Add New Client</button>
+	            <button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('create')">Add New Client</button>
 	        </div>
 	    </div>
     </div>

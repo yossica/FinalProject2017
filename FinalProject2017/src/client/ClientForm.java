@@ -14,6 +14,7 @@ public class ClientForm extends ActionForm{
 	private String phoneNumber;
 	private String faxNumber;
 	private String postalCode;
+	private int isEnabled;
 	
 	private List listClient;
 
@@ -87,6 +88,14 @@ public class ClientForm extends ActionForm{
 
 	public void setListClient(List listClient) {
 		this.listClient = listClient;
+	}
+
+	public int getIsEnabled() {
+		return isEnabled;
+	}
+
+	public void setIsEnabled(int isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 	
 	

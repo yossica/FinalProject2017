@@ -41,7 +41,6 @@ public class ClientManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
-            ibatis.update("client.udpate", input);
             ibatis.commitTransaction();
 
 		} catch (SQLException e) {
