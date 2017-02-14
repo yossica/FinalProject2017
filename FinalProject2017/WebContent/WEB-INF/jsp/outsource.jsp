@@ -48,7 +48,8 @@
 					<h1 class="page-header">Outsource List</h1>
 					<div class="panel-body" style="padding-right: 0;">
 						<div class="pull-right">
-							<button type="button" class="btn btn-primary">Create</button>
+							<button type="button" class="btn btn-primary"
+								onclick="javascript:flyToPage('create')">Create</button>
 						</div>
 					</div>
 					<div class="col-lg-12"
