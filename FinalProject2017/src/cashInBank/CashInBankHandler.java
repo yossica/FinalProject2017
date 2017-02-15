@@ -36,12 +36,12 @@ public class CashInBankHandler extends Action {
 		GeneralInformationManager generalInformationManager = new GeneralInformationManager();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		if("filter".equals(cashInBankForm.getTask())){
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
 			
 			Map paramMap = new HashMap();
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(showDateFormat.parse(cashInBankForm.getFilterEndDate()));
@@ -91,7 +91,6 @@ public class CashInBankHandler extends Action {
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
 			
 			Map paramMap = new HashMap();
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			
 			paramMap.put("endDate",dateFormat.format(cal.getTime()));
 			cashInBankForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
@@ -132,11 +131,12 @@ public class CashInBankHandler extends Action {
 			}
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
+			cashInBankForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+			
 			return mapping.findForward("form");
 		}
 		else if("saveDebit".equals(cashInBankForm.getTask())){
 			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			//validate, if false, go back to form
 			double currBalance = cashInBankManager.getCurrentBalance();
 			if(currBalance - cashInBankForm.getAmount() < 0){
@@ -219,11 +219,12 @@ public class CashInBankHandler extends Action {
 			}
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
+			cashInBankForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+			
 			return mapping.findForward("form");
 		}
 		else if("saveCredit".equals(cashInBankForm.getTask())){
 			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			//validate, if false, go back to form
 			double currBalance = cashInBankManager.getCurrentBalance();
 			double maxBalance = Double.parseDouble(generalInformationManager.getByKey("max_cash").getValue());
@@ -303,12 +304,13 @@ public class CashInBankHandler extends Action {
 			cashInBankForm.setCategoryId("");
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
+			cashInBankForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+			
 			return mapping.findForward("form");
 		}
 		else if("saveTransfer".equals(cashInBankForm.getTask())){
 			PettyCashManager pettyCashManager = new PettyCashManager();
 			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			//validate, if false, go back to form
 			double currCashBalance = cashInBankManager.getCurrentBalance();
 			double currPettyBalance = pettyCashManager.getCurrentBalance();
@@ -404,7 +406,6 @@ public class CashInBankHandler extends Action {
 			
 			Map paramMap = new HashMap();
 			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			
 			paramMap.put("endDate",dateFormat.format(cal.getTime()));
 			cashInBankForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
@@ -434,7 +435,6 @@ public class CashInBankHandler extends Action {
 			
 			Map paramMap = new HashMap();
 			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			
 			paramMap.put("endDate",dateFormat.format(cal.getTime()));
 			cashInBankForm.setFilterEndDate(showDateFormat.format(cal.getTime()));

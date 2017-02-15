@@ -20,7 +20,7 @@
 			<forward name="invoice" path="/invoice.do?task=invoice"></forward>
 			<forward name="financeSummary" path="/WEB-INF/jsp/financeSummary.jsp"></forward>
 			<forward name="employee" path="/employee.do"></forward>
-			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>
+			<forward name="pettyCash" path="/pettyCash.do"></forward>
 			<forward name="cashInBank" path="/cashInBank.do"></forward>
 			<forward name="client" path="/client.do"></forward>
 			<forward name="generalInformation" path="/generalInformation.do"></forward>
@@ -59,7 +59,8 @@
 			<forward name="outsource" path="/WEB-INF/jsp/outsource.jsp"></forward>
 		</action>
 		<action path="/pettyCash" name="pettyCashForm" type="pettyCash.PettyCashHandler" scope="request">
-			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
+			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>
+			<forward name="form" path="/WEB-INF/jsp/formPettyCash.jsp"></forward>
 		</action>
 		<action path="/training" name="trainingForm" type="training.TrainingHandler" scope="request">
 			<forward name="additionalTraining" path="/WEB-INF/jsp/additionalTraining.jsp"></forward>
