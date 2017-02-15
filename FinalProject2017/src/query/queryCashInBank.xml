@@ -20,8 +20,8 @@
 		where
 			transaction_date between to_date(#startDate#,'MM/dd/yyyy') and to_date(#endDate#,'MM/dd/yyyy')
 			<dynamic prepend="AND">
-				<isNotNull property="isDebit">
-					<isNotEmpty property="isDebit">
+				<isNotNull property="category">
+					<isNotEmpty property="category">
 						t.cash_flow_category_id = #category#
 					</isNotEmpty>
 				</isNotNull>
@@ -35,6 +35,11 @@
 		(select max(created_date) as max_date from transaction_cash_in_bank) c
 		where b.created_date = c.max_date
 	</select>
+	
+	<select id="getMaxId" resultClass="java.lang.Integer">
+		select count(1)
+		from transaction_cash_in_bank
+    </select>
 
 	<insert id="insert" parameterClass="cashInBank.CashInBankBean">
 		insert into transaction_cash_in_bank (transaction_cash_in_bank_id, cash_flow_category_id,

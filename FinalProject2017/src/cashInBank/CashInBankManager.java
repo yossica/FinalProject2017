@@ -19,6 +19,15 @@ public class CashInBankManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
 			ibatis.startTransaction();
+			Integer cashInBankId = (Integer) ibatis.queryForObject("cashInBank.getMaxId", null);
+			if(cashInBankId == null){
+				cashInBankId = 1;
+			}
+			else {
+				cashInBankId++;
+			}
+			input.setTransactionCashInBankId(cashInBankId);
+			
 			ibatis.insert("cashInBank.insert", input);
 			ibatis.commitTransaction();
 		} catch (Exception e) {

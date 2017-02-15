@@ -8,12 +8,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script>
-	function insert(){
+	function insert() {
 		//validate
+		var task = document.forms[1].task.value;
+		var debit = document.forms[1].isDebit.value;
+
+		//all balance checking in server
+		//validate amount != alphabet
+		
+		if (confirm("Are you sure to insert these data to cash in bank transaction?")) {
+			flyToPage();
+		}
+	}
+	function cancel(){
+		document.forms[1].task.value="cashInBank";
 		flyToPage();
 	}
-	function flyToPage(task)
-	{
+	function flyToPage() {
 		document.forms[1].submit();
 	}
 </script>
@@ -25,7 +36,6 @@
 	<html:form action="/cashInBank" method="post">
 		<html:hidden name="cashInBankForm" property="task" />
 		<html:hidden name="cashInBankForm" property="isDebit" />
-		<html:hidden name="cashInBankForm" property="remainingBalance" />
 		<span> <logic:notEmpty name="cashInBankForm"
 				property="messageList">
 				<logic:iterate id="message" name="cashInBankForm"
@@ -45,15 +55,18 @@
 								<div class="col-md-2">Remaining Balance</div>
 								<div class="col-md-1">:</div>
 								<div class="col-md-8">
-									Rp.<bean:write name="cashInBankForm" property="remainingBalance" format="#" />
+									Rp.
+									<bean:write name="cashInBankForm" property="remainingBalance"
+										format="#" />
 								</div>
 							</div>
-							
+
 							<div class="row" style="margin-top: 10px;">
 								<div class="col-md-2">Transaction Date</div>
 								<div class="col-md-1">:</div>
 								<div class="col-md-8">
-									<input type="date" styleClass="form-control" name="cashInBankForm" property="transactionDate"
+									<input type="date" style="form-control"
+										name="transactionDate"
 										value="<bean:write name="cashInBankForm" property="transactionDate"/>" />
 								</div>
 							</div>
@@ -63,14 +76,18 @@
 								<div class="col-md-2">Transaction Category</div>
 								<div class="col-md-1">:</div>
 								<div class="col-md-8">
-									<logic:equal value="saveBalance" property="task" name="cashInBankForm">
-										<html:select property="cashFlowCategoryId" name="cashInBankForm" styleClass="form-control" style="width: 50%;" readonly="true">
-											<html:optionsCollection property="cashFlowCategoryList" label="name" value="cashFlowCategoryId" name="cashInBankForm" />
-										</html:select>
+									<logic:equal value="saveTransfer" property="task"
+										name="cashInBankForm">
+										Transfer to Petty Cash
 									</logic:equal>
-									<logic:notEqual value="saveBalance" property="task" name="cashInBankForm">
-										<html:select property="cashFlowCategoryId" name="cashInBankForm" styleClass="form-control" style="width: 50%;">
-											<html:optionsCollection property="cashFlowCategoryList" label="name" value="cashFlowCategoryId" name="cashInBankForm" />
+									<logic:notEqual value="saveTransfer" property="task"
+										name="cashInBankForm">
+										<html:select property="cashFlowCategoryId"
+											name="cashInBankForm" styleClass="form-control"
+											style="width: 50%;">
+											<html:optionsCollection property="cashFlowCategoryList"
+												label="name" value="cashFlowCategoryId"
+												name="cashInBankForm" />
 										</html:select>
 									</logic:notEqual>
 									<br />
@@ -82,7 +99,8 @@
 								<div class="col-md-2">Amount</div>
 								<div class="col-md-1">:</div>
 								<div class="col-md-8">
-									<html:text styleClass="form-control" name="cashInBankForm" property="amount" />
+									<html:text styleClass="form-control" name="cashInBankForm"
+										property="amount" />
 								</div>
 							</div>
 							<br />
@@ -90,12 +108,13 @@
 								<div class="col-md-2">Description</div>
 								<div class="col-md-1">:</div>
 								<div class="col-md-8" style="margin-bottom: 10px;">
-									<html:textarea name="cashInBankForm" property="description" />
+									<html:textarea styleClass="form-control" name="cashInBankForm"
+										property="description" />
 								</div>
 							</div>
 							<div class="panel-body" style="padding-left: 0;">
 								<div class="pull-left">
-									<button type="button" class="btn btn-primary ">Cancel</button>
+									<button type="button" class="btn btn-primary " onclick="javascript:cancel()">Cancel</button>
 									<button type="button" class="btn btn-primary "
 										onclick="javascript:insert()">Save</button>
 
@@ -104,7 +123,18 @@
 
 						</div>
 					</div>
+					
+					<div class="col-md-4" style="color: red;"
+						id="message">
+						<logic:notEmpty name="cashInBankForm" property="messageList">
+							<logic:iterate id="message" name="cashInBankForm"
+								property="messageList">
+								<bean:write name="message" />
+							</logic:iterate>
+						</logic:notEmpty>
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</html:form>

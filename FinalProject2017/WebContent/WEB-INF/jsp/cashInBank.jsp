@@ -9,6 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cash in Bank</title>
 <script type="text/javascript">
+	function balance(){
+		if(confirm("Are you sure you want to balance cash in bank?")){
+			flyToPage("balancing");
+		}
+	}
 	function flyToPage(task){
 		document.forms[1].task.value=task;
 		document.forms[1].submit();
@@ -29,7 +34,7 @@
 			<div class="col-lg-12">
 				<label>Remaining Balance: Rp.<bean:write name="cashInBankForm" property="remainingBalance" format="#" />,-</label>
 				<button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('export')">Export to PDF</button>
-				<button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('balancing')">Balancing</button>
+				<button type="button" class="btn btn-primary pull-right" onclick="javascript:balance()">Balancing</button>
 				<br />
 				<br />
 			</div>
@@ -41,6 +46,7 @@
 					<div class="col-md-1">Category</div>
 					<div class="col-md-11">
 						<html:select property="categoryId" name="cashInBankForm" styleClass="form-control" style="width: 50%;">
+							<html:option value="">All</html:option>
 							<html:optionsCollection property="cashFlowCategoryList" label="name" value="cashFlowCategoryId" name="cashInBankForm" />
 						</html:select><br />
 					</div>
