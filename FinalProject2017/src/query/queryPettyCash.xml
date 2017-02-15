@@ -41,7 +41,7 @@
 		from transaction_petty_cash
     </select>
 
-	<insert id="insert">
+	<insert id="insert" parameterClass="pettyCash.PettyCashBean">
 		insert into transaction_petty_cash (transaction_petty_cash_id, cash_flow_category_id,
 			amount, balance, description, transaction_date, 
 			is_debit, created_by, created_date)
