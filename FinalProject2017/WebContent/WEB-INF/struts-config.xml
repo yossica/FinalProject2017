@@ -57,6 +57,7 @@
 		</action>
 		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
 			<forward name="outsource" path="/WEB-INF/jsp/outsource.jsp"></forward>
+			<forward name="formOutsource" path="/WEB-INF/jsp/formOutsource.jsp"></forward>
 		</action>
 		<action path="/pettyCash" name="pettyCashForm" type="pettyCash.PettyCashHandler" scope="request">
 			<forward name="pettyCash" path="/WEB-INF/jsp/pettyCash.jsp"></forward>

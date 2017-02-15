@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.struts.action.ActionForm;
 
 public class InvoiceForm extends ActionForm{
+	
+	private InvoiceBean invoiceBean = new InvoiceBean();
+	
 	private String task;
 	private String message;
 	private String clientId;
@@ -13,7 +16,20 @@ public class InvoiceForm extends ActionForm{
 	private String monthTo;
 	private String yearTo;
 	private List clientList;
+	private List invoiceTypeList;
+	private List headHunterList;
 	
+	public InvoiceForm(){
+		InvoiceDetailBean bean = new InvoiceDetailBean();
+		headHunterList.add(bean);
+	}
+	
+	public InvoiceBean getInvoiceBean() {
+		return invoiceBean;
+	}
+	public void setInvoiceBean(InvoiceBean invoiceBean) {
+		this.invoiceBean = invoiceBean;
+	}
 	public String getClientId() {
 		return clientId;
 	}
@@ -26,7 +42,12 @@ public class InvoiceForm extends ActionForm{
 	public void setClientList(List clientList) {
 		this.clientList = clientList;
 	}
-	
+	public List getInvoiceTypeList() {
+		return invoiceTypeList;
+	}
+	public void setInvoiceTypeList(List invoiceTypeList) {
+		this.invoiceTypeList = invoiceTypeList;
+	}
 	public String getTask() {
 		return task;
 	}
@@ -36,7 +57,18 @@ public class InvoiceForm extends ActionForm{
 	public String getMessage() {
 		return message;
 	}
-
+	public List getHeadHunterList() {
+		return headHunterList;
+	}
+	public void setHeadHunterList(List headHunterList) {
+		this.headHunterList = headHunterList;
+	}
+	public InvoiceDetailBean getInvoiceDetail(int index){
+		while(this.headHunterList.size() <= index){
+			this.headHunterList.add(new InvoiceDetailBean());
+		}
+		return (InvoiceDetailBean) this.headHunterList.get(index);
+	}
 	public void setMessage(String message) {
 		this.message = message;
 	}

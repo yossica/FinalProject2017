@@ -58,7 +58,6 @@ public class MasterManager {
 		try {
 			result = ibatis.queryForList("invoiceType.getAll", null);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;

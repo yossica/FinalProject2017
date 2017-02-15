@@ -22,10 +22,11 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/client" method="post">
 		<html:hidden property="task" name="clientForm" />
+		<html:hidden property="clientId" name="clientForm"/>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Create New Client Record</h1>
+					<h1 class="page-header">Form Client</h1>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-hover">
@@ -57,7 +58,6 @@
 									<tr>
 										<td>Client Status</td>
 										<td><html:select name="clientForm" property="isEnabled">
-												<html:option value="">--Choose--</html:option>
 												<html:option value="1">Enabled</html:option>
 												<html:option value="0">Disabled</html:option>
 												</html:select>
