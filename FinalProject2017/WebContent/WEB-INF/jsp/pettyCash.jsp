@@ -71,7 +71,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel-body">
-					<div class="table-responsive" style="overflow: auto;">
+					<div class="table-responsive" style="height:200px;overflow: auto;">
 						<table class="table table-hover">
 							<thead>
 								<tr>
