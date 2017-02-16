@@ -27,8 +27,7 @@
 	            <h1 class="page-header">Invoice List</h1>
 	            <div class="panel-body" style="padding-right:0;">
 		            <div class="pull-right">
-		           		<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('tes')">Test</button>
-			            <button type="button" class="btn btn-primary">Print</button>
+		           		<button type="button" class="btn btn-primary">Print</button>
 			            <button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Create</button>
 		            </div>
 	            </div>
@@ -158,7 +157,7 @@
 			                	<td><bean:write name="inv" property="invoiceDate"/></td>
 			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
 			                	<td>
-			                		<input type="button" value="View" class="btn btn-primary">
+			                		<input type="button" value="View" class="btn btn-primary" onclick="javascript:flyToPage('detailInvoice')">
 			                		<input type="button" value="Change Status" class="btn btn-primary">
 			                	</td>
 	                		</tr>
