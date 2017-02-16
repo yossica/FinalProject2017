@@ -10,6 +10,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Invoice</title>
 <script>
+	function filter() {
+		var monthFrom = document.forms[1].monthFrom.value;
+		var yearFrom = document.forms[1].yearFrom.value;
+		var monthTo = document.forms[1].monthTo.value;
+		var yearTo = document.forms[1].yearTo.value;
+		
+		if (monthFrom == "" && yearFrom == "" && monthTo == "" && yearTo == "") {
+			flyToPage('filter');
+		} else if (monthFrom != "" && yearFrom != "" && monthTo != "" && yearTo != "") {
+			if (monthFrom>monthTo && yearFrom==yearTo) {
+				document.getElementById("errorMessage").innerHTML = "Start month period must before end month period!";
+			} else if (yearFrom>yearTo) {
+				document.getElementById("errorMessage").innerHTML = "Start year period must before end year period!";
+			} else {
+				flyToPage('filter');
+			}
+		} else {
+			document.getElementById("errorMessage").innerHTML = "Start month and year period and month and year period must be either both filled or emptied!";
+		}
+	}
 	function flyToPage(task)
 	{
 		document.forms[1].task.value = task;
@@ -129,7 +149,8 @@
 		            	</div>
         			</div>
         			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-        				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('filter')">Filter</button>
+        				<button type="button" class="btn btn-primary" onclick="javascript:filter()">Filter</button>
+        				<span id="errorMessage" style="color:red">
         			</div>
         		</div>
 	        </div>
