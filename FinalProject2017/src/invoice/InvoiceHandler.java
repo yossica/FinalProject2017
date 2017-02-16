@@ -43,6 +43,13 @@ public class InvoiceHandler extends Action{
 		}else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+			DateFormat dateFormatMonth = new SimpleDateFormat("MM");
+			DateFormat dateFormatYear = new SimpleDateFormat("yyyy");
+			Date date = new Date();
+			Integer month = Integer.parseInt(dateFormatMonth.format(date));
+			Integer year = Integer.parseInt(dateFormatYear.format(date));
+			invoiceForm.getInvoiceBean().setPeriodMonth(month);
+			invoiceForm.getInvoiceBean().setPeriodYear(year);
 			return mapping.findForward("createInvoiceHH");
 		}else if ("addDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
@@ -53,7 +60,9 @@ public class InvoiceHandler extends Action{
 			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
 			Date date = new Date();
 			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(invoiceManager.getMaxInvoiceHeaderId());
-			invoiceForm.getInvoiceBean().setInvoiceDate(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
+			//System.out.println(invoiceManager.getMaxInvoiceHeaderId());
+			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
+			//System.out.println(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			return mapping.findForward("createInvoiceHH");
 		}else if ("filter".equals(invoiceForm.getTask())) {
 			String client = invoiceForm.getClientId();
