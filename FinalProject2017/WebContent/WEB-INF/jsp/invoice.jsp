@@ -152,7 +152,9 @@
 					    	<tr>
 			                	<td><bean:write name="inv" property="invoiceNumber"/></td>
 			                	<td><bean:write name="inv" property="clientName"/></td>
-			                	<td><bean:write name="inv" property="periodMonth" format="#"/>&nbsp;<bean:write name="inv" property="periodYear" format="#"/></td>
+			                	<td>
+			                		<bean:write name="inv" property="periodMonthName"/>&nbsp;<bean:write name="inv" property="periodYear" format="#"/>
+			                	</td>
 			                	<td><bean:write name="inv" property="invoiceTypeName"/></td>
 			                	<td><bean:write name="inv" property="invoiceDate"/></td>
 			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
