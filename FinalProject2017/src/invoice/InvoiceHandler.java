@@ -58,7 +58,6 @@ public class InvoiceHandler extends Action{
 			//System.out.println(invoiceManager.getMaxInvoiceHeaderId());
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			//System.out.println(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
-			
 			return mapping.findForward("createInvoiceHH");
 		}else if ("filter".equals(invoiceForm.getTask())) {
 			String client = invoiceForm.getClientId();
