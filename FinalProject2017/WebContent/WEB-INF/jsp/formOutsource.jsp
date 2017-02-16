@@ -56,7 +56,7 @@
 									<logic:equal name="outsourceForm" property="task" 
 												value = "saveupdate" >
 										<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
-										<html:hidden name="outsourceForm" property="clientId"/>
+										<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
 									</logic:equal>
 									<logic:equal name="outsourceForm" property="task" 
 												value = "savemutation" >
@@ -69,7 +69,7 @@
 									<logic:equal name="outsourceForm" property="task" 
 												value = "saveend" >
 										<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
-										<html:hidden name="outsourceForm" property="clientId"/>
+										<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
 									</logic:equal>
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 								<div class="col-md-5">
 									<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
-										<html:select name="outsourceForm" property="employeeId"
+										<html:select name="outsourceForm" property="outsourceBean.employeeId"
 											styleClass="form-control-client" size="1">
 											<html:optionsCollection name="outsourceForm"
 												property="optEmployeeList" value="employeeId" label="name" />
@@ -88,12 +88,12 @@
 									</logic:equal>
 									<logic:equal name="outsourceForm" property="task" 
 												value = "saveupdate" >
-										<html:text name="outsourceForm" property="employeeName" readonly="true" styleClass="form-control-client"/>
-										<html:hidden name="outsourceForm" property="employeeId"/>
+										<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true" styleClass="form-control-client"/>
+										<html:hidden name="outsourceForm" property="outsourceBean.employeeId"/>
 									</logic:equal>
 									<logic:equal name="outsourceForm" property="task" 
 												value = "savemutation" >
-										<html:select name="outsourceForm" property="employeeId"
+										<html:select name="outsourceForm" property="outsourceBean.employeeId"
 											styleClass="form-control-client" size="1">
 											<html:optionsCollection name="outsourceForm"
 												property="optEmployeeList" value="employeeId" label="name" />
@@ -101,8 +101,8 @@
 									</logic:equal>
 									<logic:equal name="outsourceForm" property="task" 
 												value = "saveend" >
-										<html:text name="outsourceForm" property="employeeName" readonly="true" styleClass="form-control-client"/>
-										<html:hidden name="outsourceForm" property="employeeId"/>
+										<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true" styleClass="form-control-client"/>
+										<html:hidden name="outsourceForm" property="outsourceBean.employeeId"/>
 									</logic:equal>
 								</div>
 							</div>
