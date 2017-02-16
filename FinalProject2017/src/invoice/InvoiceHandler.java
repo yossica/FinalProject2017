@@ -38,6 +38,7 @@ public class InvoiceHandler extends Action{
 		}else if ("createInvoiceTR".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoiceTR");
 		}else {
+			invoiceForm.setInvoiceList(invoiceManager.getAllWithFilter());
 			return mapping.findForward("invoice");
 		}
 	}

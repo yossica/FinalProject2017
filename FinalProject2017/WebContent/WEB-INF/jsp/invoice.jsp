@@ -23,8 +23,6 @@
 	<html:hidden property="task" name="invoiceForm"/>
 	<div id="page-wrapper">
 	    <div class="row">
-	    	<%-- <bean:write name="invoiceForm" property="task"/>
-	    	<bean:write name="invoiceForm" property="message"/> --%>
 	        <div class="col-lg-12">
 	            <h1 class="page-header">Invoice List</h1>
 	            <div class="panel-body" style="padding-right:0;">
@@ -151,16 +149,20 @@
 				   		<th>Action</th>
 				   	</tr>
 	                <tbody>
-	                <tr>
-	                	<td>Inv No</td>
-	                	<td>Client A</td>
-	                	<td>Jan 2016</td>
-	                	<td>Professional Service</td>
-	                	<td>02/02/16</td>
-	                	<td>Created</td>
-	                	<td><input type="button" value="View" class="btn btn-primary">
-	                		<input type="button" value="Change Status" class="btn btn-primary"></td>
-	                </tr>
+						<logic:iterate id="inv" name="invoiceForm" property="invoiceList">
+					    	<tr>
+			                	<td><bean:write name="inv" property="invoiceNumber"/></td>
+			                	<td><bean:write name="inv" property="clientName"/></td>
+			                	<td><bean:write name="inv" property="periodMonth" format="#"/>&nbsp;<bean:write name="inv" property="periodYear" format="#"/></td>
+			                	<td><bean:write name="inv" property="invoiceTypeName"/></td>
+			                	<td><bean:write name="inv" property="invoiceDate"/></td>
+			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
+			                	<td>
+			                		<input type="button" value="View" class="btn btn-primary">
+			                		<input type="button" value="Change Status" class="btn btn-primary">
+			                	</td>
+	                		</tr>
+	                	</logic:iterate>
 	                </tbody>
 	            </table>
 	        </div>
