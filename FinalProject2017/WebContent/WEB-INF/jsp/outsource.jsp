@@ -35,7 +35,6 @@
 		<html:hidden name="outsourceForm" property="transactionOutsourceId" />
 		<div id="page-wrapper">
 			<div class="row">
-				<bean:write name="outsourceForm" property="task" />
 				<span> <logic:notEmpty name="outsourceForm"
 						property="messageList">
 						<logic:iterate id="message" name="outsourceForm"

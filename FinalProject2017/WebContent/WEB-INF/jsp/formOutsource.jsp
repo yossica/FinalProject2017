@@ -48,7 +48,7 @@
 										<td>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
-												<html:select name="outsourceForm" property="clientId"
+												<html:select name="outsourceForm" property="outsourceBean.clientId"
 													styleClass="form-control-client" size="1" >
 													<html:optionsCollection name="outsourceForm"
 														property="optClientList" value="clientId" label="name" />
@@ -56,12 +56,12 @@
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveupdate" >
-												<html:text name="outsourceForm" property="clientName" readonly="true"/>
+												<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
 												<html:hidden name="outsourceForm" property="clientId"/>
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savemutation" >
-												<html:select name="outsourceForm" property="clientId"
+												<html:select name="outsourceForm" property="outsourceBean.clientId"
 													styleClass="form-control-client" size="1" >
 													<html:optionsCollection name="outsourceForm"
 														property="optClientList" value="clientId" label="name" />
@@ -69,7 +69,7 @@
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveend" >
-												<html:text name="outsourceForm" property="clientName" readonly="true"/>
+												<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
 												<html:hidden name="outsourceForm" property="clientId"/>
 											</logic:equal>
 										</td>
@@ -79,7 +79,7 @@
 										<td>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
-												<html:select name="outsourceForm" property="employeeId"
+												<html:select name="outsourceForm" property="outsourceBean.employeeId"
 													styleClass="form-control-client" size="1">
 													<html:optionsCollection name="outsourceForm"
 														property="optEmployeeList" value="employeeId" label="name" />
@@ -87,12 +87,12 @@
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveupdate" >
-												<html:text name="outsourceForm" property="employeeName" readonly="true"/>
+												<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true"/>
 												<html:hidden name="outsourceForm" property="employeeId"/>
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savemutation" >
-												<html:select name="outsourceForm" property="employeeId"
+												<html:select name="outsourceForm" property="outsourceBean.employeeId"
 													styleClass="form-control-client" size="1">
 													<html:optionsCollection name="outsourceForm"
 														property="optEmployeeList" value="employeeId" label="name" />
@@ -100,7 +100,7 @@
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveend" >
-												<html:text name="outsourceForm" property="employeeName" readonly="true"/>
+												<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true"/>
 												<html:hidden name="outsourceForm" property="employeeId"/>
 											</logic:equal>
 										</td>
@@ -110,19 +110,23 @@
 										<td>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
-												<html:text name="outsourceForm" property="startDate" />
+												<input type="date" class="form-control" style="width: 100%;" 
+													name="outsourceBean.startDate" 
+													value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />"/>
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveupdate" >
-												<html:text name="outsourceForm" property="startDate" readonly="true" />
+												<html:text name="outsourceForm" property="outsourceBean.startDate" readonly="true" />
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savemutation" >
-												<html:text name="outsourceForm" property="startDate" />
+												<input type="date" class="form-control" style="width: 100%;" 
+													name="outsourceBean.startDate" 
+													value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />"/>
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveend" >
-												<html:text name="outsourceForm" property="startDate" readonly="true" />
+												<html:text name="outsourceForm" property="outsourceBean.startDate" readonly="true" />
 											</logic:equal>
 										</td>
 									</tr>
@@ -131,11 +135,13 @@
 										<td>
 											<logic:notEqual name="outsourceForm" property="task" 
 														value = "saveupdate" >
-												<html:text name="outsourceForm" property="endDate" />
+												<input type="date" class="form-control" style="width: 100%;" 
+													name="outsourceBean.endDate" 
+													value="<bean:write property="outsourceBean.endDate" name="outsourceForm" />"/>
 											</logic:notEqual>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveupdate" >
-												<html:text name="outsourceForm" property="endDate" readonly="true" />
+												<html:text name="outsourceForm" property="outsourceBean.endDate" readonly="true" />
 											</logic:equal>
 										</td>
 									</tr>
@@ -144,19 +150,19 @@
 										<td>
 											<logic:notEqual name="outsourceForm" property="task" 
 														value = "saveend" >
-												<html:radio name="outsourceForm"  property="isGross" value="1"/>Gross
-												<html:radio name="outsourceForm"   property="isGross" value="0" />Nett
+												<html:radio name="outsourceForm"  property="outsourceBean.isGross" value="1"/>Gross
+												<html:radio name="outsourceForm"   property="outsourceBean.isGross" value="0" />Nett
 											</logic:notEqual>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveend" >
-												<html:radio name="outsourceForm"  property="isGross" value="1" disabled="true"/>Gross
-												<html:radio name="outsourceForm"   property="isGross" value="0" disabled="true"/>Nett
+												<html:radio name="outsourceForm"  property="outsourceBean.isGross" value="1" disabled="true"/>Gross
+												<html:radio name="outsourceForm"   property="outsourceBean.isGross" value="0" disabled="true"/>Nett
 											</logic:equal>
 										</td>
 									</tr>
 									<tr>
 										<td>Fee</td>
-										<td><html:text name="outsourceForm" property="fee" /></td>
+										<td><html:text name="outsourceForm" property="outsourceBean.fee" /></td>
 									</tr>
 								</tbody>
 							</table>
