@@ -33,9 +33,9 @@
 		        <div class="row" style="margin-top: 10px;">
 					<div class="col-md-10" style="padding-right: 1%">
 						<div class="form-group">
-							<div class="col-md-2">Employee Name</div>
+							<div class="col-md-2"><label>Employee Name</label></div>
 							<div class="col-md-5">
-								<html:text property="name" name="employeeForm" styleClass="form-control"/>
+								<html:text property="name" name="employeeForm" styleClass="form-control-client"/>
 							</div>
 						</div>
 					</div>
@@ -43,30 +43,30 @@
 				<div class="row" style="margin-top: 10px;">
 					<div class="col-md-10" style="padding-right: 1%">
 						<div class="form-group">
-							<div class="col-md-2">Email</div>
+							<div class="col-md-2"><label>Email</label></div>
 							<div class="col-md-5">
-								<html:text property="email" name="employeeForm" styleClass="form-control"/>
+								<html:text property="email" name="employeeForm" styleClass="form-control-client"/>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row" style="margin-top: 10px;">
 					<div class="col-md-10" style="padding-right: 1%">
-						<div class="col-md-2">Employee Status</div>
+						<div class="col-md-2"><label>Employee Status</label></div>
 						<div class="col-md-5">
-							<html:select property="isEnabled" name="employeeForm" styleClass="form-control">
+							<html:select property="isEnabled" name="employeeForm" styleClass="form-control-client">
 								<html:option value="1">Enabled</html:option>
 								<html:option value="0">Disabled</html:option>
 							</html:select>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-10" style="padding-right: 1%">
-                   	</div>
+				<div class="col-md-12" style="padding-right: 1%">
                    	<input type="button" value="Cancel" class="btn btn-primary" onclick="javascript:flyToPage('employee')">
                     <input type="button" value="Save" class="btn btn-primary" onclick="javascript:flyToSave()">
                 </div>
-		  </div>
+          </div>
+	</div>
     </html:form>
 </body>
 </html>
