@@ -111,7 +111,7 @@ public class IndexHandler extends Action{
 			indexForm.setCreatedRemainderList(invoiceManager.getCreatedRemainderList());
 			indexForm.setSentOutsourceRemainderList(invoiceManager.getSentOutsourceRemainderList());
 			indexForm.setListedTrainingRemainderList(trainingManager.getListedTrainingRemainderList());
-			System.out.println(indexForm.getListedTrainingRemainderList().size());
+			//System.out.println(indexForm.getListedTrainingRemainderList().size());
 			return mapping.findForward("success");
 		}
 	}

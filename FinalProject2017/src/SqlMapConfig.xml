@@ -16,8 +16,10 @@ Notice the use of the properties from the above resource -->
 <transactionManager type="JDBC" commitRequired="true">
 	<dataSource type="SIMPLE">
 		<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver"/>
+
 		<!-- <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@HENNYSENJAYA:1521:orcl"/> -->
 		<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+
 		<property name="JDBC.Username" value="financial"/>
 		<property name="JDBC.Password" value="financial"/>
 	</dataSource>
@@ -31,6 +33,7 @@ Notice the use of the properties from the above resource -->
 </transactionManager>
 <!-- Identify all SQL Map XML files to be loaded by this SQL map. Notice the paths
 are relative to the classpath. For now, we only have one� -->
+<sqlMap resource="query/queryCashFlowCategory.xml" />
 <sqlMap resource="query/queryCashInBank.xml" />
 <sqlMap resource="query/queryClient.xml" />
 <sqlMap resource="query/queryEmployee.xml" />
