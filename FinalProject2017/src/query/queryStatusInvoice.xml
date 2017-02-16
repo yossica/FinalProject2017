@@ -5,7 +5,7 @@
 	<select id="getAll" resultClass="master.StatusInvoiceBean">	
 		select status_invoice_id as statusInvoiceId,
 				name as name,
-				form_id as fromId,
+				from_id as fromId,
 				to_id as toId
 		from master_status_invoice
 	</select>

@@ -18,7 +18,7 @@
 		flyToPage("update");
 	}
 </script>
-<title>Client</title>
+<title>Finance Solution</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />

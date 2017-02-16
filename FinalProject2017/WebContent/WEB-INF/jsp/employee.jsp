@@ -30,8 +30,8 @@
 		        <div class="col-lg-12">
 		            <h1 class="page-header">Employee List</h1>
 		            <div class="panel-body">
-		            <input type="button" value="Create" class="btn btn-primary" onclick="javascript:flyToPage('create')">
 	                    <div class="table-responsive">
+	                    	<input type="button" value="Create" class="btn btn-primary pull-right" onclick="javascript:flyToPage('create')">
 	                        <table class="table table-hover">
 			                     <tr>
 				            		<th>Employee Name</th>

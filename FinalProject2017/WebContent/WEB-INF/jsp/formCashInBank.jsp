@@ -28,7 +28,7 @@
 		document.forms[1].submit();
 	}
 </script>
-<title>Change Password</title>
+<title>Finance Solution</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
@@ -48,13 +48,13 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Cash in Bank Transaction</h1>
-
-					<div class="col-lg-12">
-						<div class="col-lg-11">
+				</div>
+				<div class="col-lg-12">
+					<div class="col-lg-12" style="padding-left:10px">
+						<div class="col-lg-10">
 							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-2">Remaining Balance</div>
-								<div class="col-md-1">:</div>
-								<div class="col-md-8">
+								<div class="col-md-3"><label>Remaining Balance</label></div>
+								<div class="col-md-5">
 									Rp.
 									<bean:write name="cashInBankForm" property="remainingBalance"
 										format="#" />
@@ -62,10 +62,9 @@
 							</div>
 
 							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-2">Transaction Date</div>
-								<div class="col-md-1">:</div>
-								<div class="col-md-8">
-									<input type="date" style="form-control"
+								<div class="col-md-3"><label>Transaction Date</label></div>
+								<div class="col-md-5">
+									<input type="date" class="form-control"
 										name="transactionDate"
 										value="<bean:write name="cashInBankForm" property="transactionDate"/>" />
 								</div>
@@ -73,9 +72,8 @@
 
 							<br />
 							<div class="row">
-								<div class="col-md-2">Transaction Category</div>
-								<div class="col-md-1">:</div>
-								<div class="col-md-8">
+								<div class="col-md-3"><label>Transaction Category</label></div>
+								<div class="col-md-5">
 									<logic:equal value="saveTransfer" property="task"
 										name="cashInBankForm">
 										Transfer to Petty Cash
@@ -83,8 +81,7 @@
 									<logic:notEqual value="saveTransfer" property="task"
 										name="cashInBankForm">
 										<html:select property="cashFlowCategoryId"
-											name="cashInBankForm" styleClass="form-control"
-											style="width: 50%;">
+											name="cashInBankForm" styleClass="form-control">
 											<html:optionsCollection property="cashFlowCategoryList"
 												label="name" value="cashFlowCategoryId"
 												name="cashInBankForm" />
@@ -96,18 +93,16 @@
 							</div>
 							<br />
 							<div class="row">
-								<div class="col-md-2">Amount</div>
-								<div class="col-md-1">:</div>
-								<div class="col-md-8">
+								<div class="col-md-3"><label>Amount</label></div>
+								<div class="col-md-5">
 									<html:text styleClass="form-control" name="cashInBankForm"
 										property="amount" />
 								</div>
 							</div>
 							<br />
 							<div class="row">
-								<div class="col-md-2">Description</div>
-								<div class="col-md-1">:</div>
-								<div class="col-md-8" style="margin-bottom: 10px;">
+								<div class="col-md-3"><label>Description</label></div>
+								<div class="col-md-5" style="margin-bottom: 10px;">
 									<html:textarea styleClass="form-control" name="cashInBankForm"
 										property="description" />
 								</div>

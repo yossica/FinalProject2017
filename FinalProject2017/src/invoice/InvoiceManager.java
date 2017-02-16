@@ -32,11 +32,11 @@ public class InvoiceManager {
 		return result;
 	}
 	
-	public List getAllWithFilter(){
+	public List getAllWithFilter(Map input){
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
-			result = ibatis.queryForList("invoice.getAllWithFilter", null);
+			result = ibatis.queryForList("invoice.getAllWithFilter", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

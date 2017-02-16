@@ -39,7 +39,7 @@
 								value = "savemutation" >
 						<h1 class="page-header">Mutation Profesional Service Contract</h1>
 					</logic:equal>
-					
+				
 					<div class="panel-body">
 						<div class="table-responsive">
 						
@@ -121,70 +121,73 @@
 										<td>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
-												<input type="date" class="form-control" style="width: 100%;" 
-													name="outsourceBean.startDate" 
-													value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />"/>
-											</logic:equal>
-											<logic:equal name="outsourceForm" property="task" 
-														value = "saveupdate" >
-												<html:text name="outsourceForm" property="outsourceBean.startDate" readonly="true" />
-											</logic:equal>
-											<logic:equal name="outsourceForm" property="task" 
-														value = "savemutation" >
-												<input type="date" class="form-control" style="width: 100%;" 
-													name="outsourceBean.startDate" 
-													value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />"/>
-											</logic:equal>
-											<logic:equal name="outsourceForm" property="task" 
-														value = "saveend" >
-												<html:text name="outsourceForm" property="outsourceBean.startDate" readonly="true" />
-											</logic:equal>
-										</td>
-									</tr>
-									<tr>
-										<td>End Date</td>
-										<td>
-											<logic:notEqual name="outsourceForm" property="task" 
-														value = "saveupdate" >
-												<input type="date" class="form-control" style="width: 100%;" 
-													name="outsourceBean.endDate" 
-													value="<bean:write property="outsourceBean.endDate" name="outsourceForm" />"/>
-											</logic:notEqual>
-											<logic:equal name="outsourceForm" property="task" 
-														value = "saveupdate" >
-												<html:text name="outsourceForm" property="outsourceBean.endDate" readonly="true" />
-											</logic:equal>
-										</td>
-									</tr>
-									<tr>
-										<td>Tax</td>
-										<td>
-											<logic:notEqual name="outsourceForm" property="task" 
-														value = "saveend" >
-												<html:radio name="outsourceForm"  property="outsourceBean.isGross" value="1"/>Gross
-												<html:radio name="outsourceForm"   property="outsourceBean.isGross" value="0" />Nett
-											</logic:notEqual>
-											<logic:equal name="outsourceForm" property="task" 
-														value = "saveend" >
-												<html:radio name="outsourceForm"  property="outsourceBean.isGross" value="1" disabled="true"/>Gross
-												<html:radio name="outsourceForm"   property="outsourceBean.isGross" value="0" disabled="true"/>Nett
-											</logic:equal>
-										</td>
-									</tr>
-									<tr>
-										<td>Fee</td>
-										<td><html:text name="outsourceForm" property="outsourceBean.fee" /></td>
-									</tr>
-								</tbody>
-							</table>
+										<input type="date" class="form-control" style="width: 100%;" 
+											name="outsourceBean.startDate" 
+											value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />"/>
+									</logic:equal>
+									<logic:equal name="outsourceForm" property="task" 
+												value = "saveupdate" >
+										<html:text name="outsourceForm" property="outsourceBean.startDate" readonly="true" />
+									</logic:equal>
+									<logic:equal name="outsourceForm" property="task" 
+												value = "savemutation" >
+										<input type="date" class="form-control" style="width: 100%;" 
+											name="outsourceBean.startDate" 
+											value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />"/>
+									</logic:equal>
+									<logic:equal name="outsourceForm" property="task" 
+												value = "saveend" >
+										<html:text name="outsourceForm" property="outsourceBean.startDate" readonly="true" />
+									</logic:equal>
+								</div>
+							</div>
 						</div>
-						<!-- /.table-responsive -->
+						<div class="col-md-10" style="margin-top: 10px;">
+							<div class="row">
+								<div class="col-md-2"><label>End Date</label></div>
+								<div class="col-md-5">
+									<logic:notEqual name="outsourceForm" property="task" 
+														value = "saveupdate" >
+										<input type="date" class="form-control" style="width: 100%;" 
+											name="outsourceBean.endDate" 
+											value="<bean:write property="outsourceBean.endDate" name="outsourceForm" />"/>
+									</logic:notEqual>
+									<logic:equal name="outsourceForm" property="task" 
+												value = "saveupdate" >
+										<html:text name="outsourceForm" property="outsourceBean.endDate" readonly="true" />
+									</logic:equal>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-10" style="margin-top: 10px;">
+							<div class="row">
+								<div class="col-md-2"><label>Tax</label></div>
+								<div class="col-md-5">
+									<logic:notEqual name="outsourceForm" property="task" 
+														value = "saveend" >
+										<html:radio name="outsourceForm"  property="outsourceBean.isGross" value="1"/>Gross
+										<html:radio name="outsourceForm"   property="outsourceBean.isGross" value="0" />Nett
+									</logic:notEqual>
+									<logic:equal name="outsourceForm" property="task" 
+												value = "saveend" >
+										<html:radio name="outsourceForm"  property="outsourceBean.isGross" value="1" disabled="true"/>Gross
+										<html:radio name="outsourceForm"   property="outsourceBean.isGross" value="0" disabled="true"/>Nett
+									</logic:equal>
+								</div>
+							</div>
+						</div>			
+						<div class="col-md-10" style="margin-top: 10px;">
+							<div class="row">
+								<div class="col-md-2"><label>Fee</label></div>
+								<div class="col-md-5">
+									<html:text name="outsourceForm" property="outsourceBean.fee" />
+								</div>
+							</div>
+						</div>				
 					</div>
-					<table border="1">
-
-					</table>
-					<button type="button" class="btn btn-primary pull-right"
-						onclick="javascript:flyToSave()">Save</button>
+				</div>
+				<div class="col-lg-12">
+					<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>
 				</div>
 			</div>
 		</div>
