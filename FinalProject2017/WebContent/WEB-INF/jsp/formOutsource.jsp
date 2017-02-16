@@ -41,7 +41,7 @@
   				</div>
 				<div class="col-lg-12" style="padding-left: 0px;">	
 					<div class="panel-body" style="padding-left: 0px;padding-top:0px;">
-						<div class="row"">
+						<div class="row">
 							<div class="col-md-10" style="padding-right: 1%">
 								<div class="col-md-2"><label>Client</label></div>
 								<div class="col-md-5">
