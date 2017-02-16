@@ -12,10 +12,15 @@
 		//validate
 		//all balance checking in server
 		//validate amount != alphabet		
-		var amount = document.getElementsByName("pettyCashBean.amount")[0].value;
-		var description = document.getElementsByName("pettyCashBean.description")[0].value;
+		var transactionDate = document.getElementsByName("cashInBankBean.transactionDate")[0].value;
+		var amount = document.getElementsByName("cashInBankBean.amount")[0].value;
+		var description = document.getElementsByName("cashInBankBean.description")[0].value;
 		var doubleReg = /^[\d]*(.[\d])*$/;
 		var errorMessage = ""; 
+		
+		if(transactionDate == ""){
+			errorMessage = errorMessage + "Transaction date must be filled!<br/>";
+		}
 		
 		if(amount == ""){
 			errorMessage+="Amount must be filled!<br/>";
@@ -85,9 +90,8 @@
 							<div class="row">
 								<div class="col-md-3"><label>Transaction Category</label></div>
 								<div class="col-md-5">									
-									<html:select property="pettyCashBean.cashFlowCategoryId"
-										name="pettyCashForm" styleClass="form-control"
-										style="width: 50%;">
+									<html:select property="pettyCashBean.cashFlowCategoryId" 
+										name="pettyCashForm" styleClass="form-control">
 										<html:optionsCollection property="cashFlowCategoryList"
 											label="name" value="cashFlowCategoryId"
 											name="pettyCashForm" />
