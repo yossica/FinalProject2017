@@ -15,12 +15,19 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	function flyToChangeStatus(invoiceNumber,statusId){
+		document.forms[1].invoiceNumber.value = invoiceNumber;
+		document.forms[1].statusId.value = statusId;
+		flyToPage("changeStatus");
+	}
 </script>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
+	<html:hidden property="statusId" name="invoiceForm"/>
+	<html:hidden property="invoiceNumber" name="invoiceForm"/>
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
@@ -158,14 +165,24 @@
 			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
 			                	<td>
 			                		<input type="button" value="View" class="btn btn-primary">
-			                		<input type="button" value="Change Status" class="btn btn-primary">
+			                		<logic:equal name="inv" property="statusInvoiceName" value="Created">
+			                			<input type="button" value="Change Status" class="btn btn-primary" 
+			                					onclick="javascript:flyToChangeStatus(
+			                								'<bean:write name="inv" property="invoiceNumber"/>',
+			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+			                		</logic:equal>
+			                		<logic:equal name="inv" property="statusInvoiceName" value="Sent">
+			                			<input type="button" value="Change Status" class="btn btn-primary" 
+			                					onclick="javascript:flyToChangeStatus(
+			                								'<bean:write name="inv" property="invoiceNumber"/>',
+			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+			                		</logic:equal>
 			                	</td>
 	                		</tr>
 	                	</logic:iterate>
 	                </tbody>
 	            </table>
 	        </div>
-        <!-- /.table-responsive -->
     	</div>
     </div>
     </html:form>
