@@ -118,4 +118,26 @@
 			</dynamic>
 	</select>
 	
+	<select id="getOutsourceContract" parameterClass="java.util.Map" resultClass="outsource.OutsourceBean">
+		select 
+			transaction_outsource_id as transactionOutsourceId,
+			o.client_id as clientId,
+			c.name as clientName,
+			o.employee_id as employeeId,
+			e.name as employeeName,
+			to_char(start_date, 'MM/dd/yyyy') as startDate,
+			to_char(end_date, 'MM/dd/yyyy') as endDate,
+			is_gross as isGross,
+			fee as fee
+		from transaction_outsource o,
+			 master_client c,
+			 master_employee e
+		where
+			o.client_id=c.client_id
+			and o.employee_id=e.employee_id
+		    and start_date &lt;= last_day(trunc(to_date(#exampleDate#,'MM/dd/yyyy'),'mm'))
+   			and end_date &gt;= trunc(to_date(#exampleDate#,'MM/dd/yyyy'),'mm')
+		    and o.client_id = #clientId#
+	</select>
+	
 </sqlMap> 

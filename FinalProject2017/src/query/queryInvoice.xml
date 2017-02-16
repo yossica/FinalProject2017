@@ -40,4 +40,7 @@
 		    and period_year = #periodYear#
 		    and client_id = #clientId#
 	</select>
+	
+	
+	
 </sqlMap> 

@@ -3,7 +3,7 @@
 
 <sqlMap namespace="holiday">
 
-	<select id="getWorkingDays" parameterClass="java.lang.String">
+	<select id="getWorkingDays" parameterClass="java.lang.String" resultClass="java.lang.Integer">
 		<!-- &lt; adalah pengganti simbol < -->
 		select 
 			work_days-total_valid_holiday as total_workdays 

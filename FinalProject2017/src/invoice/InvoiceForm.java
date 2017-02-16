@@ -20,7 +20,35 @@ public class InvoiceForm extends ActionForm{
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
+	private List outsourceList = new ArrayList();
 	
+	private String month;
+	private String year;
+	
+	private String clientName;
+	
+	
+	
+	public String getMonth() {
+		return month;
+	}
+
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+
+	public String getYear() {
+		return year;
+	}
+
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+
 	public InvoiceForm(){
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
@@ -98,5 +126,25 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setYearTo(String yearTo) {
 		this.yearTo = yearTo;
+	}
+
+
+	public List getOutsourceList() {
+		return outsourceList;
+	}
+
+
+	public void setOutsourceList(List outsourceList) {
+		this.outsourceList = outsourceList;
+	}
+
+
+	public String getClientName() {
+		return clientName;
+	}
+
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
 	}
 }

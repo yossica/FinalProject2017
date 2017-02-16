@@ -118,4 +118,16 @@ public class OutsourceManager {
 		}
 		return result;
 	}
+	
+	public List getOutsourceContract(Map input){
+		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (List) ibatis.queryForList("outsource.getOutsourceContract", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

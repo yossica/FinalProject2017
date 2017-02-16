@@ -24,6 +24,109 @@
 			<div class="col-lg-12">
 				<h1 class="page-header">Create Invoice Professional Service</h1>
 			</div>
+			
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-10" style="padding-right: 1%">
+
+					<div class="col-md-2"><label>Invoice Date</label></div>
+					<div class="col-md-5">
+						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-10" style="padding-right: 1%">
+
+					<div class="col-md-2"><label>Client</label></div>
+					<div class="col-md-5">
+						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
+						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+
+					<div class="col-md-2"><label>Contract Service</label></div>
+					<div class="col-md-5">
+						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
+						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+
+					<div class="col-md-2"><label>Period</label></div>
+
+					<div class="col-md-5">
+						<bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#"/>
+						 - 
+						<bean:write name="invoiceForm" property="invoiceBean.periodYear" format="#"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+
+					<div class="col-md-2"><label>Tax</label></div>
+					<div class="col-md-5">
+						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
+						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="1">
+							Include
+						</logic:equal>
+						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="0">
+							Exclude
+						</logic:equal>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+
+					<div class="col-md-2"><label>Invoice Notes</label></div>
+
+					<div class="col-md-5">
+						<html:text name="invoiceForm" property="invoiceBean.notes" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-2"><label>Outsource Data:</label></div>
+				</div>
+			</div>
+			<div class="col-md-10" style="border:solid 1px gray;border-radius: 10px; background-color: #EFEFEF;">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover">
+							<tr>
+								<th>Name</th>
+								<th>Fee</th>
+								<th>Total Work Days</th>
+								<th>Man Days</th>
+								<th>Notes</th>
+							</tr>
+							<tbody>
+							<logic:notEmpty property="outsourceList" name="invoiceForm">
+								<logic:iterate id="outsource" property="outsourceList"
+									name="invoiceForm">
+									<tr>
+										<td><bean:write property="employeeName" name="outsource" /></td>
+										<td><bean:write property="fee" name="outsource" format="#"/></td>
+										<td>Total Work Days</td>
+										<td></td>
+									</tr>
+								</logic:iterate>
+							</logic:notEmpty>
+						</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	</html:form>
