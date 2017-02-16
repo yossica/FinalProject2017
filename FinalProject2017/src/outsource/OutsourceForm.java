@@ -12,16 +12,16 @@ import employee.EmployeeBean;
 
 public class OutsourceForm extends ActionForm{
 	private int transactionOutsourceId;
-	private int clientId;
-	private String clientName;
-	private int employeeId;
-	private String employeeName;
-	
-	private String startDate;
-	private String endDate;
-	private int isGross;
-	private double fee;
-	
+//	private int clientId;
+//	private String clientName;
+//	private int employeeId;
+//	private String employeeName;
+//	
+//	private String startDate;
+//	private String endDate;
+//	private int isGross;
+//	private double fee;
+	private OutsourceBean outsourceBean = new OutsourceBean();
 	private String task;
 	private List messageList;
 
@@ -114,78 +114,6 @@ public class OutsourceForm extends ActionForm{
 		this.messageList = messageList;
 	}
 
-	public int getTransactionOutsourceId() {
-		return transactionOutsourceId;
-	}
-
-	public void setTransactionOutsourceId(int transactionOutsourceId) {
-		this.transactionOutsourceId = transactionOutsourceId;
-	}
-
-	public int getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
-	}
-
-	public String getClientName() {
-		return clientName;
-	}
-
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public String getEmployeeName() {
-		return employeeName;
-	}
-
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
-
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
-	public int getIsGross() {
-		return isGross;
-	}
-
-	public void setIsGross(int isGross) {
-		this.isGross = isGross;
-	}
-
-	public double getFee() {
-		return fee;
-	}
-
-	public void setFee(double fee) {
-		this.fee = fee;
-	}
-
 	public String getTask() {
 		return task;
 	}
@@ -193,8 +121,22 @@ public class OutsourceForm extends ActionForm{
 	public void setTask(String task) {
 		this.task = task;
 	}
-	
-	
+
+	public OutsourceBean getOutsourceBean() {
+		return outsourceBean;
+	}
+
+	public void setOutsourceBean(OutsourceBean outsourceBean) {
+		this.outsourceBean = outsourceBean;
+	}
+
+	public int getTransactionOutsourceId() {
+		return transactionOutsourceId;
+	}
+
+	public void setTransactionOutsourceId(int transactionOutsourceId) {
+		this.transactionOutsourceId = transactionOutsourceId;
+	}
 	
 
 }

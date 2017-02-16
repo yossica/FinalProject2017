@@ -73,4 +73,5 @@
     
 		<action path="/login" forward="/user.do?task=login" />	
 	</action-mappings>
+
 </struts-config>

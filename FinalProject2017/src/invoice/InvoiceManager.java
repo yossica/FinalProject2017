@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
+
 import utils.Filter;
 import utils.IbatisHelper;
 
@@ -60,15 +62,30 @@ public class InvoiceManager {
 			}
 		}*/
 	}
+	
 	public void update(InvoiceBean input){
 		
 	}
+	
+	public InvoiceBean getById(int input){
+		InvoiceBean result = new InvoiceBean();
+		return result;
+	}
+
 	public List getDetailByIdHeader(int input){
 		List result = new ArrayList();
 		return result;
 	}
-	public List getAllWithFilter(Filter input){
+	
+	public List getAllWithFilter(Map input){
 		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("invoice.getAllWithFilter", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result;
 	}
 	public List getCreatedRemainderList() {

@@ -3,6 +3,9 @@ package invoice;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +50,62 @@ public class InvoiceHandler extends Action{
 			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(invoiceManager.getMaxInvoiceHeaderId());
 			invoiceForm.getInvoiceBean().setInvoiceDate(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			return mapping.findForward("createInvoiceHH");
+		}else if ("filter".equals(invoiceForm.getTask())) {
+			String client = invoiceForm.getClientId();
+			String monthFrom = invoiceForm.getMonthFrom();
+			String yearFrom = invoiceForm.getYearFrom();
+			String monthTo = invoiceForm.getMonthTo();
+			String yearTo = invoiceForm.getYearTo();
+			String status = invoiceForm.getStatusInvoiceId();
+			
+			if ("".equals(client)) {
+				client = null;
+			}
+			if ("".equals(status)) {
+				status = null;
+			}
+			if ("".equals(yearTo)) {
+				monthFrom = null;
+				yearFrom = null;
+				monthTo = null;
+				yearTo = null;
+			}
+
+			Map paramMap = new HashMap();
+			paramMap.put("monthFrom", monthFrom);
+			paramMap.put("yearFrom", yearFrom);
+			paramMap.put("monthTo", monthTo);
+			paramMap.put("yearTo", yearTo);
+			paramMap.put("client", client);
+			paramMap.put("status", status);
+			invoiceForm.setStatusInvoiceList(masterManager.getAllStatusInvoice());
+			invoiceForm.setInvoiceList(invoiceManager.getAllWithFilter(paramMap));
+			return mapping.findForward("invoice");
 		}else {
+			Calendar cc = Calendar.getInstance();
+			int cyear = cc.get(Calendar.YEAR);
+			int cmonth = cc.get(Calendar.MONTH)+1;
+			int pyear = cc.get(Calendar.YEAR);
+			int pmonth = cc.get(Calendar.MONTH);
+			if (pmonth == 0) {
+				pmonth = 12;
+				pyear--;
+			}
+			
+			invoiceForm.setMonthFrom(pmonth+"");
+			invoiceForm.setYearFrom(pyear+"");
+			invoiceForm.setMonthTo(cmonth+"");
+			invoiceForm.setYearTo(cyear+"");
+			
+			Map paramMap = new HashMap();
+			paramMap.put("monthFrom", pmonth);
+			paramMap.put("yearFrom", pyear);
+			paramMap.put("monthTo", cmonth);
+			paramMap.put("yearTo", cyear);
+			paramMap.put("client", null);
+			paramMap.put("status", null);
+			invoiceForm.setStatusInvoiceList(masterManager.getAllStatusInvoice());
+			invoiceForm.setInvoiceList(invoiceManager.getAllWithFilter(paramMap));
 			return mapping.findForward("invoice");
 		}
 	}
