@@ -22,7 +22,7 @@
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Create Invoice Professional Training</h1>
+				<h1 class="page-header">Create Invoice Professional Service</h1>
 			</div>
 		</div>
 	</div>

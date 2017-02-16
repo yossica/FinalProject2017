@@ -26,7 +26,7 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
-					<div class="col-md-2">Invoice Date</div>
+					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 					</div>
@@ -34,23 +34,25 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
-					<div class="col-md-2">Client</div>
+					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-5">
-						<bean:write name="invoiceForm" property="invoiceBean.clientId" format="#"/>
+						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
+						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2">Contract Service</div>
+					<div class="col-md-2"><label>Contract Service</label></div>
 					<div class="col-md-5">
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeId" format="#"/>
+						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
+						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2">Period</div>
+					<div class="col-md-2"><label>Period</label></div>
 					<div class="col-md-5">
 						Bulan Tahun pembuatan
 					</div>
@@ -58,9 +60,34 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2">Tax</div>
+					<div class="col-md-2"><label>Tax</label></div>
 					<div class="col-md-5">
-						<bean:write name="invoiceForm" property="invoiceBean.isGross" format="#"/>
+						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
+						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="1">
+							Include
+						</logic:equal>
+						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="0">
+							Exclude
+						</logic:equal>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-2"><label>HeadHunter / Others</label></div>
+				</div>
+			</div>
+			<div class="col-md-10" style="border:solid 1px gray;border-radius: 10px; background-color: #EFEFEF;">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover">
+							<tr>
+								<th>Description</th>
+								<th>Fee</th>
+								<th>Notes</th>
+								<th>Action</th>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>

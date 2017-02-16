@@ -59,7 +59,7 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
-					<div class="col-md-2">Invoice Date</div>
+					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<input type="date" class="form-control" style="width: 100%;" name="invoiceBean.invoiceDate">
 					</div>
@@ -67,7 +67,7 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2">Client</div>
+					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-5">
 						<html:select property="invoiceBean.clientId" name="invoiceForm" styleClass="form-control-client">
 							<option selected disabled>Select</option>
@@ -78,7 +78,7 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2">Contract Services</div>
+					<div class="col-md-2"><label>Contract Services</label></div>
 					<div class="col-md-5">
 						<html:select property="invoiceBean.invoiceTypeId" name="invoiceForm" styleClass="form-control-client" styleId="contractServices" onchange="javascript:onchangeContractServices()">
 							<option selected disabled>Select</option>
@@ -89,8 +89,8 @@
 			</div>
 			<div id="period" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
-					<div class="col-md-2">Period</div>
-					<div class="col-md-1">Month</div>
+					<div class="col-md-2"><label>Period</label></div>
+					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-4">
 						<select class="form-control">
 							<option selected disabled>Select</option>
@@ -107,7 +107,7 @@
                             <option>December</option>
 						</select>
 					</div>
-					<div class="col-md-1">Year</div>
+					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-4">
 						<select class="form-control">
 							<option selected disabled>Select</option>
@@ -125,7 +125,7 @@
 			</div>
 			<div id="payment" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
-					<div class="col-md-2">Payment</div>
+					<div class="col-md-2"><label>Payment</label></div>
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
@@ -141,7 +141,7 @@
 			</div>
 			<div id="tax" class="col-md-10" style="margin-top: 10px;  display: none;">
 				<div class="row">
-					<div class="col-md-2">Tax</div>
+					<div class="col-md-2"><label>Tax</label></div>
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
@@ -157,7 +157,7 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2">Invoice Notes</div>
+					<div class="col-md-2"><label>Invoice Notes</label></div>
 					<div class="col-md-5">
 						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
 					</div>
