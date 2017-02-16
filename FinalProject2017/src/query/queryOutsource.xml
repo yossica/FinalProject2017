@@ -40,8 +40,8 @@
 		select 
             clientId,
             clientName, 
-            extract(year from add_months(trunc(startDate,'MM'),-1) ) || 
-            trim(to_char(extract(month from add_months(trunc(startDate,'MM'),-1) ),'00')) as startDate
+            extract(year from trunc(startDate,'MM') ) || 
+            trim(to_char(extract(month from trunc(startDate,'MM') ),'00')) as startDate
         from (
             select
                 t.client_id as clientId,
