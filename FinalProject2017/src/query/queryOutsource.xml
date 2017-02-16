@@ -4,7 +4,7 @@
 <sqlMap namespace="outsource">
 	<insert id="insert" parameterClass="outsource.OutsourceBean">
 		insert into transaction_outsource (transaction_outsource_id,client_id,employee_id,start_date,
-			end_date,is_gross, fee, created_by, created_date, changedBy, changedDate)
+			end_date,is_gross, fee, created_by, created_date, changed_by, changed_date)
 		values (#transactionOutsourceId#,#clientId#,#employeeId#,to_date(#startDate#,'MM/dd/yyyy'), 
 			to_date(#endDate#,'MM/dd/yyyy'),#isGross#,#fee#,#createdBy#,sysdate,null,null)
 	</insert>
@@ -75,7 +75,13 @@
 		from 
 			dual
 	</select>
-
+	
+	<select id="getMaxId" resultClass="java.lang.Integer">
+		select
+			max(transaction_outsource_id) 
+		from transaction_outsource
+	</select>
+	
 	<select id="getAllWithFilter" resultClass="outsource.OutsourceBean"
 									parameterClass="java.util.Map">
 		select 
@@ -101,10 +107,10 @@
 				</isNotNull>
 			</dynamic>
 			<dynamic prepend="AND">
-				<isNotNull property="month">
-					<isNotEmpty property="month">
-						to_char(start_date,'mm') &lt;= #month#
-			            and to_char(end_date,'mm')&gt;=#month#
+				<isNotNull property="date">
+					<isNotEmpty property="date">
+					    start_date &lt;= last_day(trunc(to_date(#date#,'MM/dd/yyyy'),'mm'))
+			   			and end_date &gt;= trunc(to_date(#date#,'MM/dd/yyyy'),'mm')
 					</isNotEmpty>
 				</isNotNull>
 			</dynamic>
