@@ -27,6 +27,7 @@
 	            <h1 class="page-header">Invoice List</h1>
 	            <div class="panel-body" style="padding-right:0;">
 		            <div class="pull-right">
+		           		<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('tes')">Test</button>
 			            <button type="button" class="btn btn-primary">Print</button>
 			            <button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Create</button>
 		            </div>
