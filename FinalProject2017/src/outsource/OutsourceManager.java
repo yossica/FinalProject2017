@@ -14,6 +14,13 @@ public class OutsourceManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
+			Integer maxId = (Integer) ibatis.queryForObject("outsource.getMaxId", null);
+            if(maxId==null){
+            	maxId = 1;
+            }else{
+            	maxId++;
+            }
+			input.setTransactionOutsourceId(maxId);
             ibatis.insert("outsource.insert", input);
             ibatis.commitTransaction();
 		} catch (SQLException e) {

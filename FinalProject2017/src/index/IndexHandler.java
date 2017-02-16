@@ -88,7 +88,6 @@ public class IndexHandler extends Action{
 						if(invoiceManager.checkInvoice(paramMap) == 0){
 							InvoiceBean invoiceBean = new InvoiceBean();
 							invoiceBean.setClientName(list.get(i).getClientName());
-							invoiceBean.setInvoiceTypeName(list.get(i).getInvoiceTypeName());
 							invoiceBean.setPeriodMonth(periodMonth);
 							invoiceBean.setPeriodYear(periodYear);
 							arrList.add(invoiceBean);
@@ -111,7 +110,7 @@ public class IndexHandler extends Action{
 			indexForm.setCreatedRemainderList(invoiceManager.getCreatedRemainderList());
 			indexForm.setSentOutsourceRemainderList(invoiceManager.getSentOutsourceRemainderList());
 			indexForm.setListedTrainingRemainderList(trainingManager.getListedTrainingRemainderList());
-			System.out.println(indexForm.getListedTrainingRemainderList().size());
+			//System.out.println(indexForm.getListedTrainingRemainderList().size());
 			return mapping.findForward("success");
 		}
 	}

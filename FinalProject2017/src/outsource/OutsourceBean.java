@@ -6,7 +6,6 @@ public class OutsourceBean implements Serializable {
 	private int transactionOutsourceId;
 	private int clientId;
 	private String clientName;
-	private String invoiceTypeName;
 	private int employeeId;
 	private String employeeName;
 	
@@ -97,12 +96,6 @@ public class OutsourceBean implements Serializable {
 	}
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
-	}
-	public String getInvoiceTypeName() {
-		return invoiceTypeName;
-	}
-	public void setInvoiceTypeName(String invoiceTypeName) {
-		this.invoiceTypeName = invoiceTypeName;
 	}
 	
 }

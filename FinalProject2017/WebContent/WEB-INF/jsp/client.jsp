@@ -18,7 +18,7 @@
 		flyToPage("update");
 	}
 </script>
-<title>Client</title>
+<title>Finance Solution</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
@@ -64,10 +64,6 @@
 						</div>
 						<!-- /.table-responsive -->
 					</div>
-					<table border="1">
-
-					</table>
-
 				</div>
 			</div>
 		</div>
