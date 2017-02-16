@@ -33,7 +33,12 @@ public class InvoiceHandler extends Action{
 
 		if ("createInvoice".equals(invoiceForm.getTask())){
 			return mapping.findForward("createInvoice");
-		}else if ("createInvoicePS".equals(invoiceForm.getTask())) {
+		}
+		
+		else if ("detailInvoice".equals(invoiceForm.getTask())) {
+			return mapping.findForward("detailInvoice");}
+		
+		else if ("createInvoicePS".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoicePS");
 		}else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
