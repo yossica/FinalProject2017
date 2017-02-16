@@ -58,7 +58,11 @@
 				<div class="row">
 					<div class="col-md-2"><label>Period</label></div>
 					<div class="col-md-5">
-						Bulan Tahun pembuatan
+						<html:hidden name="invoiceForm" property="invoiceBean.periodMonth" />
+						<html:hidden name="invoiceForm" property="invoiceBean.periodYear" />
+						<bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#" />
+						/
+						<bean:write name="invoiceForm" property="invoiceBean.periodYear" format="#" />
 					</div>
 				</div>
 			</div>
