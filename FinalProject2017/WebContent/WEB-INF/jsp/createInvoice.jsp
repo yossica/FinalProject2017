@@ -61,7 +61,7 @@
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
-						<input type="date" class="form-control" style="width: 100%;" name="invoiceBean.invoiceDate">
+						<input type="date" class="form-control" style="width: 100%;" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
 					</div>
 				</div>
 			</div>

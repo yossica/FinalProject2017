@@ -1,5 +1,8 @@
 package invoice;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +36,20 @@ public class InvoiceHandler extends Action{
 		}else if ("createInvoicePS".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoicePS");
 		}else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
-
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
-
+			return mapping.findForward("createInvoiceHH");
+		}else if ("addDetailHH".equals(invoiceForm.getTask())){
+			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
 			return mapping.findForward("createInvoiceHH");
 		}else if ("createInvoiceTR".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoiceTR");
+		}else if ("insert".equals(invoiceForm.getTask())){
+			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
+			Date date = new Date();
+			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(invoiceManager.getMaxInvoiceHeaderId());
+			invoiceForm.getInvoiceBean().setInvoiceDate(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
+			return mapping.findForward("createInvoiceHH");
 		}else if ("filter".equals(invoiceForm.getTask())) {
 			String client = invoiceForm.getClientId();
 			String monthFrom = invoiceForm.getMonthFrom();
