@@ -25,7 +25,6 @@ public class InvoiceForm extends ActionForm{
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
 	}
-
 	
 	public InvoiceBean getInvoiceBean() {
 		return invoiceBean;

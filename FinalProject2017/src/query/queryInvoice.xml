@@ -40,4 +40,26 @@
 		    and period_year = #periodYear#
 		    and client_id = #clientId#
 	</select>
+	
+	<select id="getMaxIdHeader" resultClass="java.lang.Integer">
+		select max(transaction_invoice_id)+1
+		from transaction_invoice_header
+    </select>
+    
+    <select id="getMaxInvoiceNumber" resultClass="java.lang.String">
+    	select invoice_number
+    	from transaction_invoice_header
+    	where transaction_invoice_id = 
+    	(select max(transaction_invoice_id)
+    	from transaction_invoice_header)
+    </select>
+    
+    <select id="getLatestInvoiceDate" resultClass="java.lang.String">
+    	select invoice_date
+    	from transaction_invoice_header
+    	where transaction_invoice_id = 
+    	(select max(transaction_invoice_id)
+    	from transaction_invoice_header)
+    </select>
+    
 </sqlMap> 
