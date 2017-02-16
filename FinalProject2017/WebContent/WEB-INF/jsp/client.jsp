@@ -64,10 +64,6 @@
 						</div>
 						<!-- /.table-responsive -->
 					</div>
-					<table border="1">
-
-					</table>
-
 				</div>
 			</div>
 		</div>
