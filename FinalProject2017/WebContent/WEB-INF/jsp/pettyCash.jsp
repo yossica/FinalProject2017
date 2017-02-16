@@ -56,8 +56,10 @@
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-lg-12">
 				<label>Remaining Balance: Rp.<bean:write name="pettyCashForm" property="remainingBalance" format="#" />,-</label>
-				<button type="button" class="btn btn-primary pull-right" onclick="javascript:flyToPage('export')">Export to PDF</button>
-				<button type="button" class="btn btn-primary pull-right" onclick="javascript:balance()">Balancing</button>
+				<div class="pull-right">
+					<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('export')">Export to PDF</button>
+					<button type="button" class="btn btn-primary" onclick="javascript:balance()">Balancing</button>
+				</div>
 				<br />
 				<br />
 			</div>
