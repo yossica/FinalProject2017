@@ -12,6 +12,8 @@ public class PettyCashForm extends ActionForm{
 	private double remainingBalance;
 	private List cashFlowCategoryList;
 	
+	private PettyCashBean pettyCashBean = new PettyCashBean();
+	
 	//petty cash view
 	private List transactionList;
 	//petty cash view - filter
@@ -19,12 +21,6 @@ public class PettyCashForm extends ActionForm{
 	private String filterStartDate;
 	private String filterEndDate;
 	
-	//petty cash form
-	private Integer isDebit;
-	private String transactionDate;
-	private String cashFlowCategoryId;
-	private Double amount;
-	private String description;
 	public String getTask() {
 		return task;
 	}
@@ -51,6 +47,13 @@ public class PettyCashForm extends ActionForm{
 	public void setCashFlowCategoryList(List cashFlowCategoryList) {
 		this.cashFlowCategoryList = cashFlowCategoryList;
 	}
+	
+	public PettyCashBean getPettyCashBean() {
+		return pettyCashBean;
+	}
+	public void setPettyCashBean(PettyCashBean pettyCashBean) {
+		this.pettyCashBean = pettyCashBean;
+	}
 	public List getTransactionList() {
 		return transactionList;
 	}
@@ -75,35 +78,4 @@ public class PettyCashForm extends ActionForm{
 	public void setFilterEndDate(String filterEndDate) {
 		this.filterEndDate = filterEndDate;
 	}
-	public Integer getIsDebit() {
-		return isDebit;
-	}
-	public void setIsDebit(Integer isDebit) {
-		this.isDebit = isDebit;
-	}
-	public String getTransactionDate() {
-		return transactionDate;
-	}
-	public void setTransactionDate(String transactionDate) {
-		this.transactionDate = transactionDate;
-	}
-	public String getCashFlowCategoryId() {
-		return cashFlowCategoryId;
-	}
-	public void setCashFlowCategoryId(String cashFlowCategoryId) {
-		this.cashFlowCategoryId = cashFlowCategoryId;
-	}
-	public Double getAmount() {
-		return amount;
-	}
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
 }

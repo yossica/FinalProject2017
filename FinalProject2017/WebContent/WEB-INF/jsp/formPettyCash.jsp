@@ -10,13 +10,32 @@
 <script>
 	function insert() {
 		//validate
-		var task = document.forms[1].task.value;
-		var debit = document.forms[1].isDebit.value;
-
 		//all balance checking in server
-		//validate amount != alphabet
+		//validate amount != alphabet		
+		var amount = document.getElementsByName("pettyCashBean.amount")[0].value;
+		var description = document.getElementsByName("pettyCashBean.description")[0].value;
+		var doubleReg = /^[\d]*(.[\d])*$/;
+		var errorMessage = ""; 
 		
-		if (confirm("Are you sure to insert these data to cash in bank transaction?")) {
+		if(amount == ""){
+			errorMessage+="Amount must be filled!<br/>";
+		}
+		else if(!doubleReg.test(amount)){
+			errorMessage+="Amount must be number!<br/>";
+		}
+		else if(parseFloat(amount) < 0){
+			errorMessage+="Amount cannot be negative!<br/>";	
+		}
+		if(description == ""){
+			errorMessage+="Description must be filled!<br/>";
+		}
+		
+		if(errorMessage.length != 0){
+			document.getElementById("message").innerHTML = errorMessage;
+			return;
+		}
+		
+		if (confirm("Are you sure to insert these data to petty cash transaction?")) {
 			flyToPage();
 		}
 	}
@@ -35,15 +54,7 @@
 
 	<html:form action="/pettyCash" method="post">
 		<html:hidden name="pettyCashForm" property="task" />
-		<html:hidden name="pettyCashForm" property="isDebit" />
-		<span> <logic:notEmpty name="pettyCashForm"
-				property="messageList">
-				<logic:iterate id="message" name="pettyCashForm"
-					property="messageList">
-					<bean:write name="message" />
-				</logic:iterate>
-			</logic:notEmpty>
-		</span>
+		<html:hidden name="pettyCashForm" property="pettyCashBean.isDebit" />
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
@@ -64,9 +75,9 @@
 							<div class="row" style="margin-top: 10px;">
 								<div class="col-md-3"><label>Transaction Date</label></div>
 								<div class="col-md-5">
-									<input type="date" class="form-control"
-										name="transactionDate"
-										value="<bean:write name="pettyCashForm" property="transactionDate"/>" />
+									<input type="date" style="form-control"
+										name="pettyCashBean.transactionDate"
+										value="<bean:write name="pettyCashForm" property="pettyCashBean.transactionDate"/>" />
 								</div>
 							</div>
 
@@ -74,8 +85,9 @@
 							<div class="row">
 								<div class="col-md-3"><label>Transaction Category</label></div>
 								<div class="col-md-5">									
-									<html:select property="cashFlowCategoryId"
-										name="pettyCashForm" styleClass="form-control">
+									<html:select property="pettyCashBean.cashFlowCategoryId"
+										name="pettyCashForm" styleClass="form-control"
+										style="width: 50%;">
 										<html:optionsCollection property="cashFlowCategoryList"
 											label="name" value="cashFlowCategoryId"
 											name="pettyCashForm" />
@@ -89,7 +101,7 @@
 								<div class="col-md-3"><label>Amount</label></div>
 								<div class="col-md-5">
 									<html:text styleClass="form-control" name="pettyCashForm"
-										property="amount" />
+										property="pettyCashBean.amount" />
 								</div>
 							</div>
 							<br />
@@ -97,14 +109,13 @@
 								<div class="col-md-3"><label>Description</label></div>
 								<div class="col-md-5" style="margin-bottom: 10px;">
 									<html:textarea styleClass="form-control" name="pettyCashForm"
-										property="description" />
+										property="pettyCashBean.description" />
 								</div>
 							</div>
 							<div class="panel-body" style="padding-left: 0;">
 								<div class="pull-left">
-									<button type="button" class="btn btn-primary " onclick="javascript:cancel()">Cancel</button>
-									<button type="button" class="btn btn-primary "
-										onclick="javascript:insert()">Save</button>
+									<button type="button" class="btn btn-primary" onclick="javascript:cancel()">Cancel</button>
+									<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
 
 								</div>
 							</div>
