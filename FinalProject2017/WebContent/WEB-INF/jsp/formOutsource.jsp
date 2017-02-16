@@ -126,31 +126,15 @@
 						<div class="row">
 							<div class="col-md-2"><label>Start Date</label></div>
 							<div class="col-md-5">
-								<logic:equal name="outsourceForm" property="task" 
-										value = "savecreate" >
-									<html:select name="outsourceForm" property="outsourceBean.clientId"
-										styleClass="form-control-client" size="1" >
-										<html:optionsCollection name="outsourceForm"
-											property="optClientList" value="clientId" label="name" />
-									</html:select>
-								</logic:equal>
+								<logic:notEqual name="outsourceForm" property="task" 
+													value = "saveupdate" >
+									<input type="date" class="form-control" style="width: 100%;" 
+										name="outsourceBean.startDate" 
+										value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />"/>
+								</logic:notEqual>
 								<logic:equal name="outsourceForm" property="task" 
 											value = "saveupdate" >
-									<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true" styleClass="form-control-client"/>
-									<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
-								</logic:equal>
-								<logic:equal name="outsourceForm" property="task" 
-											value = "savemutation" >
-									<html:select name="outsourceForm" property="outsourceBean.clientId"
-										styleClass="form-control-client" size="1" >
-										<html:optionsCollection name="outsourceForm"
-											property="optClientList" value="clientId" label="name" />
-									</html:select>
-								</logic:equal>
-								<logic:equal name="outsourceForm" property="task" 
-											value = "saveend" >
-									<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true" styleClass="form-control-client"/>
-									<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
+									<html:text name="outsourceForm" property="outsourceBean.startDate" readonly="true" styleClass="form-control-client"/>
 								</logic:equal>
 							</div>
 						</div>
