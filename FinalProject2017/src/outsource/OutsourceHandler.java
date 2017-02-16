@@ -37,8 +37,6 @@ public class OutsourceHandler extends Action{
 			outsourceForm.setTask("save" + outsourceForm.getTask());
 			return mapping.findForward("formOutsource");
 		}else if("update".equals(outsourceForm.getTask())){
-			outsourceForm.setOptClientList(clientManager.getAllEnabled());
-			outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
 			
 			OutsourceBean outsourceBean = outsourceManager.getById(outsourceForm.getTransactionOutsourceId());
 			outsourceForm.setClientId(outsourceBean.getClientId());
@@ -69,6 +67,16 @@ public class OutsourceHandler extends Action{
 			outsourceForm.setTask("save" + outsourceForm.getTask());
 			return mapping.findForward("formOutsource");
 		}else if("end".equals(outsourceForm.getTask())){
+
+			OutsourceBean outsourceBean = outsourceManager.getById(outsourceForm.getTransactionOutsourceId());
+			outsourceForm.setClientId(outsourceBean.getClientId());
+			outsourceForm.setClientName(outsourceBean.getClientName());
+			outsourceForm.setEmployeeId(outsourceBean.getEmployeeId());
+			outsourceForm.setEmployeeName(outsourceBean.getEmployeeName());
+			outsourceForm.setStartDate(outsourceBean.getStartDate());
+			outsourceForm.setEndDate(outsourceBean.getEndDate());
+			outsourceForm.setIsGross(outsourceBean.getIsGross());
+			outsourceForm.setFee(outsourceBean.getFee());
 			
 			return mapping.findForward("formOutsource");
 		}else if("savecreate".equals(outsourceForm.getTask())){

@@ -8,11 +8,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script>
-	function flyToPage(task)
-		{
-			document.forms[1].task.value = task;
-			document.forms[1].submit();
-		}
+	
+	function flyToPage(task){
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
+	}
+	
+	function flyToUpdate(id){
+		document.forms[1].key.value = id;
+		flyToPage("update");
+	}
 </script>
 <title>General Information</title>
 </head>
@@ -20,7 +25,8 @@
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/generalInformation" method="post">
 	<html:hidden property="task" name="generalInformationForm"/>
-	</html:form>
+	<html:hidden property="key" name="generalInformationForm"/>
+	
 	<div id="page-wrapper">
 	    <div class="row">
 	        <div class="col-lg-12">
@@ -31,14 +37,20 @@
 		                     <tr>
 			            		<th>Key</th>
 			            		<th>Name</th>
+			            		<th>Data Type</th>
+			            		<th>Length</th>
 			            		<th>Action</th>
 			            	</tr>
                             <tbody>
+                            	 <logic:iterate id="generalInformation" name="generalInformationForm" property="listGeneralInformation">
                                 	<tr>
-				            			<td></td>
-				            			<td></td>
-				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editGeneralInformation')"></td>
+				            			<td><bean:write name="generalInformation" property="key"/></td>
+				            			<td><bean:write name="generalInformation" property="value"/></td>
+				            			<td><bean:write name="generalInformation" property="dataType"/></td>
+				            			<td><bean:write name="generalInformation" property="length" format="#"/></td>
+				            			<td><input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToUpdate('<bean:write name="generalInformation" property="key"/>')"></td>
 				            		</tr>
+				            	</logic:iterate>
                             </tbody>
                         </table>
                     </div>
@@ -50,5 +62,6 @@
 	        </div>
 	    </div>       
     </div>
+    </html:form>
 </body>
 </html>

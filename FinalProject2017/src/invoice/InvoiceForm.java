@@ -1,5 +1,6 @@
 package invoice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
@@ -15,10 +16,16 @@ public class InvoiceForm extends ActionForm{
 	private String yearFrom;
 	private String monthTo;
 	private String yearTo;
+
+	private List clientList = new ArrayList();
+	private List invoiceTypeList = new ArrayList();
+	private List headHunterList = new ArrayList();
 	
-	private List clientList;
-	private List invoiceTypeList;
-	
+	public InvoiceForm(){
+		InvoiceDetailBean bean = new InvoiceDetailBean();
+		headHunterList.add(bean);
+	}
+
 	private List invoiceList;
 	
 	public InvoiceBean getInvoiceBean() {
@@ -38,9 +45,23 @@ public class InvoiceForm extends ActionForm{
 	public String getClientId() {
 		return clientId;
 	}
+
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
+	public List getHeadHunterList() {
+		return headHunterList;
+	}
+	public void setHeadHunterList(List headHunterList) {
+		this.headHunterList = headHunterList;
+	}
+	public InvoiceDetailBean getInvoiceDetail(int index){
+		while(this.headHunterList.size() <= index){
+			this.headHunterList.add(new InvoiceDetailBean());
+		}
+		return (InvoiceDetailBean) this.headHunterList.get(index);
+	}
+	
 	public String getMonthFrom() {
 		return monthFrom;
 	}

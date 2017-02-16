@@ -139,8 +139,21 @@
 		select count(1)
 		from transaction_training_header
     </select>	
+    
     <select id="getMaxDetailId" resultClass="java.lang.Integer">
 		select count(1)
 		from transaction_training_detail
-    </select>	
+    </select>
+    
+	<select id="getListedTrainingRemainderList" resultClass="training.TrainingBean">
+		select
+		    c.name as clientName,
+		    t.description as description
+		from
+		    transaction_training_header t,master_client c
+		where
+		    c.client_id = t.client_id and
+		    t.is_invoice_created = 0 and
+		    t.training_end_date &lt;= sysdate
+	</select>	
 </sqlMap> 

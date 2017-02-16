@@ -25,20 +25,13 @@ public class MasterManager {
 		}
 		return result;
 	}*/
-	public List getAllCashFlowCategory(Filter input) {
+	public List getAllCashFlowCategory(Map input) {
 		// hanya mengambil yang enabled + cash type sesuai + debit/kredit
-		//filter nanti akan diisi di handler
+		// map nanti akan diisi di handler
 		List result = null;
-
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		Map paramMap = new HashMap();
 		try {
-			if(input.getBean() instanceof CashFlowCategoryBean){
-				CashFlowCategoryBean bean = (CashFlowCategoryBean) input.getBean();
-				paramMap.put("cashFlowType", bean.getCashFlowType());
-				paramMap.put("isDebit", bean.getIsDebit());
-			}
-			result = ibatis.queryForList("cashFlowCategory.getAll", paramMap);
+			result = ibatis.queryForList("cashFlowCategory.getAll", input);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
