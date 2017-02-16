@@ -39,7 +39,7 @@
 			            	</div>
 			            	<div class="col-md-11">
 				            	<html:select property="clientId" name="invoiceForm" styleClass="form-control-client">
-									<option selected disabled>Select</option>
+									<html:option value="">Select</html:option>
 									<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 								</html:select>
 			            	</div>
@@ -51,65 +51,67 @@
 		            		From 
 		            	</div>
 		            	<div class="col-md-3">
-			            	<select class="form-control" name="monthFrom">
-	                            <option>Select</option>
-	                            <option>January</option>
-	                            <option>February</option>
-	                            <option>March</option>
-	                            <option>April</option>
-	                            <option>June</option>
-	                            <option>July</option>
-	                            <option>August</option>
-	                            <option>September</option>
-	                            <option>October</option>
-	                            <option>November</option>
-	                            <option>December</option>
-	                        </select>
+		            		<html:select property="monthFrom" name="invoiceForm" styleClass="form-control">
+								<html:option value="">Select</html:option>
+								<html:option value="1">January</html:option>
+								<html:option value="2">February</html:option>
+								<html:option value="3">March</html:option>
+								<html:option value="4">April</html:option>
+								<html:option value="5">May</html:option>
+								<html:option value="6">June</html:option>
+								<html:option value="7">July</html:option>
+								<html:option value="8">August</html:option>
+								<html:option value="9">September</html:option>
+								<html:option value="10">October</html:option>
+								<html:option value="11">November</html:option>
+								<html:option value="12">December</html:option>
+							</html:select>
 	                     </div>
 	                     <div class="col-md-2">
-	                        <select class="form-control" name="yearFrom">
-	                        	<option>Select</option>
+	                        <html:select property="yearFrom" name="invoiceForm" styleClass="form-control">
+	                        	<html:option value="">Select</html:option>
 	                        	<%
 	                        		int year = Calendar.getInstance().get(Calendar.YEAR);
 	                        		for(int i=2000;i<=year;i++){
 	                        		%>
-	                        			<option><%= i %></option>
+	                        			<html:option value='<%= i+"" %>'><%= i %></html:option>
 	                        		<% 
 	                        		}
 	                        	%>
-	                        </select>
+	                        </html:select>
                         </div>
                         <div class="col-md-1">
                         	To
                         </div>
                         <div class="col-md-3">
-	                        <select class="form-control" name="monthTo">
-	                            <option>Select</option>
-	                            <option>January</option>
-	                            <option>February</option>
-	                            <option>March</option>
-	                            <option>April</option>
-	                            <option>June</option>
-	                            <option>July</option>
-	                            <option>August</option>
-	                            <option>September</option>
-	                            <option>October</option>
-	                            <option>November</option>
-	                            <option>December</option>
-	                        </select>
+	                        <html:select property="monthTo" name="invoiceForm" styleClass="form-control">
+								<html:option value="">Select</html:option>
+								<html:option value="1">January</html:option>
+								<html:option value="2">February</html:option>
+								<html:option value="3">March</html:option>
+								<html:option value="4">April</html:option>
+								<html:option value="5">May</html:option>
+								<html:option value="6">June</html:option>
+								<html:option value="7">July</html:option>
+								<html:option value="8">August</html:option>
+								<html:option value="9">September</html:option>
+								<html:option value="10">October</html:option>
+								<html:option value="11">November</html:option>
+								<html:option value="12">December</html:option>
+							</html:select>
 	                    </div>
 	                    <div class="col-md-2">
-	                        <select class="form-control" name="yearTo">
-	                            <option>Select</option>
+	                        <html:select property="yearTo" name="invoiceForm" styleClass="form-control">
+	                        	<html:option value="">Select</html:option>
 	                        	<%
-	                        		year = Calendar.getInstance().get(Calendar.YEAR);
+	                        		int year = Calendar.getInstance().get(Calendar.YEAR);
 	                        		for(int i=2000;i<=year;i++){
 	                        		%>
-	                        			<option><%= i %></option>
+	                        			<html:option value='<%= i+"" %>'><%= i %></html:option>
 	                        		<% 
 	                        		}
 	                        	%>
-	                        </select>
+	                        </html:select>
 	                    </div>
 	              	</div>
 	              	</div>
@@ -118,19 +120,16 @@
 		                    <div class="col-md-1">   
 				            	Status
 				            </div>
-				            <div class="col-md-3">  
-				            	<select class="form-control">
-		                            <option>Select</option>
-		                            <option>Created</option>
-		                            <option>Sent</option>
-		                            <option>Paid</option>
-		                            <option>Canceled</option>
-		                        </select>
+				            <div class="col-md-3">
+		                        <html:select property="statusInvoiceId" name="invoiceForm" styleClass="form-control">
+		                        	<html:option value="">Select</html:option>
+		                        	<html:optionsCollection property="statusInvoiceList" label="name" value="statusInvoiceId" name="invoiceForm"/>
+		                        </html:select>
 			            	</div>
 		            	</div>
         			</div>
         			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-        				<button type="button" class="btn btn-primary">Filter</button>
+        				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('filter')">Filter</button>
         			</div>
         		</div>
 	        </div>

@@ -41,6 +41,7 @@ are relative to the classpath. For now, we only have one� -->
 <sqlMap resource="query/queryInvoiceType.xml" />
 <sqlMap resource="query/queryOutsource.xml" />
 <sqlMap resource="query/queryPettyCash.xml" />
+<sqlMap resource="query/queryStatusInvoice.xml" />
 <sqlMap resource="query/queryTraining.xml" />
 <sqlMap resource="query/queryUser.xml" />
 </sqlMapConfig>
