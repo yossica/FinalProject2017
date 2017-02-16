@@ -23,6 +23,7 @@
 	<html:form action="/outsource" method="post">
 		<html:hidden property="task" name="outsourceForm" />
 		<html:hidden property="transactionOutsourceId" name="outsourceForm"/>
+		<html:hidden property="outsourceBean.transactionOutsourceId" name="outsourceForm"/>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
@@ -41,6 +42,16 @@
 					
 					<div class="panel-body">
 						<div class="table-responsive">
+						
+						<span> 
+							<logic:notEmpty name="outsourceForm"
+								property="messageList">
+								<logic:iterate id="message" name="outsourceForm"
+									property="messageList">
+									<bean:write name="message" />
+								</logic:iterate>
+							</logic:notEmpty>
+						</span>
 							<table class="table table-hover">
 								<tbody>
 									<tr>
@@ -57,7 +68,7 @@
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveupdate" >
 												<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
-												<html:hidden name="outsourceForm" property="clientId"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savemutation" >
@@ -70,7 +81,7 @@
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveend" >
 												<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
-												<html:hidden name="outsourceForm" property="clientId"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
 											</logic:equal>
 										</td>
 									</tr>
@@ -88,7 +99,7 @@
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveupdate" >
 												<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true"/>
-												<html:hidden name="outsourceForm" property="employeeId"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.employeeId"/>
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task" 
 														value = "savemutation" >
@@ -101,7 +112,7 @@
 											<logic:equal name="outsourceForm" property="task" 
 														value = "saveend" >
 												<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true"/>
-												<html:hidden name="outsourceForm" property="employeeId"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.employeeId"/>
 											</logic:equal>
 										</td>
 									</tr>
