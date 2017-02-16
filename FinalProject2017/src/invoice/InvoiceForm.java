@@ -16,12 +16,14 @@ public class InvoiceForm extends ActionForm{
 	private String yearFrom;
 	private String monthTo;
 	private String yearTo;
+	private String statusInvoiceId;
 
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
 	
 	private List invoiceList;
+	private List statusInvoiceList;
 	
 	public InvoiceForm(){
 		InvoiceDetailBean bean = new InvoiceDetailBean();
@@ -86,6 +88,12 @@ public class InvoiceForm extends ActionForm{
 	public void setYearTo(String yearTo) {
 		this.yearTo = yearTo;
 	}
+	public String getStatusInvoiceId() {
+		return statusInvoiceId;
+	}
+	public void setStatusInvoiceId(String statusInvoiceId) {
+		this.statusInvoiceId = statusInvoiceId;
+	}
 	
 	public List getClientList() {
 		return clientList;
@@ -105,5 +113,11 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setInvoiceList(List invoiceList) {
 		this.invoiceList = invoiceList;
+	}
+	public List getStatusInvoiceList() {
+		return statusInvoiceList;
+	}
+	public void setStatusInvoiceList(List statusInvoiceList) {
+		this.statusInvoiceList = statusInvoiceList;
 	}
 }
