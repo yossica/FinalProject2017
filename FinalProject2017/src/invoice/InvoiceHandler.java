@@ -35,8 +35,8 @@ public class InvoiceHandler extends Action{
 			return mapping.findForward("createInvoice");
 		}
 		
-		else if ("tes".equals(invoiceForm.getTask())) {
-			return mapping.findForward("tes");}
+		else if ("detailInvoice".equals(invoiceForm.getTask())) {
+			return mapping.findForward("detailInvoice");}
 		
 		else if ("createInvoicePS".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoicePS");
