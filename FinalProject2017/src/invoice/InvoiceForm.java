@@ -17,12 +17,14 @@ public class InvoiceForm extends ActionForm{
 	private String yearTo;
 	private List clientList;
 	private List invoiceTypeList;
+
 	private List headHunterList;
 	
 	public InvoiceForm(){
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
 	}
+
 	
 	public InvoiceBean getInvoiceBean() {
 		return invoiceBean;
