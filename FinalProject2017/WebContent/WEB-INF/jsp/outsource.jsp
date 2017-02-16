@@ -17,11 +17,11 @@
 		document.forms[1].transactionOutsourceId.value = id;
 		flyToPage('update');
 	}
-	function flyToUpdate(id) {
+	function flyToMutation(id) {
 		document.forms[1].transactionOutsourceId.value = id;
 		flyToPage('mutation');
 	}
-	function flyToUpdate(id) {
+	function flyToEnd(id) {
 		document.forms[1].transactionOutsourceId.value = id;
 		flyToPage('end');
 	}
@@ -132,9 +132,9 @@
 										<td><button type="button" class="btn btn-primary"
 												onclick="javascript:flyToUpdate('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">Edit</button>
 											<button type="button" class="btn btn-primary"
-												onclick="javascript:flyToUpdate('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">Mutation</button>
+												onclick="javascript:flyToMutation('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">Mutation</button>
 											<button type="button" class="btn btn-primary"
-												onclick="javascript:flyToUpdate('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">End</button></td>
+												onclick="javascript:flyToEnd('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">End</button></td>
 									</tr>
 								</logic:iterate>
 							</logic:notEmpty>
