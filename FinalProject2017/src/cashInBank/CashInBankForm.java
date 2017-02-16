@@ -12,20 +12,15 @@ public class CashInBankForm extends ActionForm{
 	private double remainingBalance;
 	private List cashFlowCategoryList;
 	
+	private CashInBankBean cashInBankBean = new CashInBankBean();
+	
 	//cash in bank view
 	private List transactionList;
 	//cash in bank view - filter
 	private String categoryId;
 	private String filterStartDate;
 	private String filterEndDate;
-	
-	//cash in bank form
-	private Integer isDebit;
-	private String transactionDate;
-	private String cashFlowCategoryId;
-	private Double amount;
-	private String description;
-	
+		
 	public String getTask() {
 		return task;
 	}
@@ -58,6 +53,13 @@ public class CashInBankForm extends ActionForm{
 	public void setTransactionList(List transactionList) {
 		this.transactionList = transactionList;
 	}
+	
+	public CashInBankBean getCashInBankBean() {
+		return cashInBankBean;
+	}
+	public void setCashInBankBean(CashInBankBean cashInBankBean) {
+		this.cashInBankBean = cashInBankBean;
+	}
 	public String getCategoryId() {
 		return categoryId;
 	}
@@ -76,35 +78,4 @@ public class CashInBankForm extends ActionForm{
 	public void setFilterEndDate(String filterEndDate) {
 		this.filterEndDate = filterEndDate;
 	}
-	public Integer getIsDebit() {
-		return isDebit;
-	}
-	public void setIsDebit(Integer isDebit) {
-		this.isDebit = isDebit;
-	}
-	public String getTransactionDate() {
-		return transactionDate;
-	}
-	public void setTransactionDate(String transactionDate) {
-		this.transactionDate = transactionDate;
-	}
-	public String getCashFlowCategoryId() {
-		return cashFlowCategoryId;
-	}
-	public void setCashFlowCategoryId(String cashFlowCategoryId) {
-		this.cashFlowCategoryId = cashFlowCategoryId;
-	}
-	public Double getAmount() {
-		return amount;
-	}
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-		
 }
