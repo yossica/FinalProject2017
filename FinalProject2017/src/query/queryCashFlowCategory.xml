@@ -16,7 +16,13 @@
 		from master_cash_flow_category
 		where is_enabled = 1
 			and cash_flow_type = #cashFlowType#
-			and name not in ('Balancing','Transfer')
+			<dynamic prepend="AND">
+				<isNotNull property="isEnabled">
+					<isNotEmpty property="isEnabled">					
+						name not in ('Balancing','Transfer')						
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>			
 			<dynamic prepend="AND">
 				<isNotNull property="isDebit">
 					<isNotEmpty property="isDebit">
