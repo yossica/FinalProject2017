@@ -17,6 +17,14 @@ public class InvoiceForm extends ActionForm{
 	private String yearTo;
 	private List clientList;
 	private List invoiceTypeList;
+
+	private List headHunterList;
+	
+	public InvoiceForm(){
+		InvoiceDetailBean bean = new InvoiceDetailBean();
+		headHunterList.add(bean);
+	}
+
 	
 	public InvoiceBean getInvoiceBean() {
 		return invoiceBean;
@@ -51,7 +59,18 @@ public class InvoiceForm extends ActionForm{
 	public String getMessage() {
 		return message;
 	}
-
+	public List getHeadHunterList() {
+		return headHunterList;
+	}
+	public void setHeadHunterList(List headHunterList) {
+		this.headHunterList = headHunterList;
+	}
+	public InvoiceDetailBean getInvoiceDetail(int index){
+		while(this.headHunterList.size() <= index){
+			this.headHunterList.add(new InvoiceDetailBean());
+		}
+		return (InvoiceDetailBean) this.headHunterList.get(index);
+	}
 	public void setMessage(String message) {
 		this.message = message;
 	}
