@@ -8,10 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script>
-	function flyToPage(task) {
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
-	}
 	function flyToSave() {
 		document.forms[1].submit();
 	}
