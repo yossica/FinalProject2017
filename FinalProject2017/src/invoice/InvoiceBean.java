@@ -8,6 +8,7 @@ public class InvoiceBean implements Serializable {
 	private String invoiceNumber;
 	private String invoiceDate;
 	private int periodMonth;
+	private String periodMonthName;
 	private int periodYear;
 	private int statusInvoiceId;
 	private String statusInvoiceName;
@@ -63,7 +64,15 @@ public class InvoiceBean implements Serializable {
 	public int getPeriodYear() {
 		return periodYear;
 	}
+	
+	public String getPeriodMonthName() {
+		return periodMonthName;
+	}
 
+	public void setPeriodMonthName(String periodMonthName) {
+		this.periodMonthName = periodMonthName;
+	}
+	
 	public void setPeriodYear(int periodYear) {
 		this.periodYear = periodYear;
 	}

@@ -10,6 +10,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Invoice</title>
 <script>
+	function filter() {
+		var monthFrom = document.forms[1].monthFrom.value;
+		var yearFrom = document.forms[1].yearFrom.value;
+		var monthTo = document.forms[1].monthTo.value;
+		var yearTo = document.forms[1].yearTo.value;
+		
+		if (monthFrom == "" && yearFrom == "" && monthTo == "" && yearTo == "") {
+			flyToPage('filter');
+		} else if (monthFrom != "" && yearFrom != "" && monthTo != "" && yearTo != "") {
+			if (monthFrom>monthTo && yearFrom==yearTo) {
+				document.getElementById("errorMessage").innerHTML = "Start month period must before end month period!";
+			} else if (yearFrom>yearTo) {
+				document.getElementById("errorMessage").innerHTML = "Start year period must before end year period!";
+			} else {
+				flyToPage('filter');
+			}
+		} else {
+			document.getElementById("errorMessage").innerHTML = "Start month and year period and month and year period must be either both filled or emptied!";
+		}
+	}
 	function flyToPage(task)
 	{
 		document.forms[1].task.value = task;
@@ -27,7 +47,7 @@
 	            <h1 class="page-header">Invoice List</h1>
 	            <div class="panel-body" style="padding-right:0;">
 		            <div class="pull-right">
-			            <button type="button" class="btn btn-primary">Print</button>
+		           		<button type="button" class="btn btn-primary">Print</button>
 			            <button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Create</button>
 		            </div>
 	            </div>
@@ -129,7 +149,8 @@
 		            	</div>
         			</div>
         			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
-        				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('filter')">Filter</button>
+        				<button type="button" class="btn btn-primary" onclick="javascript:filter()">Filter</button>
+        				<span id="errorMessage" style="color:red">
         			</div>
         		</div>
 	        </div>
@@ -152,12 +173,14 @@
 					    	<tr>
 			                	<td><bean:write name="inv" property="invoiceNumber"/></td>
 			                	<td><bean:write name="inv" property="clientName"/></td>
-			                	<td><bean:write name="inv" property="periodMonth" format="#"/>&nbsp;<bean:write name="inv" property="periodYear" format="#"/></td>
+			                	<td>
+			                		<bean:write name="inv" property="periodMonthName"/>&nbsp;<bean:write name="inv" property="periodYear" format="#"/>
+			                	</td>
 			                	<td><bean:write name="inv" property="invoiceTypeName"/></td>
 			                	<td><bean:write name="inv" property="invoiceDate"/></td>
 			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
 			                	<td>
-			                		<input type="button" value="View" class="btn btn-primary">
+			                		<input type="button" value="View" class="btn btn-primary" onclick="javascript:flyToPage('detailInvoice')">
 			                		<input type="button" value="Change Status" class="btn btn-primary">
 			                	</td>
 	                		</tr>
