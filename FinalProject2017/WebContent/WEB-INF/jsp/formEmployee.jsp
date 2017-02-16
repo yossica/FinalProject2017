@@ -29,35 +29,44 @@
 	    	<div class="row">
 		        <div class="col-lg-12">
 		            <h1 class="page-header">Form Employee</h1>
-		            <div class="panel-body">
-	                    <table>
-	                    	<tr>
-	                    		<td class="col-md-5">Employee Name</td>
-	                    		<td class="col-md-12"><html:text property="name" name="employeeForm"></html:text></td>
-	                    	</tr>
-	                    	<tr>
-	                    		<td class="col-md-5">Email</td>
-	                    		<td class="col-md-12"><html:text property="email" name="employeeForm"></html:text></td>
-	                    	</tr>
-	                    	<tr>
-	                    		<td class="col-md-5">Employee Status</td>
-	                    		<td class="col-md-12">
-									<html:select property="isEnabled" name="employeeForm">
-										<html:option value="">Pilih Satu</html:option>
-										<html:option value="1">Enabled</html:option>
-										<html:option value="0">Disabled</html:option>
-									</html:select>
-								</td>
-	                    	</tr>
-	                    	<tr>
-	                    		<td class="col-md-5"><input type="button" value="Cancel" class="btn btn-primary" onclick="javascript:flyToPage('employee')"></td>
-	                    		<td class="col-md-5"><input type="button" value="Save" class="btn btn-primary" onclick="javascript:flyToSave()"></td>
-	                    	</tr>
-	                    </table>
-	                </div>
 		        </div>
-		    </div>
-	    </div>
+		        <div class="row" style="margin-top: 10px;">
+					<div class="col-md-10" style="padding-right: 1%">
+						<div class="form-group">
+							<div class="col-md-2">Employee Name</div>
+							<div class="col-md-5">
+								<html:text property="name" name="employeeForm" styleClass="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 10px;">
+					<div class="col-md-10" style="padding-right: 1%">
+						<div class="form-group">
+							<div class="col-md-2">Email</div>
+							<div class="col-md-5">
+								<html:text property="email" name="employeeForm" styleClass="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 10px;">
+					<div class="col-md-10" style="padding-right: 1%">
+						<div class="col-md-2">Employee Status</div>
+						<div class="col-md-5">
+							<html:select property="isEnabled" name="employeeForm" styleClass="form-control">
+								<html:option value="1">Enabled</html:option>
+								<html:option value="0">Disabled</html:option>
+							</html:select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-10" style="padding-right: 1%">
+                   	</div>
+                   	<input type="button" value="Cancel" class="btn btn-primary" onclick="javascript:flyToPage('employee')">
+                    <input type="button" value="Save" class="btn btn-primary" onclick="javascript:flyToSave()">
+                </div>
+		  </div>
     </html:form>
 </body>
 </html>

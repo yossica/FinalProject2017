@@ -21,19 +21,23 @@ public class InvoiceHandler extends Action{
 		InvoiceManager invoiceManager = new InvoiceManager();
 		ClientManager clientManager = new ClientManager();
 		MasterManager masterManager = new MasterManager();
-		//invoiceForm.setClientList(clientManager.getAll());
-		//invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
+		invoiceForm.setClientList(clientManager.getAll());
+		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
+
 		if ("createInvoice".equals(invoiceForm.getTask())){
 			return mapping.findForward("createInvoice");
 		}else if ("createInvoicePS".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoicePS");
 		}else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
+
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+
 			return mapping.findForward("createInvoiceHH");
 		}else if ("createInvoiceTR".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoiceTR");
 		}else {
+			invoiceForm.setInvoiceList(invoiceManager.getAllWithFilter());
 			return mapping.findForward("invoice");
 		}
 	}
