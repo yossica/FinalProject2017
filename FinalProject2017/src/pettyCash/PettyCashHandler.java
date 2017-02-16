@@ -38,13 +38,19 @@ public class PettyCashHandler extends Action{
 			
 			Map paramMap = new HashMap();			
 			
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(showDateFormat.parse(pettyCashForm.getFilterEndDate()));
-			paramMap.put("endDate",dateFormat.format(cal.getTime()));
-			pettyCashForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
-			cal.setTime(showDateFormat.parse(pettyCashForm.getFilterStartDate()));
-			paramMap.put("startDate", dateFormat.format(cal.getTime()));
-			pettyCashForm.setFilterStartDate(showDateFormat.format(cal.getTime()));
+			if("".equals(pettyCashForm.getFilterEndDate())){
+				paramMap.put("endDate",null);
+				paramMap.put("startDate",null);
+			}
+			else{
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(showDateFormat.parse(pettyCashForm.getFilterEndDate()));
+				paramMap.put("endDate",dateFormat.format(cal.getTime()));
+				pettyCashForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
+				cal.setTime(showDateFormat.parse(pettyCashForm.getFilterStartDate()));
+				paramMap.put("startDate", dateFormat.format(cal.getTime()));
+				pettyCashForm.setFilterStartDate(showDateFormat.format(cal.getTime()));
+			}
 			String cat = pettyCashForm.getCategoryId();
 			if("".equals(cat))
 				paramMap.put("category", null);
@@ -55,6 +61,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -98,6 +105,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -118,6 +126,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", 1);
+			paramMap.put("isEnabled", "1");
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -147,6 +156,7 @@ public class PettyCashHandler extends Action{
 				paramMap = new HashMap();
 				paramMap.put("cashFlowType", "Petty Cash");
 				paramMap.put("isDebit", 1);
+				paramMap.put("isEnabled", "1");
 				CashFlowCategoryBean cashFlowCategoryBean;
 				List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 				for (Object obj : cashFlowCategoryList) {
@@ -181,6 +191,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -202,6 +213,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", 0);
+			paramMap.put("isEnabled", "1");
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -216,32 +228,8 @@ public class PettyCashHandler extends Action{
 		}
 		else if("saveCredit".equals(pettyCashForm.getTask())){
 			Calendar cal = Calendar.getInstance();
-			//validate, if false, go back to form
 			double currBalance = pettyCashManager.getCurrentBalance();
-			String maxpetty = generalInformationManager.getByKey("max_petty").getValue();
-			double maxBalance = Double.parseDouble(generalInformationManager.getByKey("max_petty").getValue().trim());
-			if(currBalance + pettyCashForm.getPettyCashBean().getAmount() > maxBalance){
-				pettyCashForm.getMessageList().clear();
-				pettyCashForm.getMessageList().add("Exceeded max petty cash balance (Rp."+maxBalance+")!");
-				
-				pettyCashForm.setTask("saveCredit");
-				pettyCashForm.getPettyCashBean().setIsDebit(0);
-
-				pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());
-				
-				Map paramMap = new HashMap();
-				paramMap = new HashMap();
-				paramMap.put("cashFlowType", "Petty Cash");
-				paramMap.put("isDebit", 0);
-				CashFlowCategoryBean cashFlowCategoryBean;
-				List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
-				for (Object obj : cashFlowCategoryList) {
-					cashFlowCategoryBean = (CashFlowCategoryBean) obj;
-					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
-				}
-				pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-				return mapping.findForward("form");
-			}
+			
 			//save to cash in bank
 			PettyCashBean pettyCashBean = pettyCashForm.getPettyCashBean();
 			pettyCashBean.setBalance(currBalance + pettyCashForm.getPettyCashBean().getAmount());
@@ -267,6 +255,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -300,6 +289,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -329,6 +319,7 @@ public class PettyCashHandler extends Action{
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {

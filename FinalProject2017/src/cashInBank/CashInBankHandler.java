@@ -43,13 +43,19 @@ public class CashInBankHandler extends Action {
 			
 			Map paramMap = new HashMap();
 			
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(showDateFormat.parse(cashInBankForm.getFilterEndDate()));
-			paramMap.put("endDate",dateFormat.format(cal.getTime()));
-			cashInBankForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
-			cal.setTime(showDateFormat.parse(cashInBankForm.getFilterStartDate()));
-			paramMap.put("startDate", dateFormat.format(cal.getTime()));
-			cashInBankForm.setFilterStartDate(showDateFormat.format(cal.getTime()));
+			if("".equals(cashInBankForm.getFilterEndDate())){
+				paramMap.put("endDate",null);
+				paramMap.put("startDate",null);
+			}
+			else{
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(showDateFormat.parse(cashInBankForm.getFilterEndDate()));
+				paramMap.put("endDate",dateFormat.format(cal.getTime()));
+				cashInBankForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
+				cal.setTime(showDateFormat.parse(cashInBankForm.getFilterStartDate()));
+				paramMap.put("startDate", dateFormat.format(cal.getTime()));
+				cashInBankForm.setFilterStartDate(showDateFormat.format(cal.getTime()));
+			}
 			String cat = cashInBankForm.getCategoryId();
 			if("".equals(cat))
 				paramMap.put("category", null);
@@ -60,6 +66,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -103,6 +110,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -123,6 +131,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", 1);
+			paramMap.put("isEnabled", "1");
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -152,6 +161,7 @@ public class CashInBankHandler extends Action {
 				paramMap = new HashMap();
 				paramMap.put("cashFlowType", "Cash In Bank");
 				paramMap.put("isDebit", 1);
+				paramMap.put("isEnabled", "1");
 				CashFlowCategoryBean cashFlowCategoryBean;
 				List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 				for (Object obj : cashFlowCategoryList) {
@@ -186,6 +196,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -207,6 +218,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", 0);
+			paramMap.put("isEnabled", "1");
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -221,32 +233,8 @@ public class CashInBankHandler extends Action {
 		}
 		else if("saveCredit".equals(cashInBankForm.getTask())){
 			Calendar cal = Calendar.getInstance();
-			//validate, if false, go back to form
-			double currBalance = cashInBankManager.getCurrentBalance();
-			double maxBalance = Double.parseDouble(generalInformationManager.getByKey("max_cash").getValue());
-			if(currBalance + cashInBankForm.getCashInBankBean().getAmount() > maxBalance){
-				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add("Exceeded max cash in bank balance (Rp."+maxBalance+")!");
-				
-				cashInBankForm.setTask("saveCredit");
-				cashInBankForm.getCashInBankBean().setIsDebit(0);
-
-				cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
-				
-				Map paramMap = new HashMap();
-				paramMap = new HashMap();
-				paramMap.put("cashFlowType", "Cash In Bank");
-				paramMap.put("isDebit", 0);
-				CashFlowCategoryBean cashFlowCategoryBean;
-				List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
-				for (Object obj : cashFlowCategoryList) {
-					cashFlowCategoryBean = (CashFlowCategoryBean) obj;
-					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
-				}
-				cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-				cashInBankForm.getCashInBankBean().setTransactionDate(cashInBankForm.getCashInBankBean().getTransactionDate());
-				return mapping.findForward("form");
-			}
+			Double currBalance = cashInBankManager.getCurrentBalance();
+			
 			//save to cash in bank
 			CashInBankBean cashInBankBean = cashInBankForm.getCashInBankBean();
 			cashInBankBean.setBalance(currBalance + cashInBankForm.getCashInBankBean().getAmount());
@@ -272,6 +260,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -303,12 +292,12 @@ public class CashInBankHandler extends Action {
 			boolean flag = true;
 			cashInBankForm.getMessageList().clear();
 			if(currCashBalance - amount < 0){
-				//kalau cash tidak cukup
+				//kalau cash in bank tidak cukup
 				cashInBankForm.getMessageList().add("Cannot transfer more than remaining cash in bank balance!");
 				flag = false;
 			}
 			if(currPettyBalance + amount > maxPetty){
-				//kalau petty cash melewati max balance
+				//kalau petty cash melewati max petty cash balance
 				cashInBankForm.getMessageList().add("Exceeded max petty cash balance if transferred (Rp."+maxPetty+")!");
 				flag = false;
 			}
@@ -359,6 +348,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -393,6 +383,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {
@@ -422,6 +413,7 @@ public class CashInBankHandler extends Action {
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Cash In Bank");
 			paramMap.put("isDebit", null);
+			paramMap.put("isEnabled", null);
 			CashFlowCategoryBean cashFlowCategoryBean;
 			List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
 			for (Object obj : cashFlowCategoryList) {

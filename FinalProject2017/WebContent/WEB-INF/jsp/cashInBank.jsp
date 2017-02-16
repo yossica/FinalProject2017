@@ -9,6 +9,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cash in Bank</title>
 <script type="text/javascript">
+	function filter(){
+		//validasi untuk masukin start date + end date (ga boleh salah satu aja)
+		var filterStartDate = document.forms[1].filterStartDate.value;
+		var filterEndDate = document.forms[1].filterEndDate.value;
+		
+		if((filterStartDate == "" && filterEndDate == "") || (filterStartDate != "" && filterEndDate != "")){
+			flyToPage("filter");
+		}
+		else{
+			document.getElementById("errorMessage").innerHTML = "Start Date and End Date must be either both filled or emptied!";
+		}
+	}
 	function balance(){
 		if(confirm("Are you sure you want to balance cash in bank?")){
 			flyToPage("balancing");
@@ -65,7 +77,9 @@
 				</div>
 			</div>
 			<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
-				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('filter')">Filter</button>
+				<button type="button" class="btn btn-primary" onclick="javascript:filter()">Filter</button>
+				<span id="errorMessage" style="color:red">
+				</span>
 			</div>
 		</div>
 		<div class="row">
