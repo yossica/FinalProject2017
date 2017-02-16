@@ -2,6 +2,24 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="invoice">
+	<select id="getAllWithFilter" resultClass="invoice.InvoiceBean">		
+		select
+		    invoice_number as invoiceNumber,
+		    tih.client_id as clientId,
+		    mc.name as clientName,
+		    period_month as periodMonth,
+		    period_year as periodYear,
+		    tih.invoice_type_id as invoiceTypeId,
+		    mit.name as invoiceTypeName,
+		    invoice_date as invoiceDate,
+		    tih.status_invoice_id as statusInvoiceId,
+		    msi.name as statusInvoiceName
+		from transaction_invoice_header tih
+		join master_client mc on (tih.client_id=mc.client_id)
+		join master_invoice_type mit on (tih.invoice_type_id=mit.invoice_type_id)
+		join master_status_invoice msi on (tih.status_invoice_id=msi.status_invoice_id)
+	</select>
+	
 	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">
 		select
             c.name as clientName,

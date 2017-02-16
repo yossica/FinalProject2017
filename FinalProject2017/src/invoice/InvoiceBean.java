@@ -11,13 +11,10 @@ public class InvoiceBean implements Serializable {
 	private int periodYear;
 	private int statusInvoiceId;
 	private String statusInvoiceName;
-	
-	private int invoiceTypeId;	
+	private int invoiceTypeId;
 	private String invoiceTypeName;
-	
 	private int clientId;
 	private String clientName;
-	
 	private double totalNet;
 	private float ppnPercentage;
 	private int isGross;
@@ -27,7 +24,7 @@ public class InvoiceBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-	
+
 	private List<InvoiceDetailBean> detailList;
 
 	public int getTransactionInvoiceHeaderId() {
