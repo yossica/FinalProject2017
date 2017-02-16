@@ -23,6 +23,7 @@
 	<html:form action="/outsource" method="post">
 		<html:hidden property="task" name="outsourceForm" />
 		<html:hidden property="transactionOutsourceId" name="outsourceForm"/>
+		<html:hidden property="outsourceBean.transactionOutsourceId" name="outsourceForm"/>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
@@ -38,80 +39,87 @@
 								value = "savemutation" >
 						<h1 class="page-header">Mutation Profesional Service Contract</h1>
 					</logic:equal>
-  				</div>
-				<div class="col-lg-12" style="padding-left: 0px;">	
-					<div class="panel-body" style="padding-left: 0px;padding-top:0px;">
-						<div class="row">
-							<div class="col-md-10" style="padding-right: 1%">
-								<div class="col-md-2"><label>Client</label></div>
-								<div class="col-md-5">
-									<logic:equal name="outsourceForm" property="task" 
+				
+					<div class="panel-body">
+						<div class="table-responsive">
+						
+						<span> 
+							<logic:notEmpty name="outsourceForm"
+								property="messageList">
+								<logic:iterate id="message" name="outsourceForm"
+									property="messageList">
+									<bean:write name="message" />
+								</logic:iterate>
+							</logic:notEmpty>
+						</span>
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td>Client</td>
+										<td>
+											<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
-										<html:select name="outsourceForm" property="outsourceBean.clientId"
-											styleClass="form-control-client" size="1" >
-											<html:optionsCollection name="outsourceForm"
-												property="optClientList" value="clientId" label="name" />
-										</html:select>
-									</logic:equal>
-									<logic:equal name="outsourceForm" property="task" 
-												value = "saveupdate" >
-										<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
-										<html:hidden name="outsourceForm" property="clientId"/>
-									</logic:equal>
-									<logic:equal name="outsourceForm" property="task" 
-												value = "savemutation" >
-										<html:select name="outsourceForm" property="outsourceBean.clientId"
-											styleClass="form-control-client" size="1" >
-											<html:optionsCollection name="outsourceForm"
-												property="optClientList" value="clientId" label="name" />
-										</html:select>
-									</logic:equal>
-									<logic:equal name="outsourceForm" property="task" 
-												value = "saveend" >
-										<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
-										<html:hidden name="outsourceForm" property="clientId"/>
-									</logic:equal>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-10" style="margin-top: 10px;">
-							<div class="row">
-								<div class="col-md-2"><label>Employee</label></div>
-								<div class="col-md-5">
-									<logic:equal name="outsourceForm" property="task" 
+												<html:select name="outsourceForm" property="outsourceBean.clientId"
+													styleClass="form-control-client" size="1" >
+													<html:optionsCollection name="outsourceForm"
+														property="optClientList" value="clientId" label="name" />
+												</html:select>
+											</logic:equal>
+											<logic:equal name="outsourceForm" property="task" 
+														value = "saveupdate" >
+												<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
+											</logic:equal>
+											<logic:equal name="outsourceForm" property="task" 
+														value = "savemutation" >
+												<html:select name="outsourceForm" property="outsourceBean.clientId"
+													styleClass="form-control-client" size="1" >
+													<html:optionsCollection name="outsourceForm"
+														property="optClientList" value="clientId" label="name" />
+												</html:select>
+											</logic:equal>
+											<logic:equal name="outsourceForm" property="task" 
+														value = "saveend" >
+												<html:text name="outsourceForm" property="outsourceBean.clientName" readonly="true"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.clientId"/>
+											</logic:equal>
+										</td>
+									</tr>
+									<tr>
+										<td>Employee</td>
+										<td>
+											<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
-										<html:select name="outsourceForm" property="employeeId"
-											styleClass="form-control-client" size="1">
-											<html:optionsCollection name="outsourceForm"
-												property="optEmployeeList" value="employeeId" label="name" />
-										</html:select>
-									</logic:equal>
-									<logic:equal name="outsourceForm" property="task" 
-												value = "saveupdate" >
-										<html:text name="outsourceForm" property="employeeName" readonly="true" styleClass="form-control-client"/>
-										<html:hidden name="outsourceForm" property="employeeId"/>
-									</logic:equal>
-									<logic:equal name="outsourceForm" property="task" 
-												value = "savemutation" >
-										<html:select name="outsourceForm" property="employeeId"
-											styleClass="form-control-client" size="1">
-											<html:optionsCollection name="outsourceForm"
-												property="optEmployeeList" value="employeeId" label="name" />
-										</html:select>
-									</logic:equal>
-									<logic:equal name="outsourceForm" property="task" 
-												value = "saveend" >
-										<html:text name="outsourceForm" property="employeeName" readonly="true" styleClass="form-control-client"/>
-										<html:hidden name="outsourceForm" property="employeeId"/>
-									</logic:equal>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-10" style="margin-top: 10px;">
-							<div class="row">
-								<div class="col-md-2"><label>Start Date</label></div>
-								<div class="col-md-5">
-									<logic:equal name="outsourceForm" property="task" 
+												<html:select name="outsourceForm" property="outsourceBean.employeeId"
+													styleClass="form-control-client" size="1">
+													<html:optionsCollection name="outsourceForm"
+														property="optEmployeeList" value="employeeId" label="name" />
+												</html:select>
+											</logic:equal>
+											<logic:equal name="outsourceForm" property="task" 
+														value = "saveupdate" >
+												<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.employeeId"/>
+											</logic:equal>
+											<logic:equal name="outsourceForm" property="task" 
+														value = "savemutation" >
+												<html:select name="outsourceForm" property="outsourceBean.employeeId"
+													styleClass="form-control-client" size="1">
+													<html:optionsCollection name="outsourceForm"
+														property="optEmployeeList" value="employeeId" label="name" />
+												</html:select>
+											</logic:equal>
+											<logic:equal name="outsourceForm" property="task" 
+														value = "saveend" >
+												<html:text name="outsourceForm" property="outsourceBean.employeeName" readonly="true"/>
+												<html:hidden name="outsourceForm" property="outsourceBean.employeeId"/>
+											</logic:equal>
+										</td>
+									</tr>
+									<tr>
+										<td>Start Date</td>
+										<td>
+											<logic:equal name="outsourceForm" property="task" 
 														value = "savecreate" >
 										<input type="date" class="form-control" style="width: 100%;" 
 											name="outsourceBean.startDate" 
