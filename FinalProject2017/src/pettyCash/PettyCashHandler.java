@@ -110,7 +110,7 @@ public class PettyCashHandler extends Action{
 		}
 		else if("debit".equals(pettyCashForm.getTask())){
 			pettyCashForm.setTask("saveDebit");
-			pettyCashForm.setIsDebit(1);
+			pettyCashForm.getPettyCashBean().setIsDebit(1);
 
 			pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());
 			
@@ -126,7 +126,7 @@ public class PettyCashHandler extends Action{
 			}
 			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
-			pettyCashForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+			pettyCashForm.getPettyCashBean().setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
 			
 			return mapping.findForward("form");
 		}
@@ -134,12 +134,12 @@ public class PettyCashHandler extends Action{
 			Calendar cal = Calendar.getInstance();
 			//validate, if false, go back to form
 			double currBalance = pettyCashManager.getCurrentBalance();
-			if(currBalance - pettyCashForm.getAmount() < 0){
+			if(currBalance - pettyCashForm.getPettyCashBean().getAmount() < 0){
 				pettyCashForm.getMessageList().clear();
 				pettyCashForm.getMessageList().add("Cannot create transaction that cost more than remaining balance!");
 				
 				pettyCashForm.setTask("saveDebit");
-				pettyCashForm.setIsDebit(1);
+				pettyCashForm.getPettyCashBean().setIsDebit(1);
 
 				pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());
 				
@@ -154,17 +154,13 @@ public class PettyCashHandler extends Action{
 					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
 				}
 				pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-				pettyCashForm.setTransactionDate(pettyCashForm.getTransactionDate());
+				pettyCashForm.getPettyCashBean().setTransactionDate(pettyCashForm.getPettyCashBean().getTransactionDate());
 				return mapping.findForward("form");
 			}
 			//save to cash in bank
-			PettyCashBean pettyCashBean = new PettyCashBean();
-			pettyCashBean.setCashFlowCategoryId(pettyCashForm.getCashFlowCategoryId());
-			pettyCashBean.setIsDebit(1);
-			pettyCashBean.setAmount(pettyCashForm.getAmount());
-			pettyCashBean.setBalance(currBalance - pettyCashForm.getAmount());
-			pettyCashBean.setDescription(pettyCashForm.getDescription());
-			cal.setTime(showDateFormat.parse(pettyCashForm.getTransactionDate()));
+			PettyCashBean pettyCashBean = pettyCashForm.getPettyCashBean();
+			pettyCashBean.setBalance(currBalance - pettyCashForm.getPettyCashBean().getAmount());
+			cal.setTime(showDateFormat.parse(pettyCashForm.getPettyCashBean().getTransactionDate()));
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			pettyCashBean.setCreatedBy((String) request.getSession().getAttribute("username"));
 			pettyCashManager.insert(pettyCashBean);
@@ -198,7 +194,7 @@ public class PettyCashHandler extends Action{
 		}
 		else if("credit".equals(pettyCashForm.getTask())){
 			pettyCashForm.setTask("saveCredit");
-			pettyCashForm.setIsDebit(0);
+			pettyCashForm.getPettyCashBean().setIsDebit(0);
 
 			pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());
 			
@@ -214,7 +210,7 @@ public class PettyCashHandler extends Action{
 			}
 			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
-			pettyCashForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+			pettyCashForm.getPettyCashBean().setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
 			
 			return mapping.findForward("form");
 		}
@@ -222,13 +218,14 @@ public class PettyCashHandler extends Action{
 			Calendar cal = Calendar.getInstance();
 			//validate, if false, go back to form
 			double currBalance = pettyCashManager.getCurrentBalance();
-			double maxBalance = Double.parseDouble(generalInformationManager.getByKey("max_petty").getValue());
-			if(currBalance + pettyCashForm.getAmount() > maxBalance){
+			String maxpetty = generalInformationManager.getByKey("max_petty").getValue();
+			double maxBalance = Double.parseDouble(generalInformationManager.getByKey("max_petty").getValue().trim());
+			if(currBalance + pettyCashForm.getPettyCashBean().getAmount() > maxBalance){
 				pettyCashForm.getMessageList().clear();
 				pettyCashForm.getMessageList().add("Exceeded max petty cash balance (Rp."+maxBalance+")!");
 				
 				pettyCashForm.setTask("saveCredit");
-				pettyCashForm.setIsDebit(0);
+				pettyCashForm.getPettyCashBean().setIsDebit(0);
 
 				pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());
 				
@@ -243,17 +240,12 @@ public class PettyCashHandler extends Action{
 					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
 				}
 				pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-				pettyCashForm.setTransactionDate(pettyCashForm.getTransactionDate());
 				return mapping.findForward("form");
 			}
 			//save to cash in bank
-			PettyCashBean pettyCashBean = new PettyCashBean();
-			pettyCashBean.setCashFlowCategoryId(pettyCashForm.getCashFlowCategoryId());
-			pettyCashBean.setIsDebit(0);
-			pettyCashBean.setAmount(pettyCashForm.getAmount());
-			pettyCashBean.setBalance(currBalance + pettyCashForm.getAmount());
-			pettyCashBean.setDescription(pettyCashForm.getDescription());
-			cal.setTime(showDateFormat.parse(pettyCashForm.getTransactionDate()));
+			PettyCashBean pettyCashBean = pettyCashForm.getPettyCashBean();
+			pettyCashBean.setBalance(currBalance + pettyCashForm.getPettyCashBean().getAmount());
+			cal.setTime(showDateFormat.parse(pettyCashForm.getPettyCashBean().getTransactionDate()));
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			pettyCashBean.setCreatedBy((String) request.getSession().getAttribute("username"));
 			pettyCashManager.insert(pettyCashBean);

@@ -115,7 +115,7 @@ public class CashInBankHandler extends Action {
 		}
 		else if("debit".equals(cashInBankForm.getTask())){
 			cashInBankForm.setTask("saveDebit");
-			cashInBankForm.setIsDebit(1);
+			cashInBankForm.getCashInBankBean().setIsDebit(1);
 
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
 			
@@ -131,7 +131,7 @@ public class CashInBankHandler extends Action {
 			}
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
-			cashInBankForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+			cashInBankForm.getCashInBankBean().setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
 			
 			return mapping.findForward("form");
 		}
@@ -139,12 +139,12 @@ public class CashInBankHandler extends Action {
 			Calendar cal = Calendar.getInstance();
 			//validate, if false, go back to form
 			double currBalance = cashInBankManager.getCurrentBalance();
-			if(currBalance - cashInBankForm.getAmount() < 0){
+			if(currBalance - cashInBankForm.getCashInBankBean().getAmount() < 0){
 				cashInBankForm.getMessageList().clear();
 				cashInBankForm.getMessageList().add("Cannot create transaction that cost more than remaining balance!");
 				
 				cashInBankForm.setTask("saveDebit");
-				cashInBankForm.setIsDebit(1);
+				cashInBankForm.getCashInBankBean().setIsDebit(1);
 
 				cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
 				
@@ -159,17 +159,13 @@ public class CashInBankHandler extends Action {
 					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
 				}
 				cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-				cashInBankForm.setTransactionDate(cashInBankForm.getTransactionDate());
+				cashInBankForm.getCashInBankBean().setTransactionDate(cashInBankForm.getCashInBankBean().getTransactionDate());
 				return mapping.findForward("form");
 			}
 			//save to cash in bank
-			CashInBankBean cashInBankBean = new CashInBankBean();
-			cashInBankBean.setCashFlowCategoryId(cashInBankForm.getCashFlowCategoryId());
-			cashInBankBean.setIsDebit(1);
-			cashInBankBean.setAmount(cashInBankForm.getAmount());
-			cashInBankBean.setBalance(currBalance - cashInBankForm.getAmount());
-			cashInBankBean.setDescription(cashInBankForm.getDescription());
-			cal.setTime(showDateFormat.parse(cashInBankForm.getTransactionDate()));
+			CashInBankBean cashInBankBean = cashInBankForm.getCashInBankBean();
+			cashInBankBean.setBalance(currBalance - cashInBankForm.getCashInBankBean().getAmount());
+			cal.setTime(showDateFormat.parse(cashInBankForm.getCashInBankBean().getTransactionDate()));
 			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			cashInBankBean.setCreatedBy((String) request.getSession().getAttribute("username"));
 			cashInBankManager.insert(cashInBankBean);
@@ -203,7 +199,7 @@ public class CashInBankHandler extends Action {
 		}
 		else if("credit".equals(cashInBankForm.getTask())){
 			cashInBankForm.setTask("saveCredit");
-			cashInBankForm.setIsDebit(0);
+			cashInBankForm.getCashInBankBean().setIsDebit(0);
 
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
 			
@@ -219,7 +215,7 @@ public class CashInBankHandler extends Action {
 			}
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
-			cashInBankForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+			cashInBankForm.getCashInBankBean().setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
 			
 			return mapping.findForward("form");
 		}
@@ -228,12 +224,12 @@ public class CashInBankHandler extends Action {
 			//validate, if false, go back to form
 			double currBalance = cashInBankManager.getCurrentBalance();
 			double maxBalance = Double.parseDouble(generalInformationManager.getByKey("max_cash").getValue());
-			if(currBalance + cashInBankForm.getAmount() > maxBalance){
+			if(currBalance + cashInBankForm.getCashInBankBean().getAmount() > maxBalance){
 				cashInBankForm.getMessageList().clear();
 				cashInBankForm.getMessageList().add("Exceeded max cash in bank balance (Rp."+maxBalance+")!");
 				
 				cashInBankForm.setTask("saveCredit");
-				cashInBankForm.setIsDebit(0);
+				cashInBankForm.getCashInBankBean().setIsDebit(0);
 
 				cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
 				
@@ -248,17 +244,13 @@ public class CashInBankHandler extends Action {
 					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
 				}
 				cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-				cashInBankForm.setTransactionDate(cashInBankForm.getTransactionDate());
+				cashInBankForm.getCashInBankBean().setTransactionDate(cashInBankForm.getCashInBankBean().getTransactionDate());
 				return mapping.findForward("form");
 			}
 			//save to cash in bank
-			CashInBankBean cashInBankBean = new CashInBankBean();
-			cashInBankBean.setCashFlowCategoryId(cashInBankForm.getCashFlowCategoryId());
-			cashInBankBean.setIsDebit(0);
-			cashInBankBean.setAmount(cashInBankForm.getAmount());
-			cashInBankBean.setBalance(currBalance + cashInBankForm.getAmount());
-			cashInBankBean.setDescription(cashInBankForm.getDescription());
-			cal.setTime(showDateFormat.parse(cashInBankForm.getTransactionDate()));
+			CashInBankBean cashInBankBean = cashInBankForm.getCashInBankBean();
+			cashInBankBean.setBalance(currBalance + cashInBankForm.getCashInBankBean().getAmount());
+			cal.setTime(showDateFormat.parse(cashInBankForm.getCashInBankBean().getTransactionDate()));
 			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			cashInBankBean.setCreatedBy((String) request.getSession().getAttribute("username"));
 			cashInBankManager.insert(cashInBankBean);
@@ -293,18 +285,10 @@ public class CashInBankHandler extends Action {
 		}
 		else if("transfer".equals(cashInBankForm.getTask())){
 			cashInBankForm.setTask("saveTransfer");
-			cashInBankForm.setIsDebit(-1);
+			cashInBankForm.getCashInBankBean().setIsDebit(-1);
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
-			
-			List cashFlowCategoryList = new ArrayList();
-			CashFlowCategoryBean cashFlowCategoryBean = new CashFlowCategoryBean();
-			cashFlowCategoryBean.setCashFlowCategoryId("");
-			cashFlowCategoryBean.setName("Transfer");
-			cashFlowCategoryList.add(0, cashFlowCategoryBean);
-			cashInBankForm.setCategoryId("");
-			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-			
-			cashInBankForm.setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
+						
+			cashInBankForm.getCashInBankBean().setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
 			
 			return mapping.findForward("form");
 		}
@@ -315,7 +299,7 @@ public class CashInBankHandler extends Action {
 			double currCashBalance = cashInBankManager.getCurrentBalance();
 			double currPettyBalance = pettyCashManager.getCurrentBalance();
 			double maxPetty = Double.parseDouble(generalInformationManager.getByKey("max_petty").getValue());
-			double amount = cashInBankForm.getAmount();
+			double amount = cashInBankForm.getCashInBankBean().getAmount();
 			boolean flag = true;
 			cashInBankForm.getMessageList().clear();
 			if(currCashBalance - amount < 0){
@@ -330,39 +314,30 @@ public class CashInBankHandler extends Action {
 			}
 			if(!flag){
 				cashInBankForm.setTask("saveTransfer");
-				cashInBankForm.setIsDebit(-1);
+				cashInBankForm.getCashInBankBean().setIsDebit(-1);
 				cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
-				
-				List cashFlowCategoryList = new ArrayList();
-				CashFlowCategoryBean cashFlowCategoryBean = new CashFlowCategoryBean();
-				cashFlowCategoryBean.setCashFlowCategoryId("");
-				cashFlowCategoryBean.setName("Transfer");
-				cashFlowCategoryList.add(0, cashFlowCategoryBean);
-				cashInBankForm.setCategoryId("");
-				cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-				
-				cashInBankForm.setTransactionDate(cashInBankForm.getTransactionDate());
+								
+				cashInBankForm.getCashInBankBean().setTransactionDate(cashInBankForm.getCashInBankBean().getTransactionDate());
 				
 				return mapping.findForward("form");
 			}
 			//save to cash in bank
-			CashInBankBean cashInBankBean = new CashInBankBean();
+			CashInBankBean cashInBankBean = cashInBankForm.getCashInBankBean();
 			cashInBankBean.setCashFlowCategoryId("1c-trf");
 			cashInBankBean.setIsDebit(1);
-			cashInBankBean.setAmount(amount);
 			cashInBankBean.setBalance(currCashBalance - amount);
-			cashInBankBean.setDescription(cashInBankForm.getDescription());
-			cal.setTime(showDateFormat.parse(cashInBankForm.getTransactionDate()));
+			cal.setTime(showDateFormat.parse(cashInBankForm.getCashInBankBean().getTransactionDate()));
 			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			cashInBankBean.setCreatedBy((String) request.getSession().getAttribute("username"));
 			cashInBankManager.insert(cashInBankBean);
+			
 			//save to petty cash
 			PettyCashBean pettyCashBean = new PettyCashBean();
 			pettyCashBean.setCashFlowCategoryId("0p-trf");
 			pettyCashBean.setIsDebit(0);
 			pettyCashBean.setAmount(amount);
 			pettyCashBean.setBalance(currPettyBalance + amount);
-			pettyCashBean.setDescription(cashInBankForm.getDescription());
+			pettyCashBean.setDescription(cashInBankForm.getCashInBankBean().getDescription());
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			pettyCashBean.setCreatedBy((String) request.getSession().getAttribute("username"));
 			pettyCashManager.insert(pettyCashBean);

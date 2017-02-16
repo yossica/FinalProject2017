@@ -10,14 +10,34 @@
 <script>
 	function insert() {
 		//validate
-		var task = document.forms[1].task.value;
-		var debit = document.forms[1].isDebit.value;
-
 		//all balance checking in server
 		//validate amount != alphabet
+		var amount = document.getElementsByName("cashInBankBean.amount")[0].value;
+		var description = document.getElementsByName("cashInBankBean.description")[0].value;
+		var doubleReg = /^[\d]*(.[\d])*$/;
+		var errorMessage = ""; 
 		
-		if (confirm("Are you sure to insert these data to cash in bank transaction?")) {
-			flyToPage();
+		if(amount == ""){
+			errorMessage = errorMessage + "Amount must be filled!<br/>";
+		}
+		else if(!doubleReg.test(amount)){
+			errorMessage = errorMessage + "Amount must be number!<br/>";
+		}
+		else if(parseFloat(amount) < 0){
+			errorMessage = errorMessage + "Amount cannot be negative!<br/>";	
+		}
+		if(description == ""){
+			errorMessage = errorMessage + "Description must be filled!<br/>";
+		}
+		
+		if(errorMessage.length != 0){
+			document.getElementById("message").innerHTML = errorMessage;
+			return;
+		}
+		else{		
+			if (confirm("Are you sure to insert these data to cash in bank transaction?")) {
+				flyToPage();
+			}
 		}
 	}
 	function cancel(){
@@ -28,22 +48,14 @@
 		document.forms[1].submit();
 	}
 </script>
-<title>Change Password</title>
+<title>Cash in Bank Transaction</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
 
 	<html:form action="/cashInBank" method="post">
 		<html:hidden name="cashInBankForm" property="task" />
-		<html:hidden name="cashInBankForm" property="isDebit" />
-		<span> <logic:notEmpty name="cashInBankForm"
-				property="messageList">
-				<logic:iterate id="message" name="cashInBankForm"
-					property="messageList">
-					<bean:write name="message" />
-				</logic:iterate>
-			</logic:notEmpty>
-		</span>
+		<html:hidden name="cashInBankForm" property="cashInBankBean.isDebit" />
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
@@ -66,8 +78,8 @@
 								<div class="col-md-1">:</div>
 								<div class="col-md-8">
 									<input type="date" style="form-control"
-										name="transactionDate"
-										value="<bean:write name="cashInBankForm" property="transactionDate"/>" />
+										name="cashInBankBean.transactionDate"
+										value="<bean:write name="cashInBankForm" property="cashInBankBean.transactionDate"/>" />
 								</div>
 							</div>
 
@@ -82,7 +94,7 @@
 									</logic:equal>
 									<logic:notEqual value="saveTransfer" property="task"
 										name="cashInBankForm">
-										<html:select property="cashFlowCategoryId"
+										<html:select property="cashInBankBean.cashFlowCategoryId"
 											name="cashInBankForm" styleClass="form-control"
 											style="width: 50%;">
 											<html:optionsCollection property="cashFlowCategoryList"
@@ -100,7 +112,7 @@
 								<div class="col-md-1">:</div>
 								<div class="col-md-8">
 									<html:text styleClass="form-control" name="cashInBankForm"
-										property="amount" />
+										property="cashInBankBean.amount" />
 								</div>
 							</div>
 							<br />
@@ -109,7 +121,7 @@
 								<div class="col-md-1">:</div>
 								<div class="col-md-8" style="margin-bottom: 10px;">
 									<html:textarea styleClass="form-control" name="cashInBankForm"
-										property="description" />
+										property="cashInBankBean.description" />
 								</div>
 							</div>
 							<div class="panel-body" style="padding-left: 0;">
