@@ -85,7 +85,7 @@
 							<div class="row">
 								<div class="col-md-3"><label>Transaction Category</label></div>
 								<div class="col-md-5">									
-									<html:select property="pettyCashBean.cashFlowCategoryId"
+									<html:select property="pettyCashBean.cashFlowCategoryId" 
 										name="pettyCashForm" styleClass="form-control">
 										<html:optionsCollection property="cashFlowCategoryList"
 											label="name" value="cashFlowCategoryId"
