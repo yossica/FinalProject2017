@@ -26,6 +26,7 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
+
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
@@ -34,25 +35,31 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
+
 					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
 						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
+
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
+
 					<div class="col-md-2"><label>Contract Service</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
+
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
+
 					<div class="col-md-2"><label>Period</label></div>
+
 					<div class="col-md-5">
 						Bulan Tahun pembuatan
 					</div>
@@ -60,6 +67,7 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
+
 					<div class="col-md-2"><label>Tax</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
@@ -88,6 +96,7 @@
 								<th>Action</th>
 							</tr>
 						</table>
+
 					</div>
 				</div>
 			</div>

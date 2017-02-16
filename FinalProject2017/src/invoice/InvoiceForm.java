@@ -16,6 +16,7 @@ public class InvoiceForm extends ActionForm{
 	private String yearFrom;
 	private String monthTo;
 	private String yearTo;
+
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
@@ -24,6 +25,7 @@ public class InvoiceForm extends ActionForm{
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
 	}
+
 	
 	public InvoiceBean getInvoiceBean() {
 		return invoiceBean;
