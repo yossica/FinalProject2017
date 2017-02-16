@@ -21,8 +21,8 @@ public class InvoiceHandler extends Action{
 		InvoiceManager invoiceManager = new InvoiceManager();
 		ClientManager clientManager = new ClientManager();
 		MasterManager masterManager = new MasterManager();
-		//invoiceForm.setClientList(clientManager.getAll());
-		//invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
+		invoiceForm.setClientList(clientManager.getAll());
+		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
 		if ("createInvoice".equals(invoiceForm.getTask())){
 			return mapping.findForward("createInvoice");
 		}else if ("createInvoicePS".equals(invoiceForm.getTask())) {

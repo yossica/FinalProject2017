@@ -1,5 +1,6 @@
 package invoice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
@@ -15,9 +16,9 @@ public class InvoiceForm extends ActionForm{
 	private String yearFrom;
 	private String monthTo;
 	private String yearTo;
-	private List clientList;
-	private List invoiceTypeList;
-	private List headHunterList;
+	private List clientList = new ArrayList();
+	private List invoiceTypeList = new ArrayList();
+	private List headHunterList = new ArrayList();
 	
 	public InvoiceForm(){
 		InvoiceDetailBean bean = new InvoiceDetailBean();
