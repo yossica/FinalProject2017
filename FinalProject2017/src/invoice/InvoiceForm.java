@@ -21,12 +21,12 @@ public class InvoiceForm extends ActionForm{
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
 	
+	private List invoiceList;
+	
 	public InvoiceForm(){
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
 	}
-
-	private List invoiceList;
 	
 	public InvoiceBean getInvoiceBean() {
 		return invoiceBean;
