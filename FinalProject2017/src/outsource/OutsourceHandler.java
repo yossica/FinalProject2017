@@ -35,6 +35,7 @@ public class OutsourceHandler extends Action {
 		SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
 
 		if ("create".equals(outsourceForm.getTask())) {
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
@@ -119,10 +120,11 @@ public class OutsourceHandler extends Action {
 				List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
 				tmpList = outsourceManager.getAllWithFilter(filter);
 				for (int j = 0; j < tmpList.size(); j++) {
-					cal3.setTime(dateFormat.parse(tmpList.get(j).getStartDate()));
+					cal3.setTime(dateFormat
+							.parse(tmpList.get(j).getStartDate()));
 					cal4.setTime(dateFormat.parse(tmpList.get(j).getEndDate()));
 					if (cal.after(cal4) || cal2.before(cal3)) {
-						
+
 					} else {
 						flagError = 1;
 						outsourceForm.getMessageList().add(
@@ -135,11 +137,11 @@ public class OutsourceHandler extends Action {
 						break;
 					}
 				}
-				if(flagError == 1){
+				if (flagError == 1) {
 					break;
 				}
 			}
-			
+
 			if (flagError == 1) {
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
@@ -162,7 +164,8 @@ public class OutsourceHandler extends Action {
 						"Success Create Profesional Service Contract");
 
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
-				outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager
+						.getAllEnabled());
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
@@ -177,22 +180,50 @@ public class OutsourceHandler extends Action {
 			outsourceForm.getOutsourceBean().setChangedBy(
 					(String) session.getAttribute("username"));
 
-			outsourceManager.update(outsourceForm.getOutsourceBean());
-			outsourceForm.getMessageList().add(
-					"Success Update Profesional Service Contract");
+			OutsourceBean outsourceBean = outsourceManager
+					.getById(outsourceForm.getTransactionOutsourceId());
 
-			outsourceForm.setOptClientList(clientManager.getAllEnabled());
-			outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
-			outsourceForm.setFilterMonth("");
-			outsourceForm.setFilterYear(String.valueOf(year));
+			// validasi apakah gross berubah,
+			// maka cek ada contract lain dengan client yang sama pada sysdate
+			// apa tidak
+			if (outsourceForm.getOutsourceBean().getIsGross() != outsourceBean
+					.getIsGross()) {
+				Map filter = new HashMap();
+				filter.put("date", month + "/01/" + year);
+				outsourceForm.setOutsourceList(outsourceManager
+						.getAllWithFilter(filter));
+				if (outsourceForm.getOutsourceList().size() > 1) {
+					flagError = 1;
+					outsourceForm.getMessageList().add(
+							"Another contract with client "
+									+ outsourceForm.getOutsourceBean()
+											.getClientName()
+									+ ", can't change is gross value");
+				}
 
-			Map filter = new HashMap();
-			filter.put("year", outsourceForm.getFilterYear());
+			}
+			if (flagError == 1) {
+				outsourceForm.setTask("saveupdate");
+				return mapping.findForward("formOutsource");
+			} else {
+				outsourceManager.update(outsourceForm.getOutsourceBean());
+				outsourceForm.getMessageList().add(
+						"Success Update Profesional Service Contract");
 
-			outsourceForm.setOutsourceList(outsourceManager
-					.getAllWithFilter(filter));
+				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager
+						.getAllEnabled());
+				outsourceForm.setFilterMonth("");
+				outsourceForm.setFilterYear(String.valueOf(year));
 
-			return mapping.findForward("outsource");
+				Map filter = new HashMap();
+				filter.put("year", outsourceForm.getFilterYear());
+
+				outsourceForm.setOutsourceList(outsourceManager
+						.getAllWithFilter(filter));
+
+				return mapping.findForward("outsource");
+			}
 		} else if ("savemutation".equals(outsourceForm.getTask())) {
 
 			// date format data
@@ -269,7 +300,8 @@ public class OutsourceHandler extends Action {
 
 				// for view data
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
-				outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager
+						.getAllEnabled());
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
@@ -323,7 +355,8 @@ public class OutsourceHandler extends Action {
 				outsourceForm.getMessageList().add("Success End Employee");
 				// for view data
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
-				outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager
+						.getAllEnabled());
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
