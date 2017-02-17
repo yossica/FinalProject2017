@@ -105,7 +105,7 @@
 									<html:text name="invoiceDetail" property="description" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
-									<html:text name="invoiceDetail" property="fee" styleClass="form-control" indexed="true" value=""></html:text>
+									<html:text name="invoiceDetail" property="fee" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
 									<html:text name="invoiceDetail" property="notes" styleClass="form-control" indexed="true"></html:text>
