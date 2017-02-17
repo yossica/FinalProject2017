@@ -111,19 +111,20 @@
 	
 	<select id="getAllWithFilter" parameterClass="java.util.Map">
 		<!-- hanya ngambil headernya aja -->
-		t.transaction_training_id as transactionTrainingHeaderId,
-		 		t.client_id as clientId,
-		 		c.name as clientName,
-		 		t.dp_invoice_id as dpInvoiceId,
-		 		t.training_start_date as trainingStartDate,
-		 		t.training_end_date as trainingEndDate,
-				t.description as description,
-				t.is_gross as isGross,
-				t.settlement_invoice_id as settlementInvoiceId,
-				t.created_by as createdBy,
-				to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
-				t.changed_by as changedBy,
-				to_char(t.changed_date, 'MM/dd/yyyy') as changedDate
+		select
+			t.transaction_training_id as transactionTrainingHeaderId,
+	 		t.client_id as clientId,
+	 		c.name as clientName,
+	 		t.dp_invoice_id as dpInvoiceId,
+	 		t.training_start_date as trainingStartDate,
+	 		t.training_end_date as trainingEndDate,
+			t.description as description,
+			t.is_gross as isGross,
+			t.settlement_invoice_id as settlementInvoiceId,
+			t.created_by as createdBy,
+			to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
+			t.changed_by as changedBy,
+			to_char(t.changed_date, 'MM/dd/yyyy') as changedDate
 		from transaction_training_header t, master_client c
 		where t.client_id = c.client_id
 			<dynamic prepend="AND">
@@ -136,12 +137,12 @@
 	</select>
 	
     <select id="getMaxHeaderId" resultClass="java.lang.Integer">
-		select count(1)
+		select max(transaction_training_id)
 		from transaction_training_header
     </select>	
     
     <select id="getMaxDetailId" resultClass="java.lang.Integer">
-		select count(1)
+		select max(transaction_training_detail_id)
 		from transaction_training_detail
     </select>
     
@@ -157,7 +158,7 @@
 		    t.training_end_date &lt;= sysdate
 	</select>	
 	<select id="getOngoingTrainingClient" resultClass="client.ClientBean">
-		select
+		select distinct
 		    c.client_id as clientId,
 		    c.name as name
 		from

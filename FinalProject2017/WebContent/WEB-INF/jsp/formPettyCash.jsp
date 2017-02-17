@@ -15,7 +15,7 @@
 		var transactionDate = document.getElementsByName("cashInBankBean.transactionDate")[0].value;
 		var amount = document.getElementsByName("cashInBankBean.amount")[0].value;
 		var description = document.getElementsByName("cashInBankBean.description")[0].value;
-		var doubleReg = /^[\d]*(.[\d])*$/;
+		var doubleReg = /^[\d]+(.[\d]+)$/;
 		var errorMessage = ""; 
 		
 		if(transactionDate == ""){

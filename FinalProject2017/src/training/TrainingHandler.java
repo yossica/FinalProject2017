@@ -24,14 +24,15 @@ public class TrainingHandler extends Action{
 		TrainingManager trainingManager = new TrainingManager();
 		HttpSession session = request.getSession();
 		
-		if("loadHeaderTraining".equals(trainingForm.getTask())){
+		if("loadTrainingHeader".equals(trainingForm.getTask())){
 			trainingForm.setClientList(trainingManager.getOngoingTrainingClient());
 			List<TrainingBean> trainingList = trainingManager.getOngoingTrainingByClient(trainingForm.getClientId());
+			trainingForm.getTrainingDetailBean().setTransactionTrainingHeaderId(trainingList.get(0).getTransactionTrainingHeaderId());
 			trainingForm.setTrainingHeaderList(trainingList);
 			trainingForm.setTrainingDetailList(trainingManager.getDetailByIdHeader(trainingList.get(0).getTransactionTrainingHeaderId()));
 			return mapping.findForward("additionalTraining");
 		}
-		else if("loadDetailTraining".equals(trainingForm.getTask())){
+		else if("loadTrainingDetail".equals(trainingForm.getTask())){
 			trainingForm.setClientList(trainingManager.getOngoingTrainingClient());
 			trainingForm.setTrainingHeaderList(trainingManager.getOngoingTrainingByClient(trainingForm.getClientId()));
 			trainingForm.setTrainingDetailList(trainingManager.getDetailByIdHeader(trainingForm.getTrainingDetailBean().getTransactionTrainingHeaderId()));
@@ -46,6 +47,9 @@ public class TrainingHandler extends Action{
 			trainingForm.setClientList(trainingManager.getOngoingTrainingClient());
 			trainingForm.setTrainingHeaderList(trainingManager.getOngoingTrainingByClient(trainingForm.getClientId()));
 			trainingForm.setTrainingDetailList(trainingManager.getDetailByIdHeader(trainingForm.getTrainingDetailBean().getTransactionTrainingHeaderId()));
+			
+			trainingForm.getTrainingDetailBean().setFee(0);
+			trainingForm.getTrainingDetailBean().setDescription("");
 			return mapping.findForward("additionalTraining");
 		}
 		else if("deleteDetail".equals(trainingForm.getTask())){
@@ -54,6 +58,9 @@ public class TrainingHandler extends Action{
 			trainingForm.setClientList(trainingManager.getOngoingTrainingClient());
 			trainingForm.setTrainingHeaderList(trainingManager.getOngoingTrainingByClient(trainingForm.getClientId()));
 			trainingForm.setTrainingDetailList(trainingManager.getDetailByIdHeader(trainingForm.getTrainingDetailBean().getTransactionTrainingHeaderId()));
+			
+			trainingForm.getTrainingDetailBean().setFee(0);
+			trainingForm.getTrainingDetailBean().setDescription("");
 			return mapping.findForward("additionalTraining");
 		}
 		else {

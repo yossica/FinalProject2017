@@ -11,10 +11,40 @@
 	<script type="text/javascript">
 		function insert(){
 			//validate
-			flyToPage("insertDetail");
+			var fee = document.getElementsByName("trainingDetailBean.fee")[0].value;
+			var description = document.getElementsByName("trainingDetailBean.description")[0].value;
+			var doubleReg = /^[\d]+(.[\d]+)$/;
+			var errorMessage = ""; 
+			
+			if(fee == ""){
+				errorMessage = errorMessage + "Fee must be filled!<br/>";
+			}
+			else if(!doubleReg.test(fee)){
+				errorMessage = errorMessage + "Fee must be number!<br/>";
+			}
+			else if(parseFloat(fee) <= 0){
+				errorMessage = errorMessage + "Fee cannot be zero or negative!<br/>";	
+			}
+			if(description == ""){
+				errorMessage = errorMessage + "Description must be filled!<br/>";
+			}
+			
+			if(errorMessage.length != 0){
+				document.getElementById("message").innerHTML = errorMessage;
+				return;
+			}
+			else{		
+				var clientList = document.getElementsByName("clientId")[0];
+				var clientName = clientList.options[clientList.selectedIndex].text;
+				var trainingList = document.getElementsByName("trainingDetailBean.transactionTrainingHeaderId")[0];
+				var trainingName = trainingList.options[trainingList.selectedIndex].text;
+				if (confirm("Are you sure to insert these data as additional training fee for "+clientName+"-"+trainingName+"?")) {
+					flyToPage("insertDetail");
+				}
+			}			
 		}
 		function deleteAdditionalTraining(desc,id){
-			if(confirm("Are you sure to delete additional training "+desc+"?")){
+			if(confirm("Are you sure to delete additional training fee "+desc+"?")){
 				document.forms[1].transactionTrainingDetailId.value = id;
 				flyToPage("deleteDetail");
 			}
