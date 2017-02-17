@@ -28,47 +28,53 @@
 							<table class="table table-hover">
 								<tbody>
 									<tr>
-										<td>Client Name</td>
-										<td><html:text name="clientForm" property="name" /></td>
+										<td><label>Client Name</label></td>
+										<td><html:text name="clientForm" property="name" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Address</td>
-										<td><html:text name="clientForm" property="address" /></td>
+										<td><label>Address</label></td>
+										<td><html:text name="clientForm" property="address" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>City</td>
-										<td><html:text name="clientForm" property="city" /></td>
+										<td><label>City</label></td>
+										<td><html:text name="clientForm" property="city" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Phone</td>
-										<td><html:text name="clientForm" property="phoneNumber" /></td>
+										<td><label>Phone</label></td>
+										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Fax</td>
-										<td><html:text name="clientForm" property="faxNumber" /></td>
+										<td><label>Fax</label></td>
+										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Postal Code</td>
-										<td><html:text name="clientForm" property="postalCode" /></td>
+										<td><label>Postal Code</label></td>
+										<td><html:text name="clientForm" property="postalCode" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Client Status</td>
-										<td><html:select name="clientForm" property="isEnabled">
+										<td><label>Client Status</label></td>
+										<td>
+											<div class="col-lg-13" >
+											<html:select name="clientForm" property="isEnabled" styleClass="form-control-client">
 												<html:option value="1">Enabled</html:option>
 												<html:option value="0">Disabled</html:option>
-												</html:select>
+											</html:select>
+											</div>
 										</td>
+										
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<!-- /.table-responsive -->
 					</div>
-					<table border="1">
-
-					</table>
-					<button type="button" class="btn btn-primary pull-right"
-						onclick="javascript:flyToSave()">Save</button>
+					
+					<div class="col-md-12" style="padding-right: 1%;" >
+					<button type="button" class="btn btn-primary"
+						onclick="javascript:flyToSave()" style="margin-bottom: 5%;">Save</button>
+					<button type="button" class="btn btn-primary"
+						style="margin-bottom: 5%;">Cancel</button>
+					</div>
 				</div>
 			</div>
 		</div>
