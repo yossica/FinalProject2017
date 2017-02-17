@@ -4,7 +4,6 @@
 <sqlMap namespace="holiday">
 
 	<select id="getWorkingDays" parameterClass="java.lang.String" resultClass="java.lang.Integer">
-		<!-- &lt; adalah pengganti simbol < -->
 		select 
 			work_days-total_valid_holiday as total_workdays 
 		from (
@@ -20,13 +19,13 @@
 				order by day_nr
 			) all_date
 			where day_name not in ('1','7')
-			) work_day, (
+		) work_day, (
 				select
 					count(1) as total_valid_holiday
 				from master_holiday
 				where
 					holiday_date between trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH') and add_months(trunc(to_date(#value#,'MM/dd/yyyy'), 'MONTH'), 1) - 1
-					and to_char(holiday_date,'d') not in ('1','7') --1=Sunday, 7=Saturday
+					and to_char(holiday_date,'d') not in ('1','7')
 		) holiday
 	</select>
 	

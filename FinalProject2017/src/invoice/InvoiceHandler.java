@@ -4,8 +4,10 @@ import holiday.HolidayManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +20,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import outsource.OutsourceBean;
 import outsource.OutsourceManager;
 import client.ClientManager;
+import employee.EmployeeBean;
 
 public class InvoiceHandler extends Action{
 	@Override
@@ -32,7 +36,6 @@ public class InvoiceHandler extends Action{
 		MasterManager masterManager = new MasterManager();
 		HolidayManager holidayManager = new HolidayManager();
 		OutsourceManager outsourceManager = new OutsourceManager();
-		InvoiceDetailBean invoiceDetailBean = new InvoiceDetailBean();
 		
 		invoiceForm.setClientList(clientManager.getAll());
 		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
@@ -51,14 +54,31 @@ public class InvoiceHandler extends Action{
 				invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 				invoiceForm.getInvoiceBean().setNotes(invoiceForm.getInvoiceBean().getNotes());
 				System.out.println("ada kontrak");
-				//DateFormat
-				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-				Date date = new Date();
-				System.out.println(dateFormat.format(date));
+				
 				/*System.out.println(holidayManager.getWorkingDays(dateFormat.format(date)));*/
 				//holidayManager.getWorkingDays(dateFormat.format(date));
 				//invoiceForm.setOutsourceList(invoiceManager.getOutsourceContract(paramMap));
 				invoiceForm.setOutsourceList(outsourceManager.getOutsourceContract(paramMap));
+				
+				List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
+				bean = outsourceManager.getOutsourceContract(paramMap);
+				InvoiceDetailBean invoiceDetailBean;
+				for(OutsourceBean temp : bean){
+					invoiceDetailBean = new InvoiceDetailBean();
+					invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
+					invoiceDetailBean.setFee(temp.getFee());
+					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
+					invoiceForm.getInvoiceDetailList().add(invoiceDetailBean);
+				}
+				
+				/*for(EmployeeBean bean: list){
+					bean.getEmpId();
+					bean.getFirstName();
+					bean.getLastName();
+					bean.getEmail();
+					bean.getHireDate();
+					bean.getJobId();				
+				}*/
 				
 				System.out.println(invoiceForm.getOutsourceList());
 				

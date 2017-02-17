@@ -120,10 +120,13 @@ public class OutsourceManager {
 	}
 	
 	public List getOutsourceContract(Map input){
-		List result = new ArrayList();
+		List<OutsourceBean> result = new ArrayList<OutsourceBean>();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
-			result = (List) ibatis.queryForList("outsource.getOutsourceContract", input);
+			result = (List<OutsourceBean>) ibatis.queryForList("outsource.getOutsourceContract", input);
+			for(OutsourceBean temp : result){
+				
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

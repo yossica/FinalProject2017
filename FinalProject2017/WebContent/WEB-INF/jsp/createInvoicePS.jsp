@@ -110,13 +110,13 @@
 								<th>Notes</th>
 							</tr>
 							<tbody>
-							<logic:notEmpty property="outsourceList" name="invoiceForm">
-								<logic:iterate id="outsource" property="outsourceList"
+							<logic:notEmpty property="invoiceDetailList" name="invoiceForm">
+								<logic:iterate id="invoiceDetail" property="invoiceDetailList"
 									name="invoiceForm">
 									<tr>
-										<td><bean:write property="employeeName" name="outsource" /></td>
-										<td><bean:write property="fee" name="outsource" format="#"/></td>
-										<td>Total Work Days</td>
+										<td><bean:write property="employeeName" name="invoiceDetail" /></td>
+										<td><bean:write property="fee" name="invoiceDetail" format="#"/></td>
+										<td><bean:write property="workDays" name="invoiceDetail" format="#"/></td>
 										<td></td>
 									</tr>
 								</logic:iterate>

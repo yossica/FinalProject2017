@@ -21,6 +21,7 @@ public class InvoiceForm extends ActionForm{
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
 	private List outsourceList = new ArrayList();
+	private List invoiceDetailList = new ArrayList();
 	
 	private String month;
 	private String year;
@@ -132,10 +133,15 @@ public class InvoiceForm extends ActionForm{
 	public List getOutsourceList() {
 		return outsourceList;
 	}
-
-
 	public void setOutsourceList(List outsourceList) {
 		this.outsourceList = outsourceList;
+	}
+	
+	public List getInvoiceDetailList() {
+		return invoiceDetailList;
+	}
+	public void setInvoiceDetailList(List invoiceDetailList) {
+		this.invoiceDetailList = invoiceDetailList;
 	}
 
 
