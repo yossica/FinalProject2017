@@ -2,7 +2,6 @@ package outsource;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,11 +28,12 @@ public class OutsourceHandler extends Action {
 		ClientManager clientManager = new ClientManager();
 		EmployeeManager employeeManager = new EmployeeManager();
 		HttpSession session = request.getSession();
-
+		int flagError = 0;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
-
+		int year = cal.get(Calendar.YEAR);
+		
 		if ("create".equals(outsourceForm.getTask())) {
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
 			outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
@@ -56,7 +56,7 @@ public class OutsourceHandler extends Action {
 
 			outsourceForm.setOutsourceBean(outsourceBean);
 
-			// date format
+			// date format show
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 					.getStartDate()));
 			outsourceForm.getOutsourceBean().setStartDate(
@@ -75,12 +75,13 @@ public class OutsourceHandler extends Action {
 
 			outsourceForm.setOutsourceBean(outsourceBean);
 
-			// date format
+			// date format data
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 					.getEndDate()));
 			outsourceForm.getOutsourceBean().setEndDate(
 					showDateFormat.format(cal.getTime()));
 
+			outsourceForm.setTask("save" + outsourceForm.getTask());
 			return mapping.findForward("formOutsource");
 		} else if ("savecreate".equals(outsourceForm.getTask())) {
 			outsourceForm.getOutsourceBean().setCreatedBy(
@@ -96,23 +97,58 @@ public class OutsourceHandler extends Action {
 			outsourceForm.getOutsourceBean().setEndDate(
 					dateFormat.format(cal.getTime()));
 
-			outsourceManager.insert(outsourceForm.getOutsourceBean());
-			outsourceForm.getMessageList().add(
-					"Success Create Profesional Service Contract");
+			// validation
+			// ada employee di table
+			// max end date < start end date input
+			String maxEndDate = outsourceManager
+					.getMaxEndDateByEmployeeId(outsourceForm.getOutsourceBean()
+							.getEmployeeId());
+			if (maxEndDate != null) {
+				Calendar cal2 = Calendar.getInstance();
+				cal.setTime(dateFormat.parse(maxEndDate));
+				cal2.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getStartDate()));
+				if (cal.after(cal2)) {
+					outsourceForm.getMessageList().add(
+							"Employee already with another contract, ends at "
+									+ maxEndDate);
+					flagError = 1;
+				}
+			}
 
-			outsourceForm.setOptClientList(clientManager.getAllEnabled());
-			int year = cal.get(Calendar.YEAR);
-			outsourceForm.setFilterMonth("");
-			outsourceForm.setFilterYear(String.valueOf(year));
+			if (flagError == 1) {
+				// date format show
+				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getStartDate()));
+				outsourceForm.getOutsourceBean().setStartDate(
+						showDateFormat.format(cal.getTime()));
+				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getEndDate()));
+				outsourceForm.getOutsourceBean().setEndDate(
+						showDateFormat.format(cal.getTime()));
 
-			Map filter = new HashMap();
-			filter.put("date", null);
-			filter.put("year", outsourceForm.getFilterYear());
+				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager
+						.getAllEnabled());
+				outsourceForm.setTask("savecreate");
+				return mapping.findForward("formOutsource");
+			} else {
+				outsourceManager.insert(outsourceForm.getOutsourceBean());
+				outsourceForm.getMessageList().add(
+						"Success Create Profesional Service Contract");
 
-			outsourceForm.setOutsourceList(outsourceManager
-					.getAllWithFilter(filter));
+				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setFilterMonth("");
+				outsourceForm.setFilterYear(String.valueOf(year));
 
-			return mapping.findForward("outsource");
+				Map filter = new HashMap();
+				filter.put("date", null);
+				filter.put("year", outsourceForm.getFilterYear());
+
+				outsourceForm.setOutsourceList(outsourceManager
+						.getAllWithFilter(filter));
+				return mapping.findForward("outsource");
+			}
 		} else if ("saveupdate".equals(outsourceForm.getTask())) {
 			outsourceForm.getOutsourceBean().setChangedBy(
 					(String) session.getAttribute("username"));
@@ -122,7 +158,6 @@ public class OutsourceHandler extends Action {
 					"Success Update Profesional Service Contract");
 
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
-			int year = cal.get(Calendar.YEAR);
 			outsourceForm.setFilterMonth("");
 			outsourceForm.setFilterYear(String.valueOf(year));
 
@@ -136,7 +171,7 @@ public class OutsourceHandler extends Action {
 			return mapping.findForward("outsource");
 		} else if ("savemutation".equals(outsourceForm.getTask())) {
 
-			// date format
+			// date format data
 			cal.setTime(showDateFormat.parse(outsourceForm.getOutsourceBean()
 					.getStartDate()));
 			outsourceForm.getOutsourceBean().setStartDate(
@@ -145,50 +180,137 @@ public class OutsourceHandler extends Action {
 					.getEndDate()));
 			outsourceForm.getOutsourceBean().setEndDate(
 					dateFormat.format(cal.getTime()));
+
+			// ambil data lama
 			OutsourceBean outsourceBean = outsourceManager
 					.getById(outsourceForm.getOutsourceBean()
 							.getTransactionOutsourceId());
 			Calendar cal2 = Calendar.getInstance();
-			//validation
-			//input start date > old start date
-			//input start date < old end date
-			//input end date >= old date
-			 cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean().getStartDate()));
-			 cal2.setTime(dateFormat.parse(outsourceBean.getStartDate()));
-			 
-			if(cal.after(cal2) ){
-				 cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
-				if(cal.before(cal2)){
-					 cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean().getEndDate()));
-					if(cal.compareTo(cal2)>=0){
-						
-						
-					}else{
-						outsourceForm.getMessageList().add("End date must be after or equal than previous end date");
-					}
-				}else{
-					outsourceForm.getMessageList().add("Start date must be before than previous end date");
-				}
-			}else{
-				outsourceForm.getMessageList().add("Start date must be later than previous start date");
+			// validation
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			cal2.setTime(dateFormat.parse(outsourceBean.getStartDate()));
+
+			// input start date > old start date, jika tidak maka error
+			if (cal.before(cal2)) {
+				outsourceForm.getMessageList().add(
+						"Start date must be later than previous start date");
+				flagError = 1;
 			}
-			
+			// input start date < old end date, jika  tidak maka error
+			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
+			if (cal.after(cal2)) {
+				outsourceForm.getMessageList().add(
+						"Start date must be before than previous end date");
+				flagError = 1;
+			}
+			// input end date >= old date, jika tidak maka error
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getEndDate()));
+			if (cal.compareTo(cal2) < 0) {
+				outsourceForm
+						.getMessageList()
+						.add("End date must be after or equal than previous end date");
+				flagError = 1;
+			}
 
-			// for view data
-			outsourceForm.setOptClientList(clientManager.getAllEnabled());
-			int year = cal.get(Calendar.YEAR);
-			outsourceForm.setFilterMonth("");
-			outsourceForm.setFilterYear(String.valueOf(year));
+			if (flagError == 1) {
+				// date format show
+				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getStartDate()));
+				outsourceForm.getOutsourceBean().setStartDate(
+						showDateFormat.format(cal.getTime()));
+				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getEndDate()));
+				outsourceForm.getOutsourceBean().setEndDate(
+						showDateFormat.format(cal.getTime()));
 
-			Map filter = new HashMap();
-			filter.put("date", null);
-			filter.put("year", outsourceForm.getFilterYear());
+				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager
+						.getAllEnabled());
+				outsourceForm.setTask("savemutation");
+				return mapping.findForward("formOutsource");
+			} else {
+				// berhasil
+				// update data lama
+				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getStartDate()));
+				cal.add(Calendar.DATE, -1);
+				outsourceBean.setEndDate(dateFormat.format(cal.getTime()));
 
-			outsourceForm.setOutsourceList(outsourceManager
-					.getAllWithFilter(filter));
+				outsourceManager.update(outsourceBean);
+				// insert data baru
+				outsourceManager.insert(outsourceForm.getOutsourceBean());
+				outsourceForm.getMessageList().add("Success Mutation Employee");
 
-			// save mutation belom
-			return mapping.findForward("outsource");
+				// for view data
+				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setFilterMonth("");
+				outsourceForm.setFilterYear(String.valueOf(year));
+
+				Map filter = new HashMap();
+				filter.put("date", null);
+				filter.put("year", outsourceForm.getFilterYear());
+
+				outsourceForm.setOutsourceList(outsourceManager
+						.getAllWithFilter(filter));
+
+				return mapping.findForward("outsource");
+			}
+		} else if ("saveend".equals(outsourceForm.getTask())) {
+			// date format data
+			cal.setTime(showDateFormat.parse(outsourceForm.getOutsourceBean()
+					.getEndDate()));
+			outsourceForm.getOutsourceBean().setEndDate(
+					dateFormat.format(cal.getTime()));
+
+			// ambil data lama
+			OutsourceBean outsourceBean = outsourceManager
+					.getById(outsourceForm.getOutsourceBean()
+							.getTransactionOutsourceId());
+			Calendar cal2 = Calendar.getInstance();
+			// validation
+			// input end date <= old end date
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getEndDate()));
+			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
+
+			if (cal.after(cal2)) {
+				outsourceForm.getMessageList().add(
+						"End date must before than previous end date");
+				flagError = 1;
+
+			}
+			if (flagError == 1) {
+				// date format show
+				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getStartDate()));
+				outsourceForm.getOutsourceBean().setStartDate(
+						showDateFormat.format(cal.getTime()));
+				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+						.getEndDate()));
+				outsourceForm.getOutsourceBean().setEndDate(
+						showDateFormat.format(cal.getTime()));
+
+				outsourceForm.setTask("saveend");
+				return mapping.findForward("formOutsource");
+			} else {
+				outsourceManager.update(outsourceForm.getOutsourceBean());
+				outsourceForm.getMessageList().add("Success End Employee");
+				// for view data
+				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setFilterMonth("");
+				outsourceForm.setFilterYear(String.valueOf(year));
+
+				Map filter = new HashMap();
+				filter.put("date", null);
+				filter.put("year", outsourceForm.getFilterYear());
+
+				outsourceForm.setOutsourceList(outsourceManager
+						.getAllWithFilter(filter));
+
+				return mapping.findForward("outsource");
+			}
 		} else {
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
 
@@ -197,7 +319,7 @@ public class OutsourceHandler extends Action {
 			if ("filter".equals(outsourceForm.getTask())) {
 			} else {
 				// jika baru pertama kali buka
-				int year = cal.get(Calendar.YEAR);
+				
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 			}
