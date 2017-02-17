@@ -8,11 +8,62 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script>
-	function flyToPage(task) {
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+	function insert() {
+
+		var name = document.getElementsByName("name")[0].value;
+		var address = document.getElementsByName("address")[0].value;
+		var city = document.getElementsByName("city")[0].value;
+		var phoneNumber = document.getElementsByName("phoneNumber")[0].value;
+		var faxNumber = document.getElementsByName("faxNumber")[0].value;
+		var postalCode = document.getElementsByName("postalCode")[0].value;
+
+		var letters = /([A-Za-z ])+\w/;
+		var alphanumAndSpecial = /^[ A-Za-z0-9_@.,]*$/;
+		var errorMessage = "";
+
+		if (name == "") {
+			errorMessage = errorMessage + "Name must be filled!<br/>";
+		} else if (!letters.test(name)) {
+			errorMessage = errorMessage
+					+ "Name must be in alphabets only!<br/>";
+		}
+		if (address == "") {
+			errorMessage = errorMessage + "Address must be filled!<br/>";
+		} else if (!alphanumAndSpecial.test(address)) {
+			errorMessage = errorMessage
+					+ "Address should contain letters, numbers, comma, and period only!<br/>";
+		}
+		if (errorMessage.length != 0) {
+			document.getElementById("message").innerHTML = errorMessage;
+			return;
+		} else {
+			swal({
+				title : "Are you sure?",
+				text : "System will insert these data to client database",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#DD6B55",
+				confirmButtonText : "Yes, Insert",
+				cancelButtonText : "No, Cancel Please!",
+				closeOnConfirm : false,
+				closeOnCancel : false
+			}, function(isConfirm) {
+				if (isConfirm) {
+					flyToPage();
+				} else {
+					swal("Cancelled", "Cancel Insert New Data", "error");
+				}
+			});
+		}
+
 	}
-	function flyToSave() {
+
+	function cancel() {
+		document.forms[1].task.value = "client";
+		flyToPage();
+	}
+
+	function flyToPage() {
 		document.forms[1].submit();
 	}
 </script>
@@ -44,11 +95,11 @@
 										<td><html:text name="clientForm" property="city" /></td>
 									</tr>
 									<tr>
-										<td>Phone</td>
+										<td>Phone Number</td>
 										<td><html:text name="clientForm" property="phoneNumber" /></td>
 									</tr>
 									<tr>
-										<td>Fax</td>
+										<td>Fax Number</td>
 										<td><html:text name="clientForm" property="faxNumber" /></td>
 									</tr>
 									<tr>
@@ -64,19 +115,24 @@
 									</tr>
 									<tr>
 										<td><button type="button" class="btn btn-primary"
-												onclick="javascript:flyToPage('client')">Cancel</button></td>
+												onclick="javascript:cancel()">Cancel</button></td>
 										<td><button type="button"
 												class="btn btn-primary pull-right"
-												onclick="javascript:flyToSave()">Save</button></td>
+												onclick="javascript:insert()">Save</button></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<!-- /.table-responsive -->
 					</div>
-					<table border="1">
+					<div class="col-md-15" style="color: red;" id="message">
+						<logic:notEmpty name="clientForm" property="messageList">
+							<logic:iterate id="message" name="clientForm"
+								property="messageList">
+								<bean:write name="message" />
+							</logic:iterate>
+						</logic:notEmpty>
+					</div>
 
-					</table>
 				</div>
 			</div>
 		</div>
