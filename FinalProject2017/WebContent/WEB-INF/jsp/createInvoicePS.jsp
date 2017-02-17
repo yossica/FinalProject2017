@@ -31,6 +31,7 @@
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate"/>
 					</div>
 				</div>
 			</div>
@@ -41,7 +42,6 @@
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
 						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
-
 					</div>
 				</div>
 			</div>
@@ -52,7 +52,6 @@
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
-
 					</div>
 				</div>
 			</div>
@@ -63,8 +62,10 @@
 
 					<div class="col-md-5">
 						<bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#"/>
+						<html:hidden name="invoiceForm" property="invoiceBean.periodMonth"/>
 						 - 
 						<bean:write name="invoiceForm" property="invoiceBean.periodYear" format="#"/>
+						<html:hidden name="invoiceForm" property="invoiceBean.periodYear"/>
 					</div>
 				</div>
 			</div>
@@ -76,9 +77,11 @@
 						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
 						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="1">
 							Include
+							<html:hidden name="invoiceForm" property="invoiceBean.isGross" value="1"/>
 						</logic:equal>
 						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="0">
 							Exclude
+							<html:hidden name="invoiceForm" property="invoiceBean.isGross" value="0"/>
 						</logic:equal>
 					</div>
 				</div>
@@ -110,18 +113,27 @@
 								<th>Notes</th>
 							</tr>
 							<tbody>
-							<logic:notEmpty property="invoiceDetailList" name="invoiceForm">
-								<logic:iterate id="invoiceDetail" property="invoiceDetailList"
+							<logic:notEmpty property="professionalServiceList" name="invoiceForm">
+								<logic:iterate id="invoiceDetailPS" property="professionalServiceList"
 									name="invoiceForm">
 									<tr>
-										<td><bean:write property="employeeName" name="invoiceDetail" /></td>
-										<td><bean:write property="fee" name="invoiceDetail" format="#"/></td>
-										<td><bean:write property="workDays" name="invoiceDetail" format="#"/></td>
 										<td>
-											<html:text name="invoiceDetail" property="manDays" styleClass="form-control" indexed="true" value=""></html:text>
+											<bean:write property="employeeName" name="invoiceDetailPS" />
+											<html:hidden property="employeeName" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>
-											<html:text name="invoiceDetail" property="notes" styleClass="form-control" indexed="true"></html:text>
+											<bean:write property="fee" name="invoiceDetailPS" format="#"/>
+											<html:hidden property="fee" name="invoiceDetailPS" indexed="true"/>
+										</td>
+										<td>
+											<bean:write property="workDays" name="invoiceDetailPS" format="#"/>
+											<html:hidden property="workDays" name="invoiceDetailPS" indexed="true"/>
+										</td>
+										<td>
+											<html:text name="invoiceDetailPS" property="manDays" styleClass="form-control" indexed="true" value=""></html:text>
+										</td>
+										<td>
+											<html:text name="invoiceDetailPS" property="notes" styleClass="form-control" indexed="true"></html:text>
 										</td>
 									</tr>
 								</logic:iterate>

@@ -48,6 +48,7 @@ public class IndexHandler extends Action {
 		} else if ("cashInBank".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("cashInBank");
 		} else if ("financeSummary".equals(indexForm.getTaskIndex())) {
+
 			MasterManager masterManager = new MasterManager();
 			PettyCashManager pettyCashManager = new PettyCashManager();
 			CashInBankManager cashInBankManager = new CashInBankManager();
