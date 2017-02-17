@@ -26,6 +26,7 @@ public class OutsourceForm extends ActionForm{
 	private List messageList;
 
 	private String filterClient;
+	private String filterEmployee;
 	private String filterMonth;
 	private String filterYear;
 	
@@ -36,6 +37,14 @@ public class OutsourceForm extends ActionForm{
 	private List<OutsourceBean> outsourceList;
 		
 	
+	public String getFilterEmployee() {
+		return filterEmployee;
+	}
+
+	public void setFilterEmployee(String filterEmployee) {
+		this.filterEmployee = filterEmployee;
+	}
+
 	public List<EmployeeBean> getOptEmployeeList() {
 		return optEmployeeList;
 	}

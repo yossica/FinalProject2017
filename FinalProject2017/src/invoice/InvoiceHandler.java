@@ -115,8 +115,7 @@ public class InvoiceHandler extends Action {
 			return mapping.findForward("createInvoiceHH");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
-			String nextStatusId = masterManager.getNextStatus(invoiceForm
-					.getStatusId());
+			Integer nextStatusId = Integer.parseInt(masterManager.getNextStatus(invoiceForm.getStatusId()));
 			Map paramMap = new HashMap();
 			paramMap.put("invoiceNumber", invoiceNumber);
 			paramMap.put("nextStatusId", nextStatusId);
