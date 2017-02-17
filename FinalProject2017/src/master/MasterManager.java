@@ -109,4 +109,33 @@ public class MasterManager {
 		}
 		return result;
 	}
+	
+	public String getNextStatus(String input){
+		String result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (String) ibatis.queryForObject("statusInvoice.getNextStatus", input);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public void setNextStatus(Map paramMap) {
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try{
+			ibatis.startTransaction();
+			ibatis.update("statusInvoice.updateStatus", paramMap);
+            ibatis.commitTransaction();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

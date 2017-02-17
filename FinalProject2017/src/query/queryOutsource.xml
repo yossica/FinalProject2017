@@ -40,8 +40,8 @@
 		select 
             clientId,
             clientName, 
-            extract(year from add_months(trunc(startDate,'MM'),-1) ) || 
-            trim(to_char(extract(month from add_months(trunc(startDate,'MM'),-1) ),'00')) as startDate
+            extract(year from trunc(startDate,'MM') ) || 
+            trim(to_char(extract(month from trunc(startDate,'MM') ),'00')) as startDate
         from (
             select
                 t.client_id as clientId,
@@ -80,6 +80,14 @@
 		select
 			max(transaction_outsource_id) 
 		from transaction_outsource
+	</select>
+	
+	<select id="getMaxEndDateByEmployeeId" resultClass="java.lang.String"
+							parameterClass="java.lang.Integer">
+	select 
+		to_char(max(end_date),'MM/dd/yyyy') 
+	from transaction_outsource 
+	where employee_id = #employeeId#
 	</select>
 	
 	<select id="getAllWithFilter" resultClass="outsource.OutsourceBean"
@@ -122,6 +130,7 @@
 					</isNotEmpty>
 				</isNotNull>
 			</dynamic>
+		order by transaction_outsource_id asc
 	</select>
 	
 </sqlMap> 
