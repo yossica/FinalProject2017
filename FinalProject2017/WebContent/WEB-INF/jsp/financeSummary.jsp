@@ -20,8 +20,8 @@
 	            	<div class="col-md-6">Current Date: <%= new java.util.Date() %></div>
 	            </div>
 	            <div class="col-lg-10">
-	            	<div class="col-md-6">Cash in Bank Balance: <bean:write name="indexForm" property="cashInBankBalance" format="#,###.00"/></div>
-	            	<div class="col-md-6" style="text-align:right">Petty Cash Balance: <bean:write name="indexForm" property="pettyCashBalance" format="#,###.00"/></div>
+	            	<div class="col-md-6">Cash in Bank Balance: <bean:write name="indexForm" property="cashInBankBalance" format="IDR #,###.##"/></div>
+	            	<div class="col-md-6" style="text-align:right">Petty Cash Balance: <bean:write name="indexForm" property="pettyCashBalance" format="IDR #,###.##"/></div>
 	            </div>
 	            <div class="col-lg-10">
 		            <div class="panel-body">
@@ -39,8 +39,8 @@
 						        		<logic:iterate id="financeSummary" property="financeSummaryList" name="indexForm">
 						        			<tr>
 								                <td><bean:write name="financeSummary" property="period"/></td>
-								                <td><bean:write name="financeSummary" property="cashInBankExpense" format="#,###.00"/></td>
-								                <td><bean:write name="financeSummary" property="pettyCashExpense" format="#,###.00"/></td>
+								                <td><bean:write name="financeSummary" property="cashInBankExpense" format="#,###.##"/></td>
+								                <td><bean:write name="financeSummary" property="pettyCashExpense" format="#,###.##"/></td>
 								            </tr>  
 						        		</logic:iterate>
 						        	</logic:notEmpty>						                   

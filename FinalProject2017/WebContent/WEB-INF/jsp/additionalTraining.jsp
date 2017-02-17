@@ -160,7 +160,7 @@
 								        <logic:iterate id="trainingDetail" property="trainingDetailList" name="trainingForm">
 								        	<tr>
 												<td><bean:write name="trainingDetail" property="description"/></td>
-												<td><bean:write name="trainingDetail" property="fee" format="#,###.00"/></td>
+												<td><bean:write name="trainingDetail" property="fee" format="#,###.##"/></td>
 												<logic:equal value="0" property="isSettlement" name="trainingDetail">
 													<td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td>
 												</logic:equal>
