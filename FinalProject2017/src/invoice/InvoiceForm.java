@@ -24,6 +24,7 @@ public class InvoiceForm extends ActionForm{
 	private List invoiceDetailList = new ArrayList();
 	private List invoiceList;
 	private List statusInvoiceList;
+	private List messageList;
 	
 	public InvoiceForm(){
 		InvoiceDetailBean bean = new InvoiceDetailBean();
@@ -137,4 +138,14 @@ public class InvoiceForm extends ActionForm{
 	public void setStatusInvoiceList(List statusInvoiceList) {
 		this.statusInvoiceList = statusInvoiceList;
 	}
+	public List getMessageList() {
+		if(messageList == null){
+			messageList = new ArrayList();
+		}
+		return messageList;
+	}
+	public void setMessageList(List messageList) {
+		this.messageList = messageList;
+	}
+	
 }
