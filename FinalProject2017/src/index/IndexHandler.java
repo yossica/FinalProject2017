@@ -103,7 +103,7 @@ public class IndexHandler extends Action{
 					else {
 						month--;
 					}
-					currentPeriod = Integer.parseInt(""+year+month);
+					currentPeriod = Integer.parseInt(""+year+String.format("%02d",month));
 				}
 			}
 			indexForm.setListedRemainderList(arrList);
