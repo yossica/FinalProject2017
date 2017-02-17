@@ -46,6 +46,10 @@
 			document.getElementById("tax").style.display = "block";
 		}
 	}
+	function onloadFunc() {
+		onchangeContractServices();
+	}
+	window.onload = onloadFunc;
 </script>
 </head>
 <body>
