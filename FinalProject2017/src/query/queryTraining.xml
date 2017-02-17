@@ -5,9 +5,9 @@
 	<insert id="insertHeader" parameterClass="training.TrainingBean">
 		insert into transaction_training_header 
 		(transaction_training_id,client_id,dp_invoice_id,training_start_date,training_end_date,
-		description,is_gross,is_invoice_created,created_by,created_date,changed_by,changed_date)
+		description,is_gross,settlement_invoice_id,created_by,created_date,changed_by,changed_date)
 		values (#transactionTrainingHeaderId#,#clientId#,#dpInvoiceId#,#trainingStartDate#,
-				#trainingEndDate#,#description#,#isGross#,#isInvoiceCreated#,#createdBy#,sysdate,
+				#trainingEndDate#,#description#,#isGross#,#settlementInvoiceId#,#createdBy#,sysdate,
 				null,null)
 	</insert>
 	
@@ -28,7 +28,7 @@
 		training_end_date = #trainingEndDate#,
 		description = #description#,
 		is_gross = #isGross#,
-		is_invoice_created = #isInvoiceCreated#,
+		settlement_invoice_id = #settlementInvoiceId#,
 		changed_by = #changedBy#, 
 		changed_date = sysdate
 		where transaction_training_id = #transactionTrainingHeaderId#
@@ -69,7 +69,7 @@
 		 		t.training_end_date as trainingEndDate,
 				t.description as description,
 				t.is_gross as isGross,
-				t.is_invoice_created as isInvoiceCreated,
+				t.settlement_invoice_id as settlementInvoiceId,
 				t.created_by as createdBy,
 				to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
 				t.changed_by as changedBy,
@@ -111,19 +111,20 @@
 	
 	<select id="getAllWithFilter" parameterClass="java.util.Map">
 		<!-- hanya ngambil headernya aja -->
-		t.transaction_training_id as transactionTrainingHeaderId,
-		 		t.client_id as clientId,
-		 		c.name as clientName,
-		 		t.dp_invoice_id as dpInvoiceId,
-		 		t.training_start_date as trainingStartDate,
-		 		t.training_end_date as trainingEndDate,
-				t.description as description,
-				t.is_gross as isGross,
-				t.is_invoice_created as isInvoiceCreated,
-				t.created_by as createdBy,
-				to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
-				t.changed_by as changedBy,
-				to_char(t.changed_date, 'MM/dd/yyyy') as changedDate
+		select
+			t.transaction_training_id as transactionTrainingHeaderId,
+	 		t.client_id as clientId,
+	 		c.name as clientName,
+	 		t.dp_invoice_id as dpInvoiceId,
+	 		t.training_start_date as trainingStartDate,
+	 		t.training_end_date as trainingEndDate,
+			t.description as description,
+			t.is_gross as isGross,
+			t.settlement_invoice_id as settlementInvoiceId,
+			t.created_by as createdBy,
+			to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
+			t.changed_by as changedBy,
+			to_char(t.changed_date, 'MM/dd/yyyy') as changedDate
 		from transaction_training_header t, master_client c
 		where t.client_id = c.client_id
 			<dynamic prepend="AND">
@@ -136,12 +137,12 @@
 	</select>
 	
     <select id="getMaxHeaderId" resultClass="java.lang.Integer">
-		select count(1)
+		select max(transaction_training_id)
 		from transaction_training_header
     </select>	
     
     <select id="getMaxDetailId" resultClass="java.lang.Integer">
-		select count(1)
+		select max(transaction_training_detail_id)
 		from transaction_training_detail
     </select>
     
@@ -153,7 +154,31 @@
 		    transaction_training_header t,master_client c
 		where
 		    c.client_id = t.client_id and
-		    t.is_invoice_created = 0 and
+		    t.settlement_invoice_id = 0 and
 		    t.training_end_date &lt;= sysdate
 	</select>	
+	<select id="getOngoingTrainingClient" resultClass="client.ClientBean">
+		select distinct
+		    c.client_id as clientId,
+		    c.name as name
+		from
+		    transaction_training_header h
+		    join master_client c on h.client_id = c.client_id
+		where
+		    h.settlement_invoice_id = 0
+		    and not exists (
+		        select transaction_invoice_id
+		        from transaction_invoice_header i
+		        where i.transaction_invoice_id = h.dp_invoice_id
+		            and i.status_invoice_id != (select status_invoice_id from master_status_invoice where name = 'Paid')
+		    )
+	</select>
+	<select id="getOngoingTrainingByClient" parameterClass="java.lang.Integer" resultClass="training.TrainingBean">
+		select 
+		    transaction_training_id as transactionTrainingHeaderId,
+		    description as description
+		from transaction_training_header
+		where settlement_invoice_id = 0
+		    and client_id = #value#
+	</select>
 </sqlMap> 
