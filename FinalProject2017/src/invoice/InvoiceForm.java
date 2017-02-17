@@ -8,9 +8,7 @@ import org.apache.struts.action.ActionForm;
 public class InvoiceForm extends ActionForm{
 	
 	private InvoiceBean invoiceBean = new InvoiceBean();
-	
 	private String task;
-
 	private String clientId;
 	private String monthFrom;
 	private String yearFrom;
@@ -19,11 +17,11 @@ public class InvoiceForm extends ActionForm{
 	private String statusInvoiceId;
 	private String invoiceNumber;
 	private String statusId;
-	
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
-	
+	private List outsourceList = new ArrayList();
+	private List invoiceDetailList = new ArrayList();
 	private List invoiceList;
 	private List statusInvoiceList;
 	
@@ -31,41 +29,24 @@ public class InvoiceForm extends ActionForm{
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
 	}
-	
 	public InvoiceBean getInvoiceBean() {
 		return invoiceBean;
 	}
 	public void setInvoiceBean(InvoiceBean invoiceBean) {
 		this.invoiceBean = invoiceBean;
 	}
-	
 	public String getTask() {
 		return task;
 	}
 	public void setTask(String task) {
 		this.task = task;
 	}
-	
 	public String getClientId() {
 		return clientId;
 	}
-
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
-	public List getHeadHunterList() {
-		return headHunterList;
-	}
-	public void setHeadHunterList(List headHunterList) {
-		this.headHunterList = headHunterList;
-	}
-	public InvoiceDetailBean getInvoiceDetail(int index){
-		while(this.headHunterList.size() <= index){
-			this.headHunterList.add(new InvoiceDetailBean());
-		}
-		return (InvoiceDetailBean) this.headHunterList.get(index);
-	}
-	
 	public String getMonthFrom() {
 		return monthFrom;
 	}
@@ -96,7 +77,18 @@ public class InvoiceForm extends ActionForm{
 	public void setStatusInvoiceId(String statusInvoiceId) {
 		this.statusInvoiceId = statusInvoiceId;
 	}
-	
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+	public String getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
 	public List getClientList() {
 		return clientList;
 	}
@@ -109,7 +101,30 @@ public class InvoiceForm extends ActionForm{
 	public void setInvoiceTypeList(List invoiceTypeList) {
 		this.invoiceTypeList = invoiceTypeList;
 	}
-	
+	public List getHeadHunterList() {
+		return headHunterList;
+	}
+	public void setHeadHunterList(List headHunterList) {
+		this.headHunterList = headHunterList;
+	}
+	public InvoiceDetailBean getInvoiceDetail(int index){
+		while(this.headHunterList.size() <= index){
+			this.headHunterList.add(new InvoiceDetailBean());
+		}
+		return (InvoiceDetailBean) this.headHunterList.get(index);
+	}
+	public List getOutsourceList() {
+		return outsourceList;
+	}
+	public void setOutsourceList(List outsourceList) {
+		this.outsourceList = outsourceList;
+	}
+	public List getInvoiceDetailList() {
+		return invoiceDetailList;
+	}
+	public void setInvoiceDetailList(List invoiceDetailList) {
+		this.invoiceDetailList = invoiceDetailList;
+	}
 	public List getInvoiceList() {
 		return invoiceList;
 	}
@@ -121,21 +136,5 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setStatusInvoiceList(List statusInvoiceList) {
 		this.statusInvoiceList = statusInvoiceList;
-	}
-
-	public String getInvoiceNumber() {
-		return invoiceNumber;
-	}
-
-	public void setInvoiceNumber(String invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
-	}
-
-	public String getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(String statusId) {
-		this.statusId = statusId;
 	}
 }
