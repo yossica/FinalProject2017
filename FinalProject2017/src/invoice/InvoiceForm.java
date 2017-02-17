@@ -17,7 +17,9 @@ public class InvoiceForm extends ActionForm{
 	private String monthTo;
 	private String yearTo;
 	private String statusInvoiceId;
-
+	private String invoiceNumber;
+	private String statusId;
+	
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
@@ -119,5 +121,21 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setStatusInvoiceList(List statusInvoiceList) {
 		this.statusInvoiceList = statusInvoiceList;
+	}
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public String getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
 	}
 }
