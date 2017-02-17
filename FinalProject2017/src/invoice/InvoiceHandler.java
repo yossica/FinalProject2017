@@ -1,21 +1,31 @@
 package invoice;
 
+import generalInformation.GeneralInformationManager;
 import holiday.HolidayManager;
+
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import master.MasterManager;
+
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import outsource.OutsourceBean;
 import outsource.OutsourceManager;
 import client.ClientManager;
@@ -26,12 +36,14 @@ public class InvoiceHandler extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		HttpSession session = request.getSession();
 		InvoiceForm invoiceForm = (InvoiceForm) form;
 		InvoiceManager invoiceManager = new InvoiceManager();
 		ClientManager clientManager = new ClientManager();
 		MasterManager masterManager = new MasterManager();
 		HolidayManager holidayManager = new HolidayManager();
 		OutsourceManager outsourceManager = new OutsourceManager();
+		GeneralInformationManager generalInformationManager =  new GeneralInformationManager();
 		invoiceForm.setClientList(clientManager.getAll());
 		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
 
@@ -57,8 +69,8 @@ public class InvoiceHandler extends Action {
 					invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
 					invoiceDetailBean.setFee(temp.getFee());
 					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
-					invoiceForm.getInvoiceDetailList().add(invoiceDetailBean);
-					System.out.println(invoiceForm.getInvoiceDetailList());
+					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
+					System.out.println(invoiceForm.getProfessionalServiceList());
 				}
 				
 				return mapping.findForward("createInvoicePS");
@@ -70,14 +82,28 @@ public class InvoiceHandler extends Action {
 		}else if("insertTransactionOutsource".equals(invoiceForm.getTask())){
 			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
 			Date date = new Date();
+//			System.out.println("Date "+invoiceForm.getInvoiceBean().getInvoiceDate());
+//			System.out.println("Client ID "+invoiceForm.getInvoiceBean().getClientId());
+//			System.out.println("Type ID "+invoiceForm.getInvoiceBean().getInvoiceTypeId());
+//			System.out.println("Month "+invoiceForm.getInvoiceBean().getPeriodMonth());
+//			System.out.println("Year "+invoiceForm.getInvoiceBean().getPeriodYear());
+//			System.out.println("Gross "+invoiceForm.getInvoiceBean().getIsGross());
+//			System.out.println("Inv Note "+invoiceForm.getInvoiceBean().getNotes());
+//			System.out.println("Size "+invoiceForm.getProfessionalServiceList().size());
+//			for(InvoiceDetailBean bean: invoiceForm.getProfessionalServiceList()){
+//				System.out.println("Name "+bean.getEmployeeName());
+//				System.out.println("Fee "+bean.getFee());
+//				System.out.println("Work Day "+bean.getWorkDays());
+//				System.out.println("Man Day "+bean.getManDays());
+//				System.out.println("Notes "+bean.getNotes());
+//			}
 			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(
 					invoiceManager.getMaxInvoiceHeaderId());
-			System.out.println(invoiceManager.getMaxInvoiceHeaderId());
 			invoiceForm.getInvoiceBean().setInvoiceNumber(
 					invoiceManager.getInvoiceNumber(dateFormat.format(date)));
-			System.out.println(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			
-			return mapping.findForward("createInvoicePS");
+			//return mapping.findForward("createInvoicePS");
+			return null;
 		}		
 		else if ("detailInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("detailInvoice");
@@ -104,14 +130,37 @@ public class InvoiceHandler extends Action {
 		} else if ("createInvoiceTR".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoiceTR");
 		} else if ("insert".equals(invoiceForm.getTask())) {
-			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
+			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
-			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(
-					invoiceManager.getMaxInvoiceHeaderId());
-			// System.out.println(invoiceManager.getMaxInvoiceHeaderId());
-			invoiceForm.getInvoiceBean().setInvoiceNumber(
-					invoiceManager.getInvoiceNumber(dateFormat.format(date)));
-			// System.out.println(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
+			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(invoiceManager.getMaxInvoiceHeaderId());
+			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
+			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
+			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
+			double total = 0;
+			for (InvoiceDetailBean bean : invoiceForm.getHeadHunterList()){
+				total += bean.getFee();
+			}
+			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
+				//Ini kalau exclude PPN
+				double formula = total+(total*ppn/100);
+				invoiceForm.getInvoiceBean().setTotalNet(total);
+				invoiceForm.getInvoiceBean().setTotalGross(formula);
+				invoiceForm.getInvoiceBean().setPpnPercentage(formula-total);
+			}else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
+				//Ini kalau include PPN
+				NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+				DecimalFormat doubleFormat = new DecimalFormat(".##");
+				double devider = 100+ppn;
+				double formula = total * 100 / devider;
+				formula = numberFormat.parse(doubleFormat.format(formula)).doubleValue();
+				double ppnValue = total-formula;
+				ppnValue = numberFormat.parse(doubleFormat.format(ppnValue)).doubleValue();
+				invoiceForm.getInvoiceBean().setTotalNet(formula);
+				invoiceForm.getInvoiceBean().setTotalGross(total);
+				invoiceForm.getInvoiceBean().setPpnPercentage(ppnValue);
+			}
+			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+			invoiceManager.insert(invoiceForm.getInvoiceBean());
 			return mapping.findForward("createInvoiceHH");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
