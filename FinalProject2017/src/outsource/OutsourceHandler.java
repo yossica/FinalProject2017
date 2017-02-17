@@ -1,8 +1,10 @@
 package outsource;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +35,7 @@ public class OutsourceHandler extends Action {
 		SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
-		
+
 		if ("create".equals(outsourceForm.getTask())) {
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
 			outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
@@ -87,7 +89,7 @@ public class OutsourceHandler extends Action {
 			outsourceForm.getOutsourceBean().setCreatedBy(
 					(String) session.getAttribute("username"));
 
-			// date format
+			// date format data
 			cal.setTime(showDateFormat.parse(outsourceForm.getOutsourceBean()
 					.getStartDate()));
 			outsourceForm.getOutsourceBean().setStartDate(
@@ -99,23 +101,45 @@ public class OutsourceHandler extends Action {
 
 			// validation
 			// ada employee di table
-			// max end date < start end date input
-			String maxEndDate = outsourceManager
-					.getMaxEndDateByEmployeeId(outsourceForm.getOutsourceBean()
-							.getEmployeeId());
-			if (maxEndDate != null) {
-				Calendar cal2 = Calendar.getInstance();
-				cal.setTime(dateFormat.parse(maxEndDate));
-				cal2.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
-						.getStartDate()));
-				if (cal.after(cal2)) {
-					outsourceForm.getMessageList().add(
-							"Employee already with another contract, ends at "
-									+ maxEndDate);
-					flagError = 1;
+			// cek seluruh data input start > end data or input end < start data
+
+			// ambil data dari rentang tahun input start - end
+			Calendar cal2 = Calendar.getInstance();
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			cal2.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getEndDate()));
+			Calendar cal3 = Calendar.getInstance();
+			Calendar cal4 = Calendar.getInstance();
+			for (int i = cal.get(Calendar.YEAR); i <= cal2.get(Calendar.YEAR); i++) {
+				Map filter = new HashMap();
+				filter.put("employee", outsourceForm.getOutsourceBean()
+						.getEmployeeId());
+				filter.put("year", i);
+				List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
+				tmpList = outsourceManager.getAllWithFilter(filter);
+				for (int j = 0; j < tmpList.size(); j++) {
+					cal3.setTime(dateFormat.parse(tmpList.get(j).getStartDate()));
+					cal4.setTime(dateFormat.parse(tmpList.get(j).getEndDate()));
+					if (cal.after(cal4) || cal2.before(cal3)) {
+						
+					} else {
+						flagError = 1;
+						outsourceForm.getMessageList().add(
+								"Employee already with another contract, with "
+										+ tmpList.get(j).getClientName()
+										+ " in period "
+										+ tmpList.get(j).getStartDate()
+										+ " until "
+										+ tmpList.get(j).getEndDate());
+						break;
+					}
+				}
+				if(flagError == 1){
+					break;
 				}
 			}
-
+			
 			if (flagError == 1) {
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
@@ -138,11 +162,11 @@ public class OutsourceHandler extends Action {
 						"Success Create Profesional Service Contract");
 
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
 				Map filter = new HashMap();
-				filter.put("date", null);
 				filter.put("year", outsourceForm.getFilterYear());
 
 				outsourceForm.setOutsourceList(outsourceManager
@@ -158,11 +182,11 @@ public class OutsourceHandler extends Action {
 					"Success Update Profesional Service Contract");
 
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
+			outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
 			outsourceForm.setFilterMonth("");
 			outsourceForm.setFilterYear(String.valueOf(year));
 
 			Map filter = new HashMap();
-			filter.put("date", null);
 			filter.put("year", outsourceForm.getFilterYear());
 
 			outsourceForm.setOutsourceList(outsourceManager
@@ -197,7 +221,7 @@ public class OutsourceHandler extends Action {
 						"Start date must be later than previous start date");
 				flagError = 1;
 			}
-			// input start date < old end date, jika  tidak maka error
+			// input start date < old end date, jika tidak maka error
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
 			if (cal.after(cal2)) {
 				outsourceForm.getMessageList().add(
@@ -245,11 +269,11 @@ public class OutsourceHandler extends Action {
 
 				// for view data
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
 				Map filter = new HashMap();
-				filter.put("date", null);
 				filter.put("year", outsourceForm.getFilterYear());
 
 				outsourceForm.setOutsourceList(outsourceManager
@@ -299,6 +323,7 @@ public class OutsourceHandler extends Action {
 				outsourceForm.getMessageList().add("Success End Employee");
 				// for view data
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
+				outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
@@ -313,19 +338,20 @@ public class OutsourceHandler extends Action {
 			}
 		} else {
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
+			outsourceForm.setOptEmployeeList(employeeManager.getAllEnabled());
 
 			Map filter = new HashMap();
 
 			if ("filter".equals(outsourceForm.getTask())) {
 			} else {
 				// jika baru pertama kali buka
-				
+
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 			}
 			// jika klik tombol filter
 			filter.put("client", outsourceForm.getFilterClient());
-
+			filter.put("employee", outsourceForm.getFilterEmployee());
 			if (outsourceForm.getFilterYear().isEmpty()) {
 				filter.put("date", null);
 				filter.put("year", null);
