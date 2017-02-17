@@ -35,6 +35,6 @@
 		set
 		    status_invoice_id = #nextStatusId#
 		where
-		    transaction_invoice_id = #invoiceNumber#
+		    invoice_number = #invoiceNumber#
 	 </update>
 </sqlMap> 

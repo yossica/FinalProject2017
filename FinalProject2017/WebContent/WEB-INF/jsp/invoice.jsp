@@ -36,9 +36,11 @@
 		document.forms[1].submit();
 	}
 	function flyToChangeStatus(invoiceNumber,statusId){
-		document.forms[1].invoiceNumber.value = invoiceNumber;
-		document.forms[1].statusId.value = statusId;
-		flyToPage("changeStatus");
+		if(confirm("Are you sure want to change current status to next status?")){
+			document.forms[1].invoiceNumber.value = invoiceNumber;
+			document.forms[1].statusId.value = statusId;
+			flyToPage("changeStatus");
+		}
 	}
 </script>
 </head>
