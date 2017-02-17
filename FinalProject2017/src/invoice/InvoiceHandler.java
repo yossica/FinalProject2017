@@ -1,23 +1,25 @@
 package invoice;
 
+import holiday.HolidayManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import master.MasterManager;
-
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
+import outsource.OutsourceBean;
+import outsource.OutsourceManager;
 import client.ClientManager;
+import employee.EmployeeBean;
 
 public class InvoiceHandler extends Action{
 	@Override
@@ -28,17 +30,40 @@ public class InvoiceHandler extends Action{
 		InvoiceManager invoiceManager = new InvoiceManager();
 		ClientManager clientManager = new ClientManager();
 		MasterManager masterManager = new MasterManager();
+		HolidayManager holidayManager = new HolidayManager();
+		OutsourceManager outsourceManager = new OutsourceManager();
 		invoiceForm.setClientList(clientManager.getAll());
 		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
 
 		if ("createInvoice".equals(invoiceForm.getTask())){
 			return mapping.findForward("createInvoice");
-		}
-		
-		else if ("detailInvoice".equals(invoiceForm.getTask())) {
-			return mapping.findForward("detailInvoice");}
-		
-		else if ("createInvoicePS".equals(invoiceForm.getTask())) {
+		}else if ("createInvoicePS".equals(invoiceForm.getTask())) {
+			String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()+"/01/"+invoiceForm.getInvoiceBean().getPeriodYear();
+			Map paramMap = new HashMap();
+			paramMap.put("clientId", invoiceForm.getInvoiceBean().getClientId());
+			paramMap.put("exampleDate", exampleDate);
+			System.out.println(paramMap);
+			if(outsourceManager.checkContract(paramMap) != 0){
+				invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+				invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+				invoiceForm.getInvoiceBean().setNotes(invoiceForm.getInvoiceBean().getNotes());
+				invoiceForm.setOutsourceList(outsourceManager.getOutsourceContract(paramMap));
+				
+				List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
+				bean = outsourceManager.getOutsourceContract(paramMap);
+				InvoiceDetailBean invoiceDetailBean;
+				for(OutsourceBean temp : bean){
+					invoiceDetailBean = new InvoiceDetailBean();
+					invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
+					invoiceDetailBean.setFee(temp.getFee());
+					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
+					invoiceForm.getInvoiceDetailList().add(invoiceDetailBean);
+				}
+				return mapping.findForward("createInvoicePS");
+			}
+		}else if ("detailInvoice".equals(invoiceForm.getTask())) {
+			return mapping.findForward("detailInvoice");
+    }else if ("createInvoicePS".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoicePS");
 		}else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
@@ -77,7 +102,6 @@ public class InvoiceHandler extends Action{
 			String monthTo = invoiceForm.getMonthTo();
 			String yearTo = invoiceForm.getYearTo();
 			String status = invoiceForm.getStatusInvoiceId();
-			
 			if ("".equals(client)) {
 				client = null;
 			}
@@ -90,7 +114,6 @@ public class InvoiceHandler extends Action{
 				monthTo = null;
 				yearTo = null;
 			}
-
 			paramMap = new HashMap();
 			paramMap.put("monthFrom", monthFrom);
 			paramMap.put("yearFrom", yearFrom);
@@ -109,7 +132,6 @@ public class InvoiceHandler extends Action{
 			String monthTo = invoiceForm.getMonthTo();
 			String yearTo = invoiceForm.getYearTo();
 			String status = invoiceForm.getStatusInvoiceId();
-			
 			if ("".equals(client)) {
 				client = null;
 			}
@@ -122,7 +144,6 @@ public class InvoiceHandler extends Action{
 				monthTo = null;
 				yearTo = null;
 			}
-
 			Map paramMap = new HashMap();
 			paramMap.put("monthFrom", monthFrom);
 			paramMap.put("yearFrom", yearFrom);
@@ -143,12 +164,10 @@ public class InvoiceHandler extends Action{
 				pmonth = 12;
 				pyear--;
 			}
-			
 			invoiceForm.setMonthFrom(pmonth+"");
 			invoiceForm.setYearFrom(pyear+"");
 			invoiceForm.setMonthTo(cmonth+"");
 			invoiceForm.setYearTo(cyear+"");
-			
 			Map paramMap = new HashMap();
 			paramMap.put("monthFrom", pmonth);
 			paramMap.put("yearFrom", pyear);
