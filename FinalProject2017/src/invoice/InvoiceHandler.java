@@ -64,7 +64,45 @@ public class InvoiceHandler extends Action{
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			//System.out.println(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			return mapping.findForward("createInvoiceHH");
-		}else if ("filter".equals(invoiceForm.getTask())) {
+		}else if ("changeStatus".equals(invoiceForm.getTask())) {
+			String invoiceNumber = invoiceForm.getInvoiceNumber();
+			String nextStatusId = masterManager.getNextStatus(invoiceForm.getStatusId());
+			Map paramMap = new HashMap();
+			paramMap.put("invoiceNumber",invoiceNumber);
+			paramMap.put("nextStatusId", nextStatusId);
+			masterManager.setNextStatus(paramMap);
+			String client = invoiceForm.getClientId();
+			String monthFrom = invoiceForm.getMonthFrom();
+			String yearFrom = invoiceForm.getYearFrom();
+			String monthTo = invoiceForm.getMonthTo();
+			String yearTo = invoiceForm.getYearTo();
+			String status = invoiceForm.getStatusInvoiceId();
+			
+			if ("".equals(client)) {
+				client = null;
+			}
+			if ("".equals(status)) {
+				status = null;
+			}
+			if ("".equals(yearTo)) {
+				monthFrom = null;
+				yearFrom = null;
+				monthTo = null;
+				yearTo = null;
+			}
+
+			paramMap = new HashMap();
+			paramMap.put("monthFrom", monthFrom);
+			paramMap.put("yearFrom", yearFrom);
+			paramMap.put("monthTo", monthTo);
+			paramMap.put("yearTo", yearTo);
+			paramMap.put("client", client);
+			paramMap.put("status", status);
+			invoiceForm.setStatusInvoiceList(masterManager.getAllStatusInvoice());
+			invoiceForm.setInvoiceList(invoiceManager.getAllWithFilter(paramMap));
+			return mapping.findForward("invoice");
+		}
+		else if ("filter".equals(invoiceForm.getTask())) {
 			String client = invoiceForm.getClientId();
 			String monthFrom = invoiceForm.getMonthFrom();
 			String yearFrom = invoiceForm.getYearFrom();
