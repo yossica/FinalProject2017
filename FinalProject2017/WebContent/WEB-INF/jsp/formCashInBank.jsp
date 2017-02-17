@@ -28,8 +28,8 @@
 		else if(!doubleReg.test(amount)){
 			errorMessage = errorMessage + "Amount must be number!<br/>";
 		}
-		else if(parseFloat(amount) < 0){
-			errorMessage = errorMessage + "Amount cannot be negative!<br/>";	
+		else if(parseFloat(amount) <= 0){
+			errorMessage = errorMessage + "Amount cannot be zero or negative!<br/>";	
 		}
 		if(description == ""){
 			errorMessage = errorMessage + "Description must be filled!<br/>";
