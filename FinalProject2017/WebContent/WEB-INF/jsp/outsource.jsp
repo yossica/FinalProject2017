@@ -140,7 +140,7 @@
 										<td><bean:write property="startDate" name="outsource" /></td>
 										<td><bean:write property="endDate" name="outsource" /></td>
 										<td><bean:write property="fee" name="outsource"
-												format="#" /></td>
+												format="#,###.00" /></td>
 										<td><button type="button" class="btn btn-primary"
 												onclick="javascript:flyToUpdate('<bean:write property="transactionOutsourceId" name="outsource" format="#"/>')">Edit</button>
 											<button type="button" class="btn btn-primary"
