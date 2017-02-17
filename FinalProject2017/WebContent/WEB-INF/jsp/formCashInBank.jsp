@@ -15,7 +15,7 @@
 		var transactionDate = document.getElementsByName("cashInBankBean.transactionDate")[0].value;
 		var amount = document.getElementsByName("cashInBankBean.amount")[0].value;
 		var description = document.getElementsByName("cashInBankBean.description")[0].value;
-		var doubleReg = /^[\d]*(.[\d])*$/;
+		var doubleReg =  /^[\d]+(.[\d]+)$/;
 		var errorMessage = ""; 
 		
 		if(transactionDate == ""){
@@ -28,8 +28,8 @@
 		else if(!doubleReg.test(amount)){
 			errorMessage = errorMessage + "Amount must be number!<br/>";
 		}
-		else if(parseFloat(amount) < 0){
-			errorMessage = errorMessage + "Amount cannot be negative!<br/>";	
+		else if(parseFloat(amount) <= 0){
+			errorMessage = errorMessage + "Amount cannot be zero or negative!<br/>";	
 		}
 		if(description == ""){
 			errorMessage = errorMessage + "Description must be filled!<br/>";

@@ -19,7 +19,7 @@ public class InvoiceForm extends ActionForm{
 	private String statusId;
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
-	private List headHunterList = new ArrayList();
+	private List<InvoiceDetailBean> headHunterList = new ArrayList<InvoiceDetailBean>();
 	private List outsourceList = new ArrayList();
 	private List invoiceDetailList = new ArrayList();
 	private List invoiceList;
@@ -102,10 +102,10 @@ public class InvoiceForm extends ActionForm{
 	public void setInvoiceTypeList(List invoiceTypeList) {
 		this.invoiceTypeList = invoiceTypeList;
 	}
-	public List getHeadHunterList() {
+	public List<InvoiceDetailBean> getHeadHunterList() {
 		return headHunterList;
 	}
-	public void setHeadHunterList(List headHunterList) {
+	public void setHeadHunterList(List<InvoiceDetailBean> headHunterList) {
 		this.headHunterList = headHunterList;
 	}
 	public InvoiceDetailBean getInvoiceDetail(int index){
@@ -138,6 +138,27 @@ public class InvoiceForm extends ActionForm{
 	public void setStatusInvoiceList(List statusInvoiceList) {
 		this.statusInvoiceList = statusInvoiceList;
 	}
+
+	public void print(){
+		System.out.println(invoiceBean.getTransactionInvoiceHeaderId());
+		System.out.println(invoiceBean.getInvoiceNumber());
+		System.out.println(invoiceBean.getInvoiceDate());
+		System.out.println(invoiceBean.getPeriodMonth());
+		System.out.println(invoiceBean.getPeriodYear());
+		System.out.println(invoiceBean.getStatusInvoiceId());
+		System.out.println(invoiceBean.getInvoiceTypeId());
+		System.out.println(invoiceBean.getClientId());
+		System.out.println(invoiceBean.getTotalNet());
+		System.out.println(invoiceBean.getPpnPercentage());
+		System.out.println(invoiceBean.getIsGross());
+		System.out.println(invoiceBean.getTotalGross());
+		System.out.println(invoiceBean.getNotes());
+		System.out.println(invoiceBean.getCreatedBy());
+		System.out.println(invoiceBean.getCreatedDate());
+		System.out.println(invoiceBean.getChangedBy());
+		System.out.println(invoiceBean.getChangedDate());
+	}
+  
 	public List getMessageList() {
 		if(messageList == null){
 			messageList = new ArrayList();
@@ -146,6 +167,6 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setMessageList(List messageList) {
 		this.messageList = messageList;
-	}
-	
+  }
+  
 }
