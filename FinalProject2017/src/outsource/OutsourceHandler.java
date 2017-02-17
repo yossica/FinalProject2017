@@ -25,11 +25,16 @@ public class OutsourceHandler extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("username") == null) {
+			return mapping.findForward("login");
+		}
+
 		OutsourceForm outsourceForm = (OutsourceForm) form;
 		OutsourceManager outsourceManager = new OutsourceManager();
 		ClientManager clientManager = new ClientManager();
 		EmployeeManager employeeManager = new EmployeeManager();
-		HttpSession session = request.getSession();
 		int flagError = 0;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
