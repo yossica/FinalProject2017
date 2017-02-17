@@ -16,9 +16,11 @@
     <link href="asset/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
     <link href="asset/metisMenu/metisMenu.css" rel="stylesheet">
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
     <!-- Custom Fonts -->
     <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
     
+<script src="dist/sweetalert.min.js"></script>    
 <script>
 	function flyToPageIndex(taskIndex)
 	{
