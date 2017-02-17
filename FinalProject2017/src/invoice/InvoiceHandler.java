@@ -63,9 +63,7 @@ public class InvoiceHandler extends Action{
 			}
 		}else if ("detailInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("detailInvoice");
-    }else if ("createInvoicePS".equals(invoiceForm.getTask())) {
-			return mapping.findForward("createInvoicePS");
-		}else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
+    }else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			DateFormat dateFormatMonth = new SimpleDateFormat("MM");
