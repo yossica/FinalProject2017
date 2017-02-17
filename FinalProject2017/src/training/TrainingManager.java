@@ -237,4 +237,28 @@ public class TrainingManager {
 		return result;
 	}
 	
+	public List getOngoingTrainingClient(){
+		List result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("training.getOngoingTrainingClient", null);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List getOngoingTrainingByClient(int input){
+		List result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("training.getOngoingTrainingByClient", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }
