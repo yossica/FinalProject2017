@@ -131,11 +131,12 @@ public class OutsourceManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
 			result = (List<OutsourceBean>) ibatis.queryForList("outsource.getOutsourceContract", input);
-    } catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return result;
+	}
 	public String getMaxEndDateByEmployeeId(Integer input){
 		String result = null;
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
