@@ -82,14 +82,6 @@
 		from transaction_outsource
 	</select>
 	
-	<select id="getMaxEndDateByEmployeeId" resultClass="java.lang.String"
-							parameterClass="java.lang.Integer">
-	select 
-		to_char(max(end_date),'MM/dd/yyyy') 
-	from transaction_outsource 
-	where employee_id = #employeeId#
-	</select>
-	
 	<select id="getAllWithFilter" resultClass="outsource.OutsourceBean"
 									parameterClass="java.util.Map">
 		select 
@@ -130,6 +122,14 @@
 					</isNotEmpty>
 				</isNotNull>
 			</dynamic>
+			<dynamic prepend="AND">
+				<isNotNull property="employee">
+					<isNotEmpty property="employee">
+						o.employee_id = #employee#
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>
+			
 		order by transaction_outsource_id asc
 	</select>
 	
