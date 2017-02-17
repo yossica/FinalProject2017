@@ -128,7 +128,7 @@
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
-		                                    <logic:notEmpty name="indexForm" property="createdRemainderList">
+		                                    <logic:notEmpty name="indexForm" property="sentOutsourceRemainderList">
 		                                        <logic:iterate id="list" name="indexForm" property="sentOutsourceRemainderList">
 			                                        <tr>
 			                                        	<td>
@@ -139,6 +139,13 @@
 			                                        </tr>
 		                                        </logic:iterate>
 		                                    </logic:notEmpty>
+		                                    <logic:empty name="indexForm" property="sentOutsourceRemainderList">
+		                                    	<tr>
+		                                        	<td>
+		                                        	Empty List
+		                                        	</td>
+		                                        </tr>
+		                                    </logic:empty>
 	                                    </tbody>
 	                                </table>
 	                            </div>

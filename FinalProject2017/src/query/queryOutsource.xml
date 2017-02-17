@@ -4,14 +4,14 @@
 <sqlMap namespace="outsource">
 	<insert id="insert" parameterClass="outsource.OutsourceBean">
 		insert into transaction_outsource (transaction_outsource_id,client_id,employee_id,start_date,
-			end_date,is_gross, fee, created_by, created_date, changedBy, changedDate)
+			end_date,is_gross, fee, created_by, created_date, changed_by, changed_date)
 		values (#transactionOutsourceId#,#clientId#,#employeeId#,to_date(#startDate#,'MM/dd/yyyy'), 
 			to_date(#endDate#,'MM/dd/yyyy'),#isGross#,#fee#,#createdBy#,sysdate,null,null)
 	</insert>
 	
 	<update id="update" parameterClass="outsource.OutsourceBean">
 		update transaction_outsource
-		set end_date = #endDate#,
+		set end_date = to_date(#endDate#,'MM/dd/yyyy'),
 			fee = #fee#,
 			is_gross = #isGross#,
 			changed_by = #changedBy#,
@@ -40,8 +40,8 @@
 		select 
             clientId,
             clientName, 
-            extract(year from add_months(trunc(startDate,'MM'),-1) ) || 
-            trim(to_char(extract(month from add_months(trunc(startDate,'MM'),-1) ),'00')) as startDate
+            extract(year from trunc(startDate,'MM') ) || 
+            trim(to_char(extract(month from trunc(startDate,'MM') ),'00')) as startDate
         from (
             select
                 t.client_id as clientId,
@@ -75,7 +75,21 @@
 		from 
 			dual
 	</select>
-
+	
+	<select id="getMaxId" resultClass="java.lang.Integer">
+		select
+			max(transaction_outsource_id) 
+		from transaction_outsource
+	</select>
+	
+	<select id="getMaxEndDateByEmployeeId" resultClass="java.lang.String"
+							parameterClass="java.lang.Integer">
+	select 
+		to_char(max(end_date),'MM/dd/yyyy') 
+	from transaction_outsource 
+	where employee_id = #employeeId#
+	</select>
+	
 	<select id="getAllWithFilter" resultClass="outsource.OutsourceBean"
 									parameterClass="java.util.Map">
 		select 
@@ -101,10 +115,10 @@
 				</isNotNull>
 			</dynamic>
 			<dynamic prepend="AND">
-				<isNotNull property="month">
-					<isNotEmpty property="month">
-						to_char(start_date,'mm') &lt;= #month#
-			            and to_char(end_date,'mm')&gt;=#month#
+				<isNotNull property="date">
+					<isNotEmpty property="date">
+					    start_date &lt;= last_day(trunc(to_date(#date#,'MM/dd/yyyy'),'mm'))
+			   			and end_date &gt;= trunc(to_date(#date#,'MM/dd/yyyy'),'mm')
 					</isNotEmpty>
 				</isNotNull>
 			</dynamic>
@@ -116,6 +130,7 @@
 					</isNotEmpty>
 				</isNotNull>
 			</dynamic>
+		order by transaction_outsource_id asc
 	</select>
 	
 	<select id="getOutsourceContract" parameterClass="java.util.Map" resultClass="outsource.OutsourceBean">

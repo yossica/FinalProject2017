@@ -5,7 +5,6 @@
 	<select id="getAll" resultClass="master.StatusInvoiceBean">	
 		select status_invoice_id as statusInvoiceId,
 				name as name,
-				form_id as fromId,
 				to_id as toId
 		from master_status_invoice
 	</select>
@@ -14,9 +13,28 @@
 						 parameterClass="java.lang.Integer">
 		select status_invoice_id as statusInvoiceId,
 				name as name,
-				form_id as fromId,
 				to_id as toId
 		from master_status_invoice
 		where status_invoice_id = #statusInvoiceId#
 	 </select>
+	 
+	 <select id="getNextStatus" resultClass="java.lang.String"
+						 parameterClass="java.lang.String">
+		select
+		    b.status_invoice_id 
+		from 
+		    master_status_invoice a,master_status_invoice b
+		where 
+		    a.status_invoice_id = #statusInvoiceId# and
+		    b.status_invoice_id = a.to_id
+	 </select>
+	 
+	 <update id="updateStatus" parameterClass="java.util.Map">
+	 	update
+		    transaction_invoice_header
+		set
+		    status_invoice_id = #nextStatusId#
+		where
+		    transaction_invoice_id = #invoiceNumber#
+	 </update>
 </sqlMap> 

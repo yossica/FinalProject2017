@@ -88,7 +88,6 @@ public class IndexHandler extends Action{
 						if(invoiceManager.checkInvoice(paramMap) == 0){
 							InvoiceBean invoiceBean = new InvoiceBean();
 							invoiceBean.setClientName(list.get(i).getClientName());
-							invoiceBean.setInvoiceTypeName(list.get(i).getInvoiceTypeName());
 							invoiceBean.setPeriodMonth(periodMonth);
 							invoiceBean.setPeriodYear(periodYear);
 							arrList.add(invoiceBean);
@@ -104,7 +103,7 @@ public class IndexHandler extends Action{
 					else {
 						month--;
 					}
-					currentPeriod = Integer.parseInt(""+year+month);
+					currentPeriod = Integer.parseInt(""+year+String.format("%02d",month));
 				}
 			}
 			indexForm.setListedRemainderList(arrList);

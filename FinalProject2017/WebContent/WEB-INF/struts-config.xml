@@ -49,6 +49,8 @@
 			<forward name="holiday" path="/WEB-INF/jsp/holiday.jsp"></forward>
 		</action>
 		<action path="/invoice" name="invoiceForm" type="invoice.InvoiceHandler" scope="request">
+			<forward name="detailInvoice" path="/WEB-INF/jsp/detailInvoice.jsp"></forward>
+			
 			<forward name="invoice" path="/WEB-INF/jsp/invoice.jsp"></forward>
 			<forward name="createInvoice" path="/WEB-INF/jsp/createInvoice.jsp"></forward>
 			<forward name="createInvoicePS" path="/WEB-INF/jsp/createInvoicePS.jsp"></forward>
@@ -73,4 +75,5 @@
     
 		<action path="/login" forward="/user.do?task=login" />	
 	</action-mappings>
+
 </struts-config>

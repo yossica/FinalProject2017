@@ -2,6 +2,62 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="invoice">
+	<select id="getAllWithFilter" parameterClass="java.util.Map" resultClass="invoice.InvoiceBean">		
+		select
+            invoice_number as invoiceNumber,
+            tih.client_id as clientId,
+            mc.name as clientName,
+            period_month as periodMonth,
+            case period_month
+                when 1 then 'January'
+                when 2 then 'February'
+                when 3 then 'March'
+                when 4 then 'April'
+                when 5 then 'May'
+                when 6 then 'June'
+                when 7 then 'July'
+                when 8 then 'August'
+                when 9 then 'September'
+                when 10 then 'October'
+                when 11 then 'November'
+                else 'December' 
+            end as periodMonthName,
+            period_year as periodYear,
+            tih.invoice_type_id as invoiceTypeId,
+            mit.name as invoiceTypeName,
+            invoice_date as invoiceDate,
+            tih.status_invoice_id as statusInvoiceId,
+            msi.name as statusInvoiceName
+        from transaction_invoice_header tih
+        join master_client mc on (tih.client_id=mc.client_id)
+        join master_invoice_type mit on (tih.invoice_type_id=mit.invoice_type_id)
+        join master_status_invoice msi on (tih.status_invoice_id=msi.status_invoice_id)
+        where 1=1
+        <dynamic prepend="AND">
+			<isNotNull property="yearTo">
+				<isNotEmpty property="yearTo">
+					to_date(period_month||'/'||period_year,'MM/YYYY')
+					between to_date(#monthFrom#||'/'||#yearFrom#,'MM/YYYY') 
+					and last_day(to_date(#monthTo#||'/'||#yearTo#,'MM/YYYY'))
+				</isNotEmpty>
+			</isNotNull>
+		</dynamic>
+        <dynamic prepend="AND">
+			<isNotNull property="client">
+				<isNotEmpty property="client">
+					tih.client_id = #client#
+				</isNotEmpty>
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="AND">
+			<isNotNull property="status">
+				<isNotEmpty property="status">
+					tih.status_invoice_id = #status#
+				</isNotEmpty>
+			</isNotNull>
+		</dynamic>
+	</select>
+	
 	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">
 		select
             c.name as clientName,
@@ -41,6 +97,25 @@
 		    and client_id = #clientId#
 	</select>
 	
-	
-	
+	<select id="getMaxIdHeader" resultClass="java.lang.Integer">
+		select max(transaction_invoice_id)+1
+		from transaction_invoice_header
+    </select>
+    
+    <select id="getMaxInvoiceNumber" resultClass="java.lang.String">
+    	select invoice_number
+    	from transaction_invoice_header
+    	where transaction_invoice_id = 
+    	(select max(transaction_invoice_id)
+    	from transaction_invoice_header)
+    </select>
+    
+    <select id="getLatestInvoiceDate" resultClass="java.lang.String">
+    	select invoice_date
+    	from transaction_invoice_header
+    	where transaction_invoice_id = 
+    	(select max(transaction_invoice_id)
+    	from transaction_invoice_header)
+    </select>
+    
 </sqlMap> 

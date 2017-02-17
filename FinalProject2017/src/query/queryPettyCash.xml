@@ -18,7 +18,14 @@
 		from transaction_petty_cash t
 			join master_cash_flow_category m on t.cash_flow_category_id = m.cash_flow_category_id
 		where
-			transaction_date between to_date(#startDate#,'MM/dd/yyyy') and to_date(#endDate#,'MM/dd/yyyy')
+			1=1
+			<dynamic prepend="AND">
+				<isNotNull property="startDate">
+					<isNotEmpty property="startDate">
+						transaction_date between to_date(#startDate#,'MM/dd/yyyy') and to_date(#endDate#,'MM/dd/yyyy')
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>
 			<dynamic prepend="AND">
 				<isNotNull property="category">
 					<isNotEmpty property="category">

@@ -16,44 +16,46 @@
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
-	<html:form action="/client" method="post">
-		<html:hidden property="task" name="clientForm" />
-		<html:hidden property="clientId" name="clientForm"/>
+	<html:form action="/invoice" method="post">
+		<html:hidden property="task" name="invoiceForm" />
+		<html:hidden property="clientId" name="invoiceForm"/>
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Client</h1>
 					<div class="panel-body">
-						<div class="table-responsive">
+						<div class="pull-left">Invoice No: <bean:write name="invoiceForm" property="invoiceBean.invoiceNumber"/> </div>
+						<div class="pull-right">Date: <bean:write name="invoiceForm" property="invoiceBean.invoiceDate"/></div>
+						<%-- <div class="table-responsive">
 							<table class="table table-hover">
 								<tbody>
 									<tr>
-										<td>Client Name</td>
-										<td><html:text name="clientForm" property="name" /></td>
+										<td>Invoice No: </td>
+										<td><bean:write name="invoiceForm" property="invoiceBean.invoiceNumber"/></td>
 									</tr>
 									<tr>
 										<td>Address</td>
-										<td><html:text name="clientForm" property="address" /></td>
+										<td><html:text name="invoiceForm" property="address" /></td>
 									</tr>
 									<tr>
 										<td>City</td>
-										<td><html:text name="clientForm" property="city" /></td>
+										<td><html:text name="invoiceForm" property="city" /></td>
 									</tr>
 									<tr>
 										<td>Phone</td>
-										<td><html:text name="clientForm" property="phoneNumber" /></td>
+										<td><html:text name="invoiceForm" property="phoneNumber" /></td>
 									</tr>
 									<tr>
 										<td>Fax</td>
-										<td><html:text name="clientForm" property="faxNumber" /></td>
+										<td><html:text name="invoiceForm" property="faxNumber" /></td>
 									</tr>
 									<tr>
 										<td>Postal Code</td>
-										<td><html:text name="clientForm" property="postalCode" /></td>
+										<td><html:text name="invoiceForm" property="postalCode" /></td>
 									</tr>
 									<tr>
 										<td>Client Status</td>
-										<td><html:select name="clientForm" property="isEnabled">
+										<td><html:select name="invoiceForm" property="isEnabled">
 												<html:option value="1">Enabled</html:option>
 												<html:option value="0">Disabled</html:option>
 												</html:select>
@@ -61,7 +63,7 @@
 									</tr>
 								</tbody>
 							</table>
-						</div>
+						</div> --%>
 						<!-- /.table-responsive -->
 					</div>
 					<table border="1">

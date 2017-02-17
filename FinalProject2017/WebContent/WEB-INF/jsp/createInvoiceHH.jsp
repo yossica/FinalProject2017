@@ -26,9 +26,9 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
-
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
+						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 					</div>
 				</div>
@@ -39,35 +39,35 @@
 					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
+						<html:hidden name="invoiceForm" property="invoiceBean.clientName"/>
 						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
-
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-
 					<div class="col-md-2"><label>Contract Service</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
+						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeName" />
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
-
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-
 					<div class="col-md-2"><label>Period</label></div>
-
 					<div class="col-md-5">
-						Bulan Tahun pembuatan
+						<html:hidden name="invoiceForm" property="invoiceBean.periodMonth" />
+						<html:hidden name="invoiceForm" property="invoiceBean.periodYear" />
+						<bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#" />
+						/
+						<bean:write name="invoiceForm" property="invoiceBean.periodYear" format="#" />
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-
 					<div class="col-md-2"><label>Tax</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
@@ -82,12 +82,16 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2"><label>HeadHunter / Others</label></div>
+					<div class="col-md-2"><label>Invoice Note</label></div>
+					<div class="col-md-5">
+						<html:hidden name="invoiceForm" property="invoiceBean.notes" />
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" disabled="true"></html:textarea>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="border:solid 1px gray;border-radius: 10px; background-color: #EFEFEF;">
+			<div class="col-md-10" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 1%;">
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-12" style="text-align: center;">
 						<table class="table table-hover">
 							<tr>
 								<th>Description</th>
@@ -95,8 +99,32 @@
 								<th>Notes</th>
 								<th>Action</th>
 							</tr>
+							<logic:iterate id="invoiceDetail" name="invoiceForm" property="headHunterList">
+							<tr>
+								<td>
+									<html:text name="invoiceDetail" property="description" styleClass="form-control" indexed="true"></html:text>
+								</td>
+								<td>
+									<html:text name="invoiceDetail" property="fee" styleClass="form-control" indexed="true" value=""></html:text>
+								</td>
+								<td>
+									<html:text name="invoiceDetail" property="notes" styleClass="form-control" indexed="true"></html:text>
+								</td>
+								<td>
+									Action Button Coming Soon
+								</td>
+							</tr>
+							</logic:iterate>
 						</table>
-
+						<button type="button" class="btn btn-primary btn-circle" style="margin-bottom: 1%;" onclick="javascript:flyToPage('addDetailHH')"><i class="fa fa-plus"></i></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insert')">Save</button>
 					</div>
 				</div>
 			</div>

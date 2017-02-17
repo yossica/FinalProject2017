@@ -16,10 +16,8 @@ Notice the use of the properties from the above resource -->
 <transactionManager type="JDBC" commitRequired="true">
 	<dataSource type="SIMPLE">
 		<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver"/>
-
-		<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@HENNYSENJAYA:1521:orcl"/>
-		<!-- <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:orcl"/> -->
-
+		<!-- <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@HENNYSENJAYA:1521:orcl"/> --> 
+		<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
 		<property name="JDBC.Username" value="financial"/>
 		<property name="JDBC.Password" value="financial"/>
 	</dataSource>
@@ -44,6 +42,7 @@ are relative to the classpath. For now, we only have one� -->
 <sqlMap resource="query/queryInvoiceType.xml" />
 <sqlMap resource="query/queryOutsource.xml" />
 <sqlMap resource="query/queryPettyCash.xml" />
+<sqlMap resource="query/queryStatusInvoice.xml" />
 <sqlMap resource="query/queryTraining.xml" />
 <sqlMap resource="query/queryUser.xml" />
 </sqlMapConfig>

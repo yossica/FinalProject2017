@@ -14,6 +14,13 @@ public class OutsourceManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
+			Integer maxId = (Integer) ibatis.queryForObject("outsource.getMaxId", null);
+            if(maxId==null){
+            	maxId = 1;
+            }else{
+            	maxId++;
+            }
+			input.setTransactionOutsourceId(maxId);
             ibatis.insert("outsource.insert", input);
             ibatis.commitTransaction();
 		} catch (SQLException e) {
@@ -124,9 +131,16 @@ public class OutsourceManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
 			result = (List<OutsourceBean>) ibatis.queryForList("outsource.getOutsourceContract", input);
-			for(OutsourceBean temp : result){
-				
-			}
+    } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	public String getMaxEndDateByEmployeeId(Integer input){
+		String result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (String) ibatis.queryForObject("outsource.getMaxEndDateByEmployeeId", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

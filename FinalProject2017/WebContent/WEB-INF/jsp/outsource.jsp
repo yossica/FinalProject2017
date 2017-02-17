@@ -35,7 +35,6 @@
 		<html:hidden name="outsourceForm" property="transactionOutsourceId" />
 		<div id="page-wrapper">
 			<div class="row">
-				<bean:write name="outsourceForm" property="task" />
 				<span> <logic:notEmpty name="outsourceForm"
 						property="messageList">
 						<logic:iterate id="message" name="outsourceForm"
@@ -45,7 +44,7 @@
 					</logic:notEmpty>
 				</span>
 				<div class="col-lg-12">
-					<h1 class="page-header">Outsource List</h1>
+					<h1 class="page-header">Profesional Service Contract List</h1>
 					<div class="panel-body" style="padding-right: 0;">
 						<div class="pull-right">
 							<button type="button" class="btn btn-primary"
