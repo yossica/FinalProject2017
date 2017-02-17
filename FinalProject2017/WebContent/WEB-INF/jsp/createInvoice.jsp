@@ -46,6 +46,7 @@
 			document.getElementById("tax").style.display = "block";
 		}
 	}
+
 	function onloadFunc() {
 		onchangeContractServices();
 	}
@@ -61,6 +62,13 @@
 			<div class="col-lg-12">
 				<h1 class="page-header">Create Invoice</h1>
 			</div>
+			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+			  				<logic:notEmpty name="invoiceForm" property="messageList">
+								<logic:iterate id="message" name="invoiceForm" property="messageList">
+									<bean:write name="message" /> 
+								</logic:iterate>
+							</logic:notEmpty>
+			  			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>

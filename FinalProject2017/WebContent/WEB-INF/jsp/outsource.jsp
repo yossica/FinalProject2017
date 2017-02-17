@@ -66,6 +66,19 @@
 								</div>
 							</div>
 						</div>
+						<div class="row" style="margin-top: 10px;">
+							<div class="col-md-10" style="padding-right: 1%">
+								<div class="col-md-1">Employee</div>
+								<div class="col-md-11">
+									<html:select name="outsourceForm" property="filterEmployee"
+										styleClass="form-control-client" size="1">
+										<html:option value="">Select All</html:option>
+										<html:optionsCollection name="outsourceForm"
+											property="optEmployeeList" value="employeeId" label="name" />
+									</html:select>
+								</div>
+							</div>
+						</div>
 						<div class="col-md-10" style="margin-top: 10px;">
 							<div class="row">
 								<div class="col-md-1">Period</div>
