@@ -137,7 +137,6 @@ public class OutsourceManager {
 		}
 		return result;
 	}
-
 	public String getMaxEndDateByEmployeeId(Integer input){
 		String result = null;
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
