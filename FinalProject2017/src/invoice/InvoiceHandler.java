@@ -37,6 +37,10 @@ public class InvoiceHandler extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		HttpSession session = request.getSession();
+
+		if (session.getAttribute("username") == null) {
+			return mapping.findForward("login");
+		}
 		InvoiceForm invoiceForm = (InvoiceForm) form;
 		InvoiceManager invoiceManager = new InvoiceManager();
 		ClientManager clientManager = new ClientManager();

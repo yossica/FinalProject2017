@@ -89,7 +89,7 @@
 								<div class="col-md-5">
 									Rp.
 									<bean:write name="cashInBankForm" property="remainingBalance"
-										format="#" />
+										format="#,###.00" />
 								</div>
 							</div>
 
