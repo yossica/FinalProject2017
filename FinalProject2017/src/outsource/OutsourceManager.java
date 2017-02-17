@@ -125,4 +125,17 @@ public class OutsourceManager {
 		}
 		return result;
 	}
+	
+	public String getMaxEndDateByEmployeeId(Integer input){
+		String result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (String) ibatis.queryForObject("outsource.getMaxEndDateByEmployeeId", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
 }
