@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id="getMaxId" resultClass="java.lang.Integer">
-		select count(1)
+		select max(holiday_id)
 		from master_holiday
     </select>
     

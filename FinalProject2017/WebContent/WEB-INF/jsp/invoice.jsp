@@ -36,9 +36,26 @@
 		document.forms[1].submit();
 	}
 	function flyToChangeStatus(invoiceNumber,statusId){
-		document.forms[1].invoiceNumber.value = invoiceNumber;
-		document.forms[1].statusId.value = statusId;
-		flyToPage("changeStatus");
+		swal({
+			  title: "Are you sure?",
+			  text: "System will change current status into next status",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "Yes, Change Status",
+			  cancelButtonText: "No, Cancel",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+					document.forms[1].invoiceNumber.value = invoiceNumber;
+					document.forms[1].statusId.value = statusId;
+					flyToPage("changeStatus");
+			  } else {
+			    swal("Cancelled", "Cancel Change Status", "error");
+			  }
+			});
 	}
 </script>
 </head>

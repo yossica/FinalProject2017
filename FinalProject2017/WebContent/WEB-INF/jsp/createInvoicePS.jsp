@@ -117,13 +117,26 @@
 										<td><bean:write property="employeeName" name="invoiceDetail" /></td>
 										<td><bean:write property="fee" name="invoiceDetail" format="#"/></td>
 										<td><bean:write property="workDays" name="invoiceDetail" format="#"/></td>
-										<td></td>
+										<td>
+											<html:text name="invoiceDetail" property="manDays" styleClass="form-control" indexed="true" value=""></html:text>
+										</td>
+										<td>
+											<html:text name="invoiceDetail" property="notes" styleClass="form-control" indexed="true"></html:text>
+										</td>
 									</tr>
 								</logic:iterate>
 							</logic:notEmpty>
 						</tbody>
 						</table>
 
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTransactionOutsource')">Save</button>
 					</div>
 				</div>
 			</div>

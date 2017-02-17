@@ -33,9 +33,24 @@
 		}
 	}
 	function balance(){
-		if(confirm("Are you sure you want to balance petty cash?")){
-			flyToPage("balancing");
-		}
+		swal({
+			  title: "Are you sure?",
+			  text: "System will rebalance Petty Cash ",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "Yes, Rebalance",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+				flyToPage("balancing");
+			  } else {
+			    swal("Cancelled", "Cancel Rebalance Cash in Bank", "error");
+			  }
+			});
 	}
 	function flyToPage(task){
 		document.forms[1].task.value=task;
