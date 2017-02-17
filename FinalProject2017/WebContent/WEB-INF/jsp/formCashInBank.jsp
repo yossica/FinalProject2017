@@ -15,7 +15,7 @@
 		var transactionDate = document.getElementsByName("cashInBankBean.transactionDate")[0].value;
 		var amount = document.getElementsByName("cashInBankBean.amount")[0].value;
 		var description = document.getElementsByName("cashInBankBean.description")[0].value;
-		var doubleReg = /^[\d]*(.[\d])*$/;
+		var doubleReg =  /^[\d]+(.[\d]+)$/;
 		var errorMessage = ""; 
 		
 		if(transactionDate == ""){
@@ -28,8 +28,8 @@
 		else if(!doubleReg.test(amount)){
 			errorMessage = errorMessage + "Amount must be number!<br/>";
 		}
-		else if(parseFloat(amount) < 0){
-			errorMessage = errorMessage + "Amount cannot be negative!<br/>";	
+		else if(parseFloat(amount) <= 0){
+			errorMessage = errorMessage + "Amount cannot be zero or negative!<br/>";	
 		}
 		if(description == ""){
 			errorMessage = errorMessage + "Description must be filled!<br/>";
@@ -39,10 +39,25 @@
 			document.getElementById("message").innerHTML = errorMessage;
 			return;
 		}
-		else{		
-			if (confirm("Are you sure to insert these data to cash in bank transaction?")) {
-				flyToPage();
-			}
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "System will insert these data to cash in bank transaction",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes, Insert",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  flyToPage();
+				  } else {
+				    swal("Cancelled", "Cancel Insert Transaction", "error");
+				  }
+				});
 		}
 	}
 	function cancel(){

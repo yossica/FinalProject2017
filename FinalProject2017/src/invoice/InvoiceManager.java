@@ -20,7 +20,16 @@ public class InvoiceManager {
 		String invoiceNumber = "";
 		try {
 			String invoiceDate = (String)ibatis.queryForObject("invoice.getLatestInvoiceDate", null);
-			if (Integer.parseInt(input.substring(3)) > Integer.parseInt(invoiceDate.substring(0,4))){
+			if (invoiceDate == null){
+				String numberStringTemp = (String)ibatis.queryForObject("invoice.getMaxInvoiceNumber", null);
+				if (numberStringTemp == null){
+					numberStringTemp = "001";
+				}
+				Integer numberIntegerTemp = Integer.parseInt(numberStringTemp.substring(0,3));
+				invoiceNumber = String.format("%03d", numberIntegerTemp);
+				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += input;
+			}else if (Integer.parseInt(input.substring(3)) > Integer.parseInt(invoiceDate.substring(0,4))){
 				invoiceNumber += "001";
 				invoiceNumber += "/ACE/INV.";
 				invoiceNumber += input;
@@ -44,14 +53,19 @@ public class InvoiceManager {
 			id = (Integer) ibatis.queryForObject("invoice.getMaxIdHeader", null);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			return id;
 		}
+		if (id == null){
+			id = 1;
+		}
+		return id;
+		
 	}
 	public void insert(InvoiceBean input){
-		/*SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
+			ibatis.insert("invoice.insertHeader", input);
+			ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -60,7 +74,7 @@ public class InvoiceManager {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 	}
 	
 	public void update(InvoiceBean input){

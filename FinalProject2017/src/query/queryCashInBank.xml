@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id="getMaxId" resultClass="java.lang.Integer">
-		select count(1)
+		select max(transaction_cash_in_bank_id)
 		from transaction_cash_in_bank
     </select>
 

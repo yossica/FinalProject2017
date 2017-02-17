@@ -14,7 +14,7 @@ public class TrainingBean implements Serializable {
 	private String trainingEndDate;
 	private String description;
 	private int isGross;
-	private int isInvoiceCreated;
+	private int settlementInvoiceId;
 	private int isSettlement;
 	private String createdBy;
 	private String createdDate;
@@ -88,12 +88,12 @@ public class TrainingBean implements Serializable {
 		this.isGross = isGross;
 	}
 
-	public int getIsInvoiceCreated() {
-		return isInvoiceCreated;
+	public int getSettlementInvoiceId() {
+		return settlementInvoiceId;
 	}
 
-	public void setIsInvoiceCreated(int isInvoiceCreated) {
-		this.isInvoiceCreated = isInvoiceCreated;
+	public void setSettlementInvoiceId(int settlementInvoiceId) {
+		this.settlementInvoiceId = settlementInvoiceId;
 	}
 
 	public String getCreatedBy() {

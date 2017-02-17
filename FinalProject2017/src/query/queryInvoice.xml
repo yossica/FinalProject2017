@@ -131,4 +131,11 @@
     	from transaction_invoice_header)
     </select>
     
+    <insert id="insertHeader" parameterClass="invoice.InvoiceBean">
+    	insert into transaction_invoice_header
+    	values (#transactionInvoiceHeaderId#, #invoiceNumber#, to_date(#invoiceDate#, 'yyyy-mm-dd'), #periodMonth#, #periodYear#, 
+    	#statusInvoiceId#, #invoiceTypeId#, #clientId#, #totalNet#, #ppnPercentage#, #isGross#, #totalGross#,
+    	#notes#, #createdBy#, sysdate, null, null)
+    </insert>
+    
 </sqlMap> 
