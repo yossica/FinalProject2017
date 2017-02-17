@@ -23,7 +23,8 @@ public class InvoiceForm extends ActionForm{
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
-	
+	private List outsourceList = new ArrayList();
+	private List invoiceDetailList = new ArrayList();
 	private List invoiceList;
 	private List statusInvoiceList;
 	
@@ -90,13 +91,24 @@ public class InvoiceForm extends ActionForm{
 	public void setYearTo(String yearTo) {
 		this.yearTo = yearTo;
 	}
+	public List getOutsourceList() {
+		return outsourceList;
+	}
+	public void setOutsourceList(List outsourceList) {
+		this.outsourceList = outsourceList;
+  }
+	public List getInvoiceDetailList() {
+		return invoiceDetailList;
+	}
+	public void setInvoiceDetailList(List invoiceDetailList) {
+		this.invoiceDetailList = invoiceDetailList;
+	}
 	public String getStatusInvoiceId() {
 		return statusInvoiceId;
 	}
 	public void setStatusInvoiceId(String statusInvoiceId) {
 		this.statusInvoiceId = statusInvoiceId;
-	}
-	
+  }
 	public List getClientList() {
 		return clientList;
 	}
@@ -109,7 +121,6 @@ public class InvoiceForm extends ActionForm{
 	public void setInvoiceTypeList(List invoiceTypeList) {
 		this.invoiceTypeList = invoiceTypeList;
 	}
-	
 	public List getInvoiceList() {
 		return invoiceList;
 	}
@@ -122,19 +133,15 @@ public class InvoiceForm extends ActionForm{
 	public void setStatusInvoiceList(List statusInvoiceList) {
 		this.statusInvoiceList = statusInvoiceList;
 	}
-
 	public String getInvoiceNumber() {
 		return invoiceNumber;
 	}
-
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
-
 	public String getStatusId() {
 		return statusId;
 	}
-
 	public void setStatusId(String statusId) {
 		this.statusId = statusId;
 	}
