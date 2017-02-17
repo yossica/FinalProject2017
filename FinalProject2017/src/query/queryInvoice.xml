@@ -4,6 +4,7 @@
 <sqlMap namespace="invoice">
 	<select id="getAllWithFilter" parameterClass="java.util.Map" resultClass="invoice.InvoiceBean">		
 		select
+			transaction_invoice_id as transactionInvoiceHeaderId,
             invoice_number as invoiceNumber,
             tih.client_id as clientId,
             mc.name as clientName,
@@ -56,6 +57,18 @@
 				</isNotEmpty>
 			</isNotNull>
 		</dynamic>
+	</select>
+	
+	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
+		select
+		    invoice_number as invoiceNumber,
+		    to_char(invoice_date,'MM/DD/YYYY') as invoiceDate,
+		    total_net as totalNet,
+		    ppn_percentage as ppnPercentage,
+		    total_gross as totalGross,
+		    notes as notes
+		from transaction_invoice_header
+		where transaction_invoice_id=#transactionInvoiceHeaderId#
 	</select>
 	
 	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">

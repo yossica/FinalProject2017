@@ -74,6 +74,8 @@ public class InvoiceHandler extends Action {
 				return mapping.findForward("createInvoice");
 			}
 		} else if ("detailInvoice".equals(invoiceForm.getTask())) {
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
 			return mapping.findForward("detailInvoice");
 		} else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(

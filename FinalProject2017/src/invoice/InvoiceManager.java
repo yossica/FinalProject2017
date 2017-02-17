@@ -67,10 +67,10 @@ public class InvoiceManager {
 		
 	}
 	
-	public InvoiceBean getById(int input){
-		InvoiceBean result = new InvoiceBean();
-		return result;
-	}
+//	public InvoiceBean getById(int input){
+//		InvoiceBean result = new InvoiceBean();
+//		return result;
+//	}
 
 	public List getDetailByIdHeader(int input){
 		List result = new ArrayList();
@@ -88,6 +88,19 @@ public class InvoiceManager {
 		}
 		return result;
 	}
+	
+	public InvoiceBean getHeaderById(int input){
+		InvoiceBean result = new InvoiceBean();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (InvoiceBean) ibatis.queryForObject("invoice.getHeaderById", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public List getCreatedRemainderList() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();

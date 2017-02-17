@@ -5,24 +5,38 @@ import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import client.ClientBean;
+
 public class InvoiceForm extends ActionForm{
 	
 	private InvoiceBean invoiceBean = new InvoiceBean();
+	
+	private ClientBean clientBean = new ClientBean();
+	
 	private String task;
+	
 	private String clientId;
 	private String monthFrom;
 	private String yearFrom;
 	private String monthTo;
 	private String yearTo;
 	private String statusInvoiceId;
+	
+	private String client;
 	private String invoiceNumber;
 	private String statusId;
+	
+	private int transactionInvoiceHeaderId;
+	private String invoiceTypeId;
+	
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List headHunterList = new ArrayList();
 	private List outsourceList = new ArrayList();
 	private List invoiceDetailList = new ArrayList();
+	
 	private List invoiceList;
+	
 	private List statusInvoiceList;
 	
 	public InvoiceForm(){
@@ -136,5 +150,29 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setStatusInvoiceList(List statusInvoiceList) {
 		this.statusInvoiceList = statusInvoiceList;
+	}
+	public String getInvoiceTypeId() {
+		return invoiceTypeId;
+	}
+	public void setInvoiceTypeId(String invoiceTypeId) {
+		this.invoiceTypeId = invoiceTypeId;
+	}
+	public int getTransactionInvoiceHeaderId() {
+		return transactionInvoiceHeaderId;
+	}
+	public void setTransactionInvoiceHeaderId(int transactionInvoiceHeaderId) {
+		this.transactionInvoiceHeaderId = transactionInvoiceHeaderId;
+	}
+	public ClientBean getClientBean() {
+		return clientBean;
+	}
+	public void setClientBean(ClientBean clientBean) {
+		this.clientBean = clientBean;
+	}
+	public String getClient() {
+		return client;
+	}
+	public void setClient(String client) {
+		this.client = client;
 	}
 }
