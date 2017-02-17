@@ -9,6 +9,7 @@ public class InvoiceDetailBean implements Serializable {
 	private double fee;
 	private int employeeId;
 	private String employeeName;
+	private int workDays;
 	private int manDays;
 	private String notes;
 	private String createdBy;
@@ -86,6 +87,12 @@ public class InvoiceDetailBean implements Serializable {
 	}
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
+	}
+	public int getWorkDays() {
+		return workDays;
+	}
+	public void setWorkDays(int workDays) {
+		this.workDays = workDays;
 	}
 	
 }

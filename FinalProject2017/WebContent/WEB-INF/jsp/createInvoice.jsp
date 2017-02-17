@@ -46,6 +46,11 @@
 			document.getElementById("tax").style.display = "block";
 		}
 	}
+	
+	function onloadFunc(){
+		onchangeContractServices();
+	}
+	window.onload = onloadFunc;
 </script>
 </head>
 <body>
@@ -57,6 +62,13 @@
 			<div class="col-lg-12">
 				<h1 class="page-header">Create Invoice</h1>
 			</div>
+			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+			  				<logic:notEmpty name="invoiceForm" property="messageList">
+								<logic:iterate id="message" name="invoiceForm" property="messageList">
+									<bean:write name="message" /> 
+								</logic:iterate>
+							</logic:notEmpty>
+			  			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>
@@ -92,30 +104,31 @@
 					<div class="col-md-2"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-4">
-						<select class="form-control">
+						<select class="form-control" name="invoiceBean.periodMonth">
 							<option selected disabled>Select</option>
-                            <option>January</option>
-                            <option>February</option>
-                            <option>March</option>
-                            <option>April</option>
-                            <option>June</option>
-                            <option>July</option>
-                            <option>August</option>
-                            <option>September</option>
-                            <option>October</option>
-                            <option>November</option>
-                            <option>December</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="11">December</option>
 						</select>
 					</div>
 					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-4">
-						<select class="form-control">
-							<option selected disabled>Select</option>
+						<select class="form-control" name="invoiceBean.periodYear">
+							<option selected>Select</option>
 							<%
                         		int year = Calendar.getInstance().get(Calendar.YEAR);
                         		for(int i=2000;i<=year;i++){
                         		%>
-                        			<option><%= i %></option>
+                        			<option value="<%= i %>"><%= i %></option>
                         		<% 
                         		}
                         	%>

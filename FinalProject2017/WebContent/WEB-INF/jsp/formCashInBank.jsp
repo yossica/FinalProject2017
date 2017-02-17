@@ -39,10 +39,25 @@
 			document.getElementById("message").innerHTML = errorMessage;
 			return;
 		}
-		else{		
-			if (confirm("Are you sure to insert these data to cash in bank transaction?")) {
-				flyToPage();
-			}
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "System will insert these data to cash in bank transaction",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes, Insert",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  flyToPage();
+				  } else {
+				    swal("Cancelled", "Cancel Insert Transaction", "error");
+				  }
+				});
 		}
 	}
 	function cancel(){
