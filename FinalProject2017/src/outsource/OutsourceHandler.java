@@ -100,6 +100,8 @@ public class OutsourceHandler extends Action {
 			// validation
 			// ada employee di table
 			// max end date < start end date input
+
+			//cek seluruh data input start > end data or input end < start data
 			String maxEndDate = outsourceManager
 					.getMaxEndDateByEmployeeId(outsourceForm.getOutsourceBean()
 							.getEmployeeId());
