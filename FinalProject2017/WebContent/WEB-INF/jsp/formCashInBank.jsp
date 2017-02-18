@@ -87,9 +87,8 @@
 							<div class="row" style="margin-top: 10px;">
 								<div class="col-md-3"><label>Remaining Balance</label></div>
 								<div class="col-md-5">
-									Rp.
 									<bean:write name="cashInBankForm" property="remainingBalance"
-										format="#" />
+										format="IDR #,###.##" />
 								</div>
 							</div>
 
