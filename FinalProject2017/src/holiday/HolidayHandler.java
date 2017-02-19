@@ -14,9 +14,12 @@ public class HolidayHandler extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("username") == null) {
+			return mapping.findForward("login");
+		}
 		HolidayForm holidayForm = (HolidayForm) form;
 		HolidayManager holidayManager = new HolidayManager();
-		HttpSession session = request.getSession();
 		
 		if("insert".equals(holidayForm.getTask())){
 			String[] row = holidayForm.getHolidayCsv().split("\n");

@@ -23,6 +23,15 @@
 		if (endDate == "") {
 			errorMessage = errorMessage + "End date must be filled!<br/>";
 		}
+		if(startDate != "" && endDate != ""){
+			var s = startDate.split("-");
+			var sDate = new Date(parseInt(s[0]),parseInt(s[1])-1,parseInt(s[2]));
+			var e = endDate.split("-");
+			var eDate = new Date(parseInt(e[0]),parseInt(e[1])-1,parseInt(e[2]));
+			if(sDate > eDate){
+				errorMessage = errorMessage+ "Start Date must be later than End Date! <br/>";
+			}
+		}
 		if (fee == "") {
 			errorMessage = errorMessage + "Fee  must be filled!<br/>";
 		} else if (!doubleReg.test(fee)) {
