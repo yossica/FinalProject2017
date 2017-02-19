@@ -137,37 +137,53 @@ public class InvoiceHandler extends Action {
 			return mapping.findForward("createInvoiceHH");
 		} else if ("createInvoiceTR".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoiceTR");
-		} else if ("insert".equals(invoiceForm.getTask())) {
+		} else if ("insertHH".equals(invoiceForm.getTask())) {
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
-			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(invoiceManager.getMaxInvoiceHeaderId());
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
 			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
-			double total = 0;
-			for (InvoiceDetailBean bean : invoiceForm.getHeadHunterList()){
-				total += bean.getFee();
-			}
+			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			double netTotal = 0;
 			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
 				//Ini kalau exclude PPN
-				double formula = total+(total*ppn/100);
-				invoiceForm.getInvoiceBean().setTotalNet(total);
+				for (InvoiceDetailBean bean : invoiceForm.getHeadHunterList()){
+					bean.setCreatedBy((String)session.getAttribute("username"));
+					netTotal += bean.getFee();
+					bean.setUnitPrice(bean.getFee());
+					bean.setTotalFee(bean.getFee());
+					invoiceForm.getInvoiceBean().getDetailList().add(bean);
+				}
+				double formula = netTotal+(netTotal*ppn/100);
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
 				invoiceForm.getInvoiceBean().setTotalGross(formula);
-				invoiceForm.getInvoiceBean().setPpnPercentage(formula-total);
+				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
+				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			}else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
 				//Ini kalau include PPN
 				NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
 				DecimalFormat doubleFormat = new DecimalFormat(".##");
 				double devider = 100+ppn;
-				double formula = total * 100 / devider;
-				formula = numberFormat.parse(doubleFormat.format(formula)).doubleValue();
-				double ppnValue = total-formula;
+				double netFee;
+				double grossTotal = 0;
+				for (InvoiceDetailBean bean : invoiceForm.getHeadHunterList()){
+					bean.setCreatedBy((String)session.getAttribute("username"));
+					netFee = bean.getFee() * 100 / devider;
+					netTotal += netFee;
+					grossTotal += bean.getFee();
+					bean.setUnitPrice(numberFormat.parse(doubleFormat.format(netFee)).doubleValue());
+					bean.setTotalFee(numberFormat.parse(doubleFormat.format(netFee)).doubleValue());
+					invoiceForm.getInvoiceBean().getDetailList().add(bean);
+				}
+				double ppnValue = grossTotal - netTotal;
+				netTotal = numberFormat.parse(doubleFormat.format(netTotal)).doubleValue();
 				ppnValue = numberFormat.parse(doubleFormat.format(ppnValue)).doubleValue();
-				invoiceForm.getInvoiceBean().setTotalNet(formula);
-				invoiceForm.getInvoiceBean().setTotalGross(total);
-				invoiceForm.getInvoiceBean().setPpnPercentage(ppnValue);
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
+				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+			//invoiceForm.print();
 			invoiceManager.insert(invoiceForm.getInvoiceBean());
 			return mapping.findForward("createInvoiceHH");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
