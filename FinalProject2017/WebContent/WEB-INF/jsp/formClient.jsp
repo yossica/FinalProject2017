@@ -7,13 +7,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Master Client</title>
 <script>
 	function flyToPage(task) {
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
 	function flyToSave() {
-		document.forms[1].submit();
+		swal({
+			  title: "Are you sure?",
+			  text: "System will save these data to master client",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#ef2300",
+			  confirmButtonText: "Yes, Save",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+				  swal({
+		                title: 'Saved!',
+		                text: 'Datas are successfully saved!',
+		                type: 'success'
+		            }, function() {
+		            	document.forms[1].submit();
+		            });
+				  
+			  } else {
+			    swal("Cancelled", "Cancel Save Master Client", "error");
+			  }
+			});
+		/* document.forms[1].submit(); */
 	}
 </script>
 <title>Client</title>
@@ -32,51 +58,48 @@
 							<table class="table table-hover">
 								<tbody>
 									<tr>
-										<td>Client Name</td>
-										<td><html:text name="clientForm" property="name" /></td>
+										<td><label>Client Name</label></td>
+										<td><html:text name="clientForm" property="name" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Address</td>
-										<td><html:text name="clientForm" property="address" /></td>
+										<td><label>Address</label></td>
+										<td><html:text name="clientForm" property="address" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>City</td>
-										<td><html:text name="clientForm" property="city" /></td>
+										<td><label>City</label></td>
+										<td><html:text name="clientForm" property="city" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Phone</td>
-										<td><html:text name="clientForm" property="phoneNumber" /></td>
+										<td><label>Phone</label></td>
+										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Fax</td>
-										<td><html:text name="clientForm" property="faxNumber" /></td>
+										<td><label>Fax</label></td>
+										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Postal Code</td>
-										<td><html:text name="clientForm" property="postalCode" /></td>
+										<td><label>Postal Code</label></td>
+										<td><html:text name="clientForm" property="postalCode" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
-										<td>Client Status</td>
-										<td><html:select name="clientForm" property="isEnabled">
+										<td><label>Client Status</label></td>
+										<td>
+											<div class="col-lg-13" >
+											<html:select name="clientForm" property="isEnabled" styleClass="form-control-client">
 												<html:option value="1">Enabled</html:option>
 												<html:option value="0">Disabled</html:option>
-											</html:select></td>
-									</tr>
-									<tr>
-										<td><button type="button" class="btn btn-primary"
-												onclick="javascript:flyToPage('client')">Cancel</button></td>
-										<td><button type="button"
-												class="btn btn-primary pull-right"
-												onclick="javascript:flyToSave()">Save</button></td>
+											</html:select>
+											</div>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<!-- /.table-responsive -->
+					</div>	
+					<div class="col-md-12" style="padding-right: 1%;" >
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()" style="margin-bottom: 5%;">Save</button>
+						<button type="button" class="btn btn-primary" style="margin-bottom: 5%;">Cancel</button>
 					</div>
-					<table border="1">
-
-					</table>
 				</div>
 			</div>
 		</div>
