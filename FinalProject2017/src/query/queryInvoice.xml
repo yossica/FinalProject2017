@@ -57,6 +57,7 @@
 				</isNotEmpty>
 			</isNotNull>
 		</dynamic>
+		order by 2
 	</select>
 	
 	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
@@ -64,11 +65,23 @@
 		    invoice_number as invoiceNumber,
 		    to_char(invoice_date,'MM/DD/YYYY') as invoiceDate,
 		    total_net as totalNet,
-		    ppn_percentage as ppnPercentage,
+		    total_ppn as totalPpn,
 		    total_gross as totalGross,
 		    notes as notes
 		from transaction_invoice_header
 		where transaction_invoice_id=#transactionInvoiceHeaderId#
+	</select>
+	
+	<select id="getDetailById" resultClass="invoice.InvoiceDetailBean" parameterClass="java.lang.Integer">		
+		select 
+            rownum as numb,
+            Description||' '||me.name||' '||nvl2(man_days,man_days||' days work',man_days) as description,
+            unit_price as unitPrice,
+            total,
+            notes
+        from transaction_invoice_detail tid
+        left outer join master_employee me on(tid.employee_id=me.employee_id)
+        where transaction_invoice_id=#transactionInvoiceHeaderId#
 	</select>
 	
 	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">

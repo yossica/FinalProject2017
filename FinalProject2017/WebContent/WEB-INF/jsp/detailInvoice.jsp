@@ -61,24 +61,26 @@
 									<th>Total</th>
 									<th>Notes</th>
 								</tr>
-								<tr>
-									<td>No</td>
-									<td>Description</td>
-									<td>Unit Price</td>
-									<td>Total</td>
-									<td>Notes</td>
-								</tr>
+								<logic:iterate id="inv" name="invoiceForm" property="invoiceDetailList">
+									<tr>
+										<td><bean:write name="inv" property="numb" format="#"/></td>
+										<td><bean:write name="inv" property="description"/></td>
+										<td><bean:write name="inv" property="unitPrice" format="#,###.##"/></td>
+										<td><bean:write name="inv" property="total" format="#,###.##"/></td>
+										<td><bean:write name="inv" property="notes"/></td>
+									</tr>
+								</logic:iterate>
 								<tr>
 									<td colspan="3">Total</td>
-									<td colspan="2"><bean:write name="invoiceForm" property="invoiceBean.totalNet" format="#"/></td>
+									<td colspan="2"><bean:write name="invoiceForm" property="invoiceBean.totalNet" format="#,###.##"/></td>
 								</tr>
 								<tr>
 									<td colspan="3">PPN 10%</td>
-									<td colspan="2"><bean:write name="invoiceForm" property="invoiceBean.ppnPercentage" format="#"/></td>
+									<td colspan="2"><bean:write name="invoiceForm" property="invoiceBean.totalPpn" format="#,###.##"/></td>
 								</tr>
 								<tr>
 									<td colspan="3">Grand Total</td>
-									<td colspan="2"><bean:write name="invoiceForm" property="invoiceBean.totalGross" format="#"/></td>
+									<td colspan="2"><bean:write name="invoiceForm" property="invoiceBean.totalGross" format="#,###.##"/></td>
 								</tr>
 							</table>
 						</div>
@@ -87,14 +89,14 @@
 							<table border="1">
 								<tr>
 									<td>Note</td>
-									<td>Note Content</td>
+									<td><bean:write name="invoiceForm" property="invoiceBean.notes"/></td>
 								</tr>
 							</table>
 						</div>
 						<br>
-						<div>Note Content</div>
+						<div><bean:write name="invoiceForm" property="note.value"/></div>
 						<br>
-						<div>Signature</div>
+						<div><bean:write name="invoiceForm" property="sign.value"/></div>
 						<input type="button" value="Back" class="btn btn-primary" onclick="javascript:flyToPage('invoice')">
 						<logic:equal name="invoiceForm" property="statusId" value="1">
 							<input type="button" value="Edit" class="btn btn-primary">

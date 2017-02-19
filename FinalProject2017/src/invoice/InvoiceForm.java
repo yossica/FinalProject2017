@@ -1,5 +1,7 @@
 package invoice;
 
+import generalInformation.GeneralInformationBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,9 @@ public class InvoiceForm extends ActionForm{
 	private InvoiceBean invoiceBean = new InvoiceBean();
 	
 	private ClientBean clientBean = new ClientBean();
+	
+	private GeneralInformationBean note = new GeneralInformationBean();
+	private GeneralInformationBean sign = new GeneralInformationBean();
 	
 	private String task;
 	
@@ -206,5 +211,17 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setMessageList(List messageList) {
 		this.messageList = messageList;
+	}
+	public GeneralInformationBean getNote() {
+		return note;
+	}
+	public void setNote(GeneralInformationBean note) {
+		this.note = note;
+	}
+	public GeneralInformationBean getSign() {
+		return sign;
+	}
+	public void setSign(GeneralInformationBean sign) {
+		this.sign = sign;
 	}
 }

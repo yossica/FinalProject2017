@@ -82,6 +82,9 @@ public class InvoiceHandler extends Action {
 		} else if ("detailInvoice".equals(invoiceForm.getTask())) {
 			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
 			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			return mapping.findForward("detailInvoice");
 		}else if("insertTransactionOutsource".equals(invoiceForm.getTask())){
 			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");

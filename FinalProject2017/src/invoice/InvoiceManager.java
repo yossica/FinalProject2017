@@ -86,10 +86,10 @@ public class InvoiceManager {
 //		return result;
 //	}
 
-	public List getDetailByIdHeader(int input){
-		List result = new ArrayList();
-		return result;
-	}
+//	public List getDetailByIdHeader(int input){
+//		List result = new ArrayList();
+//		return result;
+//	}
 	
 	public List getAllWithFilter(Map input){
 		List result = new ArrayList();
@@ -108,6 +108,18 @@ public class InvoiceManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
 			result = (InvoiceBean) ibatis.queryForObject("invoice.getHeaderById", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List getDetailById(int input){
+		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("invoice.getDetailById", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
