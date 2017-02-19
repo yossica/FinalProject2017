@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Finance Solution</title>
+<title>Additional Training</title>
 	<script type="text/javascript">
 		function insert(){
 			//validate

@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Master Employees</title>
 <script>
 	function flyToPage(task)
 	{
@@ -15,7 +16,25 @@
 	}
 	function flyToSave()
 	{
-		document.forms[1].submit();
+		swal({
+			  title: "Are you sure?",
+			  text: "System will update these data to master employee",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "Yes, Save",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+				  document.forms[1].submit();
+			  } else {
+			    swal("Cancelled", "Cancel Save To Master Employee", "error");
+			  }
+			});
+		/* document.forms[1].submit(); */
 	}
 </script>
 <title>Finance Solution</title>
@@ -25,48 +44,53 @@
 	<html:form action="/employee" method="post">
 		<html:hidden property="task" name="employeeForm"/>
 		<html:hidden property="employeeId" name="employeeForm"/>
+		
 		<div id="page-wrapper">
-	    	<div class="row">
-		        <div class="col-lg-12">
-		            <h1 class="page-header">Form Employee</h1>
-		        </div>
-		        <div class="row" style="margin-top: 10px;">
-					<div class="col-md-10" style="padding-right: 1%">
-						<div class="form-group">
-							<div class="col-md-2"><label>Employee Name</label></div>
-							<div class="col-md-5">
-								<html:text property="name" name="employeeForm" styleClass="form-control-client"/>
-							</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Form Employee</h1>
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><label>Employee Name</label></td>
+										<td><html:text property="name" name="employeeForm" styleClass="form-control-client"/></td>
+									</tr>
+									<tr>
+										<td><label>Email</label></td>
+										<td><html:text property="email" name="employeeForm" styleClass="form-control-client"/></td>
+									</tr>
+									<tr>
+										<td><label>Employee Status</label></td>
+										<td>
+											<div class="col-lg-13" >
+												<html:select property="isEnabled" name="employeeForm" styleClass="form-control-client">
+													<html:option value="1">Enabled</html:option>
+													<html:option value="0">Disabled</html:option>
+												</html:select>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
+						<!-- /.table-responsive -->
+						<div class="col-md-12" style="padding-left:0;">
+							<div class="pull-left">
+								 <input type="button" value="Save" class="btn btn-primary" onclick="javascript:flyToSave()">
+			                   	<input type="button" value="Cancel" class="btn btn-primary" onclick="javascript:flyToPage('employee')">
+			                </div>
+			            </div>
 					</div>
 				</div>
-				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-10" style="padding-right: 1%">
-						<div class="form-group">
-							<div class="col-md-2"><label>Email</label></div>
-							<div class="col-md-5">
-								<html:text property="email" name="employeeForm" styleClass="form-control-client"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-10" style="padding-right: 1%">
-						<div class="col-md-2"><label>Employee Status</label></div>
-						<div class="col-md-5">
-							<html:select property="isEnabled" name="employeeForm" styleClass="form-control-client">
-								<html:option value="1">Enabled</html:option>
-								<html:option value="0">Disabled</html:option>
-							</html:select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-12" style="padding-right: 1%">
-                   	<input type="button" value="Cancel" class="btn btn-primary" onclick="javascript:flyToPage('employee')">
-                    <input type="button" value="Save" class="btn btn-primary" onclick="javascript:flyToSave()">
-                </div>
-          </div>
-	</div>
+			</div>
+		</div>
+	
+		
+		
+				
+				
     </html:form>
 </body>
 </html>

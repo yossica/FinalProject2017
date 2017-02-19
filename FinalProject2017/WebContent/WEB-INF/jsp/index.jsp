@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Index</title>
+<title>Finance Solution</title>
 	<link href="asset/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
     <link href="asset/metisMenu/metisMenu.css" rel="stylesheet">
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">

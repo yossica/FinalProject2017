@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Finance Solution</title>
+<title>Create Invoice</title>
 <script>
 	function flyToPage(task){
 		document.forms[1].task.value = task;
@@ -99,16 +99,16 @@
 								<th>Notes</th>
 								<th>Action</th>
 							</tr>
-							<logic:iterate id="invoiceDetail" name="invoiceForm" property="headHunterList">
+							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList">
 							<tr>
 								<td>
-									<html:text name="invoiceDetail" property="description" styleClass="form-control" indexed="true"></html:text>
+									<html:text name="invoiceDetailHH" property="description" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
-									<html:text name="invoiceDetail" property="fee" styleClass="form-control" indexed="true"></html:text>
+									<html:text name="invoiceDetailHH" property="fee" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
-									<html:text name="invoiceDetail" property="notes" styleClass="form-control" indexed="true"></html:text>
+									<html:text name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
 									Action Button Coming Soon
@@ -124,7 +124,7 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insert')">Save</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertHH')">Save</button>
 					</div>
 				</div>
 			</div>

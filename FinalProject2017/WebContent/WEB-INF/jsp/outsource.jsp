@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Professional Services</title>
 <script>
 	function flyToPage(task) {
 		document.forms[1].task.value = task;
@@ -120,7 +121,7 @@
 				<!-- /.col-lg-12 -->
 			</div>
 			<div class="panel-body">
-				<div class="table-responsive">
+				<div class="table-responsive" style="height:400px;overflow:auto;">
 					<table class="table table-hover">
 						<tr>
 							<th>Client</th>

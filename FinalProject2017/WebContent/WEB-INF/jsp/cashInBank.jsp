@@ -85,7 +85,7 @@
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-1">Category</div>
 					<div class="col-md-11">
-						<html:select property="categoryId" name="cashInBankForm" styleClass="form-control" style="width: 50%;">
+						<html:select property="categoryId" name="cashInBankForm" styleClass="form-control-client" >
 							<html:option value="">All</html:option>
 							<html:optionsCollection property="cashFlowCategoryList" label="name" value="cashFlowCategoryId" name="cashInBankForm" />
 						</html:select><br />
@@ -147,7 +147,7 @@
 							</tbody>
 						</table>
 					</div>
-					<div class="pull-right">
+					<div class="pull-right" style="margin-top: 15px;">
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('transfer')">Transfer to Petty Cash</button>
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('debit')">Debit</button>
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('credit')">Credit</button>
