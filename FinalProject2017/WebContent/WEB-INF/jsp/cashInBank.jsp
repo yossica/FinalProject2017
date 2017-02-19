@@ -70,7 +70,7 @@
 		</div>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-lg-12">
-				<label>Remaining Balance: Rp.<bean:write name="cashInBankForm" property="remainingBalance" format="#" />,-</label>
+				<label>Remaining Balance: <bean:write name="cashInBankForm" property="remainingBalance" format="IDR #,###.##" /></label>
 				<div class="pull-right">
 					<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('export')">Export to PDF</button>
 					<button type="button" class="btn btn-primary" onclick="javascript:balance()">Balancing</button>
@@ -85,7 +85,7 @@
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-1">Category</div>
 					<div class="col-md-11">
-						<html:select property="categoryId" name="cashInBankForm" styleClass="form-control" style="width: 50%;">
+						<html:select property="categoryId" name="cashInBankForm" styleClass="form-control-client" >
 							<html:option value="">All</html:option>
 							<html:optionsCollection property="cashFlowCategoryList" label="name" value="cashFlowCategoryId" name="cashInBankForm" />
 						</html:select><br />
@@ -133,21 +133,21 @@
 											<td><bean:write property="cashFlowCategoryName" name="cashInBank"/></td>
 											<td><bean:write property="description" name="cashInBank"/></td>
 											<logic:equal value="1" name="cashInBank" property="isDebit">
-												<td>Rp.<bean:write property="amount" name="cashInBank" format="#"/></td>
+												<td><bean:write property="amount" name="cashInBank" format="#,###.##"/></td>
 												<td></td>
 											</logic:equal>
 											<logic:equal value="0" name="cashInBank" property="isDebit">
 												<td></td>
-												<td>Rp.<bean:write property="amount" name="cashInBank" format="#"/></td>
+												<td><bean:write property="amount" name="cashInBank" format="#,###.##"/></td>
 											</logic:equal>
-											<td>Rp.<bean:write property="balance" name="cashInBank" format="#"/></td>
+											<td><bean:write property="balance" name="cashInBank" format="#,###.##"/></td>
 										</tr>
 									</logic:iterate>
 								</logic:notEmpty>
 							</tbody>
 						</table>
 					</div>
-					<div class="pull-right">
+					<div class="pull-right" style="margin-top: 15px;">
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('transfer')">Transfer to Petty Cash</button>
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('debit')">Debit</button>
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('credit')">Credit</button>
