@@ -33,10 +33,29 @@
 				}
 			}
 		}
-		
-		if(confirm("Are you sure to update ?")){
-			document.forms[1].submit();
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "System will update these data to general information",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes, Update",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  document.forms[1].submit();
+				  } else {
+				    swal("Cancelled", "Cancel Update General Information", "error");
+				  }
+				});
 		}
+		/* if(confirm("Are you sure to update ?")){
+			document.forms[1].submit();
+		} */
 	}
 </script>
 <title>General Information</title>
@@ -79,27 +98,12 @@
 				            <div class="pull-left">
 				            	<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>
 					         	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>			            
-				            </div>
+				          	</div>
 	            		</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-           
-                        
-
     </html:form>
 </body>
 </html>

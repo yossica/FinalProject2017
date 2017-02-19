@@ -13,7 +13,25 @@
 		document.forms[1].submit();
 	}
 	function flyToSave() {
-		document.forms[1].submit();
+		swal({
+			  title: "Are you sure?",
+			  text: "System will save these data to master client",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "Yes, Save",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+				  document.forms[1].submit();
+			  } else {
+			    swal("Cancelled", "Cancel Save Master Client", "error");
+			  }
+			});
+		/* document.forms[1].submit(); */
 	}
 </script>
 <title>Client</title>
@@ -62,40 +80,18 @@
 											<html:select name="clientForm" property="isEnabled" styleClass="form-control-client">
 												<html:option value="1">Enabled</html:option>
 												<html:option value="0">Disabled</html:option>
-<<<<<<< HEAD
 											</html:select>
 											</div>
-										</td>
-										
-=======
-											</html:select></td>
-									</tr>
-									<tr>
-										<td><button type="button" class="btn btn-primary"
-												onclick="javascript:flyToPage('client')">Cancel</button></td>
-										<td><button type="button"
-												class="btn btn-primary pull-right"
-												onclick="javascript:flyToSave()">Save</button></td>
->>>>>>> refs/remotes/origin/master
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<!-- /.table-responsive -->
-					</div>
-<<<<<<< HEAD
-					
+					</div>	
 					<div class="col-md-12" style="padding-right: 1%;" >
-					<button type="button" class="btn btn-primary"
-						onclick="javascript:flyToSave()" style="margin-bottom: 5%;">Save</button>
-					<button type="button" class="btn btn-primary"
-						style="margin-bottom: 5%;">Cancel</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()" style="margin-bottom: 5%;">Save</button>
+						<button type="button" class="btn btn-primary" style="margin-bottom: 5%;">Cancel</button>
 					</div>
-=======
-					<table border="1">
-
-					</table>
->>>>>>> refs/remotes/origin/master
 				</div>
 			</div>
 		</div>

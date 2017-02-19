@@ -57,6 +57,7 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
+	
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -71,17 +72,17 @@
 			  			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
-					<div class="col-md-2"><label>Invoice Date</label></div>
-					<div class="col-md-5">
-						<input type="date" class="form-control" style="width: 100%;" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
+					<div class="col-md-3"><label>Invoice Date</label></div>
+					<div class="col-md-9">
+						<input type="date" class="form-control-client" style="width: 100%;" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2"><label>Client</label></div>
-					<div class="col-md-5">
-						<html:select property="invoiceBean.clientId" name="invoiceForm" styleClass="form-control-client">
+					<div class="col-md-3"><label>Client</label></div>
+					<div class="col-md-9">
+						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 						</html:select>
@@ -90,8 +91,8 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2"><label>Contract Services</label></div>
-					<div class="col-md-5">
+					<div class="col-md-3"><label>Contract Services</label></div>
+					<div class="col-md-9">
 						<html:select property="invoiceBean.invoiceTypeId" name="invoiceForm" styleClass="form-control-client" styleId="contractServices" onchange="javascript:onchangeContractServices()">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="invoiceTypeList" label="name" value="invoiceTypeId"/>
@@ -138,7 +139,7 @@
 			</div>
 			<div id="payment" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
-					<div class="col-md-2"><label>Payment</label></div>
+					<div class="col-md-3"><label>Payment</label></div>
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
@@ -154,7 +155,7 @@
 			</div>
 			<div id="tax" class="col-md-10" style="margin-top: 10px;  display: none;">
 				<div class="row">
-					<div class="col-md-2"><label>Tax</label></div>
+					<div class="col-md-3"><label>Tax</label></div>
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
@@ -170,8 +171,8 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2"><label>Invoice Notes</label></div>
-					<div class="col-md-5">
+					<div class="col-md-3"><label>Invoice Notes</label></div>
+					<div class="col-md-9">
 						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
 					</div>
 				</div>
@@ -182,6 +183,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	</html:form>
 </body>
 </html>

@@ -72,7 +72,6 @@
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
-
 	<html:form action="/cashInBank" method="post">
 		<html:hidden name="cashInBankForm" property="task" />
 		<html:hidden name="cashInBankForm" property="cashInBankBean.isDebit" />
@@ -80,76 +79,59 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Cash in Bank Transaction</h1>
-				</div>
-				<div class="col-lg-12">
-					<div class="col-lg-12" style="padding-left:10px">
-						<div class="col-lg-10">
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3"><label>Remaining Balance</label></div>
-								<div class="col-md-5">
-									Rp.
-									<bean:write name="cashInBankForm" property="remainingBalance"
-										format="#" />
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3"><label>Transaction Date</label></div>
-								<div class="col-md-5">
-									<input type="date" class="form-control"
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><label>Remaining Balance</label></td>
+										<td>Rp.
+											<bean:write name="cashInBankForm" property="remainingBalance"
+												format="#" /></td>
+									</tr>
+									<tr>
+										<td><label>Transaction Date</label></td>
+										<td><input type="date" class="form-control-client"
 										name="cashInBankBean.transactionDate"
-										value="<bean:write name="cashInBankForm" property="cashInBankBean.transactionDate"/>" />
-								</div>
-							</div>
-
-							<br />
-							<div class="row">
-								<div class="col-md-3"><label>Transaction Category</label></div>
-								<div class="col-md-5">
-									<logic:equal value="saveTransfer" property="task"
-										name="cashInBankForm">
-										Transfer to Petty Cash
-									</logic:equal>
-									<logic:notEqual value="saveTransfer" property="task"
-										name="cashInBankForm">
-										<html:select property="cashInBankBean.cashFlowCategoryId"
-											name="cashInBankForm" styleClass="form-control">
-											<html:optionsCollection property="cashFlowCategoryList"
-												label="name" value="cashFlowCategoryId"
-												name="cashInBankForm" />
-										</html:select>
-									</logic:notEqual>
-									<br />
-								</div>
-
-							</div>
-							<br />
-							<div class="row">
-								<div class="col-md-3"><label>Amount</label></div>
-								<div class="col-md-5">
-									<html:text styleClass="form-control" name="cashInBankForm"
-										property="cashInBankBean.amount" />
-								</div>
-							</div>
-							<br />
-							<div class="row">
-								<div class="col-md-3"><label>Description</label></div>
-								<div class="col-md-5" style="margin-bottom: 10px;">
-									<html:textarea styleClass="form-control" name="cashInBankForm"
-										property="cashInBankBean.description" />
-								</div>
-							</div>
-							<div class="panel-body" style="padding-left: 0;">
-								<div class="pull-left">
-									<button type="button" class="btn btn-primary " onclick="javascript:cancel()">Cancel</button>
-									<button type="button" class="btn btn-primary "
-										onclick="javascript:insert()">Save</button>
-
-								</div>
-							</div>
-
+										value="<bean:write name="cashInBankForm" property="cashInBankBean.transactionDate"/>" /></td>
+									</tr>
+									<tr>
+										<td><label>Transaction Category</label></td>
+										<td>
+											<logic:equal value="saveTransfer" property="task" name="cashInBankForm">
+												Transfer to Petty Cash
+											</logic:equal>
+											<logic:notEqual value="saveTransfer" property="task" name="cashInBankForm">
+												<html:select property="cashInBankBean.cashFlowCategoryId" name="cashInBankForm" styleClass="form-control-client">
+													<html:optionsCollection property="cashFlowCategoryList"	label="name" value="cashFlowCategoryId"	name="cashInBankForm" />
+												</html:select>
+											</logic:notEqual>
+										</td>
+									</tr>
+									<tr>
+										<td><label>Amount</label></td>
+										<td><html:text styleClass="form-control-client" name="cashInBankForm"
+										property="cashInBankBean.amount" /></td>
+									</tr>
+									<tr>
+										<td><label>Description</label></td>
+										<td><html:textarea styleClass="form-control" name="cashInBankForm"
+										property="cashInBankBean.description" /></td>
+									</tr>
+									
+								</tbody>
+							</table>
 						</div>
+						<!-- /.table-responsive -->
+					</div>	
+					<div class="col-md-12" style="padding-right: 1%;" >
+						<button type="button" class="btn btn-primary "
+										onclick="javascript:insert()">Save</button>
+						<button type="button" class="btn btn-primary " onclick="javascript:cancel()">Cancel</button>
 					</div>
+			
+		
+		
 					
 					<div class="col-md-4" style="color: red;"
 						id="message">
@@ -161,7 +143,6 @@
 						</logic:notEmpty>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</html:form>
