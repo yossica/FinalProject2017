@@ -108,7 +108,7 @@ public class InvoiceForm extends ActionForm{
 	public void setHeadHunterList(List<InvoiceDetailBean> headHunterList) {
 		this.headHunterList = headHunterList;
 	}
-	public InvoiceDetailBean getInvoiceDetail(int index){
+	public InvoiceDetailBean getInvoiceDetailHH(int index){
 		while(this.headHunterList.size() <= index){
 			this.headHunterList.add(new InvoiceDetailBean());
 		}
@@ -157,6 +157,7 @@ public class InvoiceForm extends ActionForm{
 		System.out.println(invoiceBean.getCreatedDate());
 		System.out.println(invoiceBean.getChangedBy());
 		System.out.println(invoiceBean.getChangedDate());
+		System.out.println(invoiceBean.getTotalPpn());
 	}
   
 	public List getMessageList() {
