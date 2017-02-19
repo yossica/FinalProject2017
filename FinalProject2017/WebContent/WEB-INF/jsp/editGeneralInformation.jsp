@@ -34,10 +34,35 @@
 				}
 			}
 		}
-		
-		if(confirm("Are you sure to update ?")){
-			document.forms[1].submit();
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "System will update these data to general information",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Update",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  swal({
+			                title: 'Updated!',
+			                text: 'Datas are successfully updated!',
+			                type: 'success'
+			            }, function() {
+			            	document.forms[1].submit();
+			            });
+				  } else {
+				    swal("Cancelled", "Cancel Update General Information", "error");
+				  }
+				});
 		}
+		/* if(confirm("Are you sure to update ?")){
+			document.forms[1].submit();
+		} */
 	}
 </script>
 <title>General Information</title>
@@ -46,75 +71,46 @@
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/generalInformation" method="post">
 	<html:hidden property="task" name="generalInformationForm"/>
+	
 	<div id="page-wrapper">
-	    <div class="row">
-	        <div class="col-lg-12">
-	            <h1 class="page-header">Edit General Information</h1>
-	           
-	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
-		            <div class="col-lg-11">
-			            	<div class="row" style="margin-top:10px;">
-				            	<div class="col-md-2">
-				            	Key
-				            	</div>
-				            	<div class="col-md-1">
-				            	:
-				            	</div>
-				            	<div class="col-md-8" style="margin-bottom:10px;">
-				            		<html:text name="generalInformationForm" property="key" readonly="true"/>
-				            	</div>
-				            </div>
-                        
-                        
-                        <div class="row">
-			            	<div class="col-md-2">
-			            	Value
-			            	</div>
-			            	<div class="col-md-1">
-			            	:
-			            	</div>
-			            	<div class="col-md-8" style="margin-bottom:10px;">
-			            		<html:text name="generalInformationForm" property="value" />
-			            	</div>
-                        </div>
-                      
-                      	<div class="row">
-			            	<div class="col-md-2">
-			            	Data Type
-			            	</div>
-			            	<div class="col-md-1">
-			            	:
-			            	</div>
-			            	<div class="col-md-8" style="margin-bottom:10px;">
-					            <html:text name="generalInformationForm" property="dataType" readonly="true"/>
-			            	</div>
-                        </div>
-                        
-                        <div class="row">
-			            	<div class="col-md-2">
-			            	Length
-			            	</div>
-			            	<div class="col-md-1">
-			            	:
-			            	</div>
-			            	<div class="col-md-8" style="margin-bottom:10px;">
-			            		<html:text name="generalInformationForm" property="length" readonly="true"/>
-			            	</div>
-                        </div>
-           
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Edit General Information</h1>
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><label>Key</label></td>
+										<td><html:text name="generalInformationForm" property="key" readonly="true" styleClass="form-control-client"/></td>
+									</tr>
+									<tr>
+										<td><label>Value</label></td>
+										<td><html:text name="generalInformationForm" property="value" styleClass="form-control-client"/></td>
+									</tr>
+									<tr>
+										<td><label>Data Type</label></td>
+										<td><html:text name="generalInformationForm" property="dataType" readonly="true" styleClass="form-control-client"/></td>
+									</tr>
+									<tr>
+										<td><label>Length</label></td>
+										<td><html:text name="generalInformationForm" property="length" readonly="true" styleClass="form-control-client"/></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!-- /.table-responsive -->
+						
                         <div class="panel-body" style="padding-left:0;">
 				            <div class="pull-left">
-					         	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>
 				            	<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>
-			            
-				            </div>
+					         	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>			            
+				          	</div>
 	            		</div>
-                        
-		            </div>
-	            </div>
-	        </div>
-	    </div>
-    </div>
+					</div>
+				</div>
+			</div>
+		</div>
     </html:form>
 </body>
 </html>
