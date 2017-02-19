@@ -22,6 +22,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pettyCash.PettyCashBean;
 import pettyCash.PettyCashManager;
+import utils.ExportReportManager;
 
 public class CashInBankHandler extends Action {
 	@Override
@@ -90,13 +91,21 @@ public class CashInBankHandler extends Action {
 			
 			Calendar cal = Calendar.getInstance();
 			
-			CashInBankBean cashInBankBean = new CashInBankBean();
-			cashInBankBean.setCashFlowCategoryId("0c-bal");
-			cashInBankBean.setAmount(maxBalance-currBalance);
+			double amount = maxBalance-currBalance;
+			CashInBankBean cashInBankBean = new CashInBankBean();			
+			if(amount <= 0){
+				cashInBankBean.setCashFlowCategoryId("1c-bal");
+				cashInBankBean.setAmount(Math.abs(amount));
+				cashInBankBean.setIsDebit(1);
+			}
+			else {
+				cashInBankBean.setCashFlowCategoryId("0c-bal");
+				cashInBankBean.setAmount(amount);
+				cashInBankBean.setIsDebit(0);
+			}			
 			cashInBankBean.setBalance(maxBalance);
 			cashInBankBean.setDescription("Balancing Cash in Bank "+dateFormat.format(cal.getTime()));
 			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
-			cashInBankBean.setIsDebit(0);
 			cashInBankBean.setCreatedBy((String)session.getAttribute("username"));
 			cashInBankManager.insert(cashInBankBean);
 						
@@ -153,10 +162,27 @@ public class CashInBankHandler extends Action {
 			Calendar cal = Calendar.getInstance();
 			//validate, if false, go back to form
 			double currBalance = cashInBankManager.getCurrentBalance();
-			if(currBalance - cashInBankForm.getCashInBankBean().getAmount() < 0){
+			double max_transaction = Double.parseDouble(generalInformationManager.getByKey("max_trans_cash").getValue());
+			double min_transaction = Double.parseDouble(generalInformationManager.getByKey("max_trans_petty").getValue());
+			double amount = cashInBankForm.getCashInBankBean().getAmount();
+			boolean flag = true;
+			if(currBalance - amount < 0){
 				cashInBankForm.getMessageList().clear();
 				cashInBankForm.getMessageList().add("Cannot create transaction that cost more than remaining balance!");
-				
+				flag = false;
+			}
+			else if(amount < min_transaction){
+				cashInBankForm.getMessageList().clear();
+				cashInBankForm.getMessageList().add("Cannot create transaction less than IDR"+min_transaction+"!\nPlease do this in petty cash instead");
+				flag = false;
+			}
+			else if(amount > max_transaction){
+				cashInBankForm.getMessageList().clear();
+				cashInBankForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!");
+				flag = false;
+			}
+			
+			if(!flag){
 				cashInBankForm.setTask("saveDebit");
 				cashInBankForm.getCashInBankBean().setIsDebit(1);
 
@@ -238,11 +264,42 @@ public class CashInBankHandler extends Action {
 		}
 		else if("saveCredit".equals(cashInBankForm.getTask())){
 			Calendar cal = Calendar.getInstance();
-			Double currBalance = cashInBankManager.getCurrentBalance();
+			//validate, if false, go back to form
+			double currBalance = cashInBankManager.getCurrentBalance();
+			double max_transaction = Double.parseDouble(generalInformationManager.getByKey("max_trans_cash").getValue());
+			double amount = cashInBankForm.getCashInBankBean().getAmount();
+			boolean flag = true;
+			if(amount > max_transaction){
+				cashInBankForm.getMessageList().clear();
+				cashInBankForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!");
+				flag = false;
+			}
+			
+			if(!flag){
+				cashInBankForm.setTask("saveCredit");
+				cashInBankForm.getCashInBankBean().setIsDebit(0);
+
+				cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
+				
+				Map paramMap = new HashMap();
+				paramMap = new HashMap();
+				paramMap.put("cashFlowType", "Cash In Bank");
+				paramMap.put("isDebit", 0);
+				paramMap.put("isEnabled", "1");
+				CashFlowCategoryBean cashFlowCategoryBean;
+				List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
+				for (Object obj : cashFlowCategoryList) {
+					cashFlowCategoryBean = (CashFlowCategoryBean) obj;
+					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
+				}
+				cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
+				cashInBankForm.getCashInBankBean().setTransactionDate(cashInBankForm.getCashInBankBean().getTransactionDate());
+				return mapping.findForward("form");
+			}
 			
 			//save to cash in bank
 			CashInBankBean cashInBankBean = cashInBankForm.getCashInBankBean();
-			cashInBankBean.setBalance(currBalance + cashInBankForm.getCashInBankBean().getAmount());
+			cashInBankBean.setBalance(currBalance + amount);
 			cal.setTime(showDateFormat.parse(cashInBankForm.getCashInBankBean().getTransactionDate()));
 			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			cashInBankBean.setCreatedBy((String)session.getAttribute("username"));
@@ -367,22 +424,56 @@ public class CashInBankHandler extends Action {
 			return mapping.findForward("cashInBank");
 		}
 		else if("export".equals(cashInBankForm.getTask())){
-			//get all filter field
-			//get cash in bank data based on filter field
-			//export to pdf
-			
-			//show initial page
-			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
-			
 			Map paramMap = new HashMap();
 			Calendar cal = Calendar.getInstance();
 			
-			paramMap.put("endDate",dateFormat.format(cal.getTime()));
-			cashInBankForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
-			cal.add(Calendar.DAY_OF_MONTH, -30);
-			paramMap.put("startDate", dateFormat.format(cal.getTime()));
-			cashInBankForm.setFilterStartDate(showDateFormat.format(cal.getTime()));			
-			paramMap.put("category", null);			
+			//get all filter field
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("name", generalInformationManager.getByKey("name").getValue());
+			parameters.put("address", generalInformationManager.getByKey("addr").getValue()+
+					"\nPhone:"+generalInformationManager.getByKey("telp").getValue()+
+					"\nFax: "+generalInformationManager.getByKey("fax").getValue());
+			parameters.put("reportType", "Cash in Bank");
+			String cat = cashInBankForm.getCategoryId();
+			if("".equals(cat)){
+				paramMap.put("category", null);
+				parameters.put("category", "All");
+			}
+			else{
+				paramMap.put("category", cat);
+				parameters.put("category", cat);
+			}
+			
+			if("".equals(cashInBankForm.getFilterEndDate())){
+				paramMap.put("endDate",null);
+				paramMap.put("startDate",null);
+				parameters.put("endDate","All");
+				parameters.put("startDate","All");
+			}
+			else{
+				cal.setTime(showDateFormat.parse(cashInBankForm.getFilterEndDate()));
+				paramMap.put("endDate",dateFormat.format(cal.getTime()));
+				parameters.put("endDate",dateFormat.format(cal.getTime()));
+				cashInBankForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
+				cal.setTime(showDateFormat.parse(cashInBankForm.getFilterStartDate()));
+				paramMap.put("startDate", dateFormat.format(cal.getTime()));
+				parameters.put("startDate",dateFormat.format(cal.getTime()));
+				cashInBankForm.setFilterStartDate(showDateFormat.format(cal.getTime()));
+			}
+			//get cash in bank data based on filter field
+			List cashInBankData = cashInBankManager.getAllWithFilter(paramMap);
+			//export to pdf
+			String filePath = this.getServlet().getServletContext().getRealPath("/asset/");
+			parameters.put("filePath", filePath);
+			cal = Calendar.getInstance();
+			SimpleDateFormat printDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+			String fileName = "CashInBankReport_"+printDateFormat.format(cal.getTime())+".pdf";
+			ExportReportManager.exportToPdf(filePath+"\\report\\FinanceTransactionReport"+".jrxml",
+					fileName, parameters, cashInBankData);
+						
+			//show filtered page
+			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());			
+
 			cashInBankForm.setTransactionList(cashInBankManager.getAllWithFilter(paramMap));
 			
 			paramMap = new HashMap();

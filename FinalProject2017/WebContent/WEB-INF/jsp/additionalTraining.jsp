@@ -7,13 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Finance Solution</title>
+<title>Additional Training</title>
 	<script type="text/javascript">
 		function insert(){
 			//validate
 			var fee = document.getElementsByName("trainingDetailBean.fee")[0].value;
 			var description = document.getElementsByName("trainingDetailBean.description")[0].value;
-			var doubleReg = /^[\d]+(.[\d]+)$/;
+			var doubleReg = /^([\d]+)(|.[\d]+)$/;
 			var errorMessage = ""; 
 			
 			if(fee == ""){

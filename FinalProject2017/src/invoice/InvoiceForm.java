@@ -1,33 +1,58 @@
 package invoice;
 
+import generalInformation.GeneralInformationBean;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import client.ClientBean;
+
 public class InvoiceForm extends ActionForm{
 	
 	private InvoiceBean invoiceBean = new InvoiceBean();
+	
+	private ClientBean clientBean = new ClientBean();
+	
+	private GeneralInformationBean note = new GeneralInformationBean();
+	private GeneralInformationBean sign = new GeneralInformationBean();
+	
 	private String task;
+	
 	private String clientId;
 	private String monthFrom;
 	private String yearFrom;
 	private String monthTo;
 	private String yearTo;
 	private String statusInvoiceId;
+	
+	private String client;
 	private String invoiceNumber;
 	private String statusId;
+	
+	private int transactionInvoiceHeaderId;
+	private String invoiceTypeId;
+	
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
 	private List<InvoiceDetailBean> professionalServiceList = new ArrayList<InvoiceDetailBean>();
 	private List<InvoiceDetailBean> headHunterList = new ArrayList<InvoiceDetailBean>();
 	private List outsourceList = new ArrayList();
 	private List invoiceDetailList = new ArrayList();
+	
 	private List invoiceList;
+	
 	private List statusInvoiceList;
 	private List messageList;
 	
 	public InvoiceForm(){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		invoiceBean.setInvoiceDate(dateFormat.format(date));
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
 	}
@@ -140,6 +165,31 @@ public class InvoiceForm extends ActionForm{
 		this.statusInvoiceList = statusInvoiceList;
 	}
 
+	public String getInvoiceTypeId() {
+		return invoiceTypeId;
+	}
+	public void setInvoiceTypeId(String invoiceTypeId) {
+		this.invoiceTypeId = invoiceTypeId;
+	}
+	public int getTransactionInvoiceHeaderId() {
+		return transactionInvoiceHeaderId;
+	}
+	public void setTransactionInvoiceHeaderId(int transactionInvoiceHeaderId) {
+		this.transactionInvoiceHeaderId = transactionInvoiceHeaderId;
+	}
+	public ClientBean getClientBean() {
+		return clientBean;
+	}
+	public void setClientBean(ClientBean clientBean) {
+		this.clientBean = clientBean;
+	}
+	public String getClient() {
+		return client;
+	}
+	public void setClient(String client) {
+		this.client = client;
+	}
+
 	public void print(){
 		System.out.println(invoiceBean.getTransactionInvoiceHeaderId());
 		System.out.println(invoiceBean.getInvoiceNumber());
@@ -158,6 +208,7 @@ public class InvoiceForm extends ActionForm{
 		System.out.println(invoiceBean.getCreatedDate());
 		System.out.println(invoiceBean.getChangedBy());
 		System.out.println(invoiceBean.getChangedDate());
+		System.out.println(invoiceBean.getTotalPpn());
 	}
   
 	public List getMessageList() {
@@ -168,6 +219,19 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setMessageList(List messageList) {
 		this.messageList = messageList;
+	}
+
+	public GeneralInformationBean getNote() {
+		return note;
+	}
+	public void setNote(GeneralInformationBean note) {
+		this.note = note;
+	}
+	public GeneralInformationBean getSign() {
+		return sign;
+	}
+	public void setSign(GeneralInformationBean sign) {
+		this.sign = sign;
 	}
 	public List<InvoiceDetailBean> getProfessionalServiceList() {
 		return professionalServiceList;

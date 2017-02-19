@@ -60,11 +60,50 @@ public class InvoiceManager {
 		return id;
 		
 	}
+	
+	public Integer getMaxInvoiceDetailId(){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		Integer id = null;
+		try {
+			id = (Integer) ibatis.queryForObject("invoice.getMaxIdDetail", null);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (id == null){
+			id = 1;
+		}
+		return id;	
+	}
+	
 	public void insert(InvoiceBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
+			Integer idHeader = getMaxInvoiceHeaderId();
+			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
+			for (InvoiceDetailBean bean : input.getDetailList()){
+				bean.setTransactionInvoiceHeaderId(idHeader);
+				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId());
+				ibatis.insert("invoice.insertDetail", bean);
+			}
+			ibatis.commitTransaction();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void insertDetail(InvoiceDetailBean input){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try{
+			ibatis.startTransaction();
+			ibatis.insert("invoice.insertDetail", input);
 			ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,15 +120,15 @@ public class InvoiceManager {
 		
 	}
 	
-	public InvoiceBean getById(int input){
-		InvoiceBean result = new InvoiceBean();
-		return result;
-	}
+//	public InvoiceBean getById(int input){
+//		InvoiceBean result = new InvoiceBean();
+//		return result;
+//	}
 
-	public List getDetailByIdHeader(int input){
-		List result = new ArrayList();
-		return result;
-	}
+//	public List getDetailByIdHeader(int input){
+//		List result = new ArrayList();
+//		return result;
+//	}
 	
 	public List getAllWithFilter(Map input){
 		List result = new ArrayList();
@@ -102,6 +141,31 @@ public class InvoiceManager {
 		}
 		return result;
 	}
+	
+	public InvoiceBean getHeaderById(int input){
+		InvoiceBean result = new InvoiceBean();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (InvoiceBean) ibatis.queryForObject("invoice.getHeaderById", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List getDetailById(int input){
+		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("invoice.getDetailById", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public List getCreatedRemainderList() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
