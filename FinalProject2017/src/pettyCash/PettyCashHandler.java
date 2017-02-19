@@ -98,14 +98,22 @@ public class PettyCashHandler extends Action {
 
 			Calendar cal = Calendar.getInstance();
 
+			double amount = maxBalance-currBalance;
 			PettyCashBean pettyCashBean = new PettyCashBean();
-			pettyCashBean.setCashFlowCategoryId("0p-bal");
-			pettyCashBean.setAmount(maxBalance - currBalance);
+			if(amount <= 0){
+				pettyCashBean.setCashFlowCategoryId("1p-bal");
+				pettyCashBean.setAmount(Math.abs(amount));
+				pettyCashBean.setIsDebit(1);
+			}
+			else {
+				pettyCashBean.setCashFlowCategoryId("0p-bal");
+				pettyCashBean.setAmount(amount);
+				pettyCashBean.setIsDebit(0);
+			}	
 			pettyCashBean.setBalance(maxBalance);
 			pettyCashBean.setDescription("Balancing Petty Cash "
 					+ dateFormat.format(cal.getTime()));
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
-			pettyCashBean.setIsDebit(0);
 			pettyCashBean.setCreatedBy((String) session
 					.getAttribute("username"));
 			pettyCashManager.insert(pettyCashBean);
@@ -175,12 +183,24 @@ public class PettyCashHandler extends Action {
 			Calendar cal = Calendar.getInstance();
 			// validate, if false, go back to form
 			double currBalance = pettyCashManager.getCurrentBalance();
-			if (currBalance - pettyCashForm.getPettyCashBean().getAmount() < 0) {
+			double max_transaction = Double.parseDouble(generalInformationManager.getByKey("max_trans_petty").getValue());
+			double amount = pettyCashForm.getPettyCashBean().getAmount();
+			boolean flag = true;
+			if(currBalance - amount < 0){
 				pettyCashForm.getMessageList().clear();
 				pettyCashForm
 						.getMessageList()
 						.add("Cannot create transaction that cost more than remaining balance!");
 
+				flag = false;
+			}
+			else if(amount > max_transaction){
+				pettyCashForm.getMessageList().clear();
+				pettyCashForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!\nPlease do this in cash in bank instead");
+				flag = false;
+			}
+			
+			if (!flag) {
 				pettyCashForm.setTask("saveDebit");
 				pettyCashForm.getPettyCashBean().setIsDebit(1);
 
@@ -283,12 +303,49 @@ public class PettyCashHandler extends Action {
 			return mapping.findForward("form");
 		} else if ("saveCredit".equals(pettyCashForm.getTask())) {
 			Calendar cal = Calendar.getInstance();
+			// validate, if false, go back to form
 			double currBalance = pettyCashManager.getCurrentBalance();
+			double max_transaction = Double.parseDouble(generalInformationManager.getByKey("max_trans_petty").getValue());
+			double amount = pettyCashForm.getPettyCashBean().getAmount();
+			boolean flag = true;
+			if(amount > max_transaction){
+				pettyCashForm.getMessageList().clear();
+				pettyCashForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!");
+				flag = false;
+			}
+			
+			if (!flag) {
+				pettyCashForm.setTask("saveCredit");
+				pettyCashForm.getPettyCashBean().setIsDebit(0);
+
+				pettyCashForm.setRemainingBalance(pettyCashManager
+						.getCurrentBalance());
+
+				Map paramMap = new HashMap();
+				paramMap = new HashMap();
+				paramMap.put("cashFlowType", "Petty Cash");
+				paramMap.put("isDebit", 0);
+				paramMap.put("isEnabled", "1");
+				CashFlowCategoryBean cashFlowCategoryBean;
+				List cashFlowCategoryList = masterManager
+						.getAllCashFlowCategory(paramMap);
+				for (Object obj : cashFlowCategoryList) {
+					cashFlowCategoryBean = (CashFlowCategoryBean) obj;
+					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()
+							+ "-"
+							+ (cashFlowCategoryBean.getIsDebit() == 1 ? "Debit"
+									: "Credit"));
+				}
+				pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
+				pettyCashForm.getPettyCashBean().setTransactionDate(
+						pettyCashForm.getPettyCashBean().getTransactionDate());
+				return mapping.findForward("form");
+			}
 
 			// save to cash in bank
 			PettyCashBean pettyCashBean = pettyCashForm.getPettyCashBean();
 			pettyCashBean.setBalance(currBalance
-					+ pettyCashForm.getPettyCashBean().getAmount());
+					+ amount);
 			cal.setTime(showDateFormat.parse(pettyCashForm.getPettyCashBean()
 					.getTransactionDate()));
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
