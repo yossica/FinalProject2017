@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-02-18T15:24:54 -->
+<!-- 2017-02-19T18:08:06 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FinanceTransactionReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c7281aaa-8350-4785-bf1d-488f5f48cb17">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#000000">
@@ -148,7 +148,9 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="88" height="30" uuid="bded91d5-307a-4c56-b4fc-bd164f821a8b"/>
-								<textElement verticalAlignment="Middle"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="3"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{transactionDate}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -167,7 +169,9 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="77" height="30" uuid="4b278761-0c40-4320-a190-728020857089"/>
-								<textElement verticalAlignment="Middle"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="3"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{cashFlowCategoryName}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -186,7 +190,9 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="135" height="30" uuid="5ab3c499-539a-406b-b7ae-f05f01563568"/>
-								<textElement verticalAlignment="Middle"/>
+								<textElement verticalAlignment="Middle">
+									<paragraph leftIndent="3"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -205,7 +211,9 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="79" height="30" uuid="516090aa-f71a-48d5-837a-b7148b6bba01"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="3"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{isDebit} == 1?new java.text.DecimalFormat("#,###.##").format($F{amount}):""]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -226,7 +234,9 @@
 								<reportElement x="0" y="0" width="77" height="30" uuid="cab2cd8c-72b8-43a0-82f6-e7b63917c234">
 									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 								</reportElement>
-								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="3"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{isDebit} == 0?new java.text.DecimalFormat("#,###.##").format($F{amount}):""]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -245,7 +255,9 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="79" height="30" uuid="6761a2b2-7bd5-45db-96a0-38ea5bdf20f7"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<paragraph rightIndent="3"/>
+								</textElement>
 								<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,###.##").format($F{balance})]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>

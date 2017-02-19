@@ -46,8 +46,16 @@
 			document.getElementById("tax").style.display = "block";
 		}
 	}
-
+	function yyyymmdd(dateIn) {
+	   var yyyy = dateIn.getFullYear();
+	   var mm = dateIn.getMonth()+1; // getMonth() is zero-based
+	   var dd  = dateIn.getDate();
+	   return String(yyyy + '-' + mm + '-' + dd); // Leading zeros for mm and dd
+	}
 	function onloadFunc() {
+		var today = new Date();
+		//document.getElementById("invoiceDate").value = yyyymmdd(today);
+		//alert(yyyymmdd(today));
 		onchangeContractServices();
 	}
 	window.onload = onloadFunc;
@@ -74,7 +82,7 @@
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-3"><label>Invoice Date</label></div>
 					<div class="col-md-9">
-						<input type="date" class="form-control-client" style="width: 100%;" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
+						<input type="date" id="invoiceDate" class="form-control-client" style="width: 100%;" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
 					</div>
 				</div>
 			</div>

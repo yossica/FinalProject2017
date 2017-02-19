@@ -26,7 +26,7 @@
             period_year as periodYear,
             tih.invoice_type_id as invoiceTypeId,
             mit.name as invoiceTypeName,
-            invoice_date as invoiceDate,
+            to_char(invoice_date, 'MM/dd/yyyy') as invoiceDate,
             tih.status_invoice_id as statusInvoiceId,
             msi.name as statusInvoiceName
         from transaction_invoice_header tih
@@ -129,7 +129,7 @@
     </select>
     
     <select id="getMaxIdDetail" resultClass="java.lang.Integer">
-		select max(transaction_invoice_id)+1
+		select max(transaction_invoice_detail_id)+1
 		from transaction_invoice_detail
     </select>
     
