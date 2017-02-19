@@ -13,7 +13,10 @@
 		<form-bean name="pettyCashForm" type="pettyCash.PettyCashForm"></form-bean>
 		<form-bean name="trainingForm" type="training.TrainingForm"></form-bean>
 		<form-bean name="userForm" type="user.UserForm"></form-bean>
-	</form-beans>		
+	</form-beans>	
+	<global-forwards>
+		<forward name="login" path="/login.do"></forward>
+	</global-forwards>	
 	<action-mappings>
 		<action path="/index" name="indexForm" type="index.IndexHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
