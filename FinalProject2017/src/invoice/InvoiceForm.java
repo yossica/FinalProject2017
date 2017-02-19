@@ -202,6 +202,7 @@ public class InvoiceForm extends ActionForm{
 		System.out.println(invoiceBean.getCreatedDate());
 		System.out.println(invoiceBean.getChangedBy());
 		System.out.println(invoiceBean.getChangedDate());
+		System.out.println(invoiceBean.getTotalPpn());
 	}
   
 	public List getMessageList() {
