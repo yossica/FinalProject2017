@@ -21,6 +21,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import utils.ExportReportManager;
+
 public class PettyCashHandler extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
@@ -331,27 +333,57 @@ public class PettyCashHandler extends Action {
 
 			return mapping.findForward("pettyCash");
 		} else if ("export".equals(pettyCashForm.getTask())) {
-			// get all filter field
-			// get cash in bank data based on filter field
-			// export to pdf
-
-			// show initial page
-			pettyCashForm.setRemainingBalance(pettyCashManager
-					.getCurrentBalance());
-
 			Map paramMap = new HashMap();
 			Calendar cal = Calendar.getInstance();
+			
+			//get all filter field
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("name", generalInformationManager.getByKey("name").getValue());
+			parameters.put("address", generalInformationManager.getByKey("addr").getValue()+
+					"\nPhone:"+generalInformationManager.getByKey("telp").getValue()+
+					"\nFax: "+generalInformationManager.getByKey("fax").getValue());
+			parameters.put("reportType", "Petty Cash");
+			String cat = pettyCashForm.getCategoryId();
+			if("".equals(cat)){
+				paramMap.put("category", null);
+				parameters.put("category", "All");
+			}
+			else{
+				paramMap.put("category", cat);
+				parameters.put("category", cat);
+			}
+			
+			if("".equals(pettyCashForm.getFilterEndDate())){
+				paramMap.put("endDate",null);
+				paramMap.put("startDate",null);
+				parameters.put("endDate","All");
+				parameters.put("startDate","All");
+			}
+			else{
+				cal.setTime(showDateFormat.parse(pettyCashForm.getFilterEndDate()));
+				paramMap.put("endDate",dateFormat.format(cal.getTime()));
+				parameters.put("endDate",dateFormat.format(cal.getTime()));
+				pettyCashForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
+				cal.setTime(showDateFormat.parse(pettyCashForm.getFilterStartDate()));
+				paramMap.put("startDate", dateFormat.format(cal.getTime()));
+				parameters.put("startDate",dateFormat.format(cal.getTime()));
+				pettyCashForm.setFilterStartDate(showDateFormat.format(cal.getTime()));
+			}
+			//get petty cash data based on filter field
+			List cashInBankData = pettyCashManager.getAllWithFilter(paramMap);
+			//export to pdf
+			String filePath = this.getServlet().getServletContext().getRealPath("/asset/");
+			parameters.put("filePath", filePath);
+			cal = Calendar.getInstance();
+			SimpleDateFormat printDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+			String fileName = "PettyCashReport_"+printDateFormat.format(cal.getTime())+".pdf";
+			ExportReportManager.exportToPdf(filePath+"\\report\\FinanceTransactionReport"+".jrxml",
+					fileName, parameters, cashInBankData);
+						
+			//show filtered page
+			pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());			
 
-			paramMap.put("endDate", dateFormat.format(cal.getTime()));
-			pettyCashForm
-					.setFilterEndDate(showDateFormat.format(cal.getTime()));
-			cal.add(Calendar.DAY_OF_MONTH, -30);
-			paramMap.put("startDate", dateFormat.format(cal.getTime()));
-			pettyCashForm.setFilterStartDate(showDateFormat.format(cal
-					.getTime()));
-			paramMap.put("category", null);
-			pettyCashForm.setTransactionList(pettyCashManager
-					.getAllWithFilter(paramMap));
+			pettyCashForm.setTransactionList(pettyCashManager.getAllWithFilter(paramMap));
 
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
