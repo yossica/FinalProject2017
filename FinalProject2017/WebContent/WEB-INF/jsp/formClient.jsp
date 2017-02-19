@@ -18,7 +18,7 @@
 			  text: "System will save these data to master client",
 			  type: "warning",
 			  showCancelButton: true,
-			  confirmButtonColor: "#DD6B55",
+			  confirmButtonColor: "#ef2300",
 			  confirmButtonText: "Yes, Save",
 			  cancelButtonText: "No, Cancel Please!",
 			  closeOnConfirm: false,
@@ -26,7 +26,14 @@
 			},
 			function(isConfirm){
 			  if (isConfirm) {
-				  document.forms[1].submit();
+				  swal({
+		                title: 'Saved!',
+		                text: 'Datas are successfully saved!',
+		                type: 'success'
+		            }, function() {
+		            	document.forms[1].submit();
+		            });
+				  
 			  } else {
 			    swal("Cancelled", "Cancel Save Master Client", "error");
 			  }

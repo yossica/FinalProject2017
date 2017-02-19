@@ -45,7 +45,7 @@
 				  text: "System will insert these data to cash in bank transaction",
 				  type: "warning",
 				  showCancelButton: true,
-				  confirmButtonColor: "#DD6B55",
+				  confirmButtonColor: "#ef2300",
 				  confirmButtonText: "Yes, Insert",
 				  cancelButtonText: "No, Cancel Please!",
 				  closeOnConfirm: false,
@@ -53,7 +53,13 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  flyToPage();
+					  swal({
+			                title: 'Saved!',
+			                text: 'Datas are successfully inserted!',
+			                type: 'success'
+			            }, function() {
+			            	flyToPage();
+			            });
 				  } else {
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
 				  }
@@ -81,39 +87,20 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Petty Cash Transaction</h1>
-<<<<<<< HEAD
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<tbody>
 									<tr>
 										<td><label>Remaining Balance</label></td>
-										<td>Rp.
+										<td>
 											<bean:write name="pettyCashForm" property="remainingBalance"
-										format="#" /></td>
+										format="IDR #,###.##" /></td>
 									</tr>
 									<tr>
 										<td><label>Transaction Date</label></td>
 										
 										<td><input type="date" class="form-control-client"
-=======
-				</div>
-				<div class="col-lg-12">
-					<div class="col-lg-12" style="padding-left:10px">
-						<div class="col-lg-10">
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3"><label>Remaining Balance</label></div>
-								<div class="col-md-5">
-									<bean:write name="pettyCashForm" property="remainingBalance"
-										format="IDR #,###.##" />
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3"><label>Transaction Date</label></div>
-								<div class="col-md-5">
-									<input type="date" style="form-control"
->>>>>>> refs/remotes/origin/master
 										name="pettyCashBean.transactionDate"
 										value="<bean:write name="pettyCashForm" property="pettyCashBean.transactionDate"/>" />
 										</td>
