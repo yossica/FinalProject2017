@@ -120,9 +120,9 @@
 									<th>Date</th>
 									<th>Category</th>
 									<th>Description</th>
-									<th>Debit</th>
-									<th>Credit</th>
-									<th>Balance</th>
+									<th>Debit (IDR)</th>
+									<th>Credit (IDR)</th>
+									<th>Balance (IDR)</th>
 								</tr>
 							</thead>
 							<tbody>

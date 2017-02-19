@@ -119,9 +119,9 @@
 									<th>Date</th>
 									<th>Category</th>
 									<th>Description</th>
-									<th>Debit</th>
-									<th>Credit</th>
-									<th>Balance</th>
+									<th>Debit (IDR)</th>
+									<th>Credit (IDR)</th>
+									<th>Balance (IDR)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -132,14 +132,14 @@
 											<td><bean:write property="cashFlowCategoryName" name="pettyCash"/></td>
 											<td><bean:write property="description" name="pettyCash"/></td>
 											<logic:equal value="1" name="pettyCash" property="isDebit">
-												<td>Rp.<bean:write property="amount" name="pettyCash" format="#,###.##"/></td>
+												<td><bean:write property="amount" name="pettyCash" format="#,###.##"/></td>
 												<td></td>
 											</logic:equal>
 											<logic:equal value="0" name="pettyCash" property="isDebit">
 												<td></td>
-												<td>Rp.<bean:write property="amount" name="pettyCash" format="#,###.##"/></td>
+												<td><bean:write property="amount" name="pettyCash" format="#,###.##"/></td>
 											</logic:equal>
-											<td>Rp.<bean:write property="balance" name="pettyCash" format="#,###.##"/></td>
+											<td><bean:write property="balance" name="pettyCash" format="#,###.##"/></td>
 										</tr>
 									</logic:iterate>
 								</logic:notEmpty>

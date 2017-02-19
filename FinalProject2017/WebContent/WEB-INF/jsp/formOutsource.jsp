@@ -16,7 +16,7 @@
 		var startDate = document.getElementsByName("outsourceBean.startDate")[0].value;
 		var endDate = document.getElementsByName("outsourceBean.endDate")[0].value;
 		var fee = document.getElementsByName("outsourceBean.fee")[0].value;
-		var doubleReg = /^[\d]*(.[\d])*$/;
+		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		if (startDate == "") {
 			errorMessage = errorMessage + "Start date must be filled!<br/>";
 		}
