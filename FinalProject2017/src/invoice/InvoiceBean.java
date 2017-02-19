@@ -25,7 +25,7 @@ public class InvoiceBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-	private double totalPPN;
+	private double totalPpn;
 	
 	private List<InvoiceDetailBean> detailList;
 	
@@ -206,13 +206,12 @@ public class InvoiceBean implements Serializable {
 		this.detailList = detailList;
 	}
 
-	public double getTotalPPN() {
-		return totalPPN;
+	public double getTotalPpn() {
+		return totalPpn;
 	}
 
-	public void setTotalPPN(double totalPPN) {
-		this.totalPPN = totalPPN;
+	public void setTotalPpn(double totalPpn) {
+		this.totalPpn = totalPpn;
 	}
-	
 }
 	

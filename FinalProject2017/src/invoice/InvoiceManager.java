@@ -82,6 +82,7 @@ public class InvoiceManager {
 			Integer idHeader = getMaxInvoiceHeaderId();
 			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
+			System.out.println(input.getDetailList().size());
 			for (InvoiceDetailBean bean : input.getDetailList()){
 				bean.setTransactionInvoiceHeaderId(idHeader);
 				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId());
