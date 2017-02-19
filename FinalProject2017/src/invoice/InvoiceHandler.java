@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionMapping;
 
 import outsource.OutsourceBean;
 import outsource.OutsourceManager;
+import utils.ExportReportManager;
 import client.ClientManager;
 import employee.EmployeeBean;
 
@@ -237,6 +238,68 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceList(invoiceManager
 					.getAllWithFilter(paramMap));
 			return mapping.findForward("invoice");
+		} else if ("export".equals(invoiceForm.getTask())) {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("name", generalInformationManager.getByKey("name").getValue());
+			parameters.put("address", generalInformationManager.getByKey("addr").getValue()+
+					"\nPhone:"+generalInformationManager.getByKey("telp").getValue()+
+					"\nFax: "+generalInformationManager.getByKey("fax").getValue());
+			
+			String client = invoiceForm.getClientId();
+			String monthFrom = invoiceForm.getMonthFrom();
+			String yearFrom = invoiceForm.getYearFrom();
+			String monthTo = invoiceForm.getMonthTo();
+			String yearTo = invoiceForm.getYearTo();
+			String status = invoiceForm.getStatusInvoiceId();
+			if ("".equals(client)) {
+				client = null;
+				parameters.put("client", "All");
+			}
+			else{
+				parameters.put("client", new ClientManager().getById(Integer.parseInt(client)).getName());
+			}
+			if ("".equals(status)) {
+				status = null;
+				parameters.put("invoiceStatus", "All");
+			}
+			else {
+				parameters.put("invoiceStatus", new MasterManager().getStatusInvoiceById(Integer.parseInt(status)).getName());
+			}
+			if ("".equals(yearTo)) {
+				monthFrom = null;
+				yearFrom = null;
+				monthTo = null;
+				yearTo = null;
+				parameters.put("startDate", "All");
+				parameters.put("endDate", "All");
+			}
+			else {
+				parameters.put("startDate", getMonthName(monthFrom)+" "+yearFrom);
+				parameters.put("endDate", getMonthName(monthTo)+" "+yearTo);
+			}
+			Map paramMap = new HashMap();
+			paramMap.put("monthFrom", monthFrom);
+			paramMap.put("yearFrom", yearFrom);
+			paramMap.put("monthTo", monthTo);
+			paramMap.put("yearTo", yearTo);
+			paramMap.put("client", client);
+			paramMap.put("status", status);
+			invoiceForm.setStatusInvoiceList(masterManager
+					.getAllStatusInvoice());
+			
+			List<InvoiceBean> invoiceSummaryData = invoiceManager
+					.getAllWithFilter(paramMap);			
+			//export to pdf
+			String filePath = this.getServlet().getServletContext().getRealPath("/asset/");
+			parameters.put("filePath", filePath);
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat printDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+			String fileName = "InvoiceSummaryReport_"+printDateFormat.format(cal.getTime())+".pdf";
+			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceSummaryReport"+".jrxml",
+					fileName, parameters, invoiceSummaryData);
+			
+			invoiceForm.setInvoiceList(invoiceSummaryData);
+			return mapping.findForward("invoice");
 		} else {
 			Calendar cc = Calendar.getInstance();
 			int cyear = cc.get(Calendar.YEAR);
@@ -264,5 +327,25 @@ public class InvoiceHandler extends Action {
 					.getAllWithFilter(paramMap));
 			return mapping.findForward("invoice");
 		}
+	}
+	
+	private String getMonthName(String input){
+		String result = "";
+		Integer month = Integer.parseInt(input);
+		switch(month){
+			case 1: result = "January"; break;
+			case 2 :result="February"; break;
+	        case 3 :result="March"; break;
+	        case 4 :result="April"; break;
+	        case 5 :result="May"; break;
+	        case 6 :result="June"; break;
+	        case 7 :result="July"; break;
+	        case 8 :result="August"; break;
+	        case 9 :result="September"; break;
+	        case 10:result="October"; break;
+	        case 11:result="November"; break;
+	        case 12:result="December"; break;
+		}
+		return result;
 	}
 }
