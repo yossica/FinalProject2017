@@ -16,6 +16,21 @@ public class InvoiceDetailBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
+	private double totalFee;
+	private double unitPrice;
+	
+	public double getTotalFee() {
+		return totalFee;
+	}
+	public void setTotalFee(double totalFee) {
+		this.totalFee = totalFee;
+	}
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
 	public int getTransactionInvoiceDetailId() {
 		return transactionInvoiceDetailId;
 	}
