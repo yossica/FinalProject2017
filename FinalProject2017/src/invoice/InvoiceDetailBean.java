@@ -5,8 +5,11 @@ import java.io.Serializable;
 public class InvoiceDetailBean implements Serializable {
 	private int transactionInvoiceDetailId;
 	private int transactionInvoiceHeaderId;
+	private int numb;
 	private String description;
-	private double fee;
+	private Double fee;
+	private Double unitPrice;
+	private Double total;
 	private int employeeId;
 	private String employeeName;
 	private int workDays;
@@ -34,10 +37,10 @@ public class InvoiceDetailBean implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public double getFee() {
+	public Double getFee() {
 		return fee;
 	}
-	public void setFee(double fee) {
+	public void setFee(Double fee) {
 		this.fee = fee;
 	}
 	public int getEmployeeId() {
@@ -93,6 +96,24 @@ public class InvoiceDetailBean implements Serializable {
 	}
 	public void setWorkDays(int workDays) {
 		this.workDays = workDays;
+	}
+	public int getNumb() {
+		return numb;
+	}
+	public void setNumb(int numb) {
+		this.numb = numb;
+	}
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	public Double getTotal() {
+		return total;
+	}
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 	
 }
