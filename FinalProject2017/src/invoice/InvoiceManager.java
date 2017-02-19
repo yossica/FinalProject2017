@@ -79,26 +79,15 @@ public class InvoiceManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
+			Integer idHeader = getMaxInvoiceHeaderId();
+			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
+			for (InvoiceDetailBean bean : input.getDetailList()){
+				bean.setTransactionInvoiceHeaderId(idHeader);
+				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId());
+				ibatis.insert("invoice.insertDetail", bean);
+			}
 			ibatis.commitTransaction();
-			/*for (InvoiceDetailBean bean : input.getDetailList()){
-				System.out.println(bean.getTransactionInvoiceDetailId());
-				System.out.println(bean.getTransactionInvoiceHeaderId());
-				System.out.println(bean.getDescription());
-				System.out.println(bean.getFee());
-				System.out.println(bean.getEmployeeId());
-				System.out.println(bean.getManDays());
-				System.out.println(bean.getNotes());
-				System.out.println(bean.getCreatedBy());
-				System.out.println(bean.getCreatedDate());
-				System.out.println(bean.getChangedBy());
-				System.out.println(bean.getChangedDate());
-				System.out.println(bean.getWorkDays());
-				System.out.println();
-				//ibatis.insert("invoice.insertDetail", bean);
-				//ibatis.commitTransaction();
-				//insertDetail(bean);
-			}*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
