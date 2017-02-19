@@ -28,8 +28,8 @@
 		else if(!doubleReg.test(amount)){
 			errorMessage+="Amount must be number!<br/>";
 		}
-		else if(parseFloat(amount) < 0){
-			errorMessage+="Amount cannot be negative!<br/>";	
+		else if(parseFloat(amount) <= 0){
+			errorMessage+="Amount cannot be zero or negative!<br/>";	
 		}
 		if(description == ""){
 			errorMessage+="Description must be filled!<br/>";
@@ -87,9 +87,8 @@
 							<div class="row" style="margin-top: 10px;">
 								<div class="col-md-3"><label>Remaining Balance</label></div>
 								<div class="col-md-5">
-									Rp.
 									<bean:write name="pettyCashForm" property="remainingBalance"
-										format="#" />
+										format="IDR #,###.##" />
 								</div>
 							</div>
 

@@ -36,6 +36,7 @@ public class InvoiceForm extends ActionForm{
 	
 	private List clientList = new ArrayList();
 	private List invoiceTypeList = new ArrayList();
+	private List<InvoiceDetailBean> professionalServiceList = new ArrayList<InvoiceDetailBean>();
 	private List<InvoiceDetailBean> headHunterList = new ArrayList<InvoiceDetailBean>();
 	private List outsourceList = new ArrayList();
 	private List invoiceDetailList = new ArrayList();
@@ -127,7 +128,7 @@ public class InvoiceForm extends ActionForm{
 	public void setHeadHunterList(List<InvoiceDetailBean> headHunterList) {
 		this.headHunterList = headHunterList;
 	}
-	public InvoiceDetailBean getInvoiceDetail(int index){
+	public InvoiceDetailBean getInvoiceDetailHH(int index){
 		while(this.headHunterList.size() <= index){
 			this.headHunterList.add(new InvoiceDetailBean());
 		}
@@ -212,6 +213,7 @@ public class InvoiceForm extends ActionForm{
 	public void setMessageList(List messageList) {
 		this.messageList = messageList;
 	}
+
 	public GeneralInformationBean getNote() {
 		return note;
 	}
@@ -223,5 +225,18 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setSign(GeneralInformationBean sign) {
 		this.sign = sign;
+
+	public List<InvoiceDetailBean> getProfessionalServiceList() {
+		return professionalServiceList;
+	}
+	public void setProfessionalServiceList(List<InvoiceDetailBean> professionalServiceList) {
+		this.professionalServiceList = professionalServiceList;
+	}
+	public InvoiceDetailBean getInvoiceDetailPS(int index){
+		while(this.professionalServiceList.size() <= index){
+			this.professionalServiceList.add(new InvoiceDetailBean());
+		}
+		return (InvoiceDetailBean) this.professionalServiceList.get(index);
 	}
 }
+
