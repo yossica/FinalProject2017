@@ -93,21 +93,6 @@ public class InvoiceHandler extends Action {
 		}else if("insertTransactionOutsource".equals(invoiceForm.getTask())){
 			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
 			Date date = new Date();
-//			System.out.println("Date "+invoiceForm.getInvoiceBean().getInvoiceDate());
-//			System.out.println("Client ID "+invoiceForm.getInvoiceBean().getClientId());
-//			System.out.println("Type ID "+invoiceForm.getInvoiceBean().getInvoiceTypeId());
-//			System.out.println("Month "+invoiceForm.getInvoiceBean().getPeriodMonth());
-//			System.out.println("Year "+invoiceForm.getInvoiceBean().getPeriodYear());
-//			System.out.println("Gross "+invoiceForm.getInvoiceBean().getIsGross());
-//			System.out.println("Inv Note "+invoiceForm.getInvoiceBean().getNotes());
-//			System.out.println("Size "+invoiceForm.getProfessionalServiceList().size());
-//			for(InvoiceDetailBean bean: invoiceForm.getProfessionalServiceList()){
-//				System.out.println("Name "+bean.getEmployeeName());
-//				System.out.println("Fee "+bean.getFee());
-//				System.out.println("Work Day "+bean.getWorkDays());
-//				System.out.println("Man Day "+bean.getManDays());
-//				System.out.println("Notes "+bean.getNotes());
-//			}
 			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(
 					invoiceManager.getMaxInvoiceHeaderId());
 			invoiceForm.getInvoiceBean().setInvoiceNumber(
@@ -138,8 +123,6 @@ public class InvoiceHandler extends Action {
 		} else if ("insertHH".equals(invoiceForm.getTask())) {
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
-			//int idHeader = invoiceManager.getMaxInvoiceHeaderId();
-			//invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(idHeader);
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
 			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
@@ -148,12 +131,17 @@ public class InvoiceHandler extends Action {
 			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
 				//Ini kalau exclude PPN
 				for (InvoiceDetailBean bean : invoiceForm.getHeadHunterList()){
+					bean.setCreatedBy((String)session.getAttribute("username"));
 					netTotal += bean.getFee();
+					bean.setUnitPrice(bean.getFee());
+					bean.setTotalFee(bean.getFee());
+					invoiceForm.getInvoiceBean().getDetailList().add(bean);
 				}
 				double formula = netTotal+(netTotal*ppn/100);
 				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
 				invoiceForm.getInvoiceBean().setTotalGross(formula);
-				invoiceForm.getInvoiceBean().setPpnPercentage(formula-netTotal);
+				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
+				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			}else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
 				//Ini kalau include PPN
 				NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
@@ -162,8 +150,6 @@ public class InvoiceHandler extends Action {
 				double netFee;
 				double grossTotal = 0;
 				for (InvoiceDetailBean bean : invoiceForm.getHeadHunterList()){
-					//bean.setTransactionInvoiceDetailId(invoiceManager.getMaxInvoiceDetailId());
-					//bean.setTransactionInvoiceHeaderId(idHeader);
 					bean.setCreatedBy((String)session.getAttribute("username"));
 					netFee = bean.getFee() * 100 / devider;
 					netTotal += netFee;
