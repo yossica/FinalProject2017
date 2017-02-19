@@ -151,6 +151,9 @@
     
     <insert id="insertHeader" parameterClass="invoice.InvoiceBean">
     	insert into transaction_invoice_header
+    	(TRANSACTION_INVOICE_ID,INVOICE_NUMBER,INVOICE_DATE,PERIOD_MONTH,PERIOD_YEAR,
+    	STATUS_INVOICE_ID,INVOICE_TYPE_ID,CLIENT_ID,TOTAL_NET,PPN_PERCENTAGE,IS_GROSS,TOTAL_GROSS,
+    	NOTES,CREATED_BY,CREATED_DATE,CHANGED_BY,CHANGED_DATE,TOTAL_PPN)
     	values (#transactionInvoiceHeaderId#, #invoiceNumber#, to_date(#invoiceDate#, 'yyyy-mm-dd'), #periodMonth#, #periodYear#, 
     	#statusInvoiceId#, #invoiceTypeId#, #clientId#, #totalNet#, #ppnPercentage#, #isGross#, #totalGross#,
     	#notes#, #createdBy#, sysdate, null, null, #totalPpn#)
@@ -158,8 +161,10 @@
     
     <insert id="insertDetail" parameterClass="invoice.InvoiceDetailBean">
     	insert into transaction_invoice_detail
+    	(TRANSACTION_INVOICE_DETAIL_ID,TRANSACTION_INVOICE_ID,DESCRIPTION,FEE,EMPLOYEE_ID,
+    	MAN_DAYS,NOTES,CREATED_BY,CREATED_DATE,CHANGED_BY,CHANGED_DATE,WORK_DAYS,UNIT_PRICE,TOTAL_FEE)
     	values (#transactionInvoiceDetailId#, #transactionInvoiceHeaderId#, #description#, #fee#, #employeeId#,
-    	#manDays#, #notes#, #createdBy#, sysdate, null, null, #workDays#)
+    	#manDays#, #notes#, #createdBy#, sysdate, null, null, #workDays#, #unitPrice#, #totalFee#)
     </insert>
     
 </sqlMap> 
