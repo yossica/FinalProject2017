@@ -83,6 +83,13 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getMessageList().add("There's no contract!");
 				return mapping.findForward("createInvoice");
 			}
+		} else if ("detailInvoice".equals(invoiceForm.getTask())) {
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			return mapping.findForward("detailInvoice");
 		}else if("insertTransactionOutsource".equals(invoiceForm.getTask())){
 			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
 			Date date = new Date();
@@ -105,13 +112,8 @@ public class InvoiceHandler extends Action {
 					invoiceManager.getMaxInvoiceHeaderId());
 			invoiceForm.getInvoiceBean().setInvoiceNumber(
 					invoiceManager.getInvoiceNumber(dateFormat.format(date)));
-			
-			//return mapping.findForward("createInvoicePS");
 			return null;
-		}		
-		else if ("detailInvoice".equals(invoiceForm.getTask())) {
-			return mapping.findForward("detailInvoice");
-		} else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
+		}	else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(
 					clientManager.getById(
 							invoiceForm.getInvoiceBean().getClientId())

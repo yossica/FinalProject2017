@@ -18,6 +18,7 @@ public class InvoiceBean implements Serializable {
 	private String clientName;
 	private double totalNet;
 	private double ppnPercentage;
+	private double totalPpn;
 	private int isGross;
 	private double totalGross;
 	private String notes;
@@ -203,6 +204,14 @@ public class InvoiceBean implements Serializable {
 
 	public void setDetailList(List<InvoiceDetailBean> detailList) {
 		this.detailList = detailList;
+	}
+
+	public double getTotalPpn() {
+		return totalPpn;
+	}
+
+	public void setTotalPpn(double totalPpn) {
+		this.totalPpn = totalPpn;
 	}
 	
 }
