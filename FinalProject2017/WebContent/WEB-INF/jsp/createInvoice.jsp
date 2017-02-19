@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Finance Solution</title>
+<title>Create Invoice</title>
 <script>
 	function getContractServices(){
 		var e = document.getElementById("contractServices");

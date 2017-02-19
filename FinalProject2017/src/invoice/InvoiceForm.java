@@ -225,7 +225,7 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setSign(GeneralInformationBean sign) {
 		this.sign = sign;
-
+	}
 	public List<InvoiceDetailBean> getProfessionalServiceList() {
 		return professionalServiceList;
 	}
