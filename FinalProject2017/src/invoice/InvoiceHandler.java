@@ -138,8 +138,8 @@ public class InvoiceHandler extends Action {
 		} else if ("insertHH".equals(invoiceForm.getTask())) {
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
-			int idHeader = invoiceManager.getMaxInvoiceHeaderId();
-			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(idHeader);
+			//int idHeader = invoiceManager.getMaxInvoiceHeaderId();
+			//invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(idHeader);
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
 			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
@@ -162,12 +162,14 @@ public class InvoiceHandler extends Action {
 				double netFee;
 				double grossTotal = 0;
 				for (InvoiceDetailBean bean : invoiceForm.getHeadHunterList()){
-					bean.setTransactionInvoiceDetailId(invoiceManager.getMaxInvoiceDetailId());
-					bean.setTransactionInvoiceHeaderId(idHeader);
+					//bean.setTransactionInvoiceDetailId(invoiceManager.getMaxInvoiceDetailId());
+					//bean.setTransactionInvoiceHeaderId(idHeader);
 					bean.setCreatedBy((String)session.getAttribute("username"));
 					netFee = bean.getFee() * 100 / devider;
 					netTotal += netFee;
 					grossTotal += bean.getFee();
+					bean.setUnitPrice(numberFormat.parse(doubleFormat.format(netFee)).doubleValue());
+					bean.setTotalFee(numberFormat.parse(doubleFormat.format(netFee)).doubleValue());
 					invoiceForm.getInvoiceBean().getDetailList().add(bean);
 				}
 				double ppnValue = grossTotal - netTotal;

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Holiday</title>
+<title>Master Holiday</title>
 <script type="text/javascript">
 	function deleteHoliday(holiday,id){
 		swal({
