@@ -46,8 +46,8 @@
 			document.getElementById("tax").style.display = "block";
 		}
 	}
-	
-	function onloadFunc(){
+
+	function onloadFunc() {
 		onchangeContractServices();
 	}
 	window.onload = onloadFunc;

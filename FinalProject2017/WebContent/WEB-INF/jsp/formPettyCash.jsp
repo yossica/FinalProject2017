@@ -15,7 +15,7 @@
 		var transactionDate = document.getElementsByName("pettyCashBean.transactionDate")[0].value;
 		var amount = document.getElementsByName("pettyCashBean.amount")[0].value;
 		var description = document.getElementsByName("pettyCashBean.description")[0].value;
-		var doubleReg = /^[\d]*(.[\d])*$/;
+		var doubleReg = /^[\d]+(.[\d]+)$/;
 		var errorMessage = ""; 
 		
 		if(transactionDate == ""){
@@ -28,8 +28,8 @@
 		else if(!doubleReg.test(amount)){
 			errorMessage+="Amount must be number!<br/>";
 		}
-		else if(parseFloat(amount) < 0){
-			errorMessage+="Amount cannot be negative!<br/>";	
+		else if(parseFloat(amount) <= 0){
+			errorMessage+="Amount cannot be zero or negative!<br/>";	
 		}
 		if(description == ""){
 			errorMessage+="Description must be filled!<br/>";
@@ -81,6 +81,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Petty Cash Transaction</h1>
+<<<<<<< HEAD
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-hover">
@@ -95,6 +96,24 @@
 										<td><label>Transaction Date</label></td>
 										
 										<td><input type="date" class="form-control-client"
+=======
+				</div>
+				<div class="col-lg-12">
+					<div class="col-lg-12" style="padding-left:10px">
+						<div class="col-lg-10">
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3"><label>Remaining Balance</label></div>
+								<div class="col-md-5">
+									<bean:write name="pettyCashForm" property="remainingBalance"
+										format="IDR #,###.##" />
+								</div>
+							</div>
+
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3"><label>Transaction Date</label></div>
+								<div class="col-md-5">
+									<input type="date" style="form-control"
+>>>>>>> refs/remotes/origin/master
 										name="pettyCashBean.transactionDate"
 										value="<bean:write name="pettyCashForm" property="pettyCashBean.transactionDate"/>" />
 										</td>

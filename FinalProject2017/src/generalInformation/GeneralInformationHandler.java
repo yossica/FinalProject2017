@@ -14,9 +14,12 @@ public class GeneralInformationHandler  extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("username") == null) {
+			return mapping.findForward("login");
+		}
 		GeneralInformationForm generalInformationForm = (GeneralInformationForm) form;
 		GeneralInformationManager generalInformationManager = new GeneralInformationManager();
-		HttpSession session = request.getSession();
 		
 		if("update".equals(generalInformationForm.getTask()))
 		{

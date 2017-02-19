@@ -70,7 +70,7 @@
 		</div>
 		<div class="row" style="margin-top: 1%;">
 			<div class="col-lg-12">
-				<label>Remaining Balance: Rp.<bean:write name="pettyCashForm" property="remainingBalance" format="#" />,-</label>
+				<label>Remaining Balance: <bean:write name="pettyCashForm" property="remainingBalance" format="IDR #,###.##" /></label>
 				<div class="pull-right">
 					<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('export')">Export to PDF</button>
 					<button type="button" class="btn btn-primary" onclick="javascript:balance()">Balancing</button>
@@ -132,14 +132,14 @@
 											<td><bean:write property="cashFlowCategoryName" name="pettyCash"/></td>
 											<td><bean:write property="description" name="pettyCash"/></td>
 											<logic:equal value="1" name="pettyCash" property="isDebit">
-												<td>Rp.<bean:write property="amount" name="pettyCash" format="#"/></td>
+												<td>Rp.<bean:write property="amount" name="pettyCash" format="#,###.##"/></td>
 												<td></td>
 											</logic:equal>
 											<logic:equal value="0" name="pettyCash" property="isDebit">
 												<td></td>
-												<td>Rp.<bean:write property="amount" name="pettyCash" format="#"/></td>
+												<td>Rp.<bean:write property="amount" name="pettyCash" format="#,###.##"/></td>
 											</logic:equal>
-											<td>Rp.<bean:write property="balance" name="pettyCash" format="#"/></td>
+											<td>Rp.<bean:write property="balance" name="pettyCash" format="#,###.##"/></td>
 										</tr>
 									</logic:iterate>
 								</logic:notEmpty>

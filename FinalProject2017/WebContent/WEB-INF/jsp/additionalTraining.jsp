@@ -11,10 +11,40 @@
 	<script type="text/javascript">
 		function insert(){
 			//validate
-			flyToPage("insertDetail");
+			var fee = document.getElementsByName("trainingDetailBean.fee")[0].value;
+			var description = document.getElementsByName("trainingDetailBean.description")[0].value;
+			var doubleReg = /^[\d]+(.[\d]+)$/;
+			var errorMessage = ""; 
+			
+			if(fee == ""){
+				errorMessage = errorMessage + "Fee must be filled!<br/>";
+			}
+			else if(!doubleReg.test(fee)){
+				errorMessage = errorMessage + "Fee must be number!<br/>";
+			}
+			else if(parseFloat(fee) <= 0){
+				errorMessage = errorMessage + "Fee cannot be zero or negative!<br/>";	
+			}
+			if(description == ""){
+				errorMessage = errorMessage + "Description must be filled!<br/>";
+			}
+			
+			if(errorMessage.length != 0){
+				document.getElementById("message").innerHTML = errorMessage;
+				return;
+			}
+			else{		
+				var clientList = document.getElementsByName("clientId")[0];
+				var clientName = clientList.options[clientList.selectedIndex].text;
+				var trainingList = document.getElementsByName("trainingDetailBean.transactionTrainingHeaderId")[0];
+				var trainingName = trainingList.options[trainingList.selectedIndex].text;
+				if (confirm("Are you sure to insert these data as additional training fee for "+clientName+"-"+trainingName+"?")) {
+					flyToPage("insertDetail");
+				}
+			}			
 		}
 		function deleteAdditionalTraining(desc,id){
-			if(confirm("Are you sure to delete additional training "+desc+"?")){
+			if(confirm("Are you sure to delete additional training fee "+desc+"?")){
 				document.forms[1].transactionTrainingDetailId.value = id;
 				flyToPage("deleteDetail");
 			}
@@ -54,7 +84,9 @@
 		            	<div class="col-md-8">
 				            <html:select property="clientId" name="trainingForm" 
 				            	styleClass="form-control" onchange="javascript:flyToPage('loadTrainingHeader')">
-								<html:optionsCollection name="trainingForm" property="clientList" label="name" value="clientId"/>
+				            	<logic:notEmpty name="trainingForm" property="clientList">
+									<html:optionsCollection name="trainingForm" property="clientList" label="name" value="clientId"/>
+								</logic:notEmpty>
 							</html:select>
 		            	</div>
             		</div>
@@ -65,9 +97,9 @@
             				Training
             			</div>
             			<div class="col-md-8">
-		            		<html:select property="transactionTrainingHeaderId" name="trainingForm" 
+		            		<html:select property="trainingDetailBean.transactionTrainingHeaderId" name="trainingForm" 
 		            			styleClass="form-control" onchange="javascript:flyToPage('loadTrainingDetail')">
-		            			<logic:notEmpty name="trainingForm" property="trainingHeaderList">	
+		            			<logic:notEmpty name="trainingForm" property="trainingHeaderList">
 									<html:optionsCollection name="trainingForm" property="trainingHeaderList" label="description" value="transactionTrainingHeaderId"/>
 								</logic:notEmpty>
 							</html:select>
@@ -80,7 +112,7 @@
             				Fee
             			</div>
             			<div class="col-md-8">
-		            		<html:text property="fee" name="trainingForm" styleClass="form-control"/>
+		            		<html:text property="trainingDetailBean.fee" name="trainingForm" styleClass="form-control"/>
 				        </div>
             		</div>
             	</div>
@@ -90,19 +122,29 @@
             				Notes
             			</div>
             			<div class="col-md-8">
-		            		 <html:textarea property="description" name="trainingForm" styleClass="form-control" style="height:100px">
+		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control" style="height:100px">
 						     </html:textarea>
 				        </div>
+            		</div>
+            	</div>
+            	<div class="row" style="margin-top:10px;margin-bottom:10px;">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-2">
+			        		<button type="button" class="btn btn-primary" onclick="javascript:insert()">Add</button>
+			        	</div>
+			        	<div class="col-md-1"></div>
+			        	<div class="col-md-7" id="message">
+			        		<logic:notEmpty name="trainingForm" property="messageList">
+								<logic:iterate id="message" name="trainingForm" property="messageList">
+									<bean:write name="message" /> 
+								</logic:iterate>
+							</logic:notEmpty>
+			        	</div>
             		</div>
             	</div>
             </div>
             <div class="row">
 		    	<div class="col-lg-12">
-			    	<div class="panel-body" style="padding-bottom:0;">
-			    		<div class="col-md-12">
-			        		<button type="button" class="btn btn-primary" onclick="javascript:insert()">Add</button>
-			        	</div>
-			        </div>
 		    		<div class="panel-body">
 		    			<div class="table-responsive" style="overflow: auto;">
 							<table class="table table-hover">
@@ -118,8 +160,13 @@
 								        <logic:iterate id="trainingDetail" property="trainingDetailList" name="trainingForm">
 								        	<tr>
 												<td><bean:write name="trainingDetail" property="description"/></td>
-												<td><bean:write name="trainingDetail" property="fee"/></td>
-												<td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td>
+												<td><bean:write name="trainingDetail" property="fee" format="#,###.##"/></td>
+												<logic:equal value="0" property="isSettlement" name="trainingDetail">
+													<td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td>
+												</logic:equal>
+												<logic:notEqual value="0" property="isSettlement" name="trainingDetail">
+													<td></td>
+												</logic:notEqual>
 											</tr>
 								        </logic:iterate>
 								    </logic:notEmpty>
