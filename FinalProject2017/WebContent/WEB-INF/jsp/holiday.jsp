@@ -42,7 +42,7 @@
 		document.getElementById("message").style.display="block";
 		for(var i = 0 ; i < splitenter.length ; i++){
 			if(!splitenter[i].includes(",")){
-				error += "Row number "+ (i+1) + " must contain ,\n";
+				error += "Error: Row number "+ (i+1) + " must contain ,<br/>";
 			}
 			else {
 				var splitcomma = splitenter[i].split(",");
@@ -52,15 +52,15 @@
 				}
 				if(splitcomma[1].length == 0){
 					if(isDateValid){
-						error += "Row number "+ (i+1) +" description must be filled\n";
+						error += "Error: Row number "+ (i+1) +" description must be filled<br/>";
 					}
 					else {
-						error += "Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid, description must be filled\n";
+						error += "Error: Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid, description must be filled<br/>";
 					}
 				}
 				else {
 					if(!isDateValid){
-						error += "Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid\n";
+						error += "Error: Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid<br/>";
 					}
 				}
 			}

@@ -92,52 +92,53 @@
 				<h1 class="page-header">Create Invoice (Cont)</h1>
 			</div>
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-md-10" style="padding-right: 1%">
+				<div class="col-md-12" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+						: <bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 					</div>
 				</div>
 			</div>
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-md-10" style="padding-right: 1%">
+				<div class="col-md-12" style="padding-right: 1%">
 
 					<div class="col-md-2"><label>Client</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
 						<html:hidden name="invoiceForm" property="invoiceBean.clientName"/>
-						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
+						: <bean:write name="invoiceForm" property="invoiceBean.clientName"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Contract Service</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeName" />
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
+						: <bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Period</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.periodMonth" />
 						<html:hidden name="invoiceForm" property="invoiceBean.periodYear" />
-						<bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#" />
+						: <bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#" />
 						/
 						<bean:write name="invoiceForm" property="invoiceBean.periodYear" format="#" />
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Tax</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
+						: 
 						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="1">
 							Include
 						</logic:equal>
@@ -147,7 +148,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
@@ -155,15 +156,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 1%;">
+			<div class="col-md-12" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 30px;">
 				<div class="row">
 					<div class="col-md-12" style="text-align: center;">
 						<table class="table table-hover">
 							<tr>
 								<th>Description</th>
 								<th>Fee</th>
-								<th>Notes</th>
-								<th>Action</th>
+								<th style="text-align:center;">Notes</th>
+								<th style="text-align:center;">Action</th>
 							</tr>
 							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList" indexId="indexHH">
 							<tr>
