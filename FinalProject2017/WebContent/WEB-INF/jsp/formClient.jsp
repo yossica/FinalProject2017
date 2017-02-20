@@ -18,11 +18,11 @@
 		var faxNumber = document.getElementsByName("faxNumber")[0].value;
 		var postalCode = document.getElementsByName("postalCode")[0].value;
 
-		var letters = /([A-Za-z ])+\w/;
-		var numbers = /^([0-9])*$/;
+		var letters = /^([A-z ]{3,})+$/;
+		var numbers = /^\d+$/;
 		var alphanumAndSpecial = /^[ A-Za-z0-9_@.,]*$/;
-		var phoneRegex = /^([+0])([0-9- ])*$/;
-		var faxRegex = /^([+0])([0-9. ])*$/;
+		var phoneRegex = /^([+0])([\d- ])*$/;
+		var faxRegex = /^([+0])([\d. ])*$/;
 		var errorMessage = "";
 
 		if (name == "") {
@@ -58,7 +58,7 @@
 			errorMessage = errorMessage + "Postal Code must be filled!<br/>";
 		} else if (!numbers.test(postalCode)) {
 			errorMessage = errorMessage
-					+ "Postal Code should contain numbers only!<br/>";
+					+ "Postal Code must be in numbers only!<br/>";
 		}
 		if (errorMessage.length != 0) {
 			document.getElementById("message").innerHTML = errorMessage;
