@@ -121,6 +121,8 @@
 		    period_month = #periodMonth#
 		    and period_year = #periodYear#
 		    and client_id = #clientId#
+		    and invoice_type_id = 1
+		    and status_invoice_id != 4
 	</select>
 	
 	<select id="getMaxIdHeader" resultClass="java.lang.Integer">

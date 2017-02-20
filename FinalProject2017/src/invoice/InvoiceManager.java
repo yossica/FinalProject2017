@@ -82,10 +82,20 @@ public class InvoiceManager {
 			Integer idHeader = getMaxInvoiceHeaderId();
 			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
-			System.out.println(input.getDetailList().size());
 			for (InvoiceDetailBean bean : input.getDetailList()){
 				bean.setTransactionInvoiceHeaderId(idHeader);
 				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId());
+//				System.out.println("Tr Detail Id"+ bean.getTransactionInvoiceDetailId());
+//				System.out.println("Tr Header Id"+ bean.getTransactionInvoiceHeaderId());
+//				System.out.println("Description"+ bean.getDescription());
+//				System.out.println("Fee"+ bean.getFee());
+//				System.out.println("Employee Id"+ bean.getEmployeeId());
+//				System.out.println("Man Days"+ bean.getManDays());
+//				System.out.println("Notes"+ bean.getNotes());
+//				System.out.println("Created By"+ bean.getCreatedBy());
+//				System.out.println("WorkDays"+ bean.getWorkDays());
+//				System.out.println("Unit Price"+ bean.getUnitPrice());
+//				System.out.println("Total Fee"+ bean.getTotalFee());
 				ibatis.insert("invoice.insertDetail", bean);
 			}
 			ibatis.commitTransaction();
@@ -215,6 +225,4 @@ public class InvoiceManager {
 		}
 		return result;
 	}
-	
-	
 }
