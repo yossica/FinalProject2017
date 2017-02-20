@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Master Employees</title>
 <script>
+
 	function insert() {
 
 		var name = document.getElementsByName("name")[0].value;
@@ -80,59 +81,42 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Employee</h1>
-				</div>
-
-				<div class="col-lg-12">
-					<div class="col-lg-12" style="padding-left: 10px">
-						<div class="col-lg-10">
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>Name</label>
-								</div>
-								<div class="col-md-6">
-									<html:text styleClass="form-control" name="employeeForm"
-										property="name" />
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>Email</label>
-								</div>
-								<div class="col-md-6">
-									<input id="employeeForm" name="email" type="text"
-										value='<bean:write name="employeeForm" property="email"/>'
-										placeholder="e.g. : name@domain.com" />
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3">
-									<label>Employee Status</label>
-								</div>
-								<div class="col-md-6">
-
-									<html:select name="employeeForm" property="isEnabled"
-										styleClass="form-control">
-										<html:option value="1">Enabled</html:option>
-										<html:option value="0">Disabled</html:option>
-									</html:select>
-
-								</div>
-							</div>
-
-							<div class="panel-body" style="padding-left: 0;">
-								<div class="pull-left">
-									<button type="button" class="btn btn-primary"
+				<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><label>Employee Name</label></td>
+										<td><html:text property="name" name="employeeForm" styleClass="form-control-client"/></td>
+									</tr>
+									<tr>
+										<td><label>Email</label></td>
+										<td><html:text property="email" name="employeeForm" styleClass="form-control-client"/></td>
+									</tr>
+									<tr>
+										<td><label>Employee Status</label></td>
+										<td>
+											<div class="col-lg-13" >
+												<html:select property="isEnabled" name="employeeForm" styleClass="form-control-client">
+													<html:option value="1">Enabled</html:option>
+													<html:option value="0">Disabled</html:option>
+												</html:select>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div> <!-- /.table-responsive -->
+          </div><!-- /.panel-body -->
+          
+						<div class="col-md-12" style="padding-left:0;">
+							<div class="pull-left">
+								 <button type="button" class="btn btn-primary"
 										onclick="javascript:cancel()">Cancel</button>
 									<button type="button" class="btn btn-primary"
 										onclick="javascript:insert()">Save</button>
-								</div>
-							</div>
-
-						</div>
-					</div>
+			          </div>
+					  </div>
 
 					<div class="col-md-15" style="color: red;" id="message">
 						<logic:notEmpty name="employeeForm" property="messageList">
@@ -143,9 +127,9 @@
 						</logic:notEmpty>
 					</div>
 
-				</div>
-			</div>
-		</div>
+				</div><!-- /.col lg 12 -->
+			</div><!-- /.row -->
+		</div><!-- /.page wrapper -->
 
 	</html:form>
 

@@ -61,13 +61,7 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  swal({
-			                title: 'Saved!',
-			                text: 'Datas are successfully saved!',
-			                type: 'success'
-			            }, function() {
 			            	flyToSave();
-			            });
 				  } else {
 				    swal("Cancelled", "Cancel Save Master Outsource", "error");
 				  }
