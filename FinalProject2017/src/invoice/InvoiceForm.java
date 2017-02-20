@@ -10,11 +10,16 @@ import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import training.TrainingBean;
 import client.ClientBean;
 
 public class InvoiceForm extends ActionForm{
 	
 	private InvoiceBean invoiceBean = new InvoiceBean();
+	
+	private TrainingBean trainingBean = new TrainingBean();
+	private double trainingFee;
+	private String invoiceDetailNotes;
 	
 	private ClientBean clientBean = new ClientBean();
 	
@@ -49,6 +54,8 @@ public class InvoiceForm extends ActionForm{
 	private List statusInvoiceList;
 	private List messageList;
 	
+	private int deleteIndex;
+	
 	public InvoiceForm(){
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -61,6 +68,24 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setInvoiceBean(InvoiceBean invoiceBean) {
 		this.invoiceBean = invoiceBean;
+	}	
+	public TrainingBean getTrainingBean() {
+		return trainingBean;
+	}
+	public void setTrainingBean(TrainingBean trainingBean) {
+		this.trainingBean = trainingBean;
+	}
+	public double getTrainingFee() {
+		return trainingFee;
+	}
+	public void setTrainingFee(double trainingFee) {
+		this.trainingFee = trainingFee;
+	}
+	public String getInvoiceDetailNotes() {
+		return invoiceDetailNotes;
+	}
+	public void setInvoiceDetailNotes(String invoiceDetailNotes) {
+		this.invoiceDetailNotes = invoiceDetailNotes;
 	}
 	public String getTask() {
 		return task;
@@ -245,5 +270,12 @@ public class InvoiceForm extends ActionForm{
 		}
 		return (InvoiceDetailBean) this.professionalServiceList.get(index);
 	}
+	public int getDeleteIndex() {
+		return deleteIndex;
+	}
+	public void setDeleteIndex(int deleteIndex) {
+		this.deleteIndex = deleteIndex;
+	}
+	
 }
 
