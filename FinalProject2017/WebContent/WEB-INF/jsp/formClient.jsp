@@ -90,9 +90,11 @@
 		flyToPage();
 	}
 
+
 	function flyToPage() {
 		document.forms[1].submit();
 	}
+	
 </script>
 <title>Financial Solution</title>
 </head>
@@ -211,6 +213,7 @@
 							</logic:iterate>
 						</logic:notEmpty>
 					</div>
+
 
 				</div>
 			</div>
