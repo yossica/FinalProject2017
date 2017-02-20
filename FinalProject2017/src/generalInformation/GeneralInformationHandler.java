@@ -30,7 +30,7 @@ public class GeneralInformationHandler  extends Action{
 			generalInformationForm.setLength(generalInformationBean.getLength());
 			
 			generalInformationManager.getByKey(generalInformationForm.getKey());
-			return mapping.findForward("formGeneralInformation");
+			return mapping.findForward("editGeneralInformation");
 		}
 		else if ("saveupdate".equals(generalInformationForm.getTask()))
 		{
