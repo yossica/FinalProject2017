@@ -6,8 +6,8 @@
 		insert into transaction_training_header 
 		(transaction_training_id,client_id,dp_invoice_id,training_start_date,training_end_date,
 		description,is_gross,settlement_invoice_id,created_by,created_date,changed_by,changed_date)
-		values (#transactionTrainingHeaderId#,#clientId#,#dpInvoiceId#,#trainingStartDate#,
-				#trainingEndDate#,#description#,#isGross#,#settlementInvoiceId#,#createdBy#,sysdate,
+		values (#transactionTrainingHeaderId#,#clientId#,#dpInvoiceId#,to_date(#trainingStartDate#,'MM/dd/yyyy'),
+				to_date(#trainingEndDate#,'MM/dd/yyyy'),#description#,#isGross#,#settlementInvoiceId#,#createdBy#,sysdate,
 				null,null)
 	</insert>
 	
@@ -24,8 +24,8 @@
 		update transaction_training_header set
 		client_id = #clientId#,
 		dp_invoice_id = #dpInvoiceId#
-		training_start_date = #trainingStartDate#,
-		training_end_date = #trainingEndDate#,
+		training_start_date = to_date(#trainingStartDate#,'MM/dd/yyyy'),
+		training_end_date = to_date(#trainingEndDate#,'MM/dd/yyyy)',
 		description = #description#,
 		is_gross = #isGross#,
 		settlement_invoice_id = #settlementInvoiceId#,

@@ -1,5 +1,6 @@
 package client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
@@ -17,6 +18,7 @@ public class ClientForm extends ActionForm{
 	private int isEnabled;
 	
 	private List listClient;
+	private List messageList;
 
 	public String getTask() {
 		return task;
@@ -96,6 +98,16 @@ public class ClientForm extends ActionForm{
 
 	public void setIsEnabled(int isEnabled) {
 		this.isEnabled = isEnabled;
+	}
+
+	public List getMessageList() {
+		if(messageList == null)
+			messageList = new ArrayList();
+		return messageList;
+	}
+
+	public void setMessageList(List messageList) {
+		this.messageList = messageList;
 	}
 	
 	

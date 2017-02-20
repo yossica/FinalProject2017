@@ -17,7 +17,7 @@
 		var startDate = document.getElementsByName("outsourceBean.startDate")[0].value;
 		var endDate = document.getElementsByName("outsourceBean.endDate")[0].value;
 		var fee = document.getElementsByName("outsourceBean.fee")[0].value;
-		var doubleReg = /^[\d]*(.[\d])*$/;
+		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		if (startDate == "") {
 			errorMessage = errorMessage + "Start date must be filled!<br/>";
 		}
@@ -246,11 +246,10 @@
 									value="saveend">
 									<div class="col-md-4">
 									<html:radio name="outsourceForm"
-										property="outsourceBean.isGross" value="1" />Gross
-									</div>
-									<div class="col-md-4">
+										property="outsourceBean.isGross" value="0" />&nbsp;Exclude
+									&nbsp;
 									<html:radio name="outsourceForm"
-										property="outsourceBean.isGross" value="0" />Nett
+										property="outsourceBean.isGross" value="1" />&nbsp;Include
 									</div>
 								</logic:notEqual>
 								<logic:equal name="outsourceForm" property="task"
