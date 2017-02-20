@@ -17,27 +17,9 @@
 	
 	function flyToSave()
 	{
-		//validasi belum sempurna
-		var dType = document.forms[1].dataType.value;
-		var k = document.forms[1].key.value;
-		var val = document.forms[1].value.value;
-		if(dType=="String"){
-			if(k=="name" && val.length>50){
-				alert("eror ni");
-				
-			}
-		}
-		if(dType=="Integer"){
-			if(!val.match(number)){	
-				if(k=="tax" && val.length>2){
-					alert("Too Long");
-				}
-			}
-		}
-		else{
 			swal({
 				  title: "Are you sure?",
-				  text: "System will update these data to general information",
+				  text: "System will update these data to General Information",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",
@@ -48,13 +30,7 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  swal({
-			                title: 'Updated!',
-			                text: 'Datas are successfully updated!',
-			                type: 'success'
-			            }, function() {
 			            	document.forms[1].submit();
-			            });
 				  } else {
 				    swal("Cancelled", "Cancel Update General Information", "error");
 				  }
@@ -63,7 +39,6 @@
 		/* if(confirm("Are you sure to update ?")){
 			document.forms[1].submit();
 		} */
-	}
 </script>
 <title>General Information</title>
 </head>
@@ -103,8 +78,8 @@
 						
                         <div class="panel-body" style="padding-left:0;">
 				            <div class="pull-left">
-				            	<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>
-					         	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>			            
+				            	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>	
+				            	<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>	            
 				          	</div>
 	            		</div>
 					</div>

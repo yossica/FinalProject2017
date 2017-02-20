@@ -72,12 +72,29 @@
 		where transaction_invoice_id=#transactionInvoiceHeaderId#
 	</select>
 	
+	<select id="getHeaderIdByNumber" resultClass="invoice.InvoiceBean" parameterClass="java.lang.String">
+		select
+            h.transaction_invoice_id as transactionInvoiceHeaderId,
+            t.name as invoiceTypeName
+        from transaction_invoice_header h join master_invoice_type t on h.invoice_type_id = t.invoice_type_id
+        where invoice_number=#invoiceNumber#
+	</select>
+	
+	<select id="checkTrainingPaymentTypeByHeaderId" resultClass="java.lang.String" parameterClass="java.lang.Integer">
+		select           
+            description
+        from transaction_invoice_detail
+        where transaction_invoice_id=#invoiceNumber#
+        and (description like 'Training%DP' or description like 'Training%Settlement')
+	</select>
+	
+	
 	<select id="getDetailById" resultClass="invoice.InvoiceDetailBean" parameterClass="java.lang.Integer">		
 		select 
             rownum as numb,
             Description||' '||me.name||' '||nvl2(man_days,man_days||' days work',man_days) as description,
             unit_price as unitPrice,
-            total,
+            total_fee as totalFee,
             notes
         from transaction_invoice_detail tid
         left outer join master_employee me on(tid.employee_id=me.employee_id)
@@ -126,12 +143,12 @@
 	</select>
 	
 	<select id="getMaxIdHeader" resultClass="java.lang.Integer">
-		select max(transaction_invoice_id)+1
+		select max(transaction_invoice_id)
 		from transaction_invoice_header
     </select>
     
     <select id="getMaxIdDetail" resultClass="java.lang.Integer">
-		select max(transaction_invoice_detail_id)+1
+		select max(transaction_invoice_detail_id)
 		from transaction_invoice_detail
     </select>
     

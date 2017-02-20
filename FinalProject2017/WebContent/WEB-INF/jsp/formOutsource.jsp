@@ -9,6 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Professional Services</title>
 <script>
+	function flyToPage(task) {
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
+	}
 	function flyToSave() {
 		document.forms[1].submit();
 	}
@@ -57,13 +61,7 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  swal({
-			                title: 'Saved!',
-			                text: 'Datas are successfully saved!',
-			                type: 'success'
-			            }, function() {
 			            	flyToSave();
-			            });
 				  } else {
 				    swal("Cancelled", "Cancel Save Master Outsource", "error");
 				  }
@@ -252,11 +250,10 @@
 									value="saveend">
 									<div class="col-md-4">
 									<html:radio name="outsourceForm"
-										property="outsourceBean.isGross" value="1" />Gross
-									</div>
-									<div class="col-md-4">
+										property="outsourceBean.isGross" value="0" />&nbsp;Exclude
+									&nbsp;
 									<html:radio name="outsourceForm"
-										property="outsourceBean.isGross" value="0" />Nett
+										property="outsourceBean.isGross" value="1" />&nbsp;Include
 									</div>
 								</logic:notEqual>
 								<logic:equal name="outsourceForm" property="task"
@@ -293,6 +290,8 @@
 				<div class="col-lg-12" style>
 					<button type="button" class="btn btn-primary"
 						onclick="javascript:validate()">Save</button>
+					<button type="button" class="btn btn-primary"
+						onclick="javascript:flyToPage('back')">Back</button>
 				</div>
 			</div>
 		</div>

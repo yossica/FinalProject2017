@@ -75,27 +75,17 @@ public class InvoiceManager {
 		return id;	
 	}
 	
-	public void insert(InvoiceBean input){
+	public Integer insert(InvoiceBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		Integer idHeader = null;
 		try{
 			ibatis.startTransaction();
-			Integer idHeader = getMaxInvoiceHeaderId();
+			idHeader = getMaxInvoiceHeaderId() + 1;
 			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
 			for (InvoiceDetailBean bean : input.getDetailList()){
 				bean.setTransactionInvoiceHeaderId(idHeader);
-				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId());
-//				System.out.println("Tr Detail Id"+ bean.getTransactionInvoiceDetailId());
-//				System.out.println("Tr Header Id"+ bean.getTransactionInvoiceHeaderId());
-//				System.out.println("Description"+ bean.getDescription());
-//				System.out.println("Fee"+ bean.getFee());
-//				System.out.println("Employee Id"+ bean.getEmployeeId());
-//				System.out.println("Man Days"+ bean.getManDays());
-//				System.out.println("Notes"+ bean.getNotes());
-//				System.out.println("Created By"+ bean.getCreatedBy());
-//				System.out.println("WorkDays"+ bean.getWorkDays());
-//				System.out.println("Unit Price"+ bean.getUnitPrice());
-//				System.out.println("Total Fee"+ bean.getTotalFee());
+				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId() + 1);
 				ibatis.insert("invoice.insertDetail", bean);
 			}
 			ibatis.commitTransaction();
@@ -108,6 +98,7 @@ public class InvoiceManager {
 				e.printStackTrace();
 			}
 		}
+		return idHeader;
 	}
 	
 	public void insertDetail(InvoiceDetailBean input){
@@ -175,6 +166,30 @@ public class InvoiceManager {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public InvoiceBean getHeaderIdByNumber(String input){
+		InvoiceBean result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (InvoiceBean) ibatis.queryForObject("invoice.getHeaderIdByNumber", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;		
+	}
+	
+	public String checkTrainingPaymentTypeByHeaderId(Integer input){
+		String result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (String) ibatis.queryForObject("invoice.checkTrainingPaymentTypeByHeaderId", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;		
 	}
 	
 	public List getCreatedRemainderList() {
