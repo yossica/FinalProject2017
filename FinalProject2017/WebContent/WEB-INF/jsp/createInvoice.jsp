@@ -167,11 +167,11 @@
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
-								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
+								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
 						    </label>
 						    &nbsp;
 						    <label>
-						    	<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
+						   		<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
 						    </label>
 						</div>
 					</div>
