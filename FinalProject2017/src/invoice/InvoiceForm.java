@@ -2,7 +2,10 @@ package invoice;
 
 import generalInformation.GeneralInformationBean;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
@@ -47,6 +50,9 @@ public class InvoiceForm extends ActionForm{
 	private List messageList;
 	
 	public InvoiceForm(){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		invoiceBean.setInvoiceDate(dateFormat.format(date));
 		InvoiceDetailBean bean = new InvoiceDetailBean();
 		headHunterList.add(bean);
 	}
