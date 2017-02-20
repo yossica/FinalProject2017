@@ -9,40 +9,94 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Master Client</title>
 <script>
-	function flyToPage(task) {
-		document.forms[1].task.value = task;
+	function insert() {
+
+		var name = document.getElementsByName("name")[0].value;
+		var address = document.getElementsByName("address")[0].value;
+		var city = document.getElementsByName("city")[0].value;
+		var phoneNumber = document.getElementsByName("phoneNumber")[0].value;
+		var faxNumber = document.getElementsByName("faxNumber")[0].value;
+		var postalCode = document.getElementsByName("postalCode")[0].value;
+
+		var letters = /([A-Za-z ])+\w/;
+		var numbers = /^([0-9])*$/;
+		var alphanumAndSpecial = /^[ A-Za-z0-9_@.,]*$/;
+		var phoneRegex = /^([+0])([0-9- ])*$/;
+		var faxRegex = /^([+0])([0-9. ])*$/;
+		var errorMessage = "";
+
+		if (name == "") {
+			errorMessage = errorMessage + "Name must be filled!<br/>";
+		} else if (!letters.test(name)) {
+			errorMessage = errorMessage
+					+ "Name must be in alphabets only!<br/>";
+		}
+		if (address == "") {
+			errorMessage = errorMessage + "Address must be filled!<br/>";
+		} else if (!alphanumAndSpecial.test(address)) {
+			errorMessage = errorMessage
+					+ "Address should contain letters, numbers, comma, and period only!<br/>";
+		}
+		if (city == "") {
+			errorMessage = errorMessage + "City must be filled!<br/>";
+		} else if (!letters.test(city)) {
+			errorMessage = errorMessage
+					+ "City must be in alphabets only!<br/>";
+		}
+		if (phoneNumber == "") {
+			errorMessage = errorMessage + "Phone Number must be filled!<br/>";
+		} else if (!phoneRegex.test(phoneNumber)) {
+			errorMessage = errorMessage
+					+ "Invalid format of phone number!<br/>";
+		}
+		if (faxNumber == "") {
+			errorMessage = errorMessage + "Fax Number must be filled!<br/>";
+		} else if (!faxRegex.test(faxNumber)) {
+			errorMessage = errorMessage + "Invalid format of fax number!<br/>";
+		}
+		if (postalCode == "") {
+			errorMessage = errorMessage + "Postal Code must be filled!<br/>";
+		} else if (!numbers.test(postalCode)) {
+			errorMessage = errorMessage
+					+ "Postal Code should contain numbers only!<br/>";
+		}
+		if (errorMessage.length != 0) {
+			document.getElementById("message").innerHTML = errorMessage;
+			return;
+		} else {
+			swal({
+				title : "Are you sure?",
+				text : "System will insert these data to client database",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#DD6B55",
+				confirmButtonText : "Yes, Insert",
+				cancelButtonText : "No, Cancel Please!",
+				closeOnConfirm : false,
+				closeOnCancel : false
+			}, function(isConfirm) {
+				if (isConfirm) {
+					flyToPage();
+				} else {
+					swal("Cancelled", "Cancel Insert New Data", "error");
+				}
+			});
+		}
+
+	}
+
+	function cancel() {
+		document.forms[1].task.value = "client";
+		flyToPage();
+	}
+
+
+	function flyToPage() {
 		document.forms[1].submit();
 	}
-	function flyToSave() {
-		swal({
-			  title: "Are you sure?",
-			  text: "System will save these data to master client",
-			  type: "warning",
-			  showCancelButton: true,
-			  confirmButtonColor: "#ef2300",
-			  confirmButtonText: "Yes, Save",
-			  cancelButtonText: "No, Cancel Please!",
-			  closeOnConfirm: false,
-			  closeOnCancel: false
-			},
-			function(isConfirm){
-			  if (isConfirm) {
-				  swal({
-		                title: 'Saved!',
-		                text: 'Datas are successfully saved!',
-		                type: 'success'
-		            }, function() {
-		            	document.forms[1].submit();
-		            });
-				  
-			  } else {
-			    swal("Cancelled", "Cancel Save Master Client", "error");
-			  }
-			});
-		/* document.forms[1].submit(); */
-	}
+	
 </script>
-<title>Client</title>
+<title>Financial Solution</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
@@ -53,56 +107,118 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Client</h1>
-					<div class="panel-body">
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<tbody>
-									<tr>
-										<td><label>Client Name</label></td>
-										<td><html:text name="clientForm" property="name" styleClass="form-control-client"/></td>
-									</tr>
-									<tr>
-										<td><label>Address</label></td>
-										<td><html:text name="clientForm" property="address" styleClass="form-control-client"/></td>
-									</tr>
-									<tr>
-										<td><label>City</label></td>
-										<td><html:text name="clientForm" property="city" styleClass="form-control-client"/></td>
-									</tr>
-									<tr>
-										<td><label>Phone</label></td>
-										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client"/></td>
-									</tr>
-									<tr>
-										<td><label>Fax</label></td>
-										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client"/></td>
-									</tr>
-									<tr>
-										<td><label>Postal Code</label></td>
-										<td><html:text name="clientForm" property="postalCode" styleClass="form-control-client"/></td>
-									</tr>
-									<tr>
-										<td><label>Client Status</label></td>
-										<td>
-											<div class="col-lg-13" >
-											<html:select name="clientForm" property="isEnabled" styleClass="form-control-client">
-												<html:option value="1">Enabled</html:option>
-												<html:option value="0">Disabled</html:option>
-											</html:select>
-											</div>
-									</tr>
-								</tbody>
-							</table>
+
+				</div>
+				<div class="col-lg-12">
+					<div class="col-lg-12" style="padding-left: 10px">
+						<div class="col-lg-10">
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3">
+									<label>Name</label>
+								</div>
+								<div class="col-md-6">
+									<html:text styleClass="form-control" name="clientForm"
+										property="name" />
+								</div>
+							</div>
+
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3">
+									<label>Address</label>
+								</div>
+								<div class="col-md-6">
+									<html:textarea styleClass="form-control" name="clientForm"
+										property="address" />
+								</div>
+							</div>
+
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3">
+									<label>City</label>
+								</div>
+								<div class="col-md-6">
+									<html:text styleClass="form-control" name="clientForm"
+										property="city" />
+								</div>
+							</div>
+
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3">
+									<label>Phone Number</label>
+								</div>
+								<div class="col-md-6">
+									<input id="clientForm" name="phoneNumber" type="text"
+										value='<bean:write name="clientForm" property="phoneNumber"/>'
+										placeholder="e.g. : 012 345-678 / +6212 345-678" />
+									<%-- <html:text styleClass="form-control" name="clientForm"
+										property="phoneNumber" /> --%>
+								</div>
+							</div>
+
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3">
+									<label>Fax Number</label>
+								</div>
+								<div class="col-md-6">
+									<input id="clientForm" name="faxNumber" type="text"
+										value='<bean:write name="clientForm" property="faxNumber"/>'
+										placeholder="e.g. : 012 345.678 / +6212 345.678" />
+									<%-- <html:text styleClass="form-control" name="clientForm"
+										property="faxNumber" /> --%>
+								</div>
+							</div>
+
+							<div class="row" style="margin-top: 10px;">
+								<div class="col-md-3">
+									<label>Postal Code</label>
+								</div>
+								<div class="col-md-6">
+									<html:text styleClass="form-control" name="clientForm"
+										property="postalCode" />
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-3">
+									<label>Client Status</label>
+								</div>
+								<div class="col-md-6">
+
+									<html:select name="clientForm" property="isEnabled"
+										styleClass="form-control">
+										<html:option value="1">Enabled</html:option>
+										<html:option value="0">Disabled</html:option>
+									</html:select>
+
+								</div>
+							</div>
+
+							<div class="panel-body" style="padding-left: 0;">
+								<div class="pull-left">
+									<button type="button" class="btn btn-primary"
+										onclick="javascript:cancel()">Cancel</button>
+									<button type="button" class="btn btn-primary"
+										onclick="javascript:insert()">Save</button>
+								</div>
+							</div>
+
 						</div>
-						<!-- /.table-responsive -->
-					</div>	
-					<div class="col-md-12" style="padding-right: 1%;" >
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()" style="margin-bottom: 5%;">Save</button>
-						<button type="button" class="btn btn-primary" style="margin-bottom: 5%;">Cancel</button>
 					</div>
+
+					<div class="col-md-15" style="color: red;" id="message">
+						<logic:notEmpty name="clientForm" property="messageList">
+							<logic:iterate id="message" name="clientForm"
+								property="messageList">
+								<bean:write name="message" />
+							</logic:iterate>
+						</logic:notEmpty>
+					</div>
+
+
 				</div>
 			</div>
 		</div>
+
 	</html:form>
 </body>
 </html>
