@@ -121,6 +121,7 @@
 				to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from transaction_training_detail
 		where transaction_training_id = #transactionTrainingHeaderId#
+		order by 1
 	</select>
 	
 	<select id="getAllWithFilter" parameterClass="java.util.Map">

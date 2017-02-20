@@ -64,29 +64,40 @@ public class InvoiceHandler extends Action {
 			Map paramMap = new HashMap();
 			paramMap.put("clientId", invoiceForm.getInvoiceBean().getClientId());
 			paramMap.put("exampleDate", exampleDate);
-			System.out.println(paramMap);
-			if (outsourceManager.checkContract(paramMap) != 0) {
-				invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
-				invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
-				invoiceForm.getInvoiceBean().setNotes(invoiceForm.getInvoiceBean().getNotes());
-				invoiceForm.setOutsourceList(outsourceManager.getOutsourceContract(paramMap));
-				List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
-				bean = outsourceManager.getOutsourceContract(paramMap);
-				InvoiceDetailBean invoiceDetailBean;
-				for (OutsourceBean temp : bean) {
-					invoiceDetailBean = new InvoiceDetailBean();
-					invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
-					invoiceDetailBean.setFee(temp.getFee());
-					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
-					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
-					System.out.println(invoiceForm.getProfessionalServiceList());
-				}
-				
-				return mapping.findForward("createInvoicePS");
-			}else {
+			paramMap.put("periodMonth", invoiceForm.getInvoiceBean().getPeriodMonth());
+			paramMap.put("periodYear", invoiceForm.getInvoiceBean().getPeriodYear());
+			if(invoiceManager.checkInvoice(paramMap) != 0){
+				//client sudah punya invoice professional service di period tsb
+				//balikin ke create invoice + message ilst dikasi
 				invoiceForm.getMessageList().clear();
-				invoiceForm.getMessageList().add("There's no contract!");
+				invoiceForm.getMessageList().add("Invoice already created");
 				return mapping.findForward("createInvoice");
+			} else{
+				if (outsourceManager.checkContract(paramMap) != 0) {
+					//cek ada kontrak apa ga
+					invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+					invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+					invoiceForm.getInvoiceBean().setNotes(invoiceForm.getInvoiceBean().getNotes());
+					invoiceForm.setOutsourceList(outsourceManager.getOutsourceContract(paramMap));
+					List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
+					bean = outsourceManager.getOutsourceContract(paramMap);
+					invoiceForm.getInvoiceBean().setIsGross(bean.get(0).getIsGross());
+					InvoiceDetailBean invoiceDetailBean;
+					for (OutsourceBean temp : bean) {
+						invoiceDetailBean = new InvoiceDetailBean();
+						invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
+						invoiceDetailBean.setEmployeeId(temp.getEmployeeId());
+						invoiceDetailBean.setFee(temp.getFee());
+						invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
+						invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
+					}
+					invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
+					return mapping.findForward("createInvoicePS");
+				}else {
+					invoiceForm.getMessageList().clear();
+					invoiceForm.getMessageList().add("There's no contract!");
+					return mapping.findForward("createInvoice");
+				}
 			}
 		} else if ("detailInvoice".equals(invoiceForm.getTask())) {
 			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
@@ -96,13 +107,69 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			return mapping.findForward("detailInvoice");
 		}else if("insertTransactionOutsource".equals(invoiceForm.getTask())){
-			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
+			NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+			DecimalFormat doubleFormat = new DecimalFormat(".##");
+			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
-			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(
-					invoiceManager.getMaxInvoiceHeaderId());
-			invoiceForm.getInvoiceBean().setInvoiceNumber(
-					invoiceManager.getInvoiceNumber(dateFormat.format(date)));
-			return null;
+			//generate workdays
+			String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
+					+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
+			Integer workDays=holidayManager.getWorkingDays(exampleDate);
+			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
+			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
+			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
+			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			double netTotal = 0;
+			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
+				//Ini kalau exclude PPN
+				for (InvoiceDetailBean bean : invoiceForm.getProfessionalServiceList()){
+					bean.setCreatedBy((String)session.getAttribute("username"));
+					String description = "Jasa Professional Service - "+bean.getEmployeeName()+" "+ bean.getManDays() + " hari";
+					int manDays = bean.getManDays();
+					double fee = bean.getFee();
+					double totalFee = fee * manDays / workDays;
+					netTotal += totalFee;
+					bean.setUnitPrice(bean.getFee());
+					bean.setTotalFee(totalFee);
+					bean.setWorkDays(workDays);
+					bean.setDescription(description);
+					invoiceForm.getInvoiceBean().getDetailList().add(bean);
+				}
+				double formula = netTotal+(netTotal*ppn/100);
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(formula);
+				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
+				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			}else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
+				//Ini kalau include PPN
+				double devider = 100+ppn;
+				double netFee;
+				double grossTotal = 0;
+				for (InvoiceDetailBean bean : invoiceForm.getProfessionalServiceList()){
+					bean.setCreatedBy((String)session.getAttribute("username"));
+					int manDays = bean.getManDays();
+					double fee = bean.getFee() * 100 / devider;
+					double totalFee = fee * manDays / workDays;
+					double totalGross = bean.getFee() * manDays / workDays;
+					String description = "Jasa Professional Service - "+bean.getEmployeeName()+" "+ bean.getManDays() + " hari";
+					netTotal += totalFee;
+					grossTotal += totalGross;
+					bean.setUnitPrice(numberFormat.parse(doubleFormat.format(fee)).doubleValue());
+					bean.setTotalFee(numberFormat.parse(doubleFormat.format(fee)).doubleValue());
+					bean.setWorkDays(workDays);
+					bean.setDescription(description);
+					invoiceForm.getInvoiceBean().getDetailList().add(bean);
+				}
+				double ppnValue = grossTotal - netTotal;
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
+				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
+				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			}
+			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+			//invoiceForm.print();
+			invoiceManager.insert(invoiceForm.getInvoiceBean());
+			return  mapping.findForward("createInvoicePS");
 		}	else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(
 					clientManager.getById(
@@ -239,6 +306,37 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
 			} else {
+				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
+				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
+			}
+			return mapping.findForward("createInvoiceTRST");
+		} else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
+			if (invoiceForm.getOngoingTrainingList().size()==0) {
+				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				return mapping.findForward("createInvoice");
+			} else {
+				invoiceForm.getTrainingDetailBean().setTransactionTrainingHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+				invoiceForm.getTrainingDetailBean().setIsSettlement(0);
+				invoiceForm.getTrainingDetailBean().setCreatedBy((String)session.getAttribute("username"));
+				trainingManager.insertDetail(invoiceForm.getTrainingDetailBean());
+				invoiceForm.getTrainingDetailBean().setDescription(null);
+				invoiceForm.getTrainingDetailBean().setFee(0);
+				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
+				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
+			}
+			return mapping.findForward("createInvoiceTRST");
+		} else if ("deleteAdditionalFee".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
+			if (invoiceForm.getOngoingTrainingList().size()==0) {
+				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				return mapping.findForward("createInvoice");
+			} else {
+				trainingManager.deleteDetail(invoiceForm.getTransactionTrainingDetailId());
 				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
 				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			}
