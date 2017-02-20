@@ -51,6 +51,7 @@ public class InvoiceHandler extends Action {
 		MasterManager masterManager = new MasterManager();
 		HolidayManager holidayManager = new HolidayManager();
 		OutsourceManager outsourceManager = new OutsourceManager();
+		TrainingManager trainingManager = new TrainingManager();
 		GeneralInformationManager generalInformationManager =  new GeneralInformationManager();
 		invoiceForm.setClientList(clientManager.getAll());
 		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
@@ -186,20 +187,16 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			} else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
 				//include ppn
-				NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-				DecimalFormat doubleFormat = new DecimalFormat(".##");
 				double divider = 100+ppn;
 				double netTotal;
 				double grossTotal = 0;
 				invoiceDetailBean.setFee(trainingFee);
 				netTotal = trainingFee * 100 / divider;
 				grossTotal = trainingFee;
-				invoiceDetailBean.setUnitPrice(numberFormat.parse(doubleFormat.format(netTotal)).doubleValue());
-				invoiceDetailBean.setTotalFee(numberFormat.parse(doubleFormat.format(netTotal)).doubleValue());
+				invoiceDetailBean.setUnitPrice(netTotal);
+				invoiceDetailBean.setTotalFee(netTotal);
 				
 				double ppnValue = grossTotal - netTotal;
-				netTotal = numberFormat.parse(doubleFormat.format(netTotal)).doubleValue();
-				ppnValue = numberFormat.parse(doubleFormat.format(ppnValue)).doubleValue();
 				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
 				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
 				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
@@ -211,10 +208,14 @@ public class InvoiceHandler extends Action {
 			invoiceManager.insert(invoiceForm.getInvoiceBean());
 			
 			//insert training
-			TrainingManager trainingManager = new TrainingManager();
 			trainingManager.insert(trainingBean);
 			
 			//setting field untuk view invoice
+			invoiceForm.setClientBean(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()));
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceManager.getMaxInvoiceHeaderId()));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceManager.getMaxInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			
 			return mapping.findForward("detailInvoice");
 		} else if ("createInvoiceTRST".equals(invoiceForm.getTask())) {
