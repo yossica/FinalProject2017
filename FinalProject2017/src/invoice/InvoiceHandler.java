@@ -195,7 +195,10 @@ public class InvoiceHandler extends Action {
 			return mapping.findForward("detailInvoice");
 		} else if ("createInvoiceTRST".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoiceTRST");
-		} else if ("insertHH".equals(invoiceForm.getTask())) {
+		}else if("deleteDetailHH".equals(invoiceForm.getTask())){
+			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
+			return mapping.findForward("createInvoiceHH");
+		}else if ("insertHH".equals(invoiceForm.getTask())) {
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
