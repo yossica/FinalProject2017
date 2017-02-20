@@ -13,6 +13,7 @@ public class EmployeeForm extends ActionForm{
 	private int isEnabled;
 	
 	private List employeeList;
+	private List messageList;
 
 	public String getTask() {
 		return task;
@@ -52,5 +53,11 @@ public class EmployeeForm extends ActionForm{
 	
 	public void setEmployeeList(List employeeList) {
 		this.employeeList = employeeList;
+	}
+	public List getMessageList() {
+		return messageList;
+	}
+	public void setMessageList(List messageList) {
+		this.messageList = messageList;
 	}
 }

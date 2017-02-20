@@ -77,7 +77,7 @@
             rownum as numb,
             Description||' '||me.name||' '||nvl2(man_days,man_days||' days work',man_days) as description,
             unit_price as unitPrice,
-            total,
+            total_fee,
             notes
         from transaction_invoice_detail tid
         left outer join master_employee me on(tid.employee_id=me.employee_id)
