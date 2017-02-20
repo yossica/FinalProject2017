@@ -26,7 +26,12 @@
 		}else if (getContractServices() == 2 || getContractServices() == 4){
 			task = 'createInvoiceHH';
 		}else if (getContractServices() == 3){
-			task = 'createInvoiceTR';
+			var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
+			if(payment == "option1"){
+				task = 'createInvoiceTRDP';
+			}else {
+				task = 'createInvoiceTRST';
+			}
 		}
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -167,11 +172,11 @@
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
-								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
+								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
 						    </label>
 						    &nbsp;
 						    <label>
-						    	<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
+						   		<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
 						    </label>
 						</div>
 					</div>
