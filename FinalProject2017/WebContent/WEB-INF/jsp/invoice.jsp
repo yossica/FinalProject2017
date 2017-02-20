@@ -36,26 +36,50 @@
 		document.forms[1].submit();
 	}
 	function flyToChangeStatus(invoiceNumber,statusId){
-		swal({
-			  title: "Are you sure?",
-			  text: "System will change current status into next status",
-			  type: "warning",
-			  showCancelButton: true,
-			  confirmButtonColor: "#DD6B55",
-			  confirmButtonText: "Yes, Change Status",
-			  cancelButtonText: "No, Cancel",
-			  closeOnConfirm: false,
-			  closeOnCancel: false
-			},
-			function(isConfirm){
-			  if (isConfirm) {
-					document.forms[1].invoiceNumber.value = invoiceNumber;
-					document.forms[1].statusId.value = statusId;
-					flyToPage("changeStatus");
-			  } else {
-			    swal("Cancelled", "Cancel Change Status", "error");
-			  }
-			});
+		if(statusId == 4){
+			swal({
+				  title: "Are you sure?",
+				  text: "System will change this invoice status to 'Cancelled'",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes, Cancel this Invoice",
+				  cancelButtonText: "No, Cancel",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+						document.forms[1].invoiceNumber.value = invoiceNumber;
+						document.forms[1].statusId.value = statusId;
+						flyToPage("changeStatus");
+				  } else {
+				    swal("Cancelled", "Cancel 'Cancel Invoice'", "error");
+				  }
+				});
+		}
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "System will change current status into next status",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes, Change Status",
+				  cancelButtonText: "No, Cancel",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+						document.forms[1].invoiceNumber.value = invoiceNumber;
+						document.forms[1].statusId.value = statusId;
+						flyToPage("changeStatus");
+				  } else {
+				    swal("Cancelled", "Cancel Change Status", "error");
+				  }
+				});
+		}
 	}
 	function flyToDetail(transactionInvoiceHeaderId, invoiceTypeId, clientId, statusId){
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
@@ -226,12 +250,20 @@
 			                					onclick="javascript:flyToChangeStatus(
 			                								'<bean:write name="inv" property="invoiceNumber"/>',
 			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+			                			<input type="button" value="Cancel" class="btn btn-primary" 
+			                					onclick="javascript:flyToChangeStatus(
+			                								'<bean:write name="inv" property="invoiceNumber"/>',
+			                								'4')">
 			                		</logic:equal>
 			                		<logic:equal name="inv" property="statusInvoiceName" value="Sent">
 			                			<input type="button" value="Change Status" class="btn btn-primary" 
 			                					onclick="javascript:flyToChangeStatus(
 			                								'<bean:write name="inv" property="invoiceNumber"/>',
 			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+			                			<input type="button" value="Cancel" class="btn btn-primary" 
+			                					onclick="javascript:flyToChangeStatus(
+			                								'<bean:write name="inv" property="invoiceNumber"/>',
+			                								'4')">
 			                		</logic:equal>
 			                	</td>
 	                		</tr>

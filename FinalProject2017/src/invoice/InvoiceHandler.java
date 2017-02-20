@@ -149,7 +149,7 @@ public class InvoiceHandler extends Action {
 			TrainingDetailBean trainingDetailBean = new TrainingDetailBean();
 			trainingDetailBean.setCreatedBy((String)session.getAttribute("username"));
 			trainingDetailBean.setIsSettlement(1);
-			trainingDetailBean.setDescription(trainingBean.getDescription()+" - Settlement");
+			trainingDetailBean.setDescription("Training \""+trainingBean.getDescription()+"\" - Settlement");
 			trainingDetailBean.setFee(trainingFee);
 			List<TrainingDetailBean> trainingDetailBeanList = new ArrayList<TrainingDetailBean>();
 			trainingDetailBeanList.add(trainingDetailBean);
@@ -274,11 +274,39 @@ public class InvoiceHandler extends Action {
 			return mapping.findForward("createInvoiceHH");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
-			Integer nextStatusId = Integer.parseInt(masterManager.getNextStatus(invoiceForm.getStatusId()));
-			Map paramMap = new HashMap();
-			paramMap.put("invoiceNumber", invoiceNumber);
-			paramMap.put("nextStatusId", nextStatusId);
-			masterManager.setNextStatus(paramMap);
+			String currentStatus = invoiceForm.getStatusId();
+			Map paramMap;
+			if("4".equals(currentStatus)){
+				//cancel
+				paramMap = new HashMap();
+				paramMap.put("invoiceNumber", invoiceNumber);
+				paramMap.put("nextStatusId", 4);
+				masterManager.setNextStatus(paramMap);
+				
+				//cek if training
+				InvoiceBean invoiceBean = invoiceManager.getHeaderIdByNumber(invoiceNumber);
+				if("Training".equalsIgnoreCase(invoiceBean.getInvoiceTypeName())){
+					Integer trainingHeaderId = trainingManager.getHeaderIdByDpId(invoiceBean.getTransactionInvoiceHeaderId());
+					String paymentDescription = invoiceManager.checkTrainingPaymentTypeByHeaderId(invoiceBean.getTransactionInvoiceHeaderId());
+					//cek if DP/Settlement
+					if(paymentDescription.toUpperCase().endsWith("DP")){						
+						trainingManager.delete(trainingHeaderId);
+					}
+					else if(paymentDescription.toUpperCase().endsWith("SETTLEMENT")){
+						paramMap = new HashMap();
+						paramMap.put("transactionTrainingHeaderId", trainingHeaderId);
+						paramMap.put("changedBy", (String) session.getAttribute("username"));
+						trainingManager.resetSettlementInvoiceIdByHeaderId(paramMap);
+					}
+				}
+			}
+			else {
+				Integer nextStatusId = Integer.parseInt(masterManager.getNextStatus(currentStatus));
+				paramMap = new HashMap();
+				paramMap.put("invoiceNumber", invoiceNumber);
+				paramMap.put("nextStatusId", nextStatusId);
+				masterManager.setNextStatus(paramMap);
+			}
 			String client = invoiceForm.getClientId();
 			String monthFrom = invoiceForm.getMonthFrom();
 			String yearFrom = invoiceForm.getYearFrom();

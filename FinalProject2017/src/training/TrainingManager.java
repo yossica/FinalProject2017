@@ -107,6 +107,24 @@ public class TrainingManager {
 		}
 	}
 	
+	public void resetSettlementInvoiceIdByHeaderId(Map input){
+		//kalau invoice settlement di cancel, maka perlu direset settlement invoice id nya jadi 0
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try{			
+			ibatis.startTransaction();
+            ibatis.update("training.resetSettlementInvoiceIdByHeaderId", input);
+            ibatis.commitTransaction();            
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void delete (int input){
 		//kalo DP batal, header dan detail di delete
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -167,6 +185,18 @@ public class TrainingManager {
 			detailList = ibatis.queryForList("training.getDetailByIdHeader", result.getTransactionTrainingHeaderId());
 			result.setDetailList(detailList);;
 			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public Integer getHeaderIdByDpId(int input) {
+		Integer result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (Integer)ibatis.queryForObject("training.getHeaderIdByDpId", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
