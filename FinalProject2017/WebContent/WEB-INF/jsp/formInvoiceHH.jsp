@@ -8,10 +8,81 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Invoice</title>
+<style>
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: #337ab7;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: -140px;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+</style>
 <script>
 	function flyToPage(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
+	}
+	/* function flyToDetail(transactionInvoiceHeaderId, clientId){
+		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
+		document.forms[1].client.value = clientId;
+		flyToPage("detailInvoice");
+	} */
+	function deleteDetailHH(index){
+		document.forms[1].deleteIndex.value = index;
+		flyToPage('deleteDetailHH');
+	}
+	function toggleNotes(idNumber) {
+	    var popup = document.getElementById("myPopup"+idNumber);
+	    popup.classList.toggle("show");
 	}
 </script>
 </head>
@@ -19,6 +90,7 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
+	<html:hidden property="deleteIndex" name="invoiceForm" />
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -84,8 +156,7 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
-						<html:hidden name="invoiceForm" property="invoiceBean.notes" />
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" disabled="true"></html:textarea>
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true" ></html:textarea>
 					</div>
 				</div>
 			</div>
@@ -99,7 +170,7 @@
 								<th>Notes</th>
 								<th>Action</th>
 							</tr>
-							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList">
+							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList" indexId="indexHH">
 							<tr>
 								<td>
 									<html:text name="invoiceDetailHH" property="description" styleClass="form-control" indexed="true"></html:text>
@@ -108,10 +179,15 @@
 									<html:text name="invoiceDetailHH" property="fee" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
-									<html:text name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true"></html:text>
+									<div class="popup">
+										<span class="popuptext" id="myPopup${indexHH}">
+											<html:textarea name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true" rows="7"></html:textarea>
+										</span>
+										<button type="button" class="btn btn-primary" onclick="javascript:toggleNotes(${indexHH})">Notes</button>
+									</div>
 								</td>
 								<td>
-									Action Button Coming Soon
+									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteDetailHH('${indexHH}')"><i class="fa fa-times"></i></button>
 								</td>
 							</tr>
 							</logic:iterate>
@@ -131,5 +207,6 @@
 		</div>
 	</div>
 	</html:form>
+	
 </body>
 </html>

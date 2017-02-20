@@ -26,7 +26,12 @@
 		}else if (getContractServices() == 2 || getContractServices() == 4){
 			task = 'createInvoiceHH';
 		}else if (getContractServices() == 3){
-			task = 'createInvoiceTR';
+			var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
+			if(payment == "option1"){
+				task = 'createInvoiceTRDP';
+			}else {
+				task = 'createInvoiceTRST';
+			}
 		}
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -57,6 +62,14 @@
 		//document.getElementById("invoiceDate").value = yyyymmdd(today);
 		//alert(yyyymmdd(today));
 		onchangeContractServices();
+	}
+	function ifSettlement(){
+		var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
+		if (payment == "option2" && getContractServices() == 3) {
+			document.getElementById("tax").style.display = "none";
+		} else {
+			document.getElementById("tax").style.display = "block";
+		}
 	}
 	window.onload = onloadFunc;
 </script>
@@ -151,11 +164,11 @@
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
-								<input type="radio" name="paymentRadio" id="paymentOption1" value="option1" checked>DP
+								<input type="radio" name="paymentRadio" id="paymentOption1" value="option1" onchange="javascript:ifSettlement()" checked>DP
 						    </label>
 						    &nbsp;
 						    <label>
-								<input type="radio" name="paymentRadio" id="paymentOption1" value="option2">Settlement
+								<input type="radio" name="paymentRadio" id="paymentOption1" value="option2" onchange="javascript:ifSettlement()">Settlement
 						    </label>
 						</div>
 					</div>
@@ -167,11 +180,11 @@
 					<div class="col-md-5">
 						<div class="radio">
 							<label>
-								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
+								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
 						    </label>
 						    &nbsp;
 						    <label>
-						    	<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
+						   		<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
 						    </label>
 						</div>
 					</div>

@@ -6,8 +6,8 @@
 		insert into transaction_training_header 
 		(transaction_training_id,client_id,dp_invoice_id,training_start_date,training_end_date,
 		description,is_gross,settlement_invoice_id,created_by,created_date,changed_by,changed_date)
-		values (#transactionTrainingHeaderId#,#clientId#,#dpInvoiceId#,#trainingStartDate#,
-				#trainingEndDate#,#description#,#isGross#,#settlementInvoiceId#,#createdBy#,sysdate,
+		values (#transactionTrainingHeaderId#,#clientId#,#dpInvoiceId#,to_date(#trainingStartDate#,'MM/dd/yyyy'),
+				to_date(#trainingEndDate#,'MM/dd/yyyy'),#description#,#isGross#,#settlementInvoiceId#,#createdBy#,sysdate,
 				null,null)
 	</insert>
 	
@@ -24,11 +24,18 @@
 		update transaction_training_header set
 		client_id = #clientId#,
 		dp_invoice_id = #dpInvoiceId#
-		training_start_date = #trainingStartDate#,
-		training_end_date = #trainingEndDate#,
+		training_start_date = to_date(#trainingStartDate#,'MM/dd/yyyy'),
+		training_end_date = to_date(#trainingEndDate#,'MM/dd/yyyy)',
 		description = #description#,
 		is_gross = #isGross#,
 		settlement_invoice_id = #settlementInvoiceId#,
+		changed_by = #changedBy#, 
+		changed_date = sysdate
+		where transaction_training_id = #transactionTrainingHeaderId#
+	</update>
+	<update id="resetSettlementInvoiceIdByHeaderId" parameterClass="java.util.Map">
+		update transaction_training_header set
+		settlement_invoice_id = 0,
 		changed_by = #changedBy#, 
 		changed_date = sysdate
 		where transaction_training_id = #transactionTrainingHeaderId#
@@ -77,6 +84,13 @@
 		from transaction_training_header t, master_client c
 		where t.client_id = c.client_id
 			and t.transaction_training_id = #transactionTrainingHeaderId#
+	</select>
+	
+	<select id="getHeaderIdByDpId" resultClass="java.lang.Integer"
+						 parameterClass="java.lang.Integer">
+		 select transaction_training_id as transactionTrainingHeaderId
+		from transaction_training_header
+		where dp_invoice_id = #dpInvoiceId#
 	</select>
 	
 	<select id="getDetailById" resultClass="training.TrainingDetailBean"
@@ -172,13 +186,21 @@
 		        where i.transaction_invoice_id = h.dp_invoice_id
 		            and i.status_invoice_id != (select status_invoice_id from master_status_invoice where name = 'Paid')
 		    )
+		order by c.client_id
 	</select>
 	<select id="getOngoingTrainingByClient" parameterClass="java.lang.Integer" resultClass="training.TrainingBean">
 		select 
 		    transaction_training_id as transactionTrainingHeaderId,
 		    description as description
-		from transaction_training_header
+		from transaction_training_header h
 		where settlement_invoice_id = 0
 		    and client_id = #value#
+		    and not exists (
+		        select transaction_invoice_id
+		        from transaction_invoice_header i
+		        where i.transaction_invoice_id = h.dp_invoice_id
+		            and i.status_invoice_id != (select status_invoice_id from master_status_invoice where name = 'Paid')
+		    )
+		order by description
 	</select>
 </sqlMap> 
