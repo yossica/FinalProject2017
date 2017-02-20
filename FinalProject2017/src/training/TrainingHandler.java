@@ -20,9 +20,13 @@ public class TrainingHandler extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("username") == null) {
+			return mapping.findForward("login");
+		}
 		TrainingForm trainingForm = (TrainingForm) form;
 		TrainingManager trainingManager = new TrainingManager();
-		HttpSession session = request.getSession();
 		
 		if("loadTrainingHeader".equals(trainingForm.getTask())){
 			trainingForm.setClientList(trainingManager.getOngoingTrainingClient());
@@ -66,7 +70,7 @@ public class TrainingHandler extends Action{
 		else {
 			//task = additionalTraining
 			List<ClientBean> clientList = trainingManager.getOngoingTrainingClient();			
-			if(clientList == null){
+			if(clientList.size()==0){
 				trainingForm.getMessageList().add("There is no ongoing training!");
 			}
 			else {

@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Master Employees</title>
 <script>
 	function insert() {
 
@@ -14,7 +15,7 @@
 		var email = document.getElementsByName("email")[0].value;
 
 		var letters = /([A-Za-z ])+\w/;
-		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ;
+		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		var errorMessage = "";
 
 		if (name == "") {
@@ -23,14 +24,14 @@
 			errorMessage = errorMessage
 					+ "Name must be in alphabets only!<br/>";
 		}
-	
+
 		if (email == "") {
 			errorMessage = errorMessage + "Email must be filled!<br/>";
 		} else if (!emailRegex.test(email)) {
 			errorMessage = errorMessage
 					+ "Email should be in valid format!<br/>";
 		}
-		
+
 		if (errorMessage.length != 0) {
 			document.getElementById("message").innerHTML = errorMessage;
 			return;
@@ -64,18 +65,22 @@
 	function flyToPage() {
 		document.forms[1].submit();
 	}
+	
 </script>
 <title>Finance Solution</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/employee" method="post">
+
 		<html:hidden property="task" name="employeeForm" />
 		<html:hidden property="employeeId" name="employeeForm" />
+
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Employee</h1>
+					<<<<<<< HEAD
 				</div>
 
 				<div class="col-lg-12">
@@ -142,40 +147,7 @@
 				</div>
 			</div>
 		</div>
-
-		<%--  <div class="row" style="margin-top: 10px;">
-					<div class="col-md-10" style="padding-right: 1%">
-						<div class="form-group">
-							<div class="col-md-2"><label>Employee Name</label></div>
-							<div class="col-md-5">
-								<html:text property="name" name="employeeForm" styleClass="form-control-client"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-10" style="padding-right: 1%">
-						<div class="form-group">
-							<div class="col-md-2"><label>Email</label></div>
-							<div class="col-md-5">
-								<html:text property="email" name="employeeForm" styleClass="form-control-client"/>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-10" style="padding-right: 1%">
-						<div class="col-md-2"><label>Employee Status</label></div>
-						<div class="col-md-5">
-							<html:select property="isEnabled" name="employeeForm" styleClass="form-control-client">
-								<html:option value="1">Enabled</html:option>
-								<html:option value="0">Disabled</html:option>
-							</html:select>
-						</div>
-					</div>
-				</div> --%>
-
-
 	</html:form>
+
 </body>
 </html>

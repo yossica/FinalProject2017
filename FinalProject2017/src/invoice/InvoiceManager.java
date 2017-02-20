@@ -20,7 +20,16 @@ public class InvoiceManager {
 		String invoiceNumber = "";
 		try {
 			String invoiceDate = (String)ibatis.queryForObject("invoice.getLatestInvoiceDate", null);
-			if (Integer.parseInt(input.substring(3)) > Integer.parseInt(invoiceDate.substring(0,4))){
+			if (invoiceDate == null){
+				String numberStringTemp = (String)ibatis.queryForObject("invoice.getMaxInvoiceNumber", null);
+				if (numberStringTemp == null){
+					numberStringTemp = "001";
+				}
+				Integer numberIntegerTemp = Integer.parseInt(numberStringTemp.substring(0,3));
+				invoiceNumber = String.format("%03d", numberIntegerTemp);
+				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += input;
+			}else if (Integer.parseInt(input.substring(3)) > Integer.parseInt(invoiceDate.substring(0,4))){
 				invoiceNumber += "001";
 				invoiceNumber += "/ACE/INV.";
 				invoiceNumber += input;
@@ -44,14 +53,41 @@ public class InvoiceManager {
 			id = (Integer) ibatis.queryForObject("invoice.getMaxIdHeader", null);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			return id;
 		}
+		if (id == null){
+			id = 1;
+		}
+		return id;
+		
 	}
+	
+	public Integer getMaxInvoiceDetailId(){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		Integer id = null;
+		try {
+			id = (Integer) ibatis.queryForObject("invoice.getMaxIdDetail", null);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (id == null){
+			id = 1;
+		}
+		return id;	
+	}
+	
 	public void insert(InvoiceBean input){
-		/*SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
+			Integer idHeader = getMaxInvoiceHeaderId();
+			input.setTransactionInvoiceHeaderId(idHeader);
+			ibatis.insert("invoice.insertHeader", input);
+			for (InvoiceDetailBean bean : input.getDetailList()){
+				bean.setTransactionInvoiceHeaderId(idHeader);
+				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId());
+				ibatis.insert("invoice.insertDetail", bean);
+			}
+			ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -60,22 +96,39 @@ public class InvoiceManager {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
+	}
+	
+	public void insertDetail(InvoiceDetailBean input){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try{
+			ibatis.startTransaction();
+			ibatis.insert("invoice.insertDetail", input);
+			ibatis.commitTransaction();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void update(InvoiceBean input){
 		
 	}
 	
-	public InvoiceBean getById(int input){
-		InvoiceBean result = new InvoiceBean();
-		return result;
-	}
+//	public InvoiceBean getById(int input){
+//		InvoiceBean result = new InvoiceBean();
+//		return result;
+//	}
 
-	public List getDetailByIdHeader(int input){
-		List result = new ArrayList();
-		return result;
-	}
+//	public List getDetailByIdHeader(int input){
+//		List result = new ArrayList();
+//		return result;
+//	}
 	
 	public List getAllWithFilter(Map input){
 		List result = new ArrayList();
@@ -88,6 +141,31 @@ public class InvoiceManager {
 		}
 		return result;
 	}
+	
+	public InvoiceBean getHeaderById(int input){
+		InvoiceBean result = new InvoiceBean();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (InvoiceBean) ibatis.queryForObject("invoice.getHeaderById", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List getDetailById(int input){
+		List result = new ArrayList();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = ibatis.queryForList("invoice.getDetailById", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public List getCreatedRemainderList() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();

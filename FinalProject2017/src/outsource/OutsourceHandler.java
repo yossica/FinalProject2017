@@ -25,11 +25,16 @@ public class OutsourceHandler extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
+		HttpSession session = request.getSession();
+
+		if (session.getAttribute("username") == null) {
+			return mapping.findForward("login");
+		}
+
 		OutsourceForm outsourceForm = (OutsourceForm) form;
 		OutsourceManager outsourceManager = new OutsourceManager();
 		ClientManager clientManager = new ClientManager();
 		EmployeeManager employeeManager = new EmployeeManager();
-		HttpSession session = request.getSession();
 		int flagError = 0;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -247,28 +252,82 @@ public class OutsourceHandler extends Action {
 			cal2.setTime(dateFormat.parse(outsourceBean.getStartDate()));
 
 			// input start date > old start date, jika tidak maka error
-			if (cal.before(cal2)) {
+			if (cal.compareTo(cal2) <= 0) {
+
 				outsourceForm.getMessageList().add(
-						"Start date must be later than previous start date");
+						"Start date must be later than previous start date ["
+								+ outsourceBean.getStartDate() + "]");
 				flagError = 1;
 			}
 			// input start date < old end date, jika tidak maka error
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
-			if (cal.after(cal2)) {
+			if (cal.compareTo(cal2) >= 0) {
 				outsourceForm.getMessageList().add(
-						"Start date must be before than previous end date");
+						"Start date must be before than previous end date ["
+								+ outsourceBean.getEndDate() + "]");
 				flagError = 1;
 			}
-			// input end date >= old date, jika tidak maka error
+			// cek data yang baru di input ada jadwal yang bentrok apa nggak
+			// kecuali transaksi id yang di mutasi
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			cal2.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 					.getEndDate()));
-			if (cal.compareTo(cal2) < 0) {
-				outsourceForm
-						.getMessageList()
-						.add("End date must be after or equal than previous end date");
-				flagError = 1;
-			}
+			Calendar cal3 = Calendar.getInstance();
+			Calendar cal4 = Calendar.getInstance();
+			for (int i = cal.get(Calendar.YEAR); i <= cal2.get(Calendar.YEAR); i++) {
+				Map filter = new HashMap();
+				filter.put("employee", outsourceForm.getOutsourceBean()
+						.getEmployeeId());
+				filter.put("year", i);
+				List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
+				tmpList = outsourceManager.getAllWithFilter(filter);
+				for (int j = 0; j < tmpList.size(); j++) {
+					if (tmpList.get(j).getTransactionOutsourceId() != outsourceForm
+							.getOutsourceBean().getTransactionOutsourceId()) {
 
+						cal3.setTime(dateFormat.parse(tmpList.get(j)
+								.getStartDate()));
+						cal4.setTime(dateFormat.parse(tmpList.get(j)
+								.getEndDate()));
+						if (cal.after(cal4) || cal2.before(cal3)) {
+
+						} else {
+							flagError = 1;
+							outsourceForm.getMessageList().add(
+									"Employee already with another contract, with "
+											+ tmpList.get(j).getClientName()
+											+ " in period "
+											+ tmpList.get(j).getStartDate()
+											+ " until "
+											+ tmpList.get(j).getEndDate());
+							break;
+						}
+					}
+				}
+				if (flagError == 1) {
+					break;
+				}
+			}
+			// validasi apakah gross pada data baru ada confilct dengan contract client lain,
+			// maka cek ada contract lain dengan client yang sama pada sysdate
+			// apa tidak
+			if (outsourceForm.getOutsourceBean().getIsGross() != outsourceBean
+					.getIsGross()) {
+				Map filter = new HashMap();
+				filter.put("date", month + "/01/" + year);
+				outsourceForm.setOutsourceList(outsourceManager
+						.getAllWithFilter(filter));
+				if (outsourceForm.getOutsourceList().size() > 1) {
+					flagError = 1;
+					outsourceForm.getMessageList().add(
+							"Another contract with client "
+									+ outsourceForm.getOutsourceBean()
+											.getClientName()
+									+ ", can't change is gross value");
+				}
+	
+			}			
 			if (flagError == 1) {
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()

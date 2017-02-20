@@ -7,13 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Finance Solution</title>
+<title>Additional Training</title>
 	<script type="text/javascript">
 		function insert(){
 			//validate
 			var fee = document.getElementsByName("trainingDetailBean.fee")[0].value;
 			var description = document.getElementsByName("trainingDetailBean.description")[0].value;
-			var doubleReg = /^[\d]+(.[\d]+)$/;
+			var doubleReg = /^([\d]+)(|.[\d]+)$/;
 			var errorMessage = ""; 
 			
 			if(fee == ""){
@@ -160,7 +160,7 @@
 								        <logic:iterate id="trainingDetail" property="trainingDetailList" name="trainingForm">
 								        	<tr>
 												<td><bean:write name="trainingDetail" property="description"/></td>
-												<td><bean:write name="trainingDetail" property="fee" format="#"/></td>
+												<td><bean:write name="trainingDetail" property="fee" format="#,###.##"/></td>
 												<logic:equal value="0" property="isSettlement" name="trainingDetail">
 													<td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td>
 												</logic:equal>

@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Master Client</title>
 <script>
 	function insert() {
 
@@ -104,6 +105,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Client</h1>
+
 				</div>
 				<div class="col-lg-12">
 					<div class="col-lg-12" style="padding-left: 10px">
@@ -213,62 +215,7 @@
 				</div>
 			</div>
 		</div>
-		<%-- <div id="page-wrapper">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">Form Client</h1>
-				</div>
-				<div class="panel-body">
-					<div class="table-responsive">
-						<table class="table table-hover">
-							<tbody>
-								<tr>
-									<td>Client Name</td>
-									<td><html:text name="clientForm" property="name" /></td>
-								</tr>
-								<tr>
-									<td>Address</td>
-									<td><html:textarea styleClass="form-control"
-											name="clientForm" property="address" /></td>
-									<td><html:text name="clientForm" property="address" /></td>
-								</tr>
-								<tr>
-									<td>City</td>
-									<td><html:text name="clientForm" property="city" /></td>
-								</tr>
-								<tr>
-									<td>Phone Number</td>
-									<td><html:text name="clientForm" property="phoneNumber" /></td>
-								</tr>
-								<tr>
-									<td>Fax Number</td>
-									<td><html:text name="clientForm" property="faxNumber" /></td>
-								</tr>
-								<tr>
-									<td>Postal Code</td>
-									<td><html:text name="clientForm" property="postalCode" /></td>
-								</tr>
-								<tr>
-									<td>Client Status</td>
-									<td><html:select name="clientForm" property="isEnabled">
-											<html:option value="1">Enabled</html:option>
-											<html:option value="0">Disabled</html:option>
-										</html:select></td>
-								</tr>
-								<tr>
-									<td><button type="button" class="btn btn-primary"
-											onclick="javascript:cancel()">Cancel</button></td>
-									<td><button type="button"
-											class="btn btn-primary pull-right"
-											onclick="javascript:insert()">Save</button></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
 
-				<div>
-		</div> --%>
 	</html:form>
 </body>
 </html>

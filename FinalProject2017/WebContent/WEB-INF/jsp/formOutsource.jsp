@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Professional Services</title>
 <script>
 	function flyToSave() {
 		document.forms[1].submit();
@@ -16,12 +17,21 @@
 		var startDate = document.getElementsByName("outsourceBean.startDate")[0].value;
 		var endDate = document.getElementsByName("outsourceBean.endDate")[0].value;
 		var fee = document.getElementsByName("outsourceBean.fee")[0].value;
-		var doubleReg = /^[\d]*(.[\d])*$/;
+		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		if (startDate == "") {
 			errorMessage = errorMessage + "Start date must be filled!<br/>";
 		}
 		if (endDate == "") {
 			errorMessage = errorMessage + "End date must be filled!<br/>";
+		}
+		if(startDate != "" && endDate != ""){
+			var s = startDate.split("-");
+			var sDate = new Date(parseInt(s[0]),parseInt(s[1])-1,parseInt(s[2]));
+			var e = endDate.split("-");
+			var eDate = new Date(parseInt(e[0]),parseInt(e[1])-1,parseInt(e[2]));
+			if(sDate > eDate){
+				errorMessage = errorMessage+ "Start Date must be later than End Date! <br/>";
+			}
 		}
 		if (fee == "") {
 			errorMessage = errorMessage + "Fee  must be filled!<br/>";
@@ -34,9 +44,33 @@
 			document.getElementById("message").innerHTML = errorMessage;
 			return;
 		} else {
-			if (confirm("Are you sure to save data ?")) {
+			swal({
+				  title: "Are you sure?",
+				  text: "System will save these data to master outsource",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Save",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  swal({
+			                title: 'Saved!',
+			                text: 'Datas are successfully saved!',
+			                type: 'success'
+			            }, function() {
+			            	flyToSave();
+			            });
+				  } else {
+				    swal("Cancelled", "Cancel Save Master Outsource", "error");
+				  }
+				});
+			/* if (confirm("Are you sure to save data ?")) {
 				flyToSave();
-			}
+			} */
 		}
 	}
 </script>
@@ -87,10 +121,10 @@
 					</div>
 					<div class="row" style="margin-top: 10px;">
 						<div class="col-md-10" style="padding-right: 1%">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<label>Client</label>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-9">
 								<logic:equal name="outsourceForm" property="task"
 									value="savecreate">
 									<html:select name="outsourceForm"
@@ -130,10 +164,10 @@
 					</div>
 					<div class="col-md-10" style="margin-top: 10px;">
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<label>Employee</label>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-9">
 								<logic:equal name="outsourceForm" property="task"
 									value="savecreate">
 									<html:select name="outsourceForm"
@@ -156,10 +190,10 @@
 					</div>
 					<div class="col-md-10" style="margin-top: 10px;">
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<label>Start Date</label>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-9">
 								<logic:equal name="outsourceForm" property="task"
 									value="savecreate">
 									<input type="date" class="form-control" style="width: 100%;"
@@ -189,10 +223,10 @@
 					</div>
 					<div class="col-md-10" style="margin-top: 10px;">
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<label>End Date</label>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-9">
 								<logic:notEqual name="outsourceForm" property="task"
 									value="saveupdate">
 									<input type="date" class="form-control" style="width: 100%;"
@@ -210,16 +244,20 @@
 					</div>
 					<div class="col-md-10" style="margin-top: 10px;">
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<label>Tax</label>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-9">
 								<logic:notEqual name="outsourceForm" property="task"
 									value="saveend">
+									<div class="col-md-4">
 									<html:radio name="outsourceForm"
 										property="outsourceBean.isGross" value="1" />Gross
+									</div>
+									<div class="col-md-4">
 									<html:radio name="outsourceForm"
 										property="outsourceBean.isGross" value="0" />Nett
+									</div>
 								</logic:notEqual>
 								<logic:equal name="outsourceForm" property="task"
 									value="saveend">
@@ -233,10 +271,10 @@
 					</div>
 					<div class="col-md-10" style="margin-top: 10px;">
 						<div class="row">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<label>Fee</label>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-9">
 								<logic:notEqual name="outsourceForm" property="task"
 									value="saveend">
 									<html:text name="outsourceForm" property="outsourceBean.fee"
@@ -252,7 +290,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12">
+				<div class="col-lg-12" style>
 					<button type="button" class="btn btn-primary"
 						onclick="javascript:validate()">Save</button>
 				</div>
