@@ -309,7 +309,25 @@ public class OutsourceHandler extends Action {
 					break;
 				}
 			}
-
+			// validasi apakah gross pada data baru ada confilct dengan contract client lain,
+			// maka cek ada contract lain dengan client yang sama pada sysdate
+			// apa tidak
+			if (outsourceForm.getOutsourceBean().getIsGross() != outsourceBean
+					.getIsGross()) {
+				Map filter = new HashMap();
+				filter.put("date", month + "/01/" + year);
+				outsourceForm.setOutsourceList(outsourceManager
+						.getAllWithFilter(filter));
+				if (outsourceForm.getOutsourceList().size() > 1) {
+					flagError = 1;
+					outsourceForm.getMessageList().add(
+							"Another contract with client "
+									+ outsourceForm.getOutsourceBean()
+											.getClientName()
+									+ ", can't change is gross value");
+				}
+	
+			}			
 			if (flagError == 1) {
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()

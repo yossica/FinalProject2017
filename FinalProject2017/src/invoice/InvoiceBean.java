@@ -1,6 +1,7 @@
 package invoice;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceBean implements Serializable {
@@ -18,7 +19,6 @@ public class InvoiceBean implements Serializable {
 	private String clientName;
 	private double totalNet;
 	private double ppnPercentage;
-	private double totalPpn;
 	private int isGross;
 	private double totalGross;
 	private String notes;
@@ -26,7 +26,7 @@ public class InvoiceBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-
+	private double totalPpn;
 	private List<InvoiceDetailBean> detailList;
 
 	public int getTransactionInvoiceHeaderId() {
@@ -199,6 +199,9 @@ public class InvoiceBean implements Serializable {
 	}
 
 	public List<InvoiceDetailBean> getDetailList() {
+		if (this.detailList == null){
+			detailList = new ArrayList();
+		}
 		return detailList;
 	}
 

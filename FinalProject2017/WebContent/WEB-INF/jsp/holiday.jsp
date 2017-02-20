@@ -10,10 +10,35 @@
 <title>Master Holiday</title>
 <script type="text/javascript">
 	function deleteHoliday(holiday,id){
-		if(confirm("Are you sure to delete "+holiday+"?")){
+		swal({
+			  title: "Are you sure?",
+			  text: "System will delete "+holiday+" data from master holiday",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#ef2300",
+			  confirmButtonText: "Yes, Delete",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+				  swal({
+		                title: 'Deleted!',
+		                text: 'Datas are successfully deleted!',
+		                type: 'success'
+		            }, function() {
+		            	document.forms[1].holidayId.value = id;
+		    			flyToPage("delete");
+		            });
+			  } else {
+			    swal("Cancelled", "Cancel Delete Master Holiday", "error");
+			  }
+			});
+		/* if(confirm("Are you sure to delete "+holiday+"?")){
 			document.forms[1].holidayId.value = id;
 			flyToPage("delete");
-		}		
+		} */		
 	}
 	function insertHoliday(){
 		var csv = document.forms[1].holidayCsv.value;
@@ -49,9 +74,36 @@
 			document.getElementById("message").innerHTML = error;
 			return;
 		}
-		if(confirm("Are you sure to insert these data?\n"+csv)){
+		/* if(confirm("Are you sure to insert these data?\n"+csv)){
 			flyToPage("insert");
+		}  */
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "System will insert these data to master holiday",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Insert",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  swal({
+			                title: 'Inserted!',
+			                text: 'Datas are successfully inserted!',
+			                type: 'success'
+			            }, function() {
+			            	flyToPage("insert");
+			            });
+				  } else {
+				    swal("Cancelled", "Cancel Insert Master Holiday", "error");
+				  }
+				}); 
 		}
+	
 	}
 	function checkDate(dat){
 		//MM/dd/yyyy

@@ -16,7 +16,7 @@
 		var transactionDate = document.getElementsByName("pettyCashBean.transactionDate")[0].value;
 		var amount = document.getElementsByName("pettyCashBean.amount")[0].value;
 		var description = document.getElementsByName("pettyCashBean.description")[0].value;
-		var doubleReg = /^[\d]+(.[\d]+)$/;
+		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		var errorMessage = ""; 
 		
 		if(transactionDate == ""){
@@ -46,7 +46,7 @@
 				  text: "System will insert these data to cash in bank transaction",
 				  type: "warning",
 				  showCancelButton: true,
-				  confirmButtonColor: "#DD6B55",
+				  confirmButtonColor: "#ef2300",
 				  confirmButtonText: "Yes, Insert",
 				  cancelButtonText: "No, Cancel Please!",
 				  closeOnConfirm: false,
@@ -54,7 +54,13 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  flyToPage();
+					  swal({
+			                title: 'Saved!',
+			                text: 'Datas are successfully inserted!',
+			                type: 'success'
+			            }, function() {
+			            	flyToPage();
+			            });
 				  } else {
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
 				  }
@@ -77,71 +83,63 @@
 	<html:form action="/pettyCash" method="post">
 		<html:hidden name="pettyCashForm" property="task" />
 		<html:hidden name="pettyCashForm" property="pettyCashBean.isDebit" />
+		
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Petty Cash Transaction</h1>
-				</div>
-				<div class="col-lg-12">
-					<div class="col-lg-12" style="padding-left:10px">
-						<div class="col-lg-10">
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3"><label>Remaining Balance</label></div>
-								<div class="col-md-5">
-									<bean:write name="pettyCashForm" property="remainingBalance"
-										format="IDR #,###.##" />
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3"><label>Transaction Date</label></div>
-								<div class="col-md-5">
-									<input type="date" style="form-control"
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><label>Remaining Balance</label></td>
+										<td>
+											<bean:write name="pettyCashForm" property="remainingBalance"
+										format="IDR #,###.##" /></td>
+									</tr>
+									<tr>
+										<td><label>Transaction Date</label></td>
+										
+										<td><input type="date" class="form-control-client"
 										name="pettyCashBean.transactionDate"
 										value="<bean:write name="pettyCashForm" property="pettyCashBean.transactionDate"/>" />
-								</div>
-							</div>
-
-							<br />
-							<div class="row">
-								<div class="col-md-3"><label>Transaction Category</label></div>
-								<div class="col-md-5">									
-									<html:select property="pettyCashBean.cashFlowCategoryId" 
-										name="pettyCashForm" styleClass="form-control">
+										</td>
+									</tr>
+									<tr>
+										<td><label>Transaction Category</label></td>
+										<td>
+											<html:select property="pettyCashBean.cashFlowCategoryId" 
+										name="pettyCashForm" styleClass="form-control-client">
 										<html:optionsCollection property="cashFlowCategoryList"
 											label="name" value="cashFlowCategoryId"
 											name="pettyCashForm" />
-									</html:select>									
-									<br />
-								</div>
-
-							</div>
-							<br />
-							<div class="row">
-								<div class="col-md-3"><label>Amount</label></div>
-								<div class="col-md-5">
-									<html:text styleClass="form-control" name="pettyCashForm"
-										property="pettyCashBean.amount" />
-								</div>
-							</div>
-							<br />
-							<div class="row">
-								<div class="col-md-3"><label>Description</label></div>
-								<div class="col-md-5" style="margin-bottom: 10px;">
-									<html:textarea styleClass="form-control" name="pettyCashForm"
-										property="pettyCashBean.description" />
-								</div>
-							</div>
-							<div class="panel-body" style="padding-left: 0;">
-								<div class="pull-left">
-									<button type="button" class="btn btn-primary" onclick="javascript:cancel()">Cancel</button>
-									<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
-
-								</div>
-							</div>
-
+									</html:select>
+										</td>
+									</tr>
+									<tr>
+										<td><label>Amount</label></td>
+										<td><html:text styleClass="form-control-client" name="pettyCashForm"
+										property="pettyCashBean.amount" /></td>
+									</tr>
+									<tr>
+										<td><label>Description</label></td>
+										<td><html:textarea styleClass="form-control" name="pettyCashForm"
+										property="pettyCashBean.description" /></td>
+									</tr>
+									
+								</tbody>
+							</table>
 						</div>
+						<!-- /.table-responsive -->
+					</div>	
+					<div class="col-md-12" style="padding-right: 1%;" >
+						<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:cancel()">Cancel</button>	
 					</div>
+			
+		
+		
 					
 					<div class="col-md-4" style="color: red;"
 						id="message">
@@ -153,9 +151,10 @@
 						</logic:notEmpty>
 					</div>
 				</div>
-
 			</div>
 		</div>
+		
+		
 	</html:form>
 </body>
 </html>
