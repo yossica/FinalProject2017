@@ -90,11 +90,9 @@
 		flyToPage();
 	}
 
-
 	function flyToPage() {
 		document.forms[1].submit();
 	}
-	
 </script>
 <title>Financial Solution</title>
 </head>
@@ -107,102 +105,64 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Client</h1>
-				</div>
-				
-				<div class="col-lg-12">
-					<div class="col-lg-12" style="padding-left: 10px">
-						<div class="col-lg-10">
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>Name</label>
-								</div>
-								<div class="col-md-10">
-									<html:text styleClass="form-control" name="clientForm"
-										property="name" />
-								</div>
-							</div>
 
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>Address</label>
-								</div>
-								<div class="col-md-6">
-									<html:textarea styleClass="form-control" name="clientForm"
-										property="address" />
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>City</label>
-								</div>
-								<div class="col-md-6">
-									<html:text styleClass="form-control" name="clientForm"
-										property="city" />
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>Phone Number</label>
-								</div>
-								<div class="col-md-6">
-									<input id="clientForm" name="phoneNumber" type="text"
-										value='<bean:write name="clientForm" property="phoneNumber"/>'
-										placeholder="e.g. : 012 345-678 / +6212 345-678" />
-									<%-- <html:text styleClass="form-control" name="clientForm"
-										property="phoneNumber" /> --%>
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>Fax Number</label>
-								</div>
-								<div class="col-md-6">
-									<input id="clientForm" name="faxNumber" type="text"
-										value='<bean:write name="clientForm" property="faxNumber"/>'
-										placeholder="e.g. : 012 345.678 / +6212 345.678" />
-									<%-- <html:text styleClass="form-control" name="clientForm"
-										property="faxNumber" /> --%>
-								</div>
-							</div>
-
-							<div class="row" style="margin-top: 10px;">
-								<div class="col-md-3">
-									<label>Postal Code</label>
-								</div>
-								<div class="col-md-6">
-									<html:text styleClass="form-control" name="clientForm"
-										property="postalCode" />
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3">
-									<label>Client Status</label>
-								</div>
-								<div class="col-md-6">
-
-									<html:select name="clientForm" property="isEnabled"
-										styleClass="form-control">
-										<html:option value="1">Enabled</html:option>
-										<html:option value="0">Disabled</html:option>
-									</html:select>
-
-								</div>
-							</div>
-
-							<div class="panel-body" style="padding-left: 0;">
-								<div class="pull-left">
-									<button type="button" class="btn btn-primary"
-										onclick="javascript:cancel()">Cancel</button>
-									<button type="button" class="btn btn-primary"
-										onclick="javascript:insert()">Save</button>
-								</div>
-							</div>
-
+					<div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><label>Client Name</label></td>
+										<td><html:text name="clientForm" property="name"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>Address</label></td>
+										<td><html:text name="clientForm" property="address"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>City</label></td>
+										<td><html:text name="clientForm" property="city"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>Phone</label></td>
+										<td><html:text name="clientForm" property="phoneNumber"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>Fax</label></td>
+										<td><html:text name="clientForm" property="faxNumber"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>Postal Code</label></td>
+										<td><html:text name="clientForm" property="postalCode"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>Client Status</label></td>
+										<td>
+											<div class="col-lg-13">
+												<html:select name="clientForm" property="isEnabled"
+													styleClass="form-control-client">
+													<html:option value="1">Enabled</html:option>
+													<html:option value="0">Disabled</html:option>
+												</html:select>
+											</div>
+									</tr>
+								</tbody>
+							</table>
 						</div>
+						<!-- /.table-responsive -->
+					</div>
+					<!-- /.panel-body -->
+
+					<div class="col-md-12" style="padding-right: 1%;">
+						<button type="button" class="btn btn-primary"
+							onclick="javascript:cancel()">Cancel</button>
+						<button type="button" class="btn btn-primary"
+							onclick="javascript:insert()">Save</button>
 					</div>
 
 					<div class="col-md-15" style="color: red;" id="message">
@@ -216,8 +176,11 @@
 
 
 				</div>
+				<!-- /.col-lg-12 -->
 			</div>
+			<!-- /.row -->
 		</div>
+		<!-- /.page-wrapper -->
 
 	</html:form>
 </body>

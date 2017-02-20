@@ -122,12 +122,9 @@ public class InvoiceHandler extends Action {
 		} else if ("addDetailHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
 			return mapping.findForward("createInvoiceHH");
-		} else if ("createInvoiceTRDP".equals(invoiceForm.getTask())) {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(showDateFormat.parse(invoiceForm.getInvoiceBean().getInvoiceDate()));
-			invoiceForm.getInvoiceBean().setInvoiceDate(dateFormat.format(cal.getTime()));
+		} else if ("createInvoiceTRDP".equals(invoiceForm.getTask())) {			
+			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			return mapping.findForward("createInvoiceTRDP");
 		} else if ("insertTRDP".equals(invoiceForm.getTask())) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -144,7 +141,7 @@ public class InvoiceHandler extends Action {
 			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 						
-			//add settlement ke training
+			//add settlement ke trainingbean
 			double trainingFee = invoiceForm.getTrainingFee()/2;
 			TrainingBean trainingBean = invoiceForm.getTrainingBean();
 			
@@ -167,30 +164,57 @@ public class InvoiceHandler extends Action {
 			
 			trainingBean.setCreatedBy((String)session.getAttribute("username"));
 			trainingBean.setDetailList(trainingDetailBeanList);
-			
-			TrainingManager trainingManager = new TrainingManager();
-			trainingManager.insert(trainingBean);
-			
+						
 			//insert invoice
 			InvoiceDetailBean invoiceDetailBean = new InvoiceDetailBean();
 			invoiceDetailBean.setCreatedBy((String)session.getAttribute("username"));
 			invoiceDetailBean.setDescription("Training \""+invoiceForm.getTrainingBean().getDescription() + "\" - DP");
 			invoiceDetailBean.setNotes(invoiceForm.getInvoiceDetailNotes());
-			
-			double netTotal = 0;
-			double formula = 0;
+						
 			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
 				//exclude ppn
+				double netTotal = 0;
+				netTotal = trainingFee;
 				invoiceDetailBean.setFee(trainingFee);
+				invoiceDetailBean.setUnitPrice(trainingFee);
+				invoiceDetailBean.setTotalFee(trainingFee);
+				
+				double formula = netTotal+(netTotal*ppn/100);				
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(formula);
+				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
+				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			} else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
 				//include ppn
+				NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+				DecimalFormat doubleFormat = new DecimalFormat(".##");
+				double divider = 100+ppn;
+				double netTotal;
+				double grossTotal = 0;
+				invoiceDetailBean.setFee(trainingFee);
+				netTotal = trainingFee * 100 / divider;
+				grossTotal = trainingFee;
+				invoiceDetailBean.setUnitPrice(numberFormat.parse(doubleFormat.format(netTotal)).doubleValue());
+				invoiceDetailBean.setTotalFee(numberFormat.parse(doubleFormat.format(netTotal)).doubleValue());
+				
+				double ppnValue = grossTotal - netTotal;
+				netTotal = numberFormat.parse(doubleFormat.format(netTotal)).doubleValue();
+				ppnValue = numberFormat.parse(doubleFormat.format(ppnValue)).doubleValue();
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
+				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
 			}
-			
+
 			invoiceForm.getInvoiceBean().getDetailList().add(invoiceDetailBean);
-			invoiceForm.getInvoiceBean().setTotalNet(netTotal);
-			invoiceForm.getInvoiceBean().setTotalGross(formula);
-			invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
-			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+			
+			invoiceManager.insert(invoiceForm.getInvoiceBean());
+			
+			//insert training
+			TrainingManager trainingManager = new TrainingManager();
+			trainingManager.insert(trainingBean);
+			
+			//setting field untuk view invoice
 			
 			return mapping.findForward("detailInvoice");
 		} else if ("createInvoiceTRST".equals(invoiceForm.getTask())) {
