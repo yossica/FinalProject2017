@@ -71,6 +71,11 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	/* function flyToDetail(transactionInvoiceHeaderId, clientId){
+		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
+		document.forms[1].client.value = clientId;
+		flyToPage("detailInvoice");
+	} */
 	function deleteDetailHH(index){
 		document.forms[1].deleteIndex.value = index;
 		flyToPage('deleteDetailHH');

@@ -292,8 +292,20 @@ public class InvoiceHandler extends Action {
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
 			//invoiceForm.print();
-			invoiceManager.insert(invoiceForm.getInvoiceBean());
-			return mapping.findForward("createInvoiceHH");
+			
+			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
+			
+			//display invoice
+			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+			invoiceForm.setTransactionInvoiceHeaderId(idHeader);
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+			invoiceForm.setTask("detailInvoice");
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			return mapping.findForward("detailInvoice");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
 			Integer nextStatusId = Integer.parseInt(masterManager.getNextStatus(invoiceForm.getStatusId()));
