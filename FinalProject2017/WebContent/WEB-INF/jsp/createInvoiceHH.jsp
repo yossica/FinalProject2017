@@ -8,10 +8,60 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Invoice</title>
+<style>
+/* Popup container */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+    visibility: visible;
+}
+</style>
 <script>
 	function flyToPage(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
+	}
+	function deleteDetailHH(index){
+		document.forms[1].deleteIndex.value = index;
+		flyToPage('deleteDetailHH');
+	}
+	function showNotes(input){
+		document.getElementById(input).style.display = "inline";
+	}
+	function closeNotes(input){
+		document.getElementById(input).style.display = "none";
 	}
 </script>
 </head>
@@ -19,6 +69,7 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
+	<html:hidden property="deleteIndex" name="invoiceForm" />
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -98,7 +149,7 @@
 								<th>Notes</th>
 								<th>Action</th>
 							</tr>
-							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList">
+							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList" indexId="indexHH">
 							<tr>
 								<td>
 									<html:text name="invoiceDetailHH" property="description" styleClass="form-control" indexed="true"></html:text>
@@ -107,10 +158,17 @@
 									<html:text name="invoiceDetailHH" property="fee" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
-									<html:text name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true"></html:text>
+									<button type="button" class="btn btn-primary" onclick="javascript:showNotes('notes${indexHH}')">Notes</button>
+									<div id="notes${indexHH}" class="popup" style= "display:none">
+										<span class="popuptext">
+										Notes
+											<html:textarea name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true"></html:textarea>
+											<button type="button" class="btn btn-primary" onclick="javascript:closeNotes('notes${indexHH}')">Close</button>
+										</span>
+									</div>
 								</td>
 								<td>
-									Action Button Coming Soon
+									<button type="button" class="btn btn-primary btn-circle" style="margin-bottom: 1%;" onclick="javascript:deleteDetailHH('${indexHH}')"><i class="fa fa-minus"></i></button>
 								</td>
 							</tr>
 							</logic:iterate>

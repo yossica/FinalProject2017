@@ -49,6 +49,8 @@ public class InvoiceForm extends ActionForm{
 	private List statusInvoiceList;
 	private List messageList;
 	
+	private int deleteIndex;
+	
 	public InvoiceForm(){
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
@@ -245,5 +247,12 @@ public class InvoiceForm extends ActionForm{
 		}
 		return (InvoiceDetailBean) this.professionalServiceList.get(index);
 	}
+	public int getDeleteIndex() {
+		return deleteIndex;
+	}
+	public void setDeleteIndex(int deleteIndex) {
+		this.deleteIndex = deleteIndex;
+	}
+	
 }
 
