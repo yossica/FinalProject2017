@@ -107,8 +107,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Client</h1>
-
 				</div>
+				
 				<div class="col-lg-12">
 					<div class="col-lg-12" style="padding-left: 10px">
 						<div class="col-lg-10">
@@ -116,7 +116,7 @@
 								<div class="col-md-3">
 									<label>Name</label>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-10">
 									<html:text styleClass="form-control" name="clientForm"
 										property="name" />
 								</div>
