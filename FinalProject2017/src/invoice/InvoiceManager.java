@@ -168,6 +168,30 @@ public class InvoiceManager {
 		return result;
 	}
 	
+	public InvoiceBean getHeaderIdByNumber(String input){
+		InvoiceBean result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (InvoiceBean) ibatis.queryForObject("invoice.getHeaderIdByNumber", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;		
+	}
+	
+	public String checkTrainingPaymentTypeByHeaderId(Integer input){
+		String result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (String) ibatis.queryForObject("invoice.checkTrainingPaymentTypeByHeaderId", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;		
+	}
+	
 	public List getCreatedRemainderList() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
