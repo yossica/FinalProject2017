@@ -19,7 +19,7 @@
 	{
 			swal({
 				  title: "Are you sure?",
-				  text: "System will update these data to general information",
+				  text: "System will update these data to General Information",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",
@@ -78,8 +78,8 @@
 						
                         <div class="panel-body" style="padding-left:0;">
 				            <div class="pull-left">
-				            	<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>
-					         	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>			            
+				            	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>	
+				            	<button type="button" class="btn btn-primary" onclick="javascript:flyToSave()">Save</button>	            
 				          	</div>
 	            		</div>
 					</div>
