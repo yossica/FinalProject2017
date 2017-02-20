@@ -19,6 +19,7 @@ public class InvoiceForm extends ActionForm{
 	private InvoiceBean invoiceBean = new InvoiceBean();
 
 	private TrainingBean trainingBean = new TrainingBean();
+	private TrainingDetailBean trainingDetailBean = new TrainingDetailBean();
 	
 	private double trainingFee;
 	private String invoiceDetailNotes;
@@ -52,6 +53,7 @@ public class InvoiceForm extends ActionForm{
 	private List invoiceDetailList = new ArrayList();
 	private List ongoingTrainingList;
 	private List detailTrainingList;
+	private int transactionTrainingDetailId;
 	
 	private List invoiceList;
 	
@@ -291,6 +293,18 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setDetailTrainingList(List detailTrainingList) {
 		this.detailTrainingList = detailTrainingList;
+	}
+	public TrainingDetailBean getTrainingDetailBean() {
+		return trainingDetailBean;
+	}
+	public void setTrainingDetailBean(TrainingDetailBean trainingDetailBean) {
+		this.trainingDetailBean = trainingDetailBean;
+	}
+	public int getTransactionTrainingDetailId() {
+		return transactionTrainingDetailId;
+	}
+	public void setTransactionTrainingDetailId(int transactionTrainingDetailId) {
+		this.transactionTrainingDetailId = transactionTrainingDetailId;
 	}
 	
 }
