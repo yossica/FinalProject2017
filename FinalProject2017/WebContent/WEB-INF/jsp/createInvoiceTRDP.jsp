@@ -39,7 +39,6 @@
 					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
-						<html:hidden name="invoiceForm" property="invoiceBean.clientName"/>
 						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
 					</div>
 				</div>
@@ -49,7 +48,6 @@
 					<div class="col-md-2"><label>Contract Service</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
-						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeName" />
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 					</div>
 				</div>
