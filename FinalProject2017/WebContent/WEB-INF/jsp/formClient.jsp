@@ -18,11 +18,11 @@
 		var faxNumber = document.getElementsByName("faxNumber")[0].value;
 		var postalCode = document.getElementsByName("postalCode")[0].value;
 
-		var letters = /([A-Za-z ])+\w/;
-		var numbers = /^([0-9])*$/;
+		var letters = /^([A-z ]{3,})+$/;
+		var numbers = /^\d+$/;
 		var alphanumAndSpecial = /^[ A-Za-z0-9_@.,]*$/;
-		var phoneRegex = /^([+0])([0-9- ])*$/;
-		var faxRegex = /^([+0])([0-9. ])*$/;
+		var phoneRegex = /^([+0])([\d- ])*$/;
+		var faxRegex = /^([+0])([\d. ])*$/;
 		var errorMessage = "";
 
 		if (name == "") {
@@ -58,7 +58,7 @@
 			errorMessage = errorMessage + "Postal Code must be filled!<br/>";
 		} else if (!numbers.test(postalCode)) {
 			errorMessage = errorMessage
-					+ "Postal Code should contain numbers only!<br/>";
+					+ "Postal Code must be in numbers only!<br/>";
 		}
 		if (errorMessage.length != 0) {
 			document.getElementById("message").innerHTML = errorMessage;
@@ -90,11 +90,9 @@
 		flyToPage();
 	}
 
-
 	function flyToPage() {
 		document.forms[1].submit();
 	}
-	
 </script>
 <title>Financial Solution</title>
 </head>
@@ -107,56 +105,74 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Client</h1>
-            <div class="panel-body">
+
+					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<tbody>
 									<tr>
 										<td><label>Client Name</label></td>
-										<td><html:text name="clientForm" property="name" styleClass="form-control-client"/></td>
+										<td><html:text name="clientForm" property="name"
+												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Address</label></td>
-										<td><html:text name="clientForm" property="address" styleClass="form-control-client"/></td>
+										<td><html:text name="clientForm" property="address"
+												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>City</label></td>
-										<td><html:text name="clientForm" property="city" styleClass="form-control-client"/></td>
+										<td><html:text name="clientForm" property="city"
+												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Phone</label></td>
+<<<<<<< HEAD
 										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123-456'"/></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
 										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123.456'"/></td>
+=======
+										<td><html:text name="clientForm" property="phoneNumber"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>Fax</label></td>
+										<td><html:text name="clientForm" property="faxNumber"
+												styleClass="form-control-client" /></td>
+>>>>>>> refs/remotes/origin/master
 									</tr>
 									<tr>
 										<td><label>Postal Code</label></td>
-										<td><html:text name="clientForm" property="postalCode" styleClass="form-control-client"/></td>
+										<td><html:text name="clientForm" property="postalCode"
+												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Client Status</label></td>
 										<td>
-											<div class="col-lg-13" >
-											<html:select name="clientForm" property="isEnabled" styleClass="form-control-client">
-												<html:option value="1">Enabled</html:option>
-												<html:option value="0">Disabled</html:option>
-											</html:select>
+											<div class="col-lg-13">
+												<html:select name="clientForm" property="isEnabled"
+													styleClass="form-control-client">
+													<html:option value="1">Enabled</html:option>
+													<html:option value="0">Disabled</html:option>
+												</html:select>
 											</div>
 									</tr>
 								</tbody>
 							</table>
-						</div> <!-- /.table-responsive -->
-					</div>	<!-- /.panel-body -->
-          
-          <div class="col-md-12" style="padding-right: 1%;" >
-						<button type="button" class="btn btn-primary"
-										onclick="javascript:cancel()">Cancel</button>
-            <button type="button" class="btn btn-primary"
-              onclick="javascript:insert()">Save</button>
+						</div>
+						<!-- /.table-responsive -->
 					</div>
-			    
+					<!-- /.panel-body -->
+
+					<div class="col-md-12" style="padding-right: 1%;">
+						<button type="button" class="btn btn-primary"
+							onclick="javascript:cancel()">Cancel</button>
+						<button type="button" class="btn btn-primary"
+							onclick="javascript:insert()">Save</button>
+					</div>
+
 					<div class="col-md-15" style="color: red;" id="message">
 						<logic:notEmpty name="clientForm" property="messageList">
 							<logic:iterate id="message" name="clientForm"
@@ -167,9 +183,12 @@
 					</div>
 
 
-				</div><!-- /.col-lg-12 -->
-			</div><!-- /.row -->
-		</div><!-- /.page-wrapper -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.page-wrapper -->
 
 	</html:form>
 </body>
