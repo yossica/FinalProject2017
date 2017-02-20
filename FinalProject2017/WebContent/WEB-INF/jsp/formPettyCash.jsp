@@ -54,13 +54,7 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  swal({
-			                title: 'Saved!',
-			                text: 'Datas are successfully inserted!',
-			                type: 'success'
-			            }, function() {
 			            	flyToPage();
-			            });
 				  } else {
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
 				  }

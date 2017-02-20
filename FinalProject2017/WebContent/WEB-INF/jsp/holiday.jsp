@@ -23,14 +23,8 @@
 			},
 			function(isConfirm){
 			  if (isConfirm) {
-				  swal({
-		                title: 'Deleted!',
-		                text: 'Datas are successfully deleted!',
-		                type: 'success'
-		            }, function() {
 		            	document.forms[1].holidayId.value = id;
 		    			flyToPage("delete");
-		            });
 			  } else {
 			    swal("Cancelled", "Cancel Delete Master Holiday", "error");
 			  }
@@ -74,9 +68,6 @@
 			document.getElementById("message").innerHTML = error;
 			return;
 		}
-		/* if(confirm("Are you sure to insert these data?\n"+csv)){
-			flyToPage("insert");
-		}  */
 		else{
 			swal({
 				  title: "Are you sure?",
@@ -91,13 +82,7 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  swal({
-			                title: 'Inserted!',
-			                text: 'Datas are successfully inserted!',
-			                type: 'success'
-			            }, function() {
 			            	flyToPage("insert");
-			            });
 				  } else {
 				    swal("Cancelled", "Cancel Insert Master Holiday", "error");
 				  }
