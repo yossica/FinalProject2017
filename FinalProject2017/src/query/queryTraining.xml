@@ -177,8 +177,14 @@
 		select 
 		    transaction_training_id as transactionTrainingHeaderId,
 		    description as description
-		from transaction_training_header
+		from transaction_training_header h
 		where settlement_invoice_id = 0
 		    and client_id = #value#
+		    and not exists (
+		        select transaction_invoice_id
+		        from transaction_invoice_header i
+		        where i.transaction_invoice_id = h.dp_invoice_id
+		            and i.status_invoice_id != (select status_invoice_id from master_status_invoice where name = 'Paid')
+		    )
 	</select>
 </sqlMap> 

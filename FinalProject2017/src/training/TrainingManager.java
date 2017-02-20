@@ -259,5 +259,4 @@ public class TrainingManager {
 		}
 		return result;
 	}
-	
 }
