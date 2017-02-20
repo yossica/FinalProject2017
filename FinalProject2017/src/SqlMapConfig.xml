@@ -17,9 +17,14 @@ Notice the use of the properties from the above resource -->
 	<dataSource type="SIMPLE">
 		<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
 =======
 
+		<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@HENNYSENJAYA:1521:orcl"/>
+		<!-- <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:orcl"/> -->
+>>>>>>> refs/remotes/origin/master
+=======
 		<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@HENNYSENJAYA:1521:orcl"/>
 		<!-- <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:orcl"/> -->
 >>>>>>> refs/remotes/origin/master

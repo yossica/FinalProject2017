@@ -37,12 +37,6 @@ public class InvoiceDetailBean implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public double getFee() {
-		return fee;
-	}
-	public void setFee(double fee) {
-		this.fee = fee;
-	}
 	public Double getTotalFee() {
 		return totalFee;
 	}
@@ -109,5 +103,4 @@ public class InvoiceDetailBean implements Serializable {
 	public void setWorkDays(int workDays) {
 		this.workDays = workDays;
 	}
-	
 }
