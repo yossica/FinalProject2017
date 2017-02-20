@@ -124,12 +124,12 @@
 	</select>
 	
 	<select id="getMaxIdHeader" resultClass="java.lang.Integer">
-		select max(transaction_invoice_id)+1
+		select max(transaction_invoice_id)
 		from transaction_invoice_header
     </select>
     
     <select id="getMaxIdDetail" resultClass="java.lang.Integer">
-		select max(transaction_invoice_detail_id)+1
+		select max(transaction_invoice_detail_id)
 		from transaction_invoice_detail
     </select>
     
