@@ -119,6 +119,9 @@ public class InvoiceHandler extends Action {
 		} else if ("addDetailHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
 			return mapping.findForward("createInvoiceHH");
+		}else if("deleteDetailHH".equals(invoiceForm.getTask())){
+			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
+			return mapping.findForward("createInvoiceHH");
 		} else if ("createInvoiceTR".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoiceTR");
 		} else if ("insertHH".equals(invoiceForm.getTask())) {
