@@ -84,8 +84,7 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
-						<html:hidden name="invoiceForm" property="invoiceBean.notes" />
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" disabled="true"></html:textarea>
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true" ></html:textarea>
 					</div>
 				</div>
 			</div>
