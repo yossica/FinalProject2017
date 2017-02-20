@@ -27,17 +27,17 @@ public class InvoiceManager {
 				}
 				Integer numberIntegerTemp = Integer.parseInt(numberStringTemp.substring(0,3));
 				invoiceNumber = String.format("%03d", numberIntegerTemp);
-				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += "/ACE/INV/";
 				invoiceNumber += input;
 			}else if (Integer.parseInt(input.substring(3)) > Integer.parseInt(invoiceDate.substring(0,4))){
 				invoiceNumber += "001";
-				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += "/ACE/INV/";
 				invoiceNumber += input;
 			}else {
 				String numberStringTemp = (String)ibatis.queryForObject("invoice.getMaxInvoiceNumber", null);
 				Integer numberIntegerTemp = Integer.parseInt(numberStringTemp.substring(0,3))+1;
 				invoiceNumber = String.format("%03d", numberIntegerTemp);
-				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += "/ACE/INV/";
 				invoiceNumber += input;
 			}
 		} catch (SQLException e) {
@@ -82,6 +82,7 @@ public class InvoiceManager {
 			Integer idHeader = getMaxInvoiceHeaderId();
 			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
+			System.out.println(input.getDetailList().size());
 			for (InvoiceDetailBean bean : input.getDetailList()){
 				bean.setTransactionInvoiceHeaderId(idHeader);
 				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId());

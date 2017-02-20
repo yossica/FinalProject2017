@@ -122,11 +122,11 @@
 											<html:hidden property="employeeName" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>
-											<bean:write property="fee" name="invoiceDetailPS" format="#"/>
+											<bean:write property="fee" name="invoiceDetailPS" format="##,###.##"/>
 											<html:hidden property="fee" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>
-											<bean:write property="workDays" name="invoiceDetailPS" format="#"/>
+											<bean:write property="workDays" name="invoiceDetailPS" format="#,###"/>
 											<html:hidden property="workDays" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>

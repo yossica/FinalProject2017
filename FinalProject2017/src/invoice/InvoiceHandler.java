@@ -28,7 +28,6 @@ import org.apache.struts.action.ActionMapping;
 
 import outsource.OutsourceBean;
 import outsource.OutsourceManager;
-import utils.ExportReportManager;
 import client.ClientManager;
 import employee.EmployeeBean;
 
@@ -38,10 +37,6 @@ public class InvoiceHandler extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		HttpSession session = request.getSession();
-
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
 		InvoiceForm invoiceForm = (InvoiceForm) form;
 		InvoiceManager invoiceManager = new InvoiceManager();
 		ClientManager clientManager = new ClientManager();
@@ -60,12 +55,11 @@ public class InvoiceHandler extends Action {
 			Map paramMap = new HashMap();
 			paramMap.put("clientId", invoiceForm.getInvoiceBean().getClientId());
 			paramMap.put("exampleDate", exampleDate);
-			System.out.println(paramMap);
 			if (outsourceManager.checkContract(paramMap) != 0) {
 				invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 				invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 				invoiceForm.getInvoiceBean().setNotes(invoiceForm.getInvoiceBean().getNotes());
-				invoiceForm.setOutsourceList(outsourceManager.getOutsourceContract(paramMap));
+				//invoiceForm.setOutsourceList(outsourceManager.getOutsourceContract(paramMap));
 				List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
 				bean = outsourceManager.getOutsourceContract(paramMap);
 				InvoiceDetailBean invoiceDetailBean;
@@ -75,7 +69,6 @@ public class InvoiceHandler extends Action {
 					invoiceDetailBean.setFee(temp.getFee());
 					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
 					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
-					System.out.println(invoiceForm.getProfessionalServiceList());
 				}
 				
 				return mapping.findForward("createInvoicePS");
@@ -84,22 +77,45 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getMessageList().add("There's no contract!");
 				return mapping.findForward("createInvoice");
 			}
-		} else if ("detailInvoice".equals(invoiceForm.getTask())) {
-			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
-			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
-			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
-			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
-			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
-			return mapping.findForward("detailInvoice");
 		}else if("insertTransactionOutsource".equals(invoiceForm.getTask())){
-			DateFormat dateFormat = new SimpleDateFormat("MM.yyyy");
+			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
 			invoiceForm.getInvoiceBean().setTransactionInvoiceHeaderId(
 					invoiceManager.getMaxInvoiceHeaderId());
 			invoiceForm.getInvoiceBean().setInvoiceNumber(
 					invoiceManager.getInvoiceNumber(dateFormat.format(date)));
+			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
+			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
+			double total = 0;
+			for (InvoiceDetailBean bean : invoiceForm.getProfessionalServiceList()){
+				total += bean.getFee();
+			}
+			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
+				//Ini kalau exclude PPN
+				double formula = total+(total*ppn/100);
+				invoiceForm.getInvoiceBean().setTotalNet(total);
+				invoiceForm.getInvoiceBean().setTotalGross(formula);
+				invoiceForm.getInvoiceBean().setPpnPercentage(formula-total);
+			}else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
+				//Ini kalau include PPN
+				NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
+				DecimalFormat doubleFormat = new DecimalFormat(".##");
+				double devider = 100+ppn;
+				double formula = total * 100 / devider;
+				formula = numberFormat.parse(doubleFormat.format(formula)).doubleValue();
+				double ppnValue = total-formula;
+				ppnValue = numberFormat.parse(doubleFormat.format(ppnValue)).doubleValue();
+				invoiceForm.getInvoiceBean().setTotalNet(formula);
+				invoiceForm.getInvoiceBean().setTotalGross(total);
+				invoiceForm.getInvoiceBean().setPpnPercentage(ppnValue);
+			}
+			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+			invoiceManager.insert(invoiceForm.getInvoiceBean());
 			return null;
-		}	else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
+		}		
+		else if ("detailInvoice".equals(invoiceForm.getTask())) {
+			return mapping.findForward("detailInvoice");
+		} else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(
 					clientManager.getById(
 							invoiceForm.getInvoiceBean().getClientId())
@@ -238,68 +254,6 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceList(invoiceManager
 					.getAllWithFilter(paramMap));
 			return mapping.findForward("invoice");
-		} else if ("export".equals(invoiceForm.getTask())) {
-			Map<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("name", generalInformationManager.getByKey("name").getValue());
-			parameters.put("address", generalInformationManager.getByKey("addr").getValue()+
-					"\nPhone:"+generalInformationManager.getByKey("telp").getValue()+
-					"\nFax: "+generalInformationManager.getByKey("fax").getValue());
-			
-			String client = invoiceForm.getClientId();
-			String monthFrom = invoiceForm.getMonthFrom();
-			String yearFrom = invoiceForm.getYearFrom();
-			String monthTo = invoiceForm.getMonthTo();
-			String yearTo = invoiceForm.getYearTo();
-			String status = invoiceForm.getStatusInvoiceId();
-			if ("".equals(client)) {
-				client = null;
-				parameters.put("client", "All");
-			}
-			else{
-				parameters.put("client", new ClientManager().getById(Integer.parseInt(client)).getName());
-			}
-			if ("".equals(status)) {
-				status = null;
-				parameters.put("invoiceStatus", "All");
-			}
-			else {
-				parameters.put("invoiceStatus", new MasterManager().getStatusInvoiceById(Integer.parseInt(status)).getName());
-			}
-			if ("".equals(yearTo)) {
-				monthFrom = null;
-				yearFrom = null;
-				monthTo = null;
-				yearTo = null;
-				parameters.put("startDate", "All");
-				parameters.put("endDate", "All");
-			}
-			else {
-				parameters.put("startDate", getMonthName(monthFrom)+" "+yearFrom);
-				parameters.put("endDate", getMonthName(monthTo)+" "+yearTo);
-			}
-			Map paramMap = new HashMap();
-			paramMap.put("monthFrom", monthFrom);
-			paramMap.put("yearFrom", yearFrom);
-			paramMap.put("monthTo", monthTo);
-			paramMap.put("yearTo", yearTo);
-			paramMap.put("client", client);
-			paramMap.put("status", status);
-			invoiceForm.setStatusInvoiceList(masterManager
-					.getAllStatusInvoice());
-			
-			List<InvoiceBean> invoiceSummaryData = invoiceManager
-					.getAllWithFilter(paramMap);			
-			//export to pdf
-			String filePath = this.getServlet().getServletContext().getRealPath("/asset/");
-			parameters.put("filePath", filePath);
-			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat printDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-			String fileName = "InvoiceSummaryReport_"+printDateFormat.format(cal.getTime())+".pdf";
-			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceSummaryReport"+".jrxml",
-					fileName, parameters, invoiceSummaryData);
-			
-			invoiceForm.setInvoiceList(invoiceSummaryData);
-			return mapping.findForward("invoice");
 		} else {
 			Calendar cc = Calendar.getInstance();
 			int cyear = cc.get(Calendar.YEAR);
@@ -327,25 +281,5 @@ public class InvoiceHandler extends Action {
 					.getAllWithFilter(paramMap));
 			return mapping.findForward("invoice");
 		}
-	}
-	
-	private String getMonthName(String input){
-		String result = "";
-		Integer month = Integer.parseInt(input);
-		switch(month){
-			case 1: result = "January"; break;
-			case 2 :result="February"; break;
-	        case 3 :result="March"; break;
-	        case 4 :result="April"; break;
-	        case 5 :result="May"; break;
-	        case 6 :result="June"; break;
-	        case 7 :result="July"; break;
-	        case 8 :result="August"; break;
-	        case 9 :result="September"; break;
-	        case 10:result="October"; break;
-	        case 11:result="November"; break;
-	        case 12:result="December"; break;
-		}
-		return result;
 	}
 }
