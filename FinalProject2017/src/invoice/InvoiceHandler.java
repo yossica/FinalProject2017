@@ -51,6 +51,7 @@ public class InvoiceHandler extends Action {
 		MasterManager masterManager = new MasterManager();
 		HolidayManager holidayManager = new HolidayManager();
 		OutsourceManager outsourceManager = new OutsourceManager();
+		TrainingManager trainingManager = new TrainingManager();
 		GeneralInformationManager generalInformationManager =  new GeneralInformationManager();
 		invoiceForm.setClientList(clientManager.getAll());
 		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
@@ -211,13 +212,35 @@ public class InvoiceHandler extends Action {
 			invoiceManager.insert(invoiceForm.getInvoiceBean());
 			
 			//insert training
-			TrainingManager trainingManager = new TrainingManager();
 			trainingManager.insert(trainingBean);
 			
 			//setting field untuk view invoice
 			
 			return mapping.findForward("detailInvoice");
 		} else if ("createInvoiceTRST".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
+			if (invoiceForm.getOngoingTrainingList().size()==0) {
+				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				return mapping.findForward("createInvoice");
+			} else {
+				List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+				invoiceForm.getInvoiceBean().setIsGross(trainingList.get(0).getIsGross());
+				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(trainingList.get(0).getTransactionTrainingHeaderId()));
+			}
+			return mapping.findForward("createInvoiceTRST");
+		} else if ("getTax".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
+			if (invoiceForm.getOngoingTrainingList().size()==0) {
+				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				return mapping.findForward("createInvoice");
+			} else {
+				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
+				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
+			}
 			return mapping.findForward("createInvoiceTRST");
 		} else if("deleteDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());

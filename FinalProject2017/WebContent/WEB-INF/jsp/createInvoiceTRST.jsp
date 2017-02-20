@@ -41,7 +41,6 @@
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
 						<html:hidden name="invoiceForm" property="invoiceBean.clientName"/>
 						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
-						<bean:write name="invoiceForm" property="invoiceBean.clientId" format="#"/>
 					</div>
 				</div>
 			</div>
@@ -89,40 +88,33 @@
 				<div class="row">
 					<div class="col-md-2"><label>Training Name</label></div>
 					<div class="col-md-5">
-						<html:text name="invoiceForm" property="trainingBean.description" styleClass="form-control"/>
+						<%-- <html:text name="invoiceForm" property="trainingBean.description" styleClass="form-control"/> --%>
+						<html:select name="invoiceForm" property="trainingBean.transactionTrainingHeaderId" styleClass="form-control" onchange="javascript:flyToPage('getTax')">
+							<html:optionsCollection name="invoiceForm" label="description" value="transactionTrainingHeaderId" property="ongoingTrainingList"/>
+						</html:select>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-2"><label>Start Date</label></div>
-					<div class="col-md-5">
-						<input type="date" class="form-control" style="width: 100%;" name="trainingBean.trainingStartDate" value="<bean:write property="trainingBean.trainingStartDate" name="invoiceForm" />"/>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
-				<div class="row">
-					<div class="col-md-2"><label>End Date</label></div>
-					<div class="col-md-5">
-						<input type="date" class="form-control" style="width: 100%;" name="trainingBean.trainingEndDate" value="<bean:write property="trainingBean.trainingEndDate" name="invoiceForm" />"/>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
-				<div class="row">
-					<div class="col-md-2"><label>Total Training Fee</label></div>
-					<div class="col-md-5">
-						<html:text name="invoiceForm" property="trainingFee" styleClass="form-control"/>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
-				<div class="row">
-					<div class="col-md-2"><label>Notes</label></div>
-					<div class="col-md-5">
-						<html:textarea name="invoiceForm" property="invoiceDetailNotes" styleClass="form-control"></html:textarea>
-					</div>
+					<table border="1">
+						<tr>
+							<th>Description</th>
+							<th>Price</th>
+							<th>Note</th>
+							<th>Action</th>
+						</tr>
+						<logic:iterate id="inv" name="invoiceForm" property="detailTrainingList">
+							<tr>
+								<td><bean:write name="inv" property="description"/></td>
+								<td><bean:write name="inv" property="fee" format="#,###.##"/></td>
+								<td><button type="button" class="btn btn-primary">Note</button></td>
+								<td>
+									<logic:equal name="inv" property="isSettlement" value="0"><a>X</a></logic:equal>
+								</td>
+							</tr>
+						</logic:iterate>
+					</table>
 				</div>
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
