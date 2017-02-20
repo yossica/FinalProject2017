@@ -69,7 +69,7 @@
 				text : "System will insert these data to client database",
 				type : "warning",
 				showCancelButton : true,
-				confirmButtonColor : "#DD6B55",
+				confirmButtonColor : "#ef2300",
 				confirmButtonText : "Yes, Insert",
 				cancelButtonText : "No, Cancel Please!",
 				closeOnConfirm : false,
