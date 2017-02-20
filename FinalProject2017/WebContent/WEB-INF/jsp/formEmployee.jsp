@@ -29,7 +29,7 @@
 			},
 			function(isConfirm){
 			  if (isConfirm) {
-				  document.forms[1].submit();
+		            	document.forms[1].submit();
 			  } else {
 			    swal("Cancelled", "Cancel Save To Master Employee", "error");
 			  }

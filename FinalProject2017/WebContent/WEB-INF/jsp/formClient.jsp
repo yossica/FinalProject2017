@@ -27,14 +27,7 @@
 			},
 			function(isConfirm){
 			  if (isConfirm) {
-				  swal({
-		                title: 'Saved!',
-		                text: 'Datas are successfully saved!',
-		                type: 'success'
-		            }, function() {
-		            	document.forms[1].submit();
-		            });
-				  
+		            	document.forms[1].submit();				  
 			  } else {
 			    swal("Cancelled", "Cancel Save Master Client", "error");
 			  }

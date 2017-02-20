@@ -10,7 +10,6 @@ public class InvoiceDetailBean implements Serializable {
 	private Double fee;
 	private Double totalFee;
 	private Double unitPrice;
-	private Double total;
 	private Integer employeeId;
 	private String employeeName;
 	private Integer workDays;
@@ -61,12 +60,6 @@ public class InvoiceDetailBean implements Serializable {
 	}
 	public void setUnitPrice(Double unitPrice) {
 		this.unitPrice = unitPrice;
-	}
-	public Double getTotal() {
-		return total;
-	}
-	public void setTotal(Double total) {
-		this.total = total;
 	}
 	public Integer getEmployeeId() {
 		return employeeId;
