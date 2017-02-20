@@ -9,25 +9,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Invoice</title>
 <style>
-/* Popup container */
+/* Popup container - can be anything you want */
 .popup {
     position: relative;
     display: inline-block;
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-/* The actual popup (appears on top) */
+/* The actual popup */
 .popup .popuptext {
-    width: 160px;
-    background-color: #555;
+    visibility: hidden;
+    width: 500px;
+    background-color: #337ab7;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 8px;
     position: absolute;
     z-index: 1;
     bottom: 125%;
-    left: 50%;
+    left: -140px;
     margin-left: -80px;
 }
 
@@ -43,9 +48,22 @@
     border-color: #555 transparent transparent transparent;
 }
 
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
+/* Toggle this class - hide and show the popup */
 .popup .show {
     visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
 }
 </style>
 <script>
@@ -57,11 +75,9 @@
 		document.forms[1].deleteIndex.value = index;
 		flyToPage('deleteDetailHH');
 	}
-	function showNotes(input){
-		document.getElementById(input).style.display = "inline";
-	}
-	function closeNotes(input){
-		document.getElementById(input).style.display = "none";
+	function toggleNotes(idNumber) {
+	    var popup = document.getElementById("myPopup"+idNumber);
+	    popup.classList.toggle("show");
 	}
 </script>
 </head>
@@ -158,17 +174,15 @@
 									<html:text name="invoiceDetailHH" property="fee" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
-									<button type="button" class="btn btn-primary" onclick="javascript:showNotes('notes${indexHH}')">Notes</button>
-									<div id="notes${indexHH}" class="popup" style= "display:none">
-										<span class="popuptext">
-										Notes
-											<html:textarea name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true"></html:textarea>
-											<button type="button" class="btn btn-primary" onclick="javascript:closeNotes('notes${indexHH}')">Close</button>
+									<div class="popup">
+										<span class="popuptext" id="myPopup${indexHH}">
+											<html:textarea name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true" rows="7"></html:textarea>
 										</span>
+										<button type="button" class="btn btn-primary" onclick="javascript:toggleNotes(${indexHH})">Notes</button>
 									</div>
 								</td>
 								<td>
-									<button type="button" class="btn btn-primary btn-circle" style="margin-bottom: 1%;" onclick="javascript:deleteDetailHH('${indexHH}')"><i class="fa fa-minus"></i></button>
+									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteDetailHH('${indexHH}')"><i class="fa fa-times"></i></button>
 								</td>
 							</tr>
 							</logic:iterate>
@@ -188,5 +202,6 @@
 		</div>
 	</div>
 	</html:form>
+	
 </body>
 </html>

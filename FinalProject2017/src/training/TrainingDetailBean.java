@@ -7,6 +7,7 @@ public class TrainingDetailBean implements Serializable {
 	private int transactionTrainingHeaderId;
 	private String description;
 	private double fee;
+	private String note;
 	private int isSettlement;
 	private String createdBy;
 	private String createdDate;
@@ -65,6 +66,12 @@ public class TrainingDetailBean implements Serializable {
 	}
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 }
