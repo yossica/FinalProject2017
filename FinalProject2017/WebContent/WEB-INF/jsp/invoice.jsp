@@ -57,13 +57,23 @@
 			  }
 			});
 	}
+	function flyToDetail(transactionInvoiceHeaderId, invoiceTypeId, clientId, statusId){
+		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
+		document.forms[1].invoiceTypeId.value = invoiceTypeId;
+		document.forms[1].client.value = clientId;
+		document.forms[1].statusId.value = statusId;
+		flyToPage("detailInvoice");
+	}
 </script>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
+	<html:hidden property="client" name="invoiceForm"/>
 	<html:hidden property="statusId" name="invoiceForm"/>
+	<html:hidden property="invoiceTypeId" name="invoiceForm"/>
+	<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
 	<html:hidden property="invoiceNumber" name="invoiceForm"/>
 	<div id="page-wrapper">
 	    <div class="row">
@@ -71,7 +81,7 @@
 	            <h1 class="page-header">Invoice List</h1>
 	            <div class="panel-body" style="padding-right:0;">
 		            <div class="pull-right">
-		           		<button type="button" class="btn btn-primary">Print</button>
+		           		<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('export')">Export To PDF</button>
 			            <button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Create</button>
 		            </div>
 	            </div>
@@ -205,7 +215,12 @@
 			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
 			                	<td>
 
-			                		<input type="button" value="View" class="btn btn-primary" onclick="javascript:flyToPage('detailInvoice')">
+			                		<input type="button" value="View" class="btn btn-primary" 
+			                			onclick="javascript:flyToDetail(
+			                				'<bean:write name="inv" property="transactionInvoiceHeaderId" format="#"/>',
+			                				'<bean:write name="inv" property="invoiceTypeId" format="#"/>',
+			                				'<bean:write name="inv" property="clientId" format="#"/>',
+			                				'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
 			                		<logic:equal name="inv" property="statusInvoiceName" value="Created">
 			                			<input type="button" value="Change Status" class="btn btn-primary" 
 			                					onclick="javascript:flyToChangeStatus(

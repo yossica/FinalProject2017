@@ -4,6 +4,7 @@
 <sqlMap namespace="invoice">
 	<select id="getAllWithFilter" parameterClass="java.util.Map" resultClass="invoice.InvoiceBean">		
 		select
+			transaction_invoice_id as transactionInvoiceHeaderId,
             invoice_number as invoiceNumber,
             tih.client_id as clientId,
             mc.name as clientName,
@@ -25,7 +26,7 @@
             period_year as periodYear,
             tih.invoice_type_id as invoiceTypeId,
             mit.name as invoiceTypeName,
-            invoice_date as invoiceDate,
+            to_char(invoice_date, 'MM/dd/yyyy') as invoiceDate,
             tih.status_invoice_id as statusInvoiceId,
             msi.name as statusInvoiceName
         from transaction_invoice_header tih
@@ -56,6 +57,31 @@
 				</isNotEmpty>
 			</isNotNull>
 		</dynamic>
+		order by 2
+	</select>
+	
+	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
+		select
+		    invoice_number as invoiceNumber,
+		    to_char(invoice_date,'MM/DD/YYYY') as invoiceDate,
+		    total_net as totalNet,
+		    total_ppn as totalPpn,
+		    total_gross as totalGross,
+		    notes as notes
+		from transaction_invoice_header
+		where transaction_invoice_id=#transactionInvoiceHeaderId#
+	</select>
+	
+	<select id="getDetailById" resultClass="invoice.InvoiceDetailBean" parameterClass="java.lang.Integer">		
+		select 
+            rownum as numb,
+            Description||' '||me.name||' '||nvl2(man_days,man_days||' days work',man_days) as description,
+            unit_price as unitPrice,
+            total,
+            notes
+        from transaction_invoice_detail tid
+        left outer join master_employee me on(tid.employee_id=me.employee_id)
+        where transaction_invoice_id=#transactionInvoiceHeaderId#
 	</select>
 	
 	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">
@@ -102,6 +128,11 @@
 		from transaction_invoice_header
     </select>
     
+    <select id="getMaxIdDetail" resultClass="java.lang.Integer">
+		select max(transaction_invoice_detail_id)+1
+		from transaction_invoice_detail
+    </select>
+    
     <select id="getMaxInvoiceNumber" resultClass="java.lang.String">
     	select invoice_number
     	from transaction_invoice_header
@@ -120,9 +151,20 @@
     
     <insert id="insertHeader" parameterClass="invoice.InvoiceBean">
     	insert into transaction_invoice_header
+    	(TRANSACTION_INVOICE_ID,INVOICE_NUMBER,INVOICE_DATE,PERIOD_MONTH,PERIOD_YEAR,
+    	STATUS_INVOICE_ID,INVOICE_TYPE_ID,CLIENT_ID,TOTAL_NET,PPN_PERCENTAGE,IS_GROSS,TOTAL_GROSS,
+    	NOTES,CREATED_BY,CREATED_DATE,CHANGED_BY,CHANGED_DATE,TOTAL_PPN)
     	values (#transactionInvoiceHeaderId#, #invoiceNumber#, to_date(#invoiceDate#, 'yyyy-mm-dd'), #periodMonth#, #periodYear#, 
     	#statusInvoiceId#, #invoiceTypeId#, #clientId#, #totalNet#, #ppnPercentage#, #isGross#, #totalGross#,
-    	#notes#, #createdBy#, sysdate, null, null)
+    	#notes#, #createdBy#, sysdate, null, null, #totalPpn#)
+    </insert>
+    
+    <insert id="insertDetail" parameterClass="invoice.InvoiceDetailBean">
+    	insert into transaction_invoice_detail
+    	(TRANSACTION_INVOICE_DETAIL_ID,TRANSACTION_INVOICE_ID,DESCRIPTION,FEE,EMPLOYEE_ID,
+    	MAN_DAYS,NOTES,CREATED_BY,CREATED_DATE,CHANGED_BY,CHANGED_DATE,WORK_DAYS,UNIT_PRICE,TOTAL_FEE)
+    	values (#transactionInvoiceDetailId#, #transactionInvoiceHeaderId#, #description#, #fee#, #employeeId#,
+    	#manDays#, #notes#, #createdBy#, sysdate, null, null, #workDays#, #unitPrice#, #totalFee#)
     </insert>
     
 </sqlMap> 

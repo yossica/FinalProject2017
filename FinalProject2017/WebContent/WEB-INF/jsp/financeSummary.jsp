@@ -25,7 +25,7 @@
 	            </div>
 	            <div class="col-lg-10">
 		            <div class="panel-body">
-						<div class="table-responsive" style="height:200px;overflow:auto;">
+						<div class="table-responsive" style="height:400px;overflow:auto;">
 						    <table class="table table-hover">
 						        <thead>
 						            <tr>
