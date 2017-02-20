@@ -81,9 +81,8 @@
 				});
 		}
 	}
-	function flyToDetail(transactionInvoiceHeaderId, invoiceTypeId, clientId, statusId){
+	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
-		document.forms[1].invoiceTypeId.value = invoiceTypeId;
 		document.forms[1].client.value = clientId;
 		document.forms[1].statusId.value = statusId;
 		flyToPage("detailInvoice");
@@ -238,13 +237,12 @@
 			                	<td><bean:write name="inv" property="invoiceDate"/></td>
 			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
 			                	<td>
-
 			                		<input type="button" value="View" class="btn btn-primary" 
 			                			onclick="javascript:flyToDetail(
 			                				'<bean:write name="inv" property="transactionInvoiceHeaderId" format="#"/>',
-			                				'<bean:write name="inv" property="invoiceTypeId" format="#"/>',
 			                				'<bean:write name="inv" property="clientId" format="#"/>',
-			                				'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+			                				'<bean:write name="inv" property="statusInvoiceId" format="#"/>'
+			                		)" />
 			                		<logic:equal name="inv" property="statusInvoiceName" value="Created">
 			                			<input type="button" value="Change Status" class="btn btn-primary" 
 			                					onclick="javascript:flyToChangeStatus(

@@ -219,11 +219,34 @@ public class InvoiceHandler extends Action {
 			
 			return mapping.findForward("detailInvoice");
 		} else if ("createInvoiceTRST".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
+			if (invoiceForm.getOngoingTrainingList().size()==0) {
+				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				return mapping.findForward("createInvoice");
+			} else {
+				List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+				invoiceForm.getInvoiceBean().setIsGross(trainingList.get(0).getIsGross());
+				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(trainingList.get(0).getTransactionTrainingHeaderId()));
+			}
 			return mapping.findForward("createInvoiceTRST");
-		}else if("deleteDetailHH".equals(invoiceForm.getTask())){
+		} else if ("getTax".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
+			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
+			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
+			if (invoiceForm.getOngoingTrainingList().size()==0) {
+				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				return mapping.findForward("createInvoice");
+			} else {
+				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
+				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
+			}
+			return mapping.findForward("createInvoiceTRST");
+		} else if("deleteDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
 			return mapping.findForward("createInvoiceHH");
-		}else if ("insertHH".equals(invoiceForm.getTask())) {
+		} else if ("insertHH".equals(invoiceForm.getTask())) {
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
@@ -245,7 +268,7 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setTotalGross(formula);
 				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
 				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
-			}else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
+			} else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
 				//Ini kalau include PPN
 				NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
 				DecimalFormat doubleFormat = new DecimalFormat(".##");
@@ -270,8 +293,20 @@ public class InvoiceHandler extends Action {
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
 			//invoiceForm.print();
-			invoiceManager.insert(invoiceForm.getInvoiceBean());
-			return mapping.findForward("createInvoiceHH");
+			
+			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
+			
+			//display invoice
+			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+			invoiceForm.setTransactionInvoiceHeaderId(idHeader);
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+			invoiceForm.setTask("detailInvoice");
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			return mapping.findForward("detailInvoice");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
 			String currentStatus = invoiceForm.getStatusId();

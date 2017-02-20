@@ -75,11 +75,12 @@ public class InvoiceManager {
 		return id;	
 	}
 	
-	public void insert(InvoiceBean input){
+	public Integer insert(InvoiceBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		Integer idHeader = null;
 		try{
 			ibatis.startTransaction();
-			Integer idHeader = getMaxInvoiceHeaderId() + 1;
+			idHeader = getMaxInvoiceHeaderId() + 1;
 			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
 			for (InvoiceDetailBean bean : input.getDetailList()){
@@ -97,6 +98,7 @@ public class InvoiceManager {
 				e.printStackTrace();
 			}
 		}
+		return idHeader;
 	}
 	
 	public void insertDetail(InvoiceDetailBean input){

@@ -38,7 +38,7 @@
 	                            Listed
 	                        </div>
 	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
+	                        <div class="panel-body" style="height: 450px; overflow:auto;">
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
@@ -87,7 +87,7 @@
 	                            Created
 	                        </div>
 	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
+	                        <div class="panel-body" style="height: 450px; overflow:auto;">
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
@@ -124,7 +124,7 @@
 	                            Sent
 	                        </div>
 	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
+	                        <div class="panel-body" style="height: 450px; overflow:auto;">
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
