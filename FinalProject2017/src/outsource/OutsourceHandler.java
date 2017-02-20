@@ -153,7 +153,10 @@ public class OutsourceHandler extends Action {
 			Map filter = new HashMap();
 			filter.put("client", outsourceForm.getOutsourceBean().getClientId());
 			filter.put("gtEndDate", outsourceForm.getOutsourceBean()
-					.getStartDate());
+					.getStartDate().substring(0, 3)
+					+ "01"
+					+ outsourceForm.getOutsourceBean().getStartDate()
+							.substring(5, 10));
 			List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
 			tmpList = outsourceManager.getAllWithFilter(filter);
 			if (tmpList.size() > 0) {
@@ -229,7 +232,10 @@ public class OutsourceHandler extends Action {
 				filter.put("client", outsourceForm.getOutsourceBean()
 						.getClientId());
 				filter.put("gtEndDate", outsourceForm.getOutsourceBean()
-						.getStartDate());
+						.getStartDate().substring(0, 3)
+						+ "01"
+						+ outsourceForm.getOutsourceBean().getStartDate()
+								.substring(5, 10));
 				List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
 				tmpList = outsourceManager.getAllWithFilter(filter);
 				if (tmpList.size() > 0) {
@@ -370,7 +376,10 @@ public class OutsourceHandler extends Action {
 			Map filter = new HashMap();
 			filter.put("client", outsourceForm.getOutsourceBean().getClientId());
 			filter.put("gtEndDate", outsourceForm.getOutsourceBean()
-					.getStartDate());
+					.getStartDate().substring(0, 3)
+					+ "01"
+					+ outsourceForm.getOutsourceBean().getStartDate()
+							.substring(5, 10));
 			List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
 			tmpList = outsourceManager.getAllWithFilter(filter);
 			if (tmpList.size() > 0) {
