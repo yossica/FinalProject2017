@@ -87,11 +87,11 @@
 	            </div>
 	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
 	            	<div class="row" style="margin-top:10px;">
-		            	<div class="col-md-10" style="padding-right:1%">
-			            	<div class="col-md-1">
+		            	<div class="col-md-12" style="padding-right:1%">
+			            	<div class="col-md-2">
 			            	Client
 			            	</div>
-			            	<div class="col-md-11">
+			            	<div class="col-md-10">
 				            	<html:select property="clientId" name="invoiceForm" styleClass="form-control-client">
 									<html:option value="">Select</html:option>
 									<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
@@ -99,12 +99,12 @@
 			            	</div>
 			            </div>
                        </div>
-                <div class="col-md-10" style="margin-top:10px;">
+                <div class="col-md-12" style="margin-top:10px;">
 	            	<div class="row">
-		            	<div class="col-md-1">
+		            	<div class="col-md-2">
 		            		From 
 		            	</div>
-		            	<div class="col-md-3">
+		            	<div class="col-md-2">
 		            		<html:select property="monthFrom" name="invoiceForm" styleClass="form-control">
 								<html:option value="">Select</html:option>
 								<html:option value="1">January</html:option>
@@ -137,7 +137,7 @@
                         <div class="col-md-1">
                         	To
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
 	                        <html:select property="monthTo" name="invoiceForm" styleClass="form-control">
 								<html:option value="">Select</html:option>
 								<html:option value="1">January</html:option>
@@ -169,12 +169,12 @@
 	                    </div>
 	              	</div>
 	              	</div>
-	              	<div class="col-md-10" style="margin-top:10px;">   
+	              	<div class="col-md-12" style="margin-top:10px;">   
 	                    <div class="row">
-		                    <div class="col-md-1">   
+		                    <div class="col-md-2">   
 				            	Status
 				            </div>
-				            <div class="col-md-3">
+				            <div class="col-md-10">
 		                        <html:select property="statusInvoiceId" name="invoiceForm" styleClass="form-control">
 		                        	<html:option value="">Select</html:option>
 		                        	<html:optionsCollection property="statusInvoiceList" label="name" value="statusInvoiceId" name="invoiceForm"/>
@@ -191,7 +191,7 @@
 	        <!-- /.col-lg-12 -->
 	    </div>
 	    <div class="panel-body">
-	        <div class="table-responsive">
+	        <div class="table-responsive" style="height:200px;overflow:auto;">
 	        	<table class="table table-hover">
 	            	<tr>
 	            		<th>Invoice No.</th>

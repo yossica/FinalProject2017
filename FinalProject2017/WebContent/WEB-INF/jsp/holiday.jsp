@@ -39,6 +39,7 @@
 		//validate
 		var splitenter = csv.split("\n");
 		var error = "";
+		document.getElementById("message").style.display="block";
 		for(var i = 0 ; i < splitenter.length ; i++){
 			if(!splitenter[i].includes(",")){
 				error += "Row number "+ (i+1) + " must contain ,\n";
@@ -99,6 +100,8 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	
+	
 </script>
 </head>
 <body>
@@ -116,7 +119,7 @@
 				            
 				           	<br/>
 				           	<div class="col-lg-12" style="padding:0px">
-				           	<div class="col-md-2" style="padding:0px">
+				           	<div class="col-md-2" style="padding:0px; margin-top:10px;">
 				           		<button type="button" class="btn btn-primary" onclick="javascript:insertHoliday()">Insert CSV</button>
 				           	</div>
 				           	<div class="col-md-8" style="margin-left:10px;float:left">
@@ -125,7 +128,7 @@
 				           	<div style="clear:both"></div>
 				           	</div>
 			  			</div>
-			  			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+			  			<div class="col-md-4" style="color:red;padding:20px;overflow: auto;background: #f7eded; border: 2px outset #f70000; display:none;" id="message">
 			  				<logic:notEmpty name="holidayForm" property="messageList">
 								<logic:iterate id="message" name="holidayForm" property="messageList">
 									<bean:write name="message" /> 
@@ -133,9 +136,9 @@
 							</logic:notEmpty>
 			  			</div>
 		            </div>
-		            <div class="col-lg-10">
+		            <div class="col-lg-12">
 			            <div class="panel-body">
-							<div class="table-responsive" style="height:200px;overflow:auto;">
+							<div class="table-responsive" style="height:230px;overflow:auto;">
 							    <table class="table table-hover">
 							        <thead>
 							            <tr>
