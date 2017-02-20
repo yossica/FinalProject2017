@@ -147,6 +147,34 @@ public class OutsourceHandler extends Action {
 				}
 			}
 
+			// cek ada contract dengan client yang sama atau tidak
+			// start date input < end date contract yang sudah ada
+			// maka is grossnya harus sama
+			Map filter = new HashMap();
+			filter.put("client", outsourceForm.getOutsourceBean().getClientId());
+			filter.put("gtEndDate", outsourceForm.getOutsourceBean()
+					.getStartDate());
+			List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
+			tmpList = outsourceManager.getAllWithFilter(filter);
+			if (tmpList.size() > 0) {
+				if (tmpList.get(0).getIsGross() != outsourceForm
+						.getOutsourceBean().getIsGross()) {
+					flagError = 1;
+					if (tmpList.get(0).getIsGross() == 1) {
+						outsourceForm.getMessageList().add(
+								"Client already have contract "
+										+ "with tax include, new contract "
+										+ "must be tax include as well");
+					} else {
+						outsourceForm.getMessageList().add(
+								"Client already have contract "
+										+ "with tax exclude, new contract "
+										+ "must be tax exclude as well");
+					}
+
+				}
+			}
+
 			if (flagError == 1) {
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
@@ -174,7 +202,7 @@ public class OutsourceHandler extends Action {
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
-				Map filter = new HashMap();
+				filter = new HashMap();
 				filter.put("year", outsourceForm.getFilterYear());
 
 				outsourceForm.setOutsourceList(outsourceManager
@@ -193,19 +221,37 @@ public class OutsourceHandler extends Action {
 			// apa tidak
 			if (outsourceForm.getOutsourceBean().getIsGross() != outsourceBean
 					.getIsGross()) {
-				Map filter = new HashMap();
-				filter.put("date", month + "/01/" + year);
-				outsourceForm.setOutsourceList(outsourceManager
-						.getAllWithFilter(filter));
-				if (outsourceForm.getOutsourceList().size() > 1) {
-					flagError = 1;
-					outsourceForm.getMessageList().add(
-							"Another contract with client "
-									+ outsourceForm.getOutsourceBean()
-											.getClientName()
-									+ ", can't change is gross value");
-				}
 
+				// cek ada contract dengan client yang sama atau tidak
+				// start date input < end date contract yang sudah ada
+				// maka is grossnya harus sama
+				Map filter = new HashMap();
+				filter.put("client", outsourceForm.getOutsourceBean()
+						.getClientId());
+				filter.put("gtEndDate", outsourceForm.getOutsourceBean()
+						.getStartDate());
+				List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
+				tmpList = outsourceManager.getAllWithFilter(filter);
+				if (tmpList.size() > 0) {
+					if ((tmpList.get(0).getIsGross() != outsourceForm
+							.getOutsourceBean().getIsGross())
+							&& tmpList.get(0).getTransactionOutsourceId() != outsourceForm
+									.getTransactionOutsourceId()) {
+						flagError = 1;
+						if (tmpList.get(0).getIsGross() == 1) {
+							outsourceForm.getMessageList().add(
+									"Client already have contract "
+											+ "with tax include, new contract "
+											+ "must be tax include as well");
+						} else {
+							outsourceForm.getMessageList().add(
+									"Client already have contract "
+											+ "with tax exclude, new contract "
+											+ "must be tax exclude as well");
+						}
+
+					}
+				}
 			}
 			if (flagError == 1) {
 				outsourceForm.setTask("saveupdate");
@@ -247,6 +293,14 @@ public class OutsourceHandler extends Action {
 							.getTransactionOutsourceId());
 			Calendar cal2 = Calendar.getInstance();
 			// validation
+			// client baru tidak boleh sama dengan client lama
+			if (outsourceForm.getOutsourceBean().getClientId() == outsourceBean
+					.getClientId()) {
+				flagError = 1;
+				outsourceForm.getMessageList().add(
+						"Client must be different from previous client");
+			}
+
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 					.getStartDate()));
 			cal2.setTime(dateFormat.parse(outsourceBean.getStartDate()));
@@ -309,25 +363,35 @@ public class OutsourceHandler extends Action {
 					break;
 				}
 			}
-			// validasi apakah gross pada data baru ada confilct dengan contract client lain,
-			// maka cek ada contract lain dengan client yang sama pada sysdate
-			// apa tidak
-			if (outsourceForm.getOutsourceBean().getIsGross() != outsourceBean
-					.getIsGross()) {
-				Map filter = new HashMap();
-				filter.put("date", month + "/01/" + year);
-				outsourceForm.setOutsourceList(outsourceManager
-						.getAllWithFilter(filter));
-				if (outsourceForm.getOutsourceList().size() > 1) {
+
+			// cek ada contract dengan client yang sama atau tidak
+			// start date input < end date contract yang sudah ada
+			// maka is grossnya harus sama
+			Map filter = new HashMap();
+			filter.put("client", outsourceForm.getOutsourceBean().getClientId());
+			filter.put("gtEndDate", outsourceForm.getOutsourceBean()
+					.getStartDate());
+			List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
+			tmpList = outsourceManager.getAllWithFilter(filter);
+			if (tmpList.size() > 0) {
+				if (tmpList.get(0).getIsGross() != outsourceForm
+						.getOutsourceBean().getIsGross()) {
 					flagError = 1;
-					outsourceForm.getMessageList().add(
-							"Another contract with client "
-									+ outsourceForm.getOutsourceBean()
-											.getClientName()
-									+ ", can't change is gross value");
+					if (tmpList.get(0).getIsGross() == 1) {
+						outsourceForm.getMessageList().add(
+								"Client already have contract "
+										+ "with tax include, new contract "
+										+ "must be tax include as well");
+					} else {
+						outsourceForm.getMessageList().add(
+								"Client already have contract "
+										+ "with tax exclude, new contract "
+										+ "must be tax exclude as well");
+					}
+
 				}
-	
-			}			
+			}
+
 			if (flagError == 1) {
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
@@ -364,7 +428,7 @@ public class OutsourceHandler extends Action {
 				outsourceForm.setFilterMonth("");
 				outsourceForm.setFilterYear(String.valueOf(year));
 
-				Map filter = new HashMap();
+				filter = new HashMap();
 				filter.put("year", outsourceForm.getFilterYear());
 
 				outsourceForm.setOutsourceList(outsourceManager
