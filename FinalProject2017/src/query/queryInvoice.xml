@@ -62,8 +62,10 @@
 	
 	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
 		select
+			transaction_invoice_id as transactionInvoiceHeaderId,
 		    invoice_number as invoiceNumber,
 		    to_char(invoice_date,'MM/DD/YYYY') as invoiceDate,
+		    client_id as clientId,
 		    total_net as totalNet,
 		    total_ppn as totalPpn,
 		    total_gross as totalGross,
