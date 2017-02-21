@@ -49,6 +49,7 @@ public class InvoiceForm extends ActionForm{
 	private List invoiceTypeList = new ArrayList();
 	private List<InvoiceDetailBean> professionalServiceList = new ArrayList<InvoiceDetailBean>();
 	private List<InvoiceDetailBean> headHunterList = new ArrayList<InvoiceDetailBean>();
+	private List<InvoiceDetailBean> settlementList = new ArrayList<InvoiceDetailBean>();
 	private List<TrainingDetailBean> detailTrainingList = new ArrayList<TrainingDetailBean>();
 	private List outsourceList = new ArrayList();
 	private List invoiceDetailList = new ArrayList();
@@ -313,6 +314,12 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setTransactionTrainingDetailId(int transactionTrainingDetailId) {
 		this.transactionTrainingDetailId = transactionTrainingDetailId;
+	}
+	public List<InvoiceDetailBean> getSettlementList() {
+		return settlementList;
+	}
+	public void setSettlementList(List<InvoiceDetailBean> settlementList) {
+		this.settlementList = settlementList;
 	}
 	
 }
