@@ -33,6 +33,13 @@
 		changed_date = sysdate
 		where transaction_training_id = #transactionTrainingHeaderId#
 	</update>
+	<update id="resetSettlementInvoiceIdByHeaderId" parameterClass="java.util.Map">
+		update transaction_training_header set
+		settlement_invoice_id = 0,
+		changed_by = #changedBy#, 
+		changed_date = sysdate
+		where transaction_training_id = #transactionTrainingHeaderId#
+	</update>
 	
 	<update id="updateDetail" parameterClass="training.TrainingDetailBean">
 		update transaction_training_detail set
@@ -79,6 +86,13 @@
 			and t.transaction_training_id = #transactionTrainingHeaderId#
 	</select>
 	
+	<select id="getHeaderIdByDpId" resultClass="java.lang.Integer"
+						 parameterClass="java.lang.Integer">
+		 select transaction_training_id as transactionTrainingHeaderId
+		from transaction_training_header
+		where dp_invoice_id = #dpInvoiceId#
+	</select>
+	
 	<select id="getDetailById" resultClass="training.TrainingDetailBean"
 						 			parameterClass="java.lang.Integer">
 		select transaction_training_detail_id as transactionTrainingDetailId,
@@ -107,6 +121,7 @@
 				to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from transaction_training_detail
 		where transaction_training_id = #transactionTrainingHeaderId#
+		order by 1
 	</select>
 	
 	<select id="getAllWithFilter" parameterClass="java.util.Map">
@@ -172,6 +187,7 @@
 		        where i.transaction_invoice_id = h.dp_invoice_id
 		            and i.status_invoice_id != (select status_invoice_id from master_status_invoice where name = 'Paid')
 		    )
+		order by c.client_id
 	</select>
 	<select id="getOngoingTrainingByClient" parameterClass="java.lang.Integer" resultClass="training.TrainingBean">
 		select 
@@ -186,5 +202,6 @@
 		        where i.transaction_invoice_id = h.dp_invoice_id
 		            and i.status_invoice_id != (select status_invoice_id from master_status_invoice where name = 'Paid')
 		    )
+		order by description
 	</select>
 </sqlMap> 

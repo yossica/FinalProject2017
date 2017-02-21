@@ -82,9 +82,9 @@
 		<div class="col-lg-12"
 			style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF;">
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-md-10" style="padding-right: 1%">
-					<div class="col-md-1">Category</div>
-					<div class="col-md-11">
+				<div class="col-md-12" style="padding-right: 1%">
+					<div class="col-md-2">Category</div>
+					<div class="col-md-10">
 						<html:select property="categoryId" name="pettyCashForm" styleClass="form-control-client" >
 							<html:option value="">All</html:option>
 							<html:optionsCollection property="cashFlowCategoryList" label="name" value="cashFlowCategoryId" name="pettyCashForm" />
@@ -92,21 +92,21 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
-					<div class="col-md-1">From</div>
-					<div class="col-md-5">
+					<div class="col-md-2">From</div>
+					<div class="col-md-4">
 						<input type="date" class="form-control" style="width: 100%;" name="filterStartDate" value="<bean:write property="filterStartDate" name="pettyCashForm" />"/>
 					</div>
-					<div class="col-md-1">To</div>
-					<div class="col-md-5">
+					<div class="col-md-2">To</div>
+					<div class="col-md-4">
 						<input type="date" class="form-control" style="width: 100%;" name="filterEndDate" value="<bean:write property="filterEndDate" name="pettyCashForm" />"/>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 				<button type="button" class="btn btn-primary" onclick="javascript:filter()">Filter</button>
-				<span id="errorMessage" style="color:red">
+				<span id="errorMessage" style="color:red"></span>
 			</div>
 		</div>
 		<div class="row">

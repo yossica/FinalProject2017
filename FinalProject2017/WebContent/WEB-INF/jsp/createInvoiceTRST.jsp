@@ -13,6 +13,10 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	function flyToDelete(id){
+		document.forms[1].transactionTrainingDetailId.value = id;
+		flyToPage('deleteAdditionalFee');
+	}
 </script>
 </head>
 <body>
@@ -99,6 +103,30 @@
 				<div class="row">
 					<table border="1">
 						<tr>
+							<td colspan="2">Add Additional Fee</td>
+						</tr>
+						<tr>
+							<td>Description</td>
+							<td><html:text name="invoiceForm" property="trainingDetailBean.description"></html:text></td>
+						</tr>
+						<tr>
+							<td>Fee</td>
+							<td><html:text name="invoiceForm" property="trainingDetailBean.fee"></html:text></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('addAdditionalFee')">Save</button>
+								<button type="button" class="btn btn-primary">Cancel</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<button type="button" class="btn btn-primary">Add Additional Fee</button>
+			<div class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<table border="1">
+						<tr>
 							<th>Description</th>
 							<th>Price</th>
 							<th>Note</th>
@@ -108,9 +136,15 @@
 							<tr>
 								<td><bean:write name="inv" property="description"/></td>
 								<td><bean:write name="inv" property="fee" format="#,###.##"/></td>
-								<td><button type="button" class="btn btn-primary">Note</button></td>
 								<td>
-									<logic:equal name="inv" property="isSettlement" value="0"><a>X</a></logic:equal>
+									<input type="text"/>
+									<button type="button" class="btn btn-primary">Note</button>
+								</td>
+								<td>
+									<logic:equal name="inv" property="isSettlement" value="0">
+										<html:hidden name="invoiceForm" property="transactionTrainingDetailId"/>
+										<button type="button" class="btn btn-primary" onclick="javascript:flyToDelete('<bean:write name="inv" property="transactionTrainingDetailId" format="#"/>')">Delete</button>
+									</logic:equal>
 								</td>
 							</tr>
 						</logic:iterate>
