@@ -218,4 +218,23 @@
 		    )
 		order by 1
 	</select>
+	<select id="getTrainingByInvoiceDpId" resultClass="training.TrainingBean"
+						 parameterClass="java.lang.Integer">
+		 select t.transaction_training_id as transactionTrainingHeaderId,
+		 		t.client_id as clientId,
+		 		c.name as clientName,
+		 		t.dp_invoice_id as dpInvoiceId,
+		 		t.training_start_date as trainingStartDate,
+		 		t.training_end_date as trainingEndDate,
+				t.description as description,
+				t.is_gross as isGross,
+				t.settlement_invoice_id as settlementInvoiceId,
+				t.created_by as createdBy,
+				to_char(t.created_date, 'MM/dd/yyyy') as createdDate,
+				t.changed_by as changedBy,
+				to_char(t.changed_date, 'MM/dd/yyyy') as changedDate
+		from transaction_training_header t, master_client c
+		where t.client_id = c.client_id
+			and t.dp_invoice_id = #dp_invoice_id#
+	</select>
 </sqlMap> 

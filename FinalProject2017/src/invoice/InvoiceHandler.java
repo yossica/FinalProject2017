@@ -1,5 +1,6 @@
 package invoice;
 
+import generalInformation.GeneralInformationBean;
 import generalInformation.GeneralInformationManager;
 import holiday.HolidayManager;
 
@@ -32,6 +33,7 @@ import training.TrainingBean;
 import training.TrainingDetailBean;
 import training.TrainingManager;
 import utils.ExportReportManager;
+import client.ClientBean;
 import client.ClientManager;
 import employee.EmployeeBean;
 
@@ -58,7 +60,7 @@ public class InvoiceHandler extends Action {
 
 		if ("createInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoice");
-		}else if ("createInvoicePS".equals(invoiceForm.getTask())) {
+		}else if ("formInvoicePS".equals(invoiceForm.getTask())) {
 			String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
 					+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
 			Map paramMap = new HashMap();
@@ -92,7 +94,7 @@ public class InvoiceHandler extends Action {
 						invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
 					}
 					invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
-					return mapping.findForward("createInvoicePS");
+					return mapping.findForward("formInvoicePS");
 				}else {
 					invoiceForm.getMessageList().clear();
 					invoiceForm.getMessageList().add("There's no contract!");
@@ -106,7 +108,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			return mapping.findForward("detailInvoice");
-		}else if("insertTransactionOutsource".equals(invoiceForm.getTask())){
+		}else if("insertPS".equals(invoiceForm.getTask())){
 			NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
 			DecimalFormat doubleFormat = new DecimalFormat(".##");
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
@@ -167,10 +169,20 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
-			//invoiceForm.print();
-			invoiceManager.insert(invoiceForm.getInvoiceBean());
-			return  mapping.findForward("createInvoicePS");
-		}	else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
+			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
+			
+			//display invoice
+			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+			invoiceForm.setTransactionInvoiceHeaderId(idHeader);
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+			invoiceForm.setTask("detailInvoice");
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			return mapping.findForward("detailInvoice");
+		}	else if ("formInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(
 					clientManager.getById(
 							invoiceForm.getInvoiceBean().getClientId())
@@ -186,14 +198,14 @@ public class InvoiceHandler extends Action {
 			Integer year = Integer.parseInt(dateFormatYear.format(date));
 			invoiceForm.getInvoiceBean().setPeriodMonth(month);
 			invoiceForm.getInvoiceBean().setPeriodYear(year);
-			return mapping.findForward("createInvoiceHH");
+			return mapping.findForward("formInvoiceHH");
 		} else if ("addDetailHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
 			return mapping.findForward("createInvoiceHH");
 		} else if ("createInvoiceTRDP".equals(invoiceForm.getTask())) {			
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
-			return mapping.findForward("createInvoiceTRDP");
+			return mapping.findForward("formInvoiceTRDP");
 		} else if ("insertTRDP".equals(invoiceForm.getTask())) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -306,6 +318,49 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
 			invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			return mapping.findForward("createInvoiceTRST");
+		} else if ("editInvoice".equals(invoiceForm.getTask())) {
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
+			invoiceForm.getInvoiceBean().setDetailList(invoiceManager.getDetailById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
+			int invoiceTypeId = invoiceForm.getInvoiceBean().getInvoiceTypeId();
+			if (invoiceTypeId == 1){
+				//Outsource
+				invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+				String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
+						+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
+				Map paramMap = new HashMap();
+				paramMap.put("clientId", invoiceForm.getInvoiceBean().getClientId());
+				List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
+				bean = outsourceManager.getOutsourceContract(paramMap);
+				InvoiceDetailBean invoiceDetailBean;
+				for (OutsourceBean temp : bean) {
+					invoiceDetailBean = new InvoiceDetailBean();
+					invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
+					invoiceDetailBean.setEmployeeId(temp.getEmployeeId());
+					invoiceDetailBean.setFee(temp.getFee());
+					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
+					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
+				}
+				invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
+				return  mapping.findForward("formInvoicePS");
+			} else if (invoiceTypeId == 2){
+				//Head Hunter
+				return mapping.findForward("formInvoiceHH");
+			} else if (invoiceTypeId == 3){
+				//Training
+				String paymentDescription = invoiceManager.checkTrainingPaymentTypeByHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+				//cek if DP/Settlement
+				if(paymentDescription.toUpperCase().endsWith("DP")){	
+					invoiceForm.setTrainingBean(trainingManager.getTrainingByInvoiceDpId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
+					double trainingFee = (double) (2 * invoiceForm.getInvoiceBean().getDetailList().get(0).getFee());
+					invoiceForm.setTrainingFee(trainingFee);
+					invoiceForm.setInvoiceDetailNotes(invoiceForm.getInvoiceBean().getDetailList().get(0).getNotes());
+				}else if(paymentDescription.toUpperCase().endsWith("SETTLEMENT")){
+				}
+				return mapping.findForward("formInvoiceTRDP");
+				
+			}
+			
+			return null;
 		} else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
 			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
@@ -447,8 +502,6 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
-			//invoiceForm.print();
-			
 			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
 			
 			//display invoice
@@ -620,6 +673,53 @@ public class InvoiceHandler extends Action {
 			
 			invoiceForm.setInvoiceList(invoiceSummaryData);
 			return mapping.findForward("invoice");
+
+		} else if("exportDetail".equals(invoiceForm.getTask())){
+			Integer invoiceHeaderId = invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId();
+			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceHeaderId);			
+			ClientBean clientBean = clientManager.getById(invoiceBean.getClientId());
+			
+			GeneralInformationBean rekNo = generalInformationManager.getByKey("rek_no");
+			GeneralInformationBean sign = generalInformationManager.getByKey("sign");
+			
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("name", generalInformationManager.getByKey("name").getValue());
+			parameters.put("address", generalInformationManager.getByKey("addr").getValue()+
+					"\nPhone:"+generalInformationManager.getByKey("telp").getValue()+
+					"\nFax: "+generalInformationManager.getByKey("fax").getValue());
+			parameters.put("invoiceNo", invoiceBean.getInvoiceNumber());
+			parameters.put("invoiceDate", invoiceBean.getInvoiceDate());
+			parameters.put("reference", "");
+			parameters.put("clientName", clientBean.getName());
+			parameters.put("clientAddress", clientBean.getAddress());
+			parameters.put("clientCity", clientBean.getCity());
+			parameters.put("clientPostalCode", clientBean.getPostalCode());
+			parameters.put("clientPhoneNumber", clientBean.getPhoneNumber());
+			parameters.put("clinetFaxNumber", clientBean.getFaxNumber());
+			parameters.put("totalNet", invoiceBean.getTotalNet());
+			parameters.put("totalPPN", invoiceBean.getTotalPpn());
+			parameters.put("totalGross", invoiceBean.getTotalGross());
+			parameters.put("invoiceNote", invoiceBean.getNotes()==null?"":invoiceBean.getNotes());
+			parameters.put("ppn", generalInformationManager.getByKey("tax").getValue());
+			parameters.put("accountDetail", rekNo.getValue());
+			parameters.put("manager", sign.getValue());
+			
+			List invoiceDetailData = invoiceManager.getDetailById(invoiceHeaderId);
+			//export to pdf
+			String filePath = this.getServlet().getServletContext().getRealPath("/asset/");
+			parameters.put("filePath", filePath);
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat printDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+			String fileName = invoiceBean.getInvoiceNumber().replaceAll("/", "")+"_"+printDateFormat.format(cal.getTime())+".pdf";
+			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceDetailReport"+".jrxml",
+					fileName, parameters, invoiceDetailData);
+			
+			//return to detail invoice
+			invoiceForm.setInvoiceBean(invoiceBean);
+			invoiceForm.setInvoiceDetailList(invoiceDetailData);
+			invoiceForm.setNote(rekNo);
+			invoiceForm.setSign(sign);
+			return mapping.findForward("detailInvoice");
 		} else {
 			Calendar cc = Calendar.getInstance();
 			int cyear = cc.get(Calendar.YEAR);
