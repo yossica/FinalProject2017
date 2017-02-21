@@ -170,7 +170,6 @@ public class InvoiceHandler extends Action {
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
 			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
-//			return  mapping.findForward("createInvoicePS");
 			
 			//display invoice
 			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
@@ -328,7 +327,23 @@ public class InvoiceHandler extends Action {
 			if (invoiceTypeId == 1){
 				//Outsource
 				invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
-				
+				String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
+						+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
+				Map paramMap = new HashMap();
+				paramMap.put("clientId", invoiceForm.getInvoiceBean().getClientId());
+				List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
+				bean = outsourceManager.getOutsourceContract(paramMap);
+				InvoiceDetailBean invoiceDetailBean;
+				for (OutsourceBean temp : bean) {
+					invoiceDetailBean = new InvoiceDetailBean();
+					invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
+					invoiceDetailBean.setEmployeeId(temp.getEmployeeId());
+					invoiceDetailBean.setFee(temp.getFee());
+					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
+					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
+				}
+				invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
+				return  mapping.findForward("createInvoicePS");
 			} else if (invoiceTypeId == 2){
 				//Head Hunter
 			} else if (invoiceTypeId == 3){
