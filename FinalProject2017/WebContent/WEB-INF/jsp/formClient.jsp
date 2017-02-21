@@ -26,42 +26,43 @@
 		var errorMessage = "";
 
 		if (name == "") {
-			errorMessage = errorMessage + "Name must be filled!<br/>";
+			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
 			errorMessage = errorMessage
-					+ "Name must be in alphabets only!<br/>";
+					+ "Name must be in alphabets only! \n";
 		}
 		if (address == "") {
-			errorMessage = errorMessage + "Address must be filled!<br/>";
+			errorMessage = errorMessage + "Address must be filled! \n";
 		} else if (!alphanumAndSpecial.test(address)) {
 			errorMessage = errorMessage
-					+ "Address should contain letters, numbers, comma, and period only!<br/>";
+					+ "Address should contain letters, numbers, comma, and period only! \n";
 		}
 		if (city == "") {
-			errorMessage = errorMessage + "City must be filled!<br/>";
+			errorMessage = errorMessage + "City must be filled! \n";
 		} else if (!letters.test(city)) {
 			errorMessage = errorMessage
-					+ "City must be in alphabets only!<br/>";
+					+ "City must be in alphabets only! \n";
 		}
 		if (phoneNumber == "") {
-			errorMessage = errorMessage + "Phone Number must be filled!<br/>";
+			errorMessage = errorMessage + "Phone Number must be filled! \n";
 		} else if (!phoneRegex.test(phoneNumber)) {
 			errorMessage = errorMessage
-					+ "Invalid format of phone number!<br/>";
+					+ "Invalid format of phone number! \n";
 		}
 		if (faxNumber == "") {
-			errorMessage = errorMessage + "Fax Number must be filled!<br/>";
+			errorMessage = errorMessage + "Fax Number must be filled! \n";
 		} else if (!faxRegex.test(faxNumber)) {
-			errorMessage = errorMessage + "Invalid format of fax number!<br/>";
+			errorMessage = errorMessage + "Invalid format of fax number! \n";
 		}
 		if (postalCode == "") {
-			errorMessage = errorMessage + "Postal Code must be filled!<br/>";
+			errorMessage = errorMessage + "Postal Code must be filled! \n";
 		} else if (!numbers.test(postalCode)) {
 			errorMessage = errorMessage
-					+ "Postal Code must be in numbers only!<br/>";
+					+ "Postal Code must be in numbers only! \n";
 		}
 		if (errorMessage.length != 0) {
-			document.getElementById("message").innerHTML = errorMessage;
+			sweetAlert("Oops...", errorMessage, "error");
+			/* document.getElementById("message").innerHTML = errorMessage; */
 			return;
 		} else {
 			swal({
@@ -76,13 +77,19 @@
 				closeOnCancel : false
 			}, function(isConfirm) {
 				if (isConfirm) {
-					flyToPage();
+					swal({title: "Good job!",
+						  text: "Save Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  flyToPage();
+							  }, 10);
+							});			
 				} else {
 					swal("Cancelled", "Cancel Insert New Data", "error");
 				}
 			});
 		}
-
 	}
 
 	function cancel() {
@@ -92,7 +99,9 @@
 
 	function flyToPage() {
 		document.forms[1].submit();
+		
 	}
+	
 </script>
 <title>Financial Solution</title>
 </head>
@@ -165,9 +174,8 @@
 
 					<div class="col-md-15" style="color: red;" id="message">
 						<logic:notEmpty name="clientForm" property="messageList">
-							<logic:iterate id="message" name="clientForm"
-								property="messageList">
-								<bean:write name="message" />
+							<logic:iterate id="message" name="clientForm">
+								<input type="hidden" id="err" value="<bean:write name="message" />">
 							</logic:iterate>
 						</logic:notEmpty>
 					</div>

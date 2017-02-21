@@ -190,13 +190,13 @@ public class PettyCashHandler extends Action {
 				pettyCashForm.getMessageList().clear();
 				pettyCashForm
 						.getMessageList()
-						.add("Cannot create transaction that cost more than remaining balance!");
+						.add("Ooooops!!! Cannot create transaction that cost more than remaining balance!");
 
 				flag = false;
 			}
 			else if(amount > max_transaction){
 				pettyCashForm.getMessageList().clear();
-				pettyCashForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!\nPlease do this in cash in bank instead");
+				pettyCashForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!\nPlease do this in cash in bank instead");
 				flag = false;
 			}
 			
@@ -310,7 +310,7 @@ public class PettyCashHandler extends Action {
 			boolean flag = true;
 			if(amount > max_transaction){
 				pettyCashForm.getMessageList().clear();
-				pettyCashForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!");
+				pettyCashForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!");
 				flag = false;
 			}
 			

@@ -72,7 +72,7 @@ public class InvoiceHandler extends Action {
 				//client sudah punya invoice professional service di period tsb
 				//balikin ke create invoice + message ilst dikasi
 				invoiceForm.getMessageList().clear();
-				invoiceForm.getMessageList().add("Invoice already created");
+				invoiceForm.getMessageList().add("Success!!! Invoice already created");
 				return mapping.findForward("createInvoice");
 			} else{
 				if (outsourceManager.checkContract(paramMap) != 0) {
@@ -97,7 +97,7 @@ public class InvoiceHandler extends Action {
 					return mapping.findForward("createInvoicePS");
 				}else {
 					invoiceForm.getMessageList().clear();
-					invoiceForm.getMessageList().add("There's no contract!");
+					invoiceForm.getMessageList().add("Ooooops!!! There's no contract!");
 					return mapping.findForward("createInvoice");
 				}
 			}
@@ -303,7 +303,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
 			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
 			} else {
 				List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
@@ -316,7 +316,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
 			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
 			} else {
 				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
@@ -341,7 +341,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
 			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
 			} else {
 				invoiceForm.getTrainingDetailBean().setTransactionTrainingHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
@@ -359,7 +359,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
 			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
+				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
 			} else {
 				trainingManager.deleteDetail(invoiceForm.getTransactionTrainingDetailId());

@@ -71,7 +71,14 @@
 			document.getElementById("tax").style.display = "block";
 		}
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			sweetAlert("Oops...", message.value, "error");
+		}
+	}
 	window.onload = onloadFunc;
+	window.onload = alertError;
 </script>
 </head>
 <body>
@@ -197,11 +204,12 @@
 				
 			</div>
 			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
-			  				<logic:notEmpty name="invoiceForm" property="messageList">
-								<logic:iterate id="message" name="invoiceForm" property="messageList">
-									<bean:write name="message" /> 
-								</logic:iterate>
-							</logic:notEmpty>
+  				<logic:notEmpty name="invoiceForm" property="messageList">
+					<logic:iterate id="message" name="invoiceForm" property="messageList">
+						<%-- <bean:write name="message" />  --%>
+						<input type="hidden" id="err" value="<bean:write name="message" />">
+					</logic:iterate>
+				</logic:notEmpty>
 			</div>
 		</div>
 	</div>
