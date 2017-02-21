@@ -289,4 +289,17 @@ public class TrainingManager {
 		}
 		return result;
 	}
+	
+	public TrainingBean getTrainingByInvoiceDpId(int input){
+		TrainingBean result = new TrainingBean();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (TrainingBean) ibatis.queryForObject("training.getTrainingByInvoiceDpId", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
 }

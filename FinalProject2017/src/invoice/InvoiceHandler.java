@@ -205,7 +205,7 @@ public class InvoiceHandler extends Action {
 		} else if ("createInvoiceTRDP".equals(invoiceForm.getTask())) {			
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
-			return mapping.findForward("createInvoiceTRDP");
+			return mapping.findForward("formInvoiceTRDP");
 		} else if ("insertTRDP".equals(invoiceForm.getTask())) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -323,6 +323,7 @@ public class InvoiceHandler extends Action {
 			}
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("editInvoice".equals(invoiceForm.getTask())) {
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
 			int invoiceTypeId = invoiceForm.getInvoiceBean().getInvoiceTypeId();
 			if (invoiceTypeId == 1){
 				//Outsource
@@ -331,6 +332,16 @@ public class InvoiceHandler extends Action {
 				//Head Hunter
 			} else if (invoiceTypeId == 3){
 				//Training
+				String paymentDescription = invoiceManager.checkTrainingPaymentTypeByHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+				//cek if DP/Settlement
+				if(paymentDescription.toUpperCase().endsWith("DP")){	
+					invoiceForm.setTrainingBean(trainingManager.getTrainingByInvoiceDpId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
+					invoiceForm.setTrainingFee(invoiceForm.getInvoiceBean().getDetailList().get(0).getFee()*2);
+					invoiceForm.setInvoiceDetailNotes(invoiceForm.getInvoiceBean().getDetailList().get(0).getNotes());
+				}else if(paymentDescription.toUpperCase().endsWith("SETTLEMENT")){
+				}
+				return mapping.findForward("formInvoiceTRDP");
+				
 			}
 			
 			return null;
