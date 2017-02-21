@@ -19,7 +19,6 @@ public class InvoiceDetailBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-	
 	public int getTransactionInvoiceDetailId() {
 		return transactionInvoiceDetailId;
 	}
