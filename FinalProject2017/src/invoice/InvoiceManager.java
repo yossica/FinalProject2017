@@ -27,17 +27,17 @@ public class InvoiceManager {
 				}
 				Integer numberIntegerTemp = Integer.parseInt(numberStringTemp.substring(0,3));
 				invoiceNumber = String.format("%03d", numberIntegerTemp);
-				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += "/ACE/INV/";
 				invoiceNumber += input;
 			}else if (Integer.parseInt(input.substring(3)) > Integer.parseInt(invoiceDate.substring(0,4))){
 				invoiceNumber += "001";
-				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += "/ACE/INV/";
 				invoiceNumber += input;
 			}else {
 				String numberStringTemp = (String)ibatis.queryForObject("invoice.getMaxInvoiceNumber", null);
 				Integer numberIntegerTemp = Integer.parseInt(numberStringTemp.substring(0,3))+1;
 				invoiceNumber = String.format("%03d", numberIntegerTemp);
-				invoiceNumber += "/ACE/INV.";
+				invoiceNumber += "/ACE/INV/";
 				invoiceNumber += input;
 			}
 		} catch (SQLException e) {
@@ -168,6 +168,30 @@ public class InvoiceManager {
 		return result;
 	}
 	
+	public InvoiceBean getHeaderIdByNumber(String input){
+		InvoiceBean result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (InvoiceBean) ibatis.queryForObject("invoice.getHeaderIdByNumber", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;		
+	}
+	
+	public String checkTrainingPaymentTypeByHeaderId(Integer input){
+		String result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (String) ibatis.queryForObject("invoice.checkTrainingPaymentTypeByHeaderId", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;		
+	}
+	
 	public List getCreatedRemainderList() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -216,6 +240,4 @@ public class InvoiceManager {
 		}
 		return result;
 	}
-	
-	
 }

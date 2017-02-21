@@ -9,6 +9,76 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Invoice</title>
 <script>
+	function insert(){
+		//validate
+		var fee = document.getElementsByName("trainingFee")[0].value;
+		var description = document.getElementsByName("trainingBean.description")[0].value;		
+		var startDate = document.getElementsByName("trainingBean.trainingStartDate")[0].value;
+		var endDate = document.getElementsByName("trainingBean.trainingEndDate")[0].value;		
+		
+		var doubleReg = /^([\d]+)(|.[\d]+)$/;
+		var errorMessage = "";
+		var flag = true;
+
+		if(description == ""){
+			errorMessage = errorMessage + "Training Name must be filled!<br/>";
+		}
+		
+		if(startDate == ""){
+			errorMessage = errorMessage + "Start Date must be filled! <br/>";
+			flag = false;
+		}
+		if(endDate == ""){
+			errorMessage = errorMessage + "End Date must be filled! <br/>";
+			flag = false;
+		}
+		if(flag){
+			var s = startDate.split("-");
+			var sd = new Date(parseInt(s[0]),parseInt(s[1])-1,parseInt(s[2]));
+			var e = endDate.split("-");
+			var ed = new Date(parseInt(e[0]),parseInt(e[1])-1,parseInt(e[2]));
+			if(sd > ed){
+				errorMessage = errorMessage + "Start Date must be later than End Date! <br/>";
+			}
+		}
+		
+		if(fee == ""){
+			errorMessage = errorMessage + "Total Training Fee must be filled!<br/>";
+		}
+		else if(!doubleReg.test(fee)){
+			errorMessage = errorMessage + "Total Training Fee must be number!<br/>";
+		}
+		else if(parseFloat(fee) <= 0){
+			errorMessage = errorMessage + "Total Training Fee cannot be zero or negative!<br/>";	
+		}
+		
+		if(errorMessage.length != 0){
+			document.getElementById("message").innerHTML = errorMessage;
+			return;
+		}
+		else{		
+			
+			swal({
+				  title: "Are you sure?",
+				  text: "System will insert these data to Invoice",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Insert",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+			            	flyToPage("insertTRDP");
+				  } else {
+				    swal("Cancelled", "Cancel Insert Transaction", "error");
+				  }
+				});
+			
+		}			
+	}
 	function flyToPage(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -126,9 +196,16 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTRDP')">Save</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
 					</div>
 				</div>
+				<div class="col-md-7" id="message" style="color:red">
+	        		<logic:notEmpty name="invoiceForm" property="messageList">
+						<logic:iterate id="message" name="invoiceForm" property="messageList">
+							<bean:write name="message" /> 
+						</logic:iterate>
+					</logic:notEmpty>
+	        	</div>
 			</div>
 		</div>
 	</div>

@@ -10,8 +10,55 @@
 <title>Create Invoice</title>
 <script>
 	function flyToPage(task){
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+		var detailSize = document.getElementsByName("invoiceBean.detailSize")[0].value;
+		var errorMessage = "";
+		for(count = 0; count < detailSize; count++){
+			var manDays = document.getElementsByName("invoiceDetailPS["+ count +"].manDays")[0].value;
+			var workDays = document.getElementsByName("invoiceDetailPS["+ count +"].workDays")[0].value;
+			var numberReg = /^\d+$/; 
+			
+			if(manDays == ""){
+				errorMessage+="Man Days at row "+(count+1)+" must be filled!<br/>";
+			}
+			else if(!numberReg.test(manDays)){
+				errorMessage+="Man Days at row "+(count+1)+" must be number and not negative!<br/>";
+			}
+			else if(manDays>workDays){
+				errorMessage+="Man Days at row "+(count+1)+" must lesser than Work Days!<br/>";
+			}
+
+			if(workDays == ""){
+				errorMessage+="Work Days at row "+(count+1)+" must be filled!<br/>";
+			}
+			else if(!numberReg.test(workDays)){
+				errorMessage+="Work Days at row "+(count+1)+" must be number and not negative!<br/>";
+			}
+			
+         }
+
+		if(errorMessage.length != 0){
+			document.getElementById("message").innerHTML = errorMessage;
+			return;
+		}
+		 swal({
+			  title: "Are you sure?",
+			  text: "System will insert these data to Invoice Professional Service",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#ef2300",
+			  confirmButtonText: "Yes, Insert",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+					document.forms[1].task.value = task;
+					document.forms[1].submit();
+			  } else {
+			    swal("Cancelled", "Cancel Insert Transaction", "error");
+			  }
+			});
 	}
 </script>
 </head>
@@ -41,6 +88,7 @@
 					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
+						<html:hidden name="invoiceForm" property="invoiceBean.clientName" />
 						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
 					</div>
 				</div>
@@ -51,6 +99,7 @@
 					<div class="col-md-2"><label>Contract Service</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
+						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 					</div>
 				</div>
@@ -113,6 +162,7 @@
 								<th>Notes</th>
 							</tr>
 							<tbody>
+							<html:hidden name="invoiceForm" property="invoiceBean.detailSize" />
 							<logic:notEmpty property="professionalServiceList" name="invoiceForm">
 								<logic:iterate id="invoiceDetailPS" property="professionalServiceList"
 									name="invoiceForm">
@@ -120,20 +170,22 @@
 										<td>
 											<bean:write property="employeeName" name="invoiceDetailPS" />
 											<html:hidden property="employeeName" name="invoiceDetailPS" indexed="true"/>
+											<html:hidden property="employeeId" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>
-											<bean:write property="fee" name="invoiceDetailPS" format="#"/>
+											<bean:write property="fee" name="invoiceDetailPS" format="##,###.##"/>
 											<html:hidden property="fee" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>
-											<bean:write property="workDays" name="invoiceDetailPS" format="#"/>
-											<html:hidden property="workDays" name="invoiceDetailPS" indexed="true"/>
+											<html:text property="workDays" name="invoiceDetailPS" styleClass="form-control" indexed="true"/>
 										</td>
 										<td>
-											<html:text name="invoiceDetailPS" property="manDays" styleClass="form-control" indexed="true" value=""></html:text>
+											<html:text property="manDays" name="invoiceDetailPS" styleClass="form-control" indexed="true" value=""/>
+											<html:hidden property="manDays" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>
-											<html:text name="invoiceDetailPS" property="notes" styleClass="form-control" indexed="true"></html:text>
+											<html:text property="notes" name="invoiceDetailPS" styleClass="form-control" indexed="true"></html:text>
+											<html:hidden property="notes" name="invoiceDetailPS" indexed="true"/>
 										</td>
 									</tr>
 								</logic:iterate>
@@ -151,6 +203,8 @@
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTransactionOutsource')">Save</button>
 					</div>
 				</div>
+			</div>
+			<div class="col-md-4" style="color: red;" id="message">
 			</div>
 		</div>
 	</div>

@@ -3,45 +3,45 @@ package invoice;
 import java.io.Serializable;
 
 public class InvoiceDetailBean implements Serializable {
-	private Integer transactionInvoiceDetailId;
-	private Integer transactionInvoiceHeaderId;
-	private Integer numb;
+	private int transactionInvoiceDetailId;
+	private int transactionInvoiceHeaderId;
 	private String description;
+	private Integer numb;
 	private Double fee;
 	private Double totalFee;
 	private Double unitPrice;
 	private Integer employeeId;
 	private String employeeName;
-	private Integer workDays;
-	private Integer manDays;
+	private int workDays;
+	private int manDays;
 	private String notes;
 	private String createdBy;
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-	public Integer getTransactionInvoiceDetailId() {
+	public int getTransactionInvoiceDetailId() {
 		return transactionInvoiceDetailId;
 	}
-	public void setTransactionInvoiceDetailId(Integer transactionInvoiceDetailId) {
+	public void setTransactionInvoiceDetailId(int transactionInvoiceDetailId) {
 		this.transactionInvoiceDetailId = transactionInvoiceDetailId;
 	}
-	public Integer getTransactionInvoiceHeaderId() {
+	public int getTransactionInvoiceHeaderId() {
 		return transactionInvoiceHeaderId;
 	}
-	public void setTransactionInvoiceHeaderId(Integer transactionInvoiceHeaderId) {
+	public void setTransactionInvoiceHeaderId(int transactionInvoiceHeaderId) {
 		this.transactionInvoiceHeaderId = transactionInvoiceHeaderId;
-	}
-	public Integer getNumb() {
-		return numb;
-	}
-	public void setNumb(Integer numb) {
-		this.numb = numb;
 	}
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Integer getNumb() {
+		return numb;
+	}
+	public void setNumb(Integer numb) {
+		this.numb = numb;
 	}
 	public Double getFee() {
 		return fee;
@@ -73,16 +73,16 @@ public class InvoiceDetailBean implements Serializable {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public Integer getWorkDays() {
+	public int getWorkDays() {
 		return workDays;
 	}
-	public void setWorkDays(Integer workDays) {
+	public void setWorkDays(int workDays) {
 		this.workDays = workDays;
 	}
-	public Integer getManDays() {
+	public int getManDays() {
 		return manDays;
 	}
-	public void setManDays(Integer manDays) {
+	public void setManDays(int manDays) {
 		this.manDays = manDays;
 	}
 	public String getNotes() {
