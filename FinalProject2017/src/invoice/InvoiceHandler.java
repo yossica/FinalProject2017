@@ -1,5 +1,6 @@
 package invoice;
 
+import generalInformation.GeneralInformationBean;
 import generalInformation.GeneralInformationManager;
 import holiday.HolidayManager;
 
@@ -32,6 +33,7 @@ import training.TrainingBean;
 import training.TrainingDetailBean;
 import training.TrainingManager;
 import utils.ExportReportManager;
+import client.ClientBean;
 import client.ClientManager;
 import employee.EmployeeBean;
 
@@ -563,6 +565,52 @@ public class InvoiceHandler extends Action {
 			
 			invoiceForm.setInvoiceList(invoiceSummaryData);
 			return mapping.findForward("invoice");
+		} else if("exportDetail".equals(invoiceForm.getTask())){
+			Integer invoiceHeaderId = invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId();
+			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceHeaderId);			
+			ClientBean clientBean = clientManager.getById(invoiceBean.getClientId());
+			
+			GeneralInformationBean rekNo = generalInformationManager.getByKey("rek_no");
+			GeneralInformationBean sign = generalInformationManager.getByKey("sign");
+			
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("name", generalInformationManager.getByKey("name").getValue());
+			parameters.put("address", generalInformationManager.getByKey("addr").getValue()+
+					"\nPhone:"+generalInformationManager.getByKey("telp").getValue()+
+					"\nFax: "+generalInformationManager.getByKey("fax").getValue());
+			parameters.put("invoiceNo", invoiceBean.getInvoiceNumber());
+			parameters.put("invoiceDate", invoiceBean.getInvoiceDate());
+			parameters.put("reference", "");
+			parameters.put("clientName", clientBean.getName());
+			parameters.put("clientAddress", clientBean.getAddress());
+			parameters.put("clientCity", clientBean.getCity());
+			parameters.put("clientPostalCode", clientBean.getPostalCode());
+			parameters.put("clientPhoneNumber", clientBean.getPhoneNumber());
+			parameters.put("clinetFaxNumber", clientBean.getFaxNumber());
+			parameters.put("totalNet", invoiceBean.getTotalNet());
+			parameters.put("totalPPN", invoiceBean.getTotalPpn());
+			parameters.put("totalGross", invoiceBean.getTotalGross());
+			parameters.put("invoiceNote", invoiceBean.getNotes()==null?"":invoiceBean.getNotes());
+			parameters.put("ppn", generalInformationManager.getByKey("tax").getValue());
+			parameters.put("accountDetail", rekNo.getValue());
+			parameters.put("manager", sign.getValue());
+			
+			List invoiceDetailData = invoiceManager.getDetailById(invoiceHeaderId);
+			//export to pdf
+			String filePath = this.getServlet().getServletContext().getRealPath("/asset/");
+			parameters.put("filePath", filePath);
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat printDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+			String fileName = invoiceBean.getInvoiceNumber().replaceAll("/", "")+"_"+printDateFormat.format(cal.getTime())+".pdf";
+			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceDetailReport"+".jrxml",
+					fileName, parameters, invoiceDetailData);
+			
+			//return to detail invoice
+			invoiceForm.setInvoiceBean(invoiceBean);
+			invoiceForm.setInvoiceDetailList(invoiceDetailData);
+			invoiceForm.setNote(rekNo);
+			invoiceForm.setSign(sign);
+			return mapping.findForward("detailInvoice");
 		} else {
 			Calendar cc = Calendar.getInstance();
 			int cyear = cc.get(Calendar.YEAR);
