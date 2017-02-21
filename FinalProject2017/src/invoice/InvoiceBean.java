@@ -27,6 +27,7 @@ public class InvoiceBean implements Serializable {
 	private String changedBy;
 	private String changedDate;
 	private double totalPpn;
+	private String detailSize;
 	private List<InvoiceDetailBean> detailList;
 
 	public int getTransactionInvoiceHeaderId() {
@@ -215,6 +216,14 @@ public class InvoiceBean implements Serializable {
 
 	public void setTotalPpn(double totalPpn) {
 		this.totalPpn = totalPpn;
+	}
+
+	public String getDetailSize() {
+		return detailSize;
+	}
+
+	public void setDetailSize(String detailSize) {
+		this.detailSize = detailSize;
 	}
 	
 }
