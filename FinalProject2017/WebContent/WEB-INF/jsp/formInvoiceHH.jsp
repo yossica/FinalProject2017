@@ -100,19 +100,22 @@
 				<div class="col-md-12" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-6">
+					<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
 						: <bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+					</logic:equal>
+					<logic:equal name="invoiceForm" property="task" value="editInvoice">
+						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+					</logic:equal>
 					</div>
 				</div>
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-12" style="padding-right: 1%">
-
 					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-6">
-						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
-						<html:hidden name="invoiceForm" property="invoiceBean.clientName"/>
-						: <bean:write name="invoiceForm" property="invoiceBean.clientName"/>
+					<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
+					<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
 					</div>
 				</div>
 			</div>
@@ -120,28 +123,30 @@
 				<div class="row">
 					<div class="col-md-2"><label>Contract Service</label></div>
 					<div class="col-md-6">
-						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
-						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeName" />
-						: <bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
+					<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
+					<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 					</div>
 				</div>
 			</div>
+			<html:hidden name="invoiceForm" property="invoiceBean.periodMonth" />
+			<html:hidden name="invoiceForm" property="invoiceBean.periodYear" />
+			<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
 			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Period</label></div>
 					<div class="col-md-6">
-						<html:hidden name="invoiceForm" property="invoiceBean.periodMonth" />
-						<html:hidden name="invoiceForm" property="invoiceBean.periodYear" />
 						: <bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#" />
 						/
 						<bean:write name="invoiceForm" property="invoiceBean.periodYear" format="#" />
 					</div>
 				</div>
 			</div>
+			</logic:equal>
 			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Tax</label></div>
 					<div class="col-md-6">
+					<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
 						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
 						: 
 						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="1">
@@ -150,6 +155,10 @@
 						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="0">
 							Exclude
 						</logic:equal>
+					</logic:equal>
+					<logic:equal name="invoiceForm" property="task" value="editInvoice">
+						LOL
+					</logic:equal>
 					</div>
 				</div>
 			</div>
@@ -157,7 +166,12 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
+					<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
 						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true" ></html:textarea>
+					</logic:equal>
+					<logic:equal name="invoiceForm" property="task" value="editInvoice">
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" rows="3"></html:textarea>
+					</logic:equal>
 					</div>
 				</div>
 			</div>

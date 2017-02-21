@@ -332,7 +332,9 @@ public class InvoiceHandler extends Action {
 				invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
 			} else if (invoiceTypeId == 2){
 				//Head Hunter
-				return mapping.findForward("formInvoiceHH");
+				System.out.println(invoiceForm.getInvoiceBean().getInvoiceDate());
+				//invoiceForm.getInvoiceBean().setIn
+				//return mapping.findForward("formInvoiceHH");
 			} else if (invoiceTypeId == 3){
 				//Training
 				String paymentDescription = invoiceManager.checkTrainingPaymentTypeByHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
