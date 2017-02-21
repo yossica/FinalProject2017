@@ -170,7 +170,6 @@ public class InvoiceHandler extends Action {
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
 			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
-//			return  mapping.findForward("createInvoicePS");
 			
 			//display invoice
 			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
@@ -329,6 +328,24 @@ public class InvoiceHandler extends Action {
 			int invoiceTypeId = invoiceForm.getInvoiceBean().getInvoiceTypeId();
 			if (invoiceTypeId == 1){
 				//Outsource
+				invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+				String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
+						+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
+				Map paramMap = new HashMap();
+				paramMap.put("clientId", invoiceForm.getInvoiceBean().getClientId());
+				List<OutsourceBean> bean = new ArrayList<OutsourceBean>();
+				bean = outsourceManager.getOutsourceContract(paramMap);
+				InvoiceDetailBean invoiceDetailBean;
+				for (OutsourceBean temp : bean) {
+					invoiceDetailBean = new InvoiceDetailBean();
+					invoiceDetailBean.setEmployeeName(temp.getEmployeeName());
+					invoiceDetailBean.setEmployeeId(temp.getEmployeeId());
+					invoiceDetailBean.setFee(temp.getFee());
+					invoiceDetailBean.setWorkDays(holidayManager.getWorkingDays(exampleDate));
+					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
+				}
+				invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
+				return  mapping.findForward("formInvoicePS");
 			} else if (invoiceTypeId == 2){
 				//Head Hunter
 				return mapping.findForward("formInvoiceHH");
@@ -669,7 +686,7 @@ public class InvoiceHandler extends Action {
 
 		} else if("exportDetail".equals(invoiceForm.getTask())){
 			Integer invoiceHeaderId = invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId();
-			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceHeaderId);			
+			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceHeaderId);	
 			ClientBean clientBean = clientManager.getById(invoiceBean.getClientId());
 			
 			GeneralInformationBean rekNo = generalInformationManager.getByKey("rek_no");
