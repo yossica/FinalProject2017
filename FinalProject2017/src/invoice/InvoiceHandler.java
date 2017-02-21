@@ -325,6 +325,8 @@ public class InvoiceHandler extends Action {
 			int invoiceTypeId = invoiceForm.getInvoiceBean().getInvoiceTypeId();
 			if (invoiceTypeId == 1){
 				//Outsource
+				invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+				
 			} else if (invoiceTypeId == 2){
 				//Head Hunter
 			} else if (invoiceTypeId == 3){
