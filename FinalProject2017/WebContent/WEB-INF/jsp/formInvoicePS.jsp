@@ -9,6 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Invoice</title>
 <script>
+	function back(task){
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
+	}
 	function flyToPage(task){
 		var detailSize = document.getElementsByName("invoiceBean.detailSize")[0].value;
 		var errorMessage = "";
@@ -137,11 +141,9 @@
 			</div>
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
-
 					<div class="col-md-2"><label>Invoice Notes</label></div>
-
 					<div class="col-md-5">
-						<html:text name="invoiceForm" property="invoiceBean.notes" />
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true" ></html:textarea>
 					</div>
 				</div>
 			</div>
@@ -199,8 +201,8 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTransactionOutsource')">Save</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:back('createInvoice')">Back</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertPS')">Save</button>
 					</div>
 				</div>
 			</div>
