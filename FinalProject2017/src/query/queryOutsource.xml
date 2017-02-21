@@ -129,6 +129,13 @@
 					</isNotEmpty>
 				</isNotNull>
 			</dynamic>
+			<dynamic prepend="AND">
+				<isNotNull property="gtEndDate">
+					<isNotEmpty property="gtEndDate">
+			            end_date &gt;= to_date(#gtEndDate# ,'MM/dd/yyyy')
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>
 			
 		order by transaction_outsource_id asc
 	</select>

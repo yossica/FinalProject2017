@@ -15,8 +15,8 @@
 		var name = document.getElementsByName("name")[0].value;
 		var email = document.getElementsByName("email")[0].value;
 
-		var letters = /([A-Za-z ])+\w/;
-		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		var letters = /^([A-z ]{3,})+$/;
+		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}])|(([A-z\-\d]+\.)+[A-z]{2,}))$/;
 		var errorMessage = "";
 
 		if (name == "") {
@@ -36,13 +36,14 @@
 		if (errorMessage.length != 0) {
 			document.getElementById("message").innerHTML = errorMessage;
 			return;
-		} else {
+		} 			
+		else {
 			swal({
 				title : "Are you sure?",
 				text : "System will insert these data to client database",
 				type : "warning",
 				showCancelButton : true,
-				confirmButtonColor : "#27AE60",
+				confirmButtonColor : "#ef2300",
 				confirmButtonText : "Yes, Insert",
 				cancelButtonText : "No, Cancel Please!",
 				closeOnConfirm : false,
@@ -118,13 +119,15 @@
 			          </div>
 					  </div>
 
-					<div class="col-md-15" style="color: red;" id="message">
+					<div class="col-md-12" style="color: red;" id="message" >	
+										
 						<logic:notEmpty name="employeeForm" property="messageList">
 							<logic:iterate id="message" name="employeeForm"
 								property="messageList">
 								<bean:write name="message" />
 							</logic:iterate>
 						</logic:notEmpty>
+						
 					</div>
 
 				</div><!-- /.col lg 12 -->

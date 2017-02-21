@@ -11,13 +11,16 @@ import java.util.List;
 import org.apache.struts.action.ActionForm;
 
 import training.TrainingBean;
+import training.TrainingDetailBean;
 import client.ClientBean;
 
 public class InvoiceForm extends ActionForm{
 	
 	private InvoiceBean invoiceBean = new InvoiceBean();
-	
+
 	private TrainingBean trainingBean = new TrainingBean();
+	private TrainingDetailBean trainingDetailBean = new TrainingDetailBean();
+	
 	private double trainingFee;
 	private String invoiceDetailNotes;
 	
@@ -48,6 +51,9 @@ public class InvoiceForm extends ActionForm{
 	private List<InvoiceDetailBean> headHunterList = new ArrayList<InvoiceDetailBean>();
 	private List outsourceList = new ArrayList();
 	private List invoiceDetailList = new ArrayList();
+	private List ongoingTrainingList;
+	private List detailTrainingList;
+	private int transactionTrainingDetailId;
 	
 	private List invoiceList;
 	
@@ -275,6 +281,30 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setDeleteIndex(int deleteIndex) {
 		this.deleteIndex = deleteIndex;
+	}
+	public List getOngoingTrainingList() {
+		return ongoingTrainingList;
+	}
+	public void setOngoingTrainingList(List ongoingTrainingList) {
+		this.ongoingTrainingList = ongoingTrainingList;
+	}
+	public List getDetailTrainingList() {
+		return detailTrainingList;
+	}
+	public void setDetailTrainingList(List detailTrainingList) {
+		this.detailTrainingList = detailTrainingList;
+	}
+	public TrainingDetailBean getTrainingDetailBean() {
+		return trainingDetailBean;
+	}
+	public void setTrainingDetailBean(TrainingDetailBean trainingDetailBean) {
+		this.trainingDetailBean = trainingDetailBean;
+	}
+	public int getTransactionTrainingDetailId() {
+		return transactionTrainingDetailId;
+	}
+	public void setTransactionTrainingDetailId(int transactionTrainingDetailId) {
+		this.transactionTrainingDetailId = transactionTrainingDetailId;
 	}
 	
 }

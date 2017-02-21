@@ -9,25 +9,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Invoice</title>
 <style>
-/* Popup container */
+/* Popup container - can be anything you want */
 .popup {
     position: relative;
     display: inline-block;
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-/* The actual popup (appears on top) */
+/* The actual popup */
 .popup .popuptext {
-    width: 160px;
-    background-color: #555;
+    visibility: hidden;
+    width: 500px;
+    background-color: #337ab7;
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 8px 0;
+    padding: 8px;
     position: absolute;
     z-index: 1;
     bottom: 125%;
-    left: 50%;
+    left: -140px;
     margin-left: -80px;
 }
 
@@ -43,9 +48,22 @@
     border-color: #555 transparent transparent transparent;
 }
 
-/* Toggle this class when clicking on the popup container (hide and show the popup) */
+/* Toggle this class - hide and show the popup */
 .popup .show {
     visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
 }
 </style>
 <script>
@@ -53,15 +71,18 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	/* function flyToDetail(transactionInvoiceHeaderId, clientId){
+		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
+		document.forms[1].client.value = clientId;
+		flyToPage("detailInvoice");
+	} */
 	function deleteDetailHH(index){
 		document.forms[1].deleteIndex.value = index;
 		flyToPage('deleteDetailHH');
 	}
-	function showNotes(input){
-		document.getElementById(input).style.display = "inline";
-	}
-	function closeNotes(input){
-		document.getElementById(input).style.display = "none";
+	function toggleNotes(idNumber) {
+	    var popup = document.getElementById("myPopup"+idNumber);
+	    popup.classList.toggle("show");
 	}
 </script>
 </head>
@@ -76,52 +97,53 @@
 				<h1 class="page-header">Create Invoice (Cont)</h1>
 			</div>
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-md-10" style="padding-right: 1%">
+				<div class="col-md-12" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+						: <bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 					</div>
 				</div>
 			</div>
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-md-10" style="padding-right: 1%">
+				<div class="col-md-12" style="padding-right: 1%">
 
 					<div class="col-md-2"><label>Client</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
 						<html:hidden name="invoiceForm" property="invoiceBean.clientName"/>
-						<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
+						: <bean:write name="invoiceForm" property="invoiceBean.clientName"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Contract Service</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
 						<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeName" />
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
+						: <bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Period</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.periodMonth" />
 						<html:hidden name="invoiceForm" property="invoiceBean.periodYear" />
-						<bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#" />
+						: <bean:write name="invoiceForm" property="invoiceBean.periodMonth" format="#" />
 						/
 						<bean:write name="invoiceForm" property="invoiceBean.periodYear" format="#" />
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Tax</label></div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
+						: 
 						<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="1">
 							Include
 						</logic:equal>
@@ -131,7 +153,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="margin-top: 10px;">
+			<div class="col-md-12" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
@@ -139,15 +161,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-10" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 1%;">
+			<div class="col-md-12" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 30px;">
 				<div class="row">
 					<div class="col-md-12" style="text-align: center;">
 						<table class="table table-hover">
 							<tr>
 								<th>Description</th>
 								<th>Fee</th>
-								<th>Notes</th>
-								<th>Action</th>
+								<th style="text-align:center;">Notes</th>
+								<th style="text-align:center;">Action</th>
 							</tr>
 							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList" indexId="indexHH">
 							<tr>
@@ -158,17 +180,15 @@
 									<html:text name="invoiceDetailHH" property="fee" styleClass="form-control" indexed="true"></html:text>
 								</td>
 								<td>
-									<button type="button" class="btn btn-primary" onclick="javascript:showNotes('notes${indexHH}')">Notes</button>
-									<div id="notes${indexHH}" class="popup" style= "display:none">
-										<span class="popuptext">
-										Notes
-											<html:textarea name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true"></html:textarea>
-											<button type="button" class="btn btn-primary" onclick="javascript:closeNotes('notes${indexHH}')">Close</button>
+									<div class="popup">
+										<span class="popuptext" id="myPopup${indexHH}">
+											<html:textarea name="invoiceDetailHH" property="notes" styleClass="form-control" indexed="true" rows="7"></html:textarea>
 										</span>
+										<button type="button" class="btn btn-primary" onclick="javascript:toggleNotes(${indexHH})">Notes</button>
 									</div>
 								</td>
 								<td>
-									<button type="button" class="btn btn-primary btn-circle" style="margin-bottom: 1%;" onclick="javascript:deleteDetailHH('${indexHH}')"><i class="fa fa-minus"></i></button>
+									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteDetailHH('${indexHH}')"><i class="fa fa-times"></i></button>
 								</td>
 							</tr>
 							</logic:iterate>
@@ -188,5 +208,6 @@
 		</div>
 	</div>
 	</html:form>
+	
 </body>
 </html>
