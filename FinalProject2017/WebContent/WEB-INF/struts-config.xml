@@ -74,9 +74,12 @@
 		<action path="/user" name="userForm" type="user.UserHandler" scope="request">
 			<forward name="login" path="/WEB-INF/jsp/login.jsp"></forward>
 			<forward name="changePassword" path="/WEB-INF/jsp/changePassword.jsp"></forward>
+			<forward name="manageUser" path="/WEB-INF/jsp/formUser.jsp"></forward>
 		</action>
     
-		<action path="/login" forward="/user.do?task=login" />	
+		<action path="/login" forward="/user.do?task=login" />
+		<action path="/manageUser" forward="/user.do?task=manageUser" />	
 	</action-mappings>
 
 </struts-config>
+

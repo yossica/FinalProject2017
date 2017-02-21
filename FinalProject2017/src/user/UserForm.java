@@ -14,6 +14,9 @@ public class UserForm extends ActionForm {
 
 	private String newPassword;
 	private String confirmPassword;
+	
+	private String newUser;
+	private List userList;
 
 	public String getUserName() {
 		return userName;
@@ -66,4 +69,19 @@ public class UserForm extends ActionForm {
 		this.messageList = messageList;
 	}
 
+	public String getNewUser() {
+		return newUser;
+	}
+
+	public void setNewUser(String newUser) {
+		this.newUser = newUser;
+	}
+
+	public List getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List userList) {
+		this.userList = userList;
+	}
 }
