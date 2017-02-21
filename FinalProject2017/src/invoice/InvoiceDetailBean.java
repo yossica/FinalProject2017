@@ -38,6 +38,12 @@ public class InvoiceDetailBean implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public Integer getNumb() {
+		return numb;
+	}
+	public void setNumb(Integer numb) {
+		this.numb = numb;
+	}
 	public Double getTotalFee() {
 		return totalFee;
 	}
@@ -53,7 +59,7 @@ public class InvoiceDetailBean implements Serializable {
 	public Integer getEmployeeId() {
 		return employeeId;
 	}
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
 	public String getEmployeeName() {
