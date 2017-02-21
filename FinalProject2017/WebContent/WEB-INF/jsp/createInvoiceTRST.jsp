@@ -14,7 +14,7 @@
 		document.forms[1].submit();
 	}
 	function flyToDelete(id){
-		document.forms[1].transactionTrainingDetailId.value = id;
+		document.forms[1].deleteIndex.value = id;
 		flyToPage('deleteAdditionalFee');
 	}
 </script>
@@ -23,6 +23,7 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
+	<html:hidden property="deleteIndex" name="invoiceForm" />
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -39,7 +40,6 @@
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
-
 					<div class="col-md-2"><label>Client</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
@@ -84,7 +84,7 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"></html:textarea>
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
 					</div>
 				</div>
 			</div>
@@ -92,7 +92,6 @@
 				<div class="row">
 					<div class="col-md-2"><label>Training Name</label></div>
 					<div class="col-md-5">
-						<%-- <html:text name="invoiceForm" property="trainingBean.description" styleClass="form-control"/> --%>
 						<html:select name="invoiceForm" property="trainingBean.transactionTrainingHeaderId" styleClass="form-control" onchange="javascript:flyToPage('getTax')">
 							<html:optionsCollection name="invoiceForm" label="description" value="transactionTrainingHeaderId" property="ongoingTrainingList"/>
 						</html:select>
@@ -132,18 +131,15 @@
 							<th>Note</th>
 							<th>Action</th>
 						</tr>
-						<logic:iterate id="inv" name="invoiceForm" property="detailTrainingList">
+						<logic:iterate id="trainingDetail" name="invoiceForm" property="detailTrainingList" indexId="indexDetail">
 							<tr>
-								<td><bean:write name="inv" property="description"/></td>
-								<td><bean:write name="inv" property="fee" format="#,###.##"/></td>
+								<td><html:text name="trainingDetail" property="description" indexed="true"></html:text></td>
+								<td><html:text name="trainingDetail" property="fee" indexed="true"></html:text></td>
+								<td><html:text name="trainingDetail" property="note" indexed="true"></html:text></td>
 								<td>
-									<input type="text"/>
-									<button type="button" class="btn btn-primary">Note</button>
-								</td>
-								<td>
-									<logic:equal name="inv" property="isSettlement" value="0">
-										<html:hidden name="invoiceForm" property="transactionTrainingDetailId"/>
-										<button type="button" class="btn btn-primary" onclick="javascript:flyToDelete('<bean:write name="inv" property="transactionTrainingDetailId" format="#"/>')">Delete</button>
+									<html:hidden name="trainingDetail" property="isSettlement" indexed="true"/>
+									<logic:equal name="trainingDetail" property="isSettlement" value="0">
+										<button type="button" class="btn btn-primary" onclick="javascript:flyToDelete('${indexDetail}')">Delete</button>
 									</logic:equal>
 								</td>
 							</tr>
@@ -155,7 +151,7 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTRDP')">Save</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTRST')">Save</button>
 					</div>
 				</div>
 			</div>

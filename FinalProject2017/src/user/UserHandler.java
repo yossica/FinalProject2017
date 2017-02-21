@@ -21,6 +21,9 @@ public class UserHandler extends Action {
 		HttpSession session = request.getSession(true);
 
 		if ("login".equals(userForm.getTask())) {
+			if(userForm.getUserName() == null){
+				return mapping.findForward("login");
+			}
 			UserBean userBean = new UserBean();
 			userBean.setUserName(userForm.getUserName());
 			userBean.setPassword(userForm.getPassword());
@@ -36,18 +39,65 @@ public class UserHandler extends Action {
 			}
 
 		} else if ("changePassword".equals(userForm.getTask())) {
-			System.out.println("user handler change password");
+			if (session.getAttribute("username") == null) {
+				return mapping.findForward("login");
+			}
 			userForm.setUserName(session.getAttribute("username").toString());
 			userForm.setTask("");
 			return mapping.findForward("changePassword");
 		} else if ("saveChangePassword".equals(userForm.getTask())) {
 			// validasi login
+			if (session.getAttribute("username") == null) {
+				return mapping.findForward("login");
+			}
+			
+			boolean flag = true;
+			// validasi old password sama ga sama yang di database
+			UserBean userBean = new UserBean();
+			userBean.setUserName((String)session.getAttribute("username"));
+			userBean.setPassword(userForm.getPassword());
+			userForm.getMessageList().clear();
+			if(userManager.checkLogin(userBean) == 0){
+				userForm.getMessageList().add("Ooooops Old Password does not match");
+				flag = false;
+			}
 			// validasi new password dengan confirm password sama apa nggak
+			if(!userForm.getNewPassword().equals(userForm.getConfirmPassword())){
+				userForm.getMessageList().add("Ooooops New Password is not same as Confirm Password");
+				flag = false;
+			}
+			if(!flag) {
+				userForm.setPassword("");
+				userForm.setNewPassword("");
+				userForm.setConfirmPassword("");
+				return mapping.findForward("changePassword");
+			}
 			// update password
-			System.out.println("masuk save change password");
-			userForm.getMessageList().add("Change Password Success");
+			userBean.setPassword(userForm.getNewPassword());
+			userManager.changePassword(userBean);
+			userForm.setPassword("");
+			userForm.setNewPassword("");
+			userForm.setConfirmPassword("");
+			userForm.getMessageList().add("Success Change Password Success");
 			userForm.setTask("");
 			return mapping.findForward("changePassword");
+		} else if ("manageUser".equals(userForm.getTask())) {
+			userForm.setUserList(userManager.getAll());
+			return mapping.findForward("manageUser");
+		} else if ("insertUser".equals(userForm.getTask())) {
+			userForm.getMessageList().clear();
+			if(userManager.checkUsername(userForm.getNewUser()) > 0){
+				userForm.getMessageList().add("Username already exist!");
+				return mapping.findForward("manageUser");
+			}
+			userManager.insert(userForm.getNewUser());
+			userForm.setNewUser("");
+			userForm.setUserList(userManager.getAll());
+			return mapping.findForward("manageUser");
+		} else if ("resetPassword".equals(userForm.getTask())) {
+			userManager.resetPassword(userForm.getUserName());
+			userForm.setUserList(userManager.getAll());
+			return mapping.findForward("manageUser");
 		} else {
 			return mapping.findForward("login");
 		}

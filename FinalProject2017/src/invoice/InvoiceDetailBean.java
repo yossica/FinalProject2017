@@ -43,12 +43,6 @@ public class InvoiceDetailBean implements Serializable {
 	public void setNumb(Integer numb) {
 		this.numb = numb;
 	}
-	public Double getFee() {
-		return fee;
-	}
-	public void setFee(Double fee) {
-		this.fee = fee;
-	}
 	public Double getTotalFee() {
 		return totalFee;
 	}
@@ -63,9 +57,6 @@ public class InvoiceDetailBean implements Serializable {
 	}
 	public Integer getEmployeeId() {
 		return employeeId;
-	}
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
 	}
 	public String getEmployeeName() {
 		return employeeName;
@@ -114,5 +105,15 @@ public class InvoiceDetailBean implements Serializable {
 	}
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+	public Double getFee() {
+		return fee;
+	}
+	public void setFee(Double fee) {
+		this.fee = fee;
 	}
 }
