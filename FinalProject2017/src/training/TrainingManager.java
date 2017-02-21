@@ -107,6 +107,42 @@ public class TrainingManager {
 		}
 	}
 	
+	//dibuat oleh aldhi
+	public void updateSettlementId(int input){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try{			
+			ibatis.startTransaction();
+			ibatis.update("training.updateSettlementId", input);
+            ibatis.commitTransaction();            
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void deleteDetailByHeader(int input){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			ibatis.startTransaction();
+			ibatis.delete("training.deleteDetailByHeader", input);
+            ibatis.commitTransaction();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	//sampai sini
+	
 	public void resetSettlementInvoiceIdByHeaderId(Map input){
 		//kalau invoice settlement di cancel, maka perlu direset settlement invoice id nya jadi 0
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();

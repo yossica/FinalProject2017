@@ -302,45 +302,102 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
-				return mapping.findForward("createInvoice");
-			} else {
-				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
-				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
-			}
+			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+			invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
+			invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
-			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
-			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
-				return mapping.findForward("createInvoice");
-			} else {
-				invoiceForm.getTrainingDetailBean().setTransactionTrainingHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
-				invoiceForm.getTrainingDetailBean().setIsSettlement(0);
-				invoiceForm.getTrainingDetailBean().setCreatedBy((String)session.getAttribute("username"));
-				trainingManager.insertDetail(invoiceForm.getTrainingDetailBean());
-				invoiceForm.getTrainingDetailBean().setDescription(null);
-				invoiceForm.getTrainingDetailBean().setFee(0);
-				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
-				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
-			}
+			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+			invoiceForm.getDetailTrainingList().add(invoiceForm.getTrainingDetailBean());
+			invoiceForm.setTrainingDetailBean(new TrainingDetailBean());
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("deleteAdditionalFee".equals(invoiceForm.getTask())) {
-			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
-			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
-				return mapping.findForward("createInvoice");
-			} else {
-				trainingManager.deleteDetail(invoiceForm.getTransactionTrainingDetailId());
-				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
-				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
-			}
+			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+			invoiceForm.getDetailTrainingList().remove(invoiceForm.getDeleteIndex());
 			return mapping.findForward("createInvoiceTRST");
+		} else if ("insertTRST".equals(invoiceForm.getTask())) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat invoiceDateFormat = new SimpleDateFormat("MM.yy");
+			Calendar cal = Calendar.getInstance();
+			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(invoiceDateFormat.format(cal.getTime())));
+			invoiceDateFormat = new SimpleDateFormat("MM");
+			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
+			invoiceDateFormat = new SimpleDateFormat("yyyy");
+			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
+			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
+			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
+			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			double netTotal = 0;
+			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
+				//Ini kalau exclude PPN
+				for (TrainingDetailBean print : invoiceForm.getDetailTrainingList()) {
+					netTotal += print.getFee();
+				}
+				double formula = netTotal+(netTotal*ppn/100);
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(formula);
+				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
+			} else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
+				//Ini kalau include PPN
+				double devider = 100+ppn;
+				double netFee;
+				double grossTotal = 0;
+				for (TrainingDetailBean print : invoiceForm.getDetailTrainingList()){
+					netFee = print.getFee() * 100 / devider;
+					netTotal += netFee;
+					grossTotal += print.getFee();
+				}
+				double ppnValue = grossTotal - netTotal;
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
+				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
+			}
+			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+			//insert to invoice header
+//			invoiceManager.insert(invoiceForm.getInvoiceBean());
+			//update settlement invoice id training header
+//			trainingManager.updateSettlementId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+			//insert to training detail
+//			trainingManager.deleteDetailByHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+			for (TrainingDetailBean print : invoiceForm.getDetailTrainingList()) {
+				print.setCreatedBy((String)session.getAttribute("username"));
+				print.setTransactionTrainingHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+				System.out.println(print.getTransactionTrainingHeaderId());
+				System.out.println(print.getDescription());
+				System.out.println(print.getFee());
+				System.out.println(print.getIsSettlement());
+				System.out.println(print.getCreatedBy());
+			}
+			//insert to invoice detail
+			//back to filter
+			Calendar cc = Calendar.getInstance();
+			int cyear = cc.get(Calendar.YEAR);
+			int cmonth = cc.get(Calendar.MONTH) + 1;
+			int pyear = cc.get(Calendar.YEAR);
+			int pmonth = cc.get(Calendar.MONTH);
+			if (pmonth == 0) {
+				pmonth = 12;
+				pyear--;
+			}
+			invoiceForm.setMonthFrom(pmonth + "");
+			invoiceForm.setYearFrom(pyear + "");
+			invoiceForm.setMonthTo(cmonth + "");
+			invoiceForm.setYearTo(cyear + "");
+			Map paramMap = new HashMap();
+			paramMap.put("monthFrom", pmonth);
+			paramMap.put("yearFrom", pyear);
+			paramMap.put("monthTo", cmonth);
+			paramMap.put("yearTo", cyear);
+			paramMap.put("client", null);
+			paramMap.put("status", null);
+			invoiceForm.setStatusInvoiceList(masterManager
+					.getAllStatusInvoice());
+			invoiceForm.setInvoiceList(invoiceManager
+					.getAllWithFilter(paramMap));
+			return mapping.findForward("invoice");
 		} else if("deleteDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
 			return mapping.findForward("createInvoiceHH");
