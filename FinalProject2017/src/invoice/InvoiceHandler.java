@@ -314,13 +314,9 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
-				return mapping.findForward("createInvoice");
-			} else {
-				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
-				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
-			}
+			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+			invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
+			invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("editInvoice".equals(invoiceForm.getTask())) {
 			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
@@ -358,6 +354,29 @@ public class InvoiceHandler extends Action {
 					double trainingFee = (double) (2 * invoiceForm.getInvoiceBean().getDetailList().get(0).getFee());
 					invoiceForm.setTrainingFee(trainingFee);
 					invoiceForm.setInvoiceDetailNotes(invoiceForm.getInvoiceBean().getDetailList().get(0).getNotes());
+
+					//set data untuk tombol back
+					invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+					invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+					invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+					
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+					SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					Calendar cal = Calendar.getInstance();
+					// date format show
+					cal.setTime(dateFormat.parse(invoiceForm.getInvoiceBean()
+							.getInvoiceDate()));
+					invoiceForm.getInvoiceBean().setInvoiceDate(
+							showDateFormat.format(cal.getTime()));
+					cal.setTime(dateFormat.parse(invoiceForm.getTrainingBean()
+							.getTrainingStartDate()));
+					invoiceForm.getTrainingBean().setTrainingStartDate(
+							showDateFormat.format(cal.getTime()));
+					cal.setTime(dateFormat.parse(invoiceForm.getTrainingBean()
+							.getTrainingEndDate()));
+					invoiceForm.getTrainingBean().setTrainingEndDate(
+							showDateFormat.format(cal.getTime()));
+					invoiceForm.setTask("editInvoiceTRDP");
 				}else if(paymentDescription.toUpperCase().endsWith("SETTLEMENT")){
 				}
 				return mapping.findForward("formInvoiceTRDP");
@@ -365,37 +384,151 @@ public class InvoiceHandler extends Action {
 			}
 			
 			return null;
-		} else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
+
+		}else if("editInvoiceTRDP".equals(invoiceForm.getTask())){ 
+		
+//			InvoiceDetailBean invoiceDetailBean = new InvoiceDetailBean();
+//			invoiceDetailBean.setCreatedBy((String)session.getAttribute("username"));
+//			invoiceDetailBean.setDescription("Training \""+invoiceForm.getTrainingBean().getDescription() + "\" - DP");
+//			invoiceDetailBean.setNotes(invoiceForm.getInvoiceDetailNotes());
+//						
+//			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
+//				//exclude ppn
+//				double netTotal = 0;
+//				netTotal = trainingFee;
+//				invoiceDetailBean.setFee(trainingFee);
+//				invoiceDetailBean.setUnitPrice(trainingFee);
+//				invoiceDetailBean.setTotalFee(trainingFee);
+//				
+//				double formula = netTotal+(netTotal*ppn/100);				
+//				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+//				invoiceForm.getInvoiceBean().setTotalGross(formula);
+//				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
+//				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+//			} else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
+//				//include ppn
+//				double divider = 100+ppn;
+//				double netTotal;
+//				double grossTotal = 0;
+//				invoiceDetailBean.setFee(trainingFee);
+//				netTotal = trainingFee * 100 / divider;
+//				grossTotal = trainingFee;
+//				invoiceDetailBean.setUnitPrice(netTotal);
+//				invoiceDetailBean.setTotalFee(netTotal);
+//				
+//				double ppnValue = grossTotal - netTotal;
+//				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+//				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
+//				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
+//			}
+//
+//			invoiceForm.getInvoiceBean().getDetailList().add(invoiceDetailBean);
+//			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+//			
+//			
+//			invoiceForm.getMessageList().add("Success Edit Invoice");
+			return mapping.findForward("invoice");
+		
+		}else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
-				return mapping.findForward("createInvoice");
-			} else {
-				invoiceForm.getTrainingDetailBean().setTransactionTrainingHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
-				invoiceForm.getTrainingDetailBean().setIsSettlement(0);
-				invoiceForm.getTrainingDetailBean().setCreatedBy((String)session.getAttribute("username"));
-				trainingManager.insertDetail(invoiceForm.getTrainingDetailBean());
-				invoiceForm.getTrainingDetailBean().setDescription(null);
-				invoiceForm.getTrainingDetailBean().setFee(0);
-				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
-				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
-			}
+			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+			invoiceForm.getDetailTrainingList().add(invoiceForm.getTrainingDetailBean());
+			invoiceForm.setTrainingDetailBean(new TrainingDetailBean());
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("deleteAdditionalFee".equals(invoiceForm.getTask())) {
-			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
-			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("There is no ongoing training for this client!");
-				return mapping.findForward("createInvoice");
-			} else {
-				trainingManager.deleteDetail(invoiceForm.getTransactionTrainingDetailId());
-				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
-				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
-			}
+			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
+			invoiceForm.getDetailTrainingList().remove(invoiceForm.getDeleteIndex());
 			return mapping.findForward("createInvoiceTRST");
+		} else if ("insertTRST".equals(invoiceForm.getTask())) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat invoiceDateFormat = new SimpleDateFormat("MM.yy");
+			Calendar cal = Calendar.getInstance();
+			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(invoiceDateFormat.format(cal.getTime())));
+			invoiceDateFormat = new SimpleDateFormat("MM");
+			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
+			invoiceDateFormat = new SimpleDateFormat("yyyy");
+			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
+			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
+			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
+			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			double netTotal = 0;
+			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
+				//Ini kalau exclude PPN
+				for (TrainingDetailBean print : invoiceForm.getDetailTrainingList()) {
+					netTotal += print.getFee();
+					InvoiceDetailBean bean = new InvoiceDetailBean();
+					//head,desc,fee,crby,unit,total
+					bean.setTransactionInvoiceHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+					bean.setDescription(print.getDescription());
+					bean.setFee(print.getFee());
+					bean.setNotes(print.getNote());
+					bean.setCreatedBy((String)session.getAttribute("username"));
+					bean.setUnitPrice(print.getFee());
+					bean.setTotalFee(print.getFee());
+					invoiceForm.getSettlementList().add(bean);
+				}
+				double formula = netTotal+(netTotal*ppn/100);
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(formula);
+				invoiceForm.getInvoiceBean().setTotalPpn(formula-netTotal);
+				invoiceForm.getInvoiceBean().setDetailList(invoiceForm.getSettlementList());
+			} else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
+				//Ini kalau include PPN
+				double devider = 100+ppn;
+				double netFee;
+				double grossTotal = 0;
+				for (TrainingDetailBean print : invoiceForm.getDetailTrainingList()){
+					netFee = print.getFee() * 100 / devider;
+					netTotal += netFee;
+					grossTotal += print.getFee();
+					InvoiceDetailBean bean = new InvoiceDetailBean();
+					//head,desc,fee,crby,unit,total
+					bean.setTransactionInvoiceHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+					bean.setDescription(print.getDescription());
+					bean.setFee(print.getFee());
+					bean.setNotes(print.getNote());
+					bean.setCreatedBy((String)session.getAttribute("username"));
+					bean.setUnitPrice(print.getFee() * 100 / devider);
+					bean.setTotalFee(print.getFee() * 100 / devider);
+					invoiceForm.getSettlementList().add(bean);
+				}
+				double ppnValue = grossTotal - netTotal;
+				invoiceForm.getInvoiceBean().setTotalNet(netTotal);
+				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
+				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
+				invoiceForm.getInvoiceBean().setDetailList(invoiceForm.getSettlementList());
+			}
+			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
+			//insert to invoice header
+			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
+			//update settlement invoice id training header
+			trainingManager.updateSettlementId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+			//insert to training detail
+			trainingManager.deleteDetailByHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+			for (TrainingDetailBean print : invoiceForm.getDetailTrainingList()) {
+				print.setCreatedBy((String)session.getAttribute("username"));
+				print.setTransactionTrainingHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
+				trainingManager.insertDetail(print);
+			}
+//			//insert to invoice detail
+//			for (InvoiceDetailBean print : invoiceForm.getSettlementList()){
+//				invoiceManager.insertDetail(print);
+//			}
+			//display invoice
+			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+			invoiceForm.setTransactionInvoiceHeaderId(idHeader);
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+			invoiceForm.setTask("detailInvoice");
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			return mapping.findForward("detailInvoice");
 		} else if("deleteDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
 			return mapping.findForward("createInvoiceHH");
