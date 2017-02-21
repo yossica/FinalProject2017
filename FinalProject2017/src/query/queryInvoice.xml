@@ -75,7 +75,11 @@
 		    i.total_net as totalNet,
 		    i.total_ppn as totalPpn,
 		    i.total_gross as totalGross,
-		    i.notes as notes
+		    i.notes as notes,
+		    i.created_date as createdDate,
+		    i.created_by as createdBy,
+		    i.changed_date as changedDate,
+		    i.changed_by as changedBy
 		from 
 		    transaction_invoice_header i,
 		    master_invoice_type t,
@@ -104,15 +108,28 @@
 	
 	
 	<select id="getDetailById" resultClass="invoice.InvoiceDetailBean" parameterClass="java.lang.Integer">		
-		select 
+        select 
             rownum as numb,
-            Description||' '||me.name||' '||nvl2(man_days,man_days||' days work',man_days) as description,
-            unit_price as unitPrice,
-            total_fee as totalFee,
-            notes
-        from transaction_invoice_detail tid
-        left outer join master_employee me on(tid.employee_id=me.employee_id)
-        where transaction_invoice_id=#transactionInvoiceHeaderId#
+            Description||' '||e.name||' '||nvl2(i.man_days,i.man_days||' days work',i.man_days) as description,
+			i.TRANSACTION_INVOICE_DETAIL_ID as transactionInvoiceDetailId,
+			i.TRANSACTION_INVOICE_ID as transactionInvoiceHeaderId,
+			i.FEE as fee,
+			i.EMPLOYEE_ID as employeeId,
+			i.MAN_DAYS as manDays,
+			i.NOTES as notes,
+			i.CREATED_BY as createdBy,
+			to_char(i.CREATED_DATE,'MM/dd/yyyy') as createdDate,
+			i.CHANGED_BY as changedBy,
+			to_char(i.CHANGED_DATE,'MM/dd/yyyy') as changedDate,
+			i.WORK_DAYS as workDays,
+			i.UNIT_PRICE as unitPrice,
+			i.TOTAL_FEE as totalFee,
+			e.name as employeeName
+		from transaction_invoice_detail i, master_employee e
+		where I.EMPLOYEE_ID = e.employee_id
+		and transaction_invoice_id=#transactionInvoiceHeaderId#
+        
+        
 	</select>
 	
 	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">
