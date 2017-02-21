@@ -34,6 +34,8 @@
 						</div>
 						<div class="col-lg-4">
 							<strong>
+								<html:hidden name="invoiceForm" property="invoiceBean.transactionInvoiceHeaderId"/>
+								<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId"/>
 								<bean:write name="invoiceForm" property="invoiceBean.invoiceNumber"/>
 							</strong>
 						</div>
@@ -142,10 +144,10 @@
 						<div class="pull-left" style="margin-top:40px;margin-bottom:10px;">
 							<input type="button" value="Back" class="btn btn-primary" onclick="javascript:flyToPage('invoice')">
 							<logic:equal name="invoiceForm" property="statusId" value="1">
-								<input type="button" value="Edit" class="btn btn-primary">
+								<input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editInvoice')">
 							</logic:equal>
 							<logic:equal name="invoiceForm" property="statusId" value="2">
-								<input type="button" value="Edit" class="btn btn-primary">
+								<input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editInvoice')">
 							</logic:equal>
 							<input type="button" value="Export" class="btn btn-primary">
 						</div>
