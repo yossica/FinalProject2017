@@ -72,6 +72,23 @@
 		where transaction_invoice_id=#transactionInvoiceHeaderId#
 	</select>
 	
+	<select id="getHeaderIdByNumber" resultClass="invoice.InvoiceBean" parameterClass="java.lang.String">
+		select
+            h.transaction_invoice_id as transactionInvoiceHeaderId,
+            t.name as invoiceTypeName
+        from transaction_invoice_header h join master_invoice_type t on h.invoice_type_id = t.invoice_type_id
+        where invoice_number=#invoiceNumber#
+	</select>
+	
+	<select id="checkTrainingPaymentTypeByHeaderId" resultClass="java.lang.String" parameterClass="java.lang.Integer">
+		select           
+            description
+        from transaction_invoice_detail
+        where transaction_invoice_id=#invoiceNumber#
+        and (description like 'Training%DP' or description like 'Training%Settlement')
+	</select>
+	
+	
 	<select id="getDetailById" resultClass="invoice.InvoiceDetailBean" parameterClass="java.lang.Integer">		
 		select 
             rownum as numb,
@@ -121,6 +138,8 @@
 		    period_month = #periodMonth#
 		    and period_year = #periodYear#
 		    and client_id = #clientId#
+		    and invoice_type_id = 1
+		    and status_invoice_id != 4
 	</select>
 	
 	<select id="getMaxIdHeader" resultClass="java.lang.Integer">

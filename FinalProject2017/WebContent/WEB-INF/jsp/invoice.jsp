@@ -36,26 +36,50 @@
 		document.forms[1].submit();
 	}
 	function flyToChangeStatus(invoiceNumber,statusId){
-		swal({
-			  title: "Are you sure?",
-			  text: "System will change current status into next status",
-			  type: "warning",
-			  showCancelButton: true,
-			  confirmButtonColor: "#DD6B55",
-			  confirmButtonText: "Yes, Change Status",
-			  cancelButtonText: "No, Cancel",
-			  closeOnConfirm: false,
-			  closeOnCancel: false
-			},
-			function(isConfirm){
-			  if (isConfirm) {
-					document.forms[1].invoiceNumber.value = invoiceNumber;
-					document.forms[1].statusId.value = statusId;
-					flyToPage("changeStatus");
-			  } else {
-			    swal("Cancelled", "Cancel Change Status", "error");
-			  }
-			});
+		if(statusId == 4){
+			swal({
+				  title: "Are you sure?",
+				  text: "System will change this invoice status to 'Cancelled'",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes, Cancel this Invoice",
+				  cancelButtonText: "No, Cancel",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+						document.forms[1].invoiceNumber.value = invoiceNumber;
+						document.forms[1].statusId.value = statusId;
+						flyToPage("changeStatus");
+				  } else {
+				    swal("Cancelled", "Cancel 'Cancel Invoice'", "error");
+				  }
+				});
+		}
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "System will change current status into next status",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Yes, Change Status",
+				  cancelButtonText: "No, Cancel",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+						document.forms[1].invoiceNumber.value = invoiceNumber;
+						document.forms[1].statusId.value = statusId;
+						flyToPage("changeStatus");
+				  } else {
+				    swal("Cancelled", "Cancel Change Status", "error");
+				  }
+				});
+		}
 	}
 	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
@@ -86,11 +110,11 @@
 	            </div>
 	            <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
 	            	<div class="row" style="margin-top:10px;">
-		            	<div class="col-md-10" style="padding-right:1%">
-			            	<div class="col-md-1">
+		            	<div class="col-md-12" style="padding-right:1%">
+			            	<div class="col-md-2">
 			            	Client
 			            	</div>
-			            	<div class="col-md-11">
+			            	<div class="col-md-10">
 				            	<html:select property="clientId" name="invoiceForm" styleClass="form-control-client">
 									<html:option value="">Select</html:option>
 									<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
@@ -98,12 +122,12 @@
 			            	</div>
 			            </div>
                        </div>
-                <div class="col-md-10" style="margin-top:10px;">
+                <div class="col-md-12" style="margin-top:10px;">
 	            	<div class="row">
-		            	<div class="col-md-1">
+		            	<div class="col-md-2">
 		            		From 
 		            	</div>
-		            	<div class="col-md-3">
+		            	<div class="col-md-2">
 		            		<html:select property="monthFrom" name="invoiceForm" styleClass="form-control">
 								<html:option value="">Select</html:option>
 								<html:option value="1">January</html:option>
@@ -136,7 +160,7 @@
                         <div class="col-md-1">
                         	To
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
 	                        <html:select property="monthTo" name="invoiceForm" styleClass="form-control">
 								<html:option value="">Select</html:option>
 								<html:option value="1">January</html:option>
@@ -168,12 +192,12 @@
 	                    </div>
 	              	</div>
 	              	</div>
-	              	<div class="col-md-10" style="margin-top:10px;">   
+	              	<div class="col-md-12" style="margin-top:10px;">   
 	                    <div class="row">
-		                    <div class="col-md-1">   
+		                    <div class="col-md-2">   
 				            	Status
 				            </div>
-				            <div class="col-md-3">
+				            <div class="col-md-10">
 		                        <html:select property="statusInvoiceId" name="invoiceForm" styleClass="form-control">
 		                        	<html:option value="">Select</html:option>
 		                        	<html:optionsCollection property="statusInvoiceList" label="name" value="statusInvoiceId" name="invoiceForm"/>
@@ -190,7 +214,7 @@
 	        <!-- /.col-lg-12 -->
 	    </div>
 	    <div class="panel-body">
-	        <div class="table-responsive">
+	        <div class="table-responsive" style="height:200px;overflow:auto;">
 	        	<table class="table table-hover">
 	            	<tr>
 	            		<th>Invoice No.</th>
@@ -224,12 +248,20 @@
 			                					onclick="javascript:flyToChangeStatus(
 			                								'<bean:write name="inv" property="invoiceNumber"/>',
 			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+			                			<input type="button" value="Cancel" class="btn btn-primary" 
+			                					onclick="javascript:flyToChangeStatus(
+			                								'<bean:write name="inv" property="invoiceNumber"/>',
+			                								'4')">
 			                		</logic:equal>
 			                		<logic:equal name="inv" property="statusInvoiceName" value="Sent">
 			                			<input type="button" value="Change Status" class="btn btn-primary" 
 			                					onclick="javascript:flyToChangeStatus(
 			                								'<bean:write name="inv" property="invoiceNumber"/>',
 			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+			                			<input type="button" value="Cancel" class="btn btn-primary" 
+			                					onclick="javascript:flyToChangeStatus(
+			                								'<bean:write name="inv" property="invoiceNumber"/>',
+			                								'4')">
 			                		</logic:equal>
 			                	</td>
 	                		</tr>

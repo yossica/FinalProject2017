@@ -16,14 +16,17 @@
 	        <div class="col-lg-12">
 	            <h1 class="page-header">Expense Summary</h1>
 	           
-	            <div class="col-lg-10">
-	            	<div class="col-md-6">Current Date: <%= new java.util.Date() %></div>
+	            <div class="col-lg-12">
+	            	<div class="col-md-6" style="padding:10px;"><strong>
+	            		Current Date: <%= new java.util.Date() %>
+	            		</strong>
+	            	</div>
 	            </div>
-	            <div class="col-lg-10">
+	            <div class="col-lg-12">
 	            	<div class="col-md-6">Cash in Bank Balance: <bean:write name="indexForm" property="cashInBankBalance" format="IDR #,###.##"/></div>
 	            	<div class="col-md-6" style="text-align:right">Petty Cash Balance: <bean:write name="indexForm" property="pettyCashBalance" format="IDR #,###.##"/></div>
 	            </div>
-	            <div class="col-lg-10">
+	            <div class="col-lg-12">
 		            <div class="panel-body">
 						<div class="table-responsive" style="height:400px;overflow:auto;">
 						    <table class="table table-hover">
