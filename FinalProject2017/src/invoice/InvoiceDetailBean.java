@@ -19,7 +19,6 @@ public class InvoiceDetailBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-	
 	public int getTransactionInvoiceDetailId() {
 		return transactionInvoiceDetailId;
 	}
@@ -65,6 +64,12 @@ public class InvoiceDetailBean implements Serializable {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
+	public Integer getWorkDays() {
+		return workDays;
+	}
+	public void setWorkDays(Integer workDays) {
+		this.workDays = workDays;
+	}
 	public Integer getManDays() {
 		return manDays;
 	}
@@ -102,13 +107,6 @@ public class InvoiceDetailBean implements Serializable {
 		this.changedDate = changedDate;
 	}
 
-	public Integer getWorkDays() {
-		return workDays;
-	}
-	public void setWorkDays(Integer workDays) {
-		this.workDays = workDays;
-	}
-	
 	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
