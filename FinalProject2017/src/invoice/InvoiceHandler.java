@@ -339,7 +339,8 @@ public class InvoiceHandler extends Action {
 				//cek if DP/Settlement
 				if(paymentDescription.toUpperCase().endsWith("DP")){	
 					invoiceForm.setTrainingBean(trainingManager.getTrainingByInvoiceDpId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
-					invoiceForm.setTrainingFee(invoiceForm.getInvoiceBean().getDetailList().get(0).getFee()*2);
+					double trainingFee = (double) (2 * invoiceForm.getInvoiceBean().getDetailList().get(0).getFee());
+					invoiceForm.setTrainingFee(trainingFee);
 					invoiceForm.setInvoiceDetailNotes(invoiceForm.getInvoiceBean().getDetailList().get(0).getNotes());
 				}else if(paymentDescription.toUpperCase().endsWith("SETTLEMENT")){
 				}
