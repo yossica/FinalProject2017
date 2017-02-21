@@ -62,7 +62,6 @@
 	
 	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
 		select
-<<<<<<< HEAD
 		    i.transaction_invoice_id as transactionInvoiceHeaderId,
 		    i.invoice_type_id as invoiceTypeId,
 		    i.client_id as clientId,
