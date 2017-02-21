@@ -125,11 +125,9 @@
 			i.UNIT_PRICE as unitPrice,
 			i.TOTAL_FEE as totalFee,
 			e.name as employeeName
-		from transaction_invoice_detail i, master_employee e
-		where I.EMPLOYEE_ID = e.employee_id
-		and transaction_invoice_id=#transactionInvoiceHeaderId#
-        
-        
+		from transaction_invoice_detail i
+		left outer join master_employee e on i.employee_id = e.employee_id
+		where transaction_invoice_id=#transactionInvoiceHeaderId#
 	</select>
 	
 	<select id="getCreatedRemainderList" resultClass="invoice.InvoiceBean">
