@@ -22,9 +22,9 @@
 	function flyToNextPage(){
 		var task;
 		if (getContractServices() == 1){
-			task = 'createInvoicePS';
+			task = 'formInvoicePS';
 		}else if (getContractServices() == 2 || getContractServices() == 4){
-			task = 'createInvoiceHH';
+			task = 'formInvoiceHH';
 		}else if (getContractServices() == 3){
 			var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
 			if(payment == "option1"){
@@ -59,8 +59,6 @@
 	}
 	function onloadFunc() {
 		var today = new Date();
-		//document.getElementById("invoiceDate").value = yyyymmdd(today);
-		//alert(yyyymmdd(today));
 		onchangeContractServices();
 	}
 	function ifSettlement(){
@@ -194,7 +192,6 @@
 			<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoice')">Back</button>
 				<button type="button" class="btn btn-primary" onclick="javascript:flyToNextPage()">Next</button>
-				
 			</div>
 			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
 			  				<logic:notEmpty name="invoiceForm" property="messageList">
