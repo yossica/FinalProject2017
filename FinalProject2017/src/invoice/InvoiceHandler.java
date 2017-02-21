@@ -167,9 +167,21 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
-			//invoiceForm.print();
+			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
 			invoiceManager.insert(invoiceForm.getInvoiceBean());
-			return  mapping.findForward("createInvoicePS");
+//			return  mapping.findForward("createInvoicePS");
+			
+			//display invoice
+			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+			invoiceForm.setTransactionInvoiceHeaderId(idHeader);
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+			invoiceForm.setTask("detailInvoice");
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			return mapping.findForward("detailInvoice");
 		}	else if ("createInvoiceHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(
 					clientManager.getById(
@@ -310,6 +322,18 @@ public class InvoiceHandler extends Action {
 				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			}
 			return mapping.findForward("createInvoiceTRST");
+		} else if ("editInvoice".equals(invoiceForm.getTask())) {
+			int invoiceTypeId = invoiceForm.getInvoiceBean().getInvoiceTypeId();
+			if (invoiceTypeId == 1){
+				//Outsource
+				invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId();
+			} else if (invoiceTypeId == 2){
+				//Head Hunter
+			} else if (invoiceTypeId == 3){
+				//Training
+			}
+			
+			return null;
 		} else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
@@ -390,8 +414,6 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setTotalPpn(ppnValue);
 			}
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
-			//invoiceForm.print();
-			
 			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
 			
 			//display invoice
