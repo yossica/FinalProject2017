@@ -55,8 +55,8 @@
 			<forward name="detailInvoice" path="/WEB-INF/jsp/detailInvoice.jsp"></forward>
 			<forward name="invoice" path="/WEB-INF/jsp/invoice.jsp"></forward>
 			<forward name="createInvoice" path="/WEB-INF/jsp/createInvoice.jsp"></forward>
-			<forward name="createInvoicePS" path="/WEB-INF/jsp/createInvoicePS.jsp"></forward>
-			<forward name="createInvoiceHH" path="/WEB-INF/jsp/formInvoiceHH.jsp"></forward>
+			<forward name="formInvoicePS" path="/WEB-INF/jsp/formInvoicePS.jsp"></forward>
+			<forward name="formInvoiceHH" path="/WEB-INF/jsp/formInvoiceHH.jsp"></forward>
 			<forward name="createInvoiceTRDP" path="/WEB-INF/jsp/createInvoiceTRDP.jsp"></forward>
 			<forward name="createInvoiceTRST" path="/WEB-INF/jsp/createInvoiceTRST.jsp"></forward>
 		</action>
