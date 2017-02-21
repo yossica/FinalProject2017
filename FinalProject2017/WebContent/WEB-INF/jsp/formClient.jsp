@@ -127,13 +127,11 @@
 									</tr>
 									<tr>
 										<td><label>Phone</label></td>
-										<td><html:text name="clientForm" property="phoneNumber"
-												styleClass="form-control-client" /></td>
+										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123-456'"/></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
-										<td><html:text name="clientForm" property="faxNumber"
-												styleClass="form-control-client" /></td>
+										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123.456'"/></td>
 									</tr>
 									<tr>
 										<td><label>Postal Code</label></td>

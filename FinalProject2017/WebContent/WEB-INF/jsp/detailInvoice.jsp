@@ -149,7 +149,7 @@
 							<logic:equal name="invoiceForm" property="statusId" value="2">
 								<input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editInvoice')">
 							</logic:equal>
-							<input type="button" value="Export" class="btn btn-primary">
+							<input type="button" value="Export" class="btn btn-primary" onclick="javascript:flyToPage('exportDetail')">
 						</div>
 					</div>
 				</div>
