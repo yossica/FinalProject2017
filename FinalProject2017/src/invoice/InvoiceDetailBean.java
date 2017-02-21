@@ -116,4 +116,10 @@ public class InvoiceDetailBean implements Serializable {
 	public void setFee(Double fee) {
 		this.fee = fee;
 	}
+	public Integer getNumb() {
+		return numb;
+	}
+	public void setNumb(Integer numb) {
+		this.numb = numb;
+	}
 }
