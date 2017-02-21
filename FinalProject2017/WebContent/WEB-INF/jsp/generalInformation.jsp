@@ -33,8 +33,8 @@
 	        <div class="col-lg-12">
 	            <h1 class="page-header">General Information List</h1>
 	            <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
+                    <div class="table-responsive" style="height:450px;overflow:auto;">
+                        <table class="table table-hover" >
 		                     <tr>
 			            		<th>Key</th>
 			            		<th>Name</th>

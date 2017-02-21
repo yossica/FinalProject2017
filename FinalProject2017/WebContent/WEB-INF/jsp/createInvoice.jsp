@@ -84,13 +84,6 @@
 			<div class="col-lg-12">
 				<h1 class="page-header">Create Invoice</h1>
 			</div>
-			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
-			  				<logic:notEmpty name="invoiceForm" property="messageList">
-								<logic:iterate id="message" name="invoiceForm" property="messageList">
-									<bean:write name="message" /> 
-								</logic:iterate>
-							</logic:notEmpty>
-			  			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-3"><label>Invoice Date</label></div>
@@ -201,6 +194,14 @@
 			<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoice')">Back</button>
 				<button type="button" class="btn btn-primary" onclick="javascript:flyToNextPage()">Next</button>
+				
+			</div>
+			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+			  				<logic:notEmpty name="invoiceForm" property="messageList">
+								<logic:iterate id="message" name="invoiceForm" property="messageList">
+									<bean:write name="message" /> 
+								</logic:iterate>
+							</logic:notEmpty>
 			</div>
 		</div>
 	</div>

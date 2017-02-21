@@ -62,15 +62,46 @@
 	
 	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
 		select
-		    invoice_number as invoiceNumber,
-		    to_char(invoice_date,'MM/DD/YYYY') as invoiceDate,
-		    total_net as totalNet,
-		    total_ppn as totalPpn,
-		    total_gross as totalGross,
-		    notes as notes
-		from transaction_invoice_header
-		where transaction_invoice_id=#transactionInvoiceHeaderId#
+		    i.transaction_invoice_id as transactionInvoiceHeaderId,
+		    i.invoice_type_id as invoiceTypeId,
+		    i.client_id as clientId,
+		    c.name as clientName,
+		    t.name as invoiceTypeName,
+		    i.period_month as periodMonth,
+		    i.period_year as periodYear,
+		    i.is_gross as isGross,
+		    i.invoice_number as invoiceNumber,
+		    to_char(i.invoice_date,'MM/DD/YYYY') as invoiceDate,
+		    i.total_net as totalNet,
+		    i.total_ppn as totalPpn,
+		    i.total_gross as totalGross,
+		    i.notes as notes
+		from 
+		    transaction_invoice_header i,
+		    master_invoice_type t,
+		    master_client c
+		where 
+		    i.transaction_invoice_id= #transactionInvoiceHeaderId# and
+		    i.client_id = c.client_id and
+		    i.invoice_type_id = t.invoice_type_id
 	</select>
+	
+	<select id="getHeaderIdByNumber" resultClass="invoice.InvoiceBean" parameterClass="java.lang.String">
+		select
+            h.transaction_invoice_id as transactionInvoiceHeaderId,
+            t.name as invoiceTypeName
+        from transaction_invoice_header h join master_invoice_type t on h.invoice_type_id = t.invoice_type_id
+        where invoice_number=#invoiceNumber#
+	</select>
+	
+	<select id="checkTrainingPaymentTypeByHeaderId" resultClass="java.lang.String" parameterClass="java.lang.Integer">
+		select           
+            description
+        from transaction_invoice_detail
+        where transaction_invoice_id=#invoiceNumber#
+        and (description like 'Training%DP' or description like 'Training%Settlement')
+	</select>
+	
 	
 	<select id="getDetailById" resultClass="invoice.InvoiceDetailBean" parameterClass="java.lang.Integer">		
 		select 
@@ -121,6 +152,8 @@
 		    period_month = #periodMonth#
 		    and period_year = #periodYear#
 		    and client_id = #clientId#
+		    and invoice_type_id = 1
+		    and status_invoice_id != 4
 	</select>
 	
 	<select id="getMaxIdHeader" resultClass="java.lang.Integer">
