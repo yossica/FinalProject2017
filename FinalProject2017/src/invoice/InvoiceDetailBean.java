@@ -115,5 +115,4 @@ public class InvoiceDetailBean implements Serializable {
 	public void setChangedDate(String changedDate) {
 		this.changedDate = changedDate;
 	}
-	
 }
