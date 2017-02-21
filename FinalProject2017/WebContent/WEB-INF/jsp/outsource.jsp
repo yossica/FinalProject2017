@@ -55,9 +55,9 @@
 					<div class="col-lg-12"
 						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF;">
 						<div class="row" style="margin-top: 10px;">
-							<div class="col-md-10" style="padding-right: 1%">
-								<div class="col-md-1">Client</div>
-								<div class="col-md-11">
+							<div class="col-md-12" style="padding-right: 1%">
+								<div class="col-md-2">Client</div>
+								<div class="col-md-10">
 									<html:select name="outsourceForm" property="filterClient"
 										styleClass="form-control-client" size="1">
 										<html:option value="">Select All</html:option>
@@ -68,9 +68,9 @@
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
-							<div class="col-md-10" style="padding-right: 1%">
-								<div class="col-md-1">Employee</div>
-								<div class="col-md-11">
+							<div class="col-md-12" style="padding-right: 1%">
+								<div class="col-md-2">Employee</div>
+								<div class="col-md-10">
 									<html:select name="outsourceForm" property="filterEmployee"
 										styleClass="form-control-client" size="1">
 										<html:option value="">Select All</html:option>
@@ -80,10 +80,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-10" style="margin-top: 10px;">
+						<div class="col-md-12" style="margin-top: 10px;">
 							<div class="row">
-								<div class="col-md-1">Period</div>
-								<div class="col-md-3">
+								<div class="col-md-2">Period</div>
+								<div class="col-md-4">
 									<html:select name="outsourceForm" property="filterMonth"
 										styleClass="form-control" size="1">
 										<html:option value="">Select All</html:option>
