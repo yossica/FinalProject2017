@@ -55,7 +55,6 @@
 			  if (isConfirm) {
 					document.forms[1].task.value = task;
 					document.forms[1].submit();
-					alert("success");
 			  } else {
 			    swal("Cancelled", "Cancel Insert Transaction", "error");
 			  }
