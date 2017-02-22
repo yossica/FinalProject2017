@@ -236,7 +236,38 @@ public class PettyCashHandler extends Action {
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			pettyCashBean.setCreatedBy((String) session
 					.getAttribute("username"));
-			pettyCashManager.insert(pettyCashBean);
+			String message = pettyCashManager.insert(pettyCashBean);
+			if(message.startsWith("Failed")){
+				pettyCashForm.getMessageList().clear();
+				pettyCashForm
+						.getMessageList()
+						.add(message);
+				pettyCashForm.setTask("saveDebit");
+				pettyCashForm.getPettyCashBean().setIsDebit(1);
+
+				pettyCashForm.setRemainingBalance(pettyCashManager
+						.getCurrentBalance());
+
+				Map paramMap = new HashMap();
+				paramMap = new HashMap();
+				paramMap.put("cashFlowType", "Petty Cash");
+				paramMap.put("isDebit", 1);
+				paramMap.put("isEnabled", "1");
+				CashFlowCategoryBean cashFlowCategoryBean;
+				List cashFlowCategoryList = masterManager
+						.getAllCashFlowCategory(paramMap);
+				for (Object obj : cashFlowCategoryList) {
+					cashFlowCategoryBean = (CashFlowCategoryBean) obj;
+					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()
+							+ "-"
+							+ (cashFlowCategoryBean.getIsDebit() == 1 ? "Debit"
+									: "Credit"));
+				}
+				pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
+				pettyCashForm.getPettyCashBean().setTransactionDate(
+						pettyCashForm.getPettyCashBean().getTransactionDate());
+				return mapping.findForward("form");
+			}
 
 			// show cash in bank view
 			pettyCashForm.setRemainingBalance(pettyCashManager

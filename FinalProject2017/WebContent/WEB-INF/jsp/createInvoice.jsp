@@ -92,7 +92,7 @@
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-3"><label>Invoice Date</label></div>
-					<div class="col-md-9">
+					<div class="col-md-8">
 						<input type="date" id="invoiceDate" class="form-control-client" style="width: 100%;" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
 					</div>
 				</div>
@@ -100,7 +100,7 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-3"><label>Client</label></div>
-					<div class="col-md-9">
+					<div class="col-md-8">
 						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
@@ -111,7 +111,7 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-3"><label>Contract Services</label></div>
-					<div class="col-md-9">
+					<div class="col-md-8">
 						<html:select property="invoiceBean.invoiceTypeId" name="invoiceForm" styleClass="form-control-client" styleId="contractServices" onchange="javascript:onchangeContractServices()">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="invoiceTypeList" label="name" value="invoiceTypeId"/>
@@ -121,9 +121,9 @@
 			</div>
 			<div id="period" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
-					<div class="col-md-2"><label>Period</label></div>
+					<div class="col-md-3"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<select class="form-control" name="invoiceBean.periodMonth">
 							<option selected disabled>Select</option>
                             <option value="01">January</option>
@@ -141,7 +141,7 @@
 						</select>
 					</div>
 					<div class="col-md-1"><label>Year</label></div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<select class="form-control" name="invoiceBean.periodYear">
 							<option selected>Select</option>
 							<%
@@ -191,7 +191,7 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-3"><label>Invoice Notes</label></div>
-					<div class="col-md-9">
+					<div class="col-md-8">
 						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
 					</div>
 				</div>

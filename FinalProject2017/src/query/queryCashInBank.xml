@@ -38,9 +38,9 @@
 	
 	<select id="getCurrentBalance" resultClass="java.lang.Double">
 		select balance
-		from transaction_cash_in_bank b,
-		(select max(created_date) as max_date from transaction_cash_in_bank) c
-		where b.created_date = c.max_date
+        from transaction_cash_in_bank b,
+        (select max(transaction_cash_in_bank_id) as max_id from transaction_cash_in_bank) c
+        where b.transaction_cash_in_bank_id = c.max_id
 	</select>
 	
 	<select id="getMaxId" resultClass="java.lang.Integer">
@@ -49,12 +49,28 @@
     </select>
 
 	<insert id="insert" parameterClass="cashInBank.CashInBankBean">
-		insert into transaction_cash_in_bank (transaction_cash_in_bank_id, cash_flow_category_id,
-			amount, balance, description, transaction_date, 
-			is_debit, created_by, created_date)
-		values (#transactionCashInBankId#,#cashFlowCategoryId#,
-			#amount#,#balance#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
+		<isEqual property="isDebit" compareValue="1">
+			insert all
+			    into transaction_cash_in_bank (transaction_cash_in_bank_id, cash_flow_category_id,
+			            amount, balance, description, transaction_date, 
+			            is_debit, created_by, created_date)
+		        values (#transactionCashInBankId#,#cashFlowCategoryId#,
+			#amount#,balance-#amount#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
 			#isDebit#,#createdBy#, sysdate)
+		</isEqual>
+		<isEqual property="isDebit" compareValue="0">
+			insert all
+			    into transaction_cash_in_bank (transaction_cash_in_bank_id, cash_flow_category_id,
+			            amount, balance, description, transaction_date, 
+			            is_debit, created_by, created_date)
+		        values (#transactionCashInBankId#,#cashFlowCategoryId#,
+			#amount#,balance+#amount#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
+			#isDebit#,#createdBy#, sysdate)
+		</isEqual>
+			select balance
+	        from transaction_cash_in_bank b,
+	        (select max(transaction_cash_in_bank_id) as max_id from transaction_cash_in_bank) c
+	        where b.transaction_cash_in_bank_id = c.max_id
 	</insert>
 	
 </sqlMap> 

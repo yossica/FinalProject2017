@@ -209,7 +209,31 @@ public class CashInBankHandler extends Action {
 			cal.setTime(showDateFormat.parse(cashInBankForm.getCashInBankBean().getTransactionDate()));
 			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			cashInBankBean.setCreatedBy((String)session.getAttribute("username"));
-			cashInBankManager.insert(cashInBankBean);
+			String message = cashInBankManager.insert(cashInBankBean);
+			if(message.startsWith("Failed")){
+				cashInBankForm.getMessageList().clear();
+				cashInBankForm.getMessageList().add(message);
+				
+				cashInBankForm.setTask("saveDebit");
+				cashInBankForm.getCashInBankBean().setIsDebit(1);
+
+				cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
+				
+				Map paramMap = new HashMap();
+				paramMap = new HashMap();
+				paramMap.put("cashFlowType", "Cash In Bank");
+				paramMap.put("isDebit", 1);
+				paramMap.put("isEnabled", "1");
+				CashFlowCategoryBean cashFlowCategoryBean;
+				List cashFlowCategoryList = masterManager.getAllCashFlowCategory(paramMap);
+				for (Object obj : cashFlowCategoryList) {
+					cashFlowCategoryBean = (CashFlowCategoryBean) obj;
+					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
+				}
+				cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
+				cashInBankForm.getCashInBankBean().setTransactionDate(cashInBankForm.getCashInBankBean().getTransactionDate());
+				return mapping.findForward("form");
+			}
 			
 			//show cash in bank view
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());

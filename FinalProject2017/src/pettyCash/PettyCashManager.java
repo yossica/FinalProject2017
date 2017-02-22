@@ -13,7 +13,7 @@ import utils.IbatisHelper;
 
 
 public class PettyCashManager {
-	public void insert(PettyCashBean input){
+	public String insert(PettyCashBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		
 		try {
@@ -30,9 +30,16 @@ public class PettyCashManager {
 			
 			ibatis.insert("pettyCash.insert", input);
 			
+			//cek if balance setelah insert jadinya minus
+			if(getCurrentBalance() < 0){
+				return "Failed to insert transaction because balance not enough";
+			}
+			
 			ibatis.commitTransaction();
+			return "Success";
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "Failed "+e.getMessage()+"\nPlease contact the system administrator";
 		} finally {
 			try {
 				ibatis.endTransaction();
