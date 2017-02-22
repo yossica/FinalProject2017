@@ -10,11 +10,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 	<link rel="stylesheet" href="asset/bootstrap/css/styleLogin.css">
+	<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
+<script src="dist/sweetalert.min.js"></script>   
 <script>
 	function flyToPage(task){
 		document.forms[0].task.value = task;
 		document.forms[0].submit();
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			var strValue = messageValue.substring(0, 7);
+			if (strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Error", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 </head>
 <body>
@@ -32,7 +46,13 @@
                         document.getElementById('btnSubmit').click()">
        <i class="fa fa-lock"></i>
      </div>
-      <span class="alert">Invalid Credentials</span>
+     <div class="col-md-4" id="message">
+		<logic:notEmpty name="userForm" property="messageList">
+			<logic:iterate id="message" name="userForm" property="messageList">
+				<input type="hidden" id="err" value="<bean:write name="message" />">
+			</logic:iterate>
+		</logic:notEmpty>
+	</div>
      <button type="button" id="btnSubmit" class="log-btn" onclick="javascript:flyToPage('login')">Log in</button>
    </div>
   <script src="asset/jquery/jquery.min.js"></script>
