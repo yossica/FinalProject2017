@@ -37,6 +37,7 @@ public class InvoiceForm extends ActionForm{
 	private String monthTo;
 	private String yearTo;
 	private String statusInvoiceId;
+	private String invoiceTipeId;
 	
 	private String client;
 	private String invoiceNumber;
@@ -320,6 +321,12 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setSettlementList(List<InvoiceDetailBean> settlementList) {
 		this.settlementList = settlementList;
+	}
+	public String getInvoiceTipeId() {
+		return invoiceTipeId;
+	}
+	public void setInvoiceTipeId(String invoiceTipeId) {
+		this.invoiceTipeId = invoiceTipeId;
 	}
 	
 }
