@@ -179,14 +179,10 @@
 						<logic:iterate id="trainingDetail" name="invoiceForm" property="detailTrainingList" indexId="indexDetail">
 							<tr>
 								<td>
-									<logic:equal name="trainingDetail" property="isSettlement" value="0">
-										<html:text name="trainingDetail" property="description" indexed="true"></html:text>
-									</logic:equal>
-									<logic:notEqual name="trainingDetail" property="isSettlement" value="0">
-										<html:text name="trainingDetail" property="description" readonly="true" indexed="true"></html:text>
-									</logic:notEqual>
+								<html:text name="trainingDetail" property="description" readonly="true" indexed="true"></html:text>
+				
 								</td>
-								<td><html:text name="trainingDetail" property="fee" indexed="true"></html:text></td>
+								<td><html:text name="trainingDetail" property="fee" readonly="true" indexed="true"></html:text></td>
 								<td><html:text name="trainingDetail" property="note" indexed="true"></html:text></td>
 								<td>
 									<html:hidden name="trainingDetail" property="isSettlement" indexed="true"/>
