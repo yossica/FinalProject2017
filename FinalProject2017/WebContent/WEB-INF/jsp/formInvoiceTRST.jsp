@@ -40,8 +40,6 @@
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
-						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 						<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
 							<input type="date" name="invoiceBean.invoiceDate" class="form-control" value="<bean:write property="invoiceBean.invoiceDate" name="invoiceForm"/>">
 						</logic:equal>
@@ -98,7 +96,6 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
 						<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
 							<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
 						</logic:equal>
@@ -170,8 +167,6 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTRST')">Save</button>
 						<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoiceList')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoiceTRST')">Save</button>
