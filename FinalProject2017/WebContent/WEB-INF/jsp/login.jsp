@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login Page</title>
+<title>Finance Solution</title>
 	<link rel="stylesheet" href="asset/bootstrap/css/styleLogin.css">
 <script>
 	function flyToPage(task){

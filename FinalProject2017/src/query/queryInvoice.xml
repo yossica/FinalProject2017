@@ -57,6 +57,13 @@
 				</isNotEmpty>
 			</isNotNull>
 		</dynamic>
+		<dynamic prepend="AND">
+			<isNotNull property="tipe">
+				<isNotEmpty property="tipe">
+					tih.invoice_type_id = #tipe#
+				</isNotEmpty>
+			</isNotNull>
+		</dynamic>
 		order by 2 desc
 	</select>
 	
