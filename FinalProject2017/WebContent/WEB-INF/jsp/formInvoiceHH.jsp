@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create Invoice</title>
+<title>Financial Solution</title>
 <style>
 /* Popup container - can be anything you want */
 .popup {
@@ -91,10 +91,18 @@
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
 	<html:hidden property="deleteIndex" name="invoiceForm" />
+	
+	<html:hidden property="invoiceBean.transactionInvoiceHeaderId" name="invoiceForm" />
+
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Create Invoice (Cont)</h1>
+				<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
+					<h1 class="page-header">Create Invoice (Cont)</h1>
+				</logic:equal>
+				<logic:equal name="invoiceForm" property="task" value="editInvoice">
+					<h1 class="page-header">Edit Invoice</h1>
+				</logic:equal>
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-12" style="padding-right: 1%">
@@ -223,7 +231,12 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertHH')">Save</button>
+						<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertHH')">Save</button>
+						</logic:equal>
+						<logic:equal name="invoiceForm" property="task" value="editInvoice">
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoiceHH')">Save</button>
+						</logic:equal>
 					</div>
 				</div>
 			</div>
