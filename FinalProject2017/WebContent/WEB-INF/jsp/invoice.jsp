@@ -62,9 +62,19 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-						document.forms[1].invoiceNumber.value = invoiceNumber;
+					  swal({title: "Good job!",
+						  text: "Cancelled Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  document.forms[1].invoiceNumber.value = invoiceNumber;
+								document.forms[1].statusId.value = statusId;
+								flyToPage("changeStatus");
+							  }, 10);
+							});	
+						/* document.forms[1].invoiceNumber.value = invoiceNumber;
 						document.forms[1].statusId.value = statusId;
-						flyToPage("changeStatus");
+						flyToPage("changeStatus"); */
 				  } else {
 				    swal("Cancelled", "Cancel 'Cancel Invoice'", "error");
 				  }
@@ -84,9 +94,19 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-						document.forms[1].invoiceNumber.value = invoiceNumber;
+					  swal({title: "Good job!",
+						  text: "Changed Status Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  document.forms[1].invoiceNumber.value = invoiceNumber;
+								document.forms[1].statusId.value = statusId;
+								flyToPage("changeStatus");
+							  }, 10);
+							});		
+						/* document.forms[1].invoiceNumber.value = invoiceNumber;
 						document.forms[1].statusId.value = statusId;
-						flyToPage("changeStatus");
+						flyToPage("changeStatus"); */
 				  } else {
 				    swal("Cancelled", "Cancel Change Status", "error");
 				  }

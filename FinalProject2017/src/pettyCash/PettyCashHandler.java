@@ -149,7 +149,8 @@ public class PettyCashHandler extends Action {
 								: "Credit"));
 			}
 			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-
+		/*	pettyCashForm.getMessageList().add(
+					"Success!!! Petty Cash has been balanced!");*/
 			return mapping.findForward("pettyCash");
 		} else if ("debit".equals(pettyCashForm.getTask())) {
 			pettyCashForm.setTask("saveDebit");
@@ -302,7 +303,8 @@ public class PettyCashHandler extends Action {
 			}
 			pettyCashForm.setCategoryId("");
 			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-
+			pettyCashForm.getMessageList().add(
+					"Success!!! Transaction has been added!");
 			return mapping.findForward("pettyCash");
 		} else if ("credit".equals(pettyCashForm.getTask())) {
 			pettyCashForm.setTask("saveCredit");
@@ -418,7 +420,8 @@ public class PettyCashHandler extends Action {
 			}
 			pettyCashForm.setCategoryId("");
 			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-
+			pettyCashForm.getMessageList().add(
+					"Success!!! Transaction has been added!");
 			return mapping.findForward("pettyCash");
 		} else if ("export".equals(pettyCashForm.getTask())) {
 			Map paramMap = new HashMap();
