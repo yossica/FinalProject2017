@@ -324,7 +324,6 @@ public class InvoiceHandler extends Action {
 			int invoiceTypeId = invoiceForm.getInvoiceBean().getInvoiceTypeId();
 			if (invoiceTypeId == 1){
 				//Outsource
-				invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
 				String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
 						+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
 				Map paramMap = new HashMap();
