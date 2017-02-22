@@ -21,7 +21,7 @@
 	<jsp:include page="dashboard.jsp"/>
 	
 	<html:form action="/user" method="post">
-	<html:hidden  name="userForm" property="task"/> 
+	<html:hidden name="userForm" property="task"/> 
 	
 	<div id="page-wrapper">
 			<div class="row">
@@ -41,7 +41,7 @@
 									</tr>
 									<tr>
 										<td><label>New Password</label></td>
-										<td> <html:password name="userForm" property="password" styleClass="form-control-client"/></td>
+										<td> <html:password name="userForm" property="newPassword" styleClass="form-control-client"/></td>
 									</tr>
 									<tr>
 										<td><label>Confirm Password</label></td>
