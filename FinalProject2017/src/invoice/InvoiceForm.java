@@ -33,6 +33,7 @@ public class InvoiceForm extends ActionForm{
 	private String periodMonth;
 	private String periodYear;
 	private String subTask;
+
 	private String clientId;
 	private String monthFrom;
 	private String yearFrom;
