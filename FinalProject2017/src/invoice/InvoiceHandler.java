@@ -314,7 +314,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			if (invoiceForm.getOngoingTrainingList().size()==0) {
 				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
@@ -322,11 +322,10 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
 				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			}
-=======
+=======*/
 			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
 			invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
 			invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
->>>>>>> refs/remotes/origin/master
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("editInvoice".equals(invoiceForm.getTask())) {
 			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
@@ -443,7 +442,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			if (invoiceForm.getOngoingTrainingList().size()==0) {
 				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
@@ -457,15 +456,14 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
 				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			}
-=======
+=======*/
 			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
 			invoiceForm.getDetailTrainingList().add(invoiceForm.getTrainingDetailBean());
 			invoiceForm.setTrainingDetailBean(new TrainingDetailBean());
->>>>>>> refs/remotes/origin/master
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("deleteAdditionalFee".equals(invoiceForm.getTask())) {
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			if (invoiceForm.getOngoingTrainingList().size()==0) {
 				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
 				return mapping.findForward("createInvoice");
@@ -474,10 +472,10 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
 				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
 			}
-=======
+=======*/
 			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
 			invoiceForm.getDetailTrainingList().remove(invoiceForm.getDeleteIndex());
->>>>>>> refs/remotes/origin/master
+
 			return mapping.findForward("createInvoiceTRST");
 		} else if ("insertTRST".equals(invoiceForm.getTask())) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
