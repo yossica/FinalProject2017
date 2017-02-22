@@ -105,7 +105,7 @@
 						: <bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 					</logic:equal>
 					<logic:equal name="invoiceForm" property="task" value="editInvoice">
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+						<input type="date" id="invoiceDate" class="form-control-client" style="width: 100%;" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
 					</logic:equal>
 					</div>
 				</div>
@@ -157,7 +157,15 @@
 						</logic:equal>
 					</logic:equal>
 					<logic:equal name="invoiceForm" property="task" value="editInvoice">
-						LOL
+						<div class="radio">
+							<label>
+								<html:radio name="invoiceForm" property="invoiceBean.isGross" value="0">Exclude</html:radio>
+						    </label>
+						    &nbsp;
+						    <label>
+						   		<html:radio name="invoiceForm" property="invoiceBean.isGross" value="1">Include</html:radio>
+						    </label>
+						</div>
 					</logic:equal>
 					</div>
 				</div>

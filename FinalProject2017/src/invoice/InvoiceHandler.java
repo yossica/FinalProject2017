@@ -344,9 +344,11 @@ public class InvoiceHandler extends Action {
 				return  mapping.findForward("formInvoicePS");
 			} else if (invoiceTypeId == 2){
 				//Head Hunter
-				System.out.println(invoiceForm.getInvoiceBean().getInvoiceDate());
-				//invoiceForm.getInvoiceBean().setIn
-				//return mapping.findForward("formInvoiceHH");
+				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date getDate = dateFormat.parse(invoiceForm.getInvoiceBean().getInvoiceDate());
+				invoiceForm.getInvoiceBean().setInvoiceDate(showDateFormat.format(getDate));
+				return mapping.findForward("formInvoiceHH");
 			} else if (invoiceTypeId == 3){
 				//Training
 				String paymentDescription = invoiceManager.checkTrainingPaymentTypeByHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
