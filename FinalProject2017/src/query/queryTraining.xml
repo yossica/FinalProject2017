@@ -52,7 +52,7 @@
 		settlement_invoice_id = 0,
 		changed_by = #changedBy#, 
 		changed_date = sysdate
-		where transaction_training_id = #transactionTrainingHeaderId#
+		where settlement_invoice_id = #settlementInvoiceId#
 	</update>
 	
 	<update id="updateDetail" parameterClass="training.TrainingDetailBean">
@@ -105,6 +105,14 @@
 		 select transaction_training_id as transactionTrainingHeaderId
 		from transaction_training_header
 		where dp_invoice_id = #dpInvoiceId#
+	</select>
+	
+	<select id="getTrainingByInvoiceSettlementId" resultClass="training.TrainingBean"
+						 parameterClass="java.lang.Integer">
+		select transaction_training_id as transactionTrainingHeaderId,
+			description as description
+		from transaction_training_header
+		where settlement_invoice_id = #settlementInvoiceId#
 	</select>
 	
 	<select id="getDetailById" resultClass="training.TrainingDetailBean"
