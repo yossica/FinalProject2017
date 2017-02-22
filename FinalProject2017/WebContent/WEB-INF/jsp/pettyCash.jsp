@@ -9,6 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 <script type="text/javascript">
+	function scrollBottom(){
+		var objDiv = document.getElementById("listPettyCash");
+	    objDiv.scrollTop = objDiv.scrollHeight;		
+	}
 	function toggleFilter() {
 		var filter = document.getElementById("filterForm");
 		filter.style.display = filter.style.display === 'none' ? '' : 'none';
@@ -18,6 +22,7 @@
 			document.getElementById("listPettyCash").style.height = "200px";
 		}
 	}
+	
 	function filter(){
 		//validasi untuk masukin start date + end date (ga boleh salah satu aja)
 		var filterStartDate = document.forms[1].filterStartDate.value;
@@ -94,7 +99,7 @@
 	window.onload = alertError;
 </script>
 </head>
-<body>
+<body onload="scrollBottom()">
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/pettyCash" method="post">
 	<html:hidden property="task" name="pettyCashForm"/>
