@@ -110,7 +110,7 @@
 	<select id="getDetailById" resultClass="invoice.InvoiceDetailBean" parameterClass="java.lang.Integer">		
         select 
             rownum as numb,
-            Description||' '||e.name||' '||nvl2(i.man_days,i.man_days||' days work',i.man_days) as description,
+            Description<!-- ||' '||e.name||' '||nvl2(i.man_days,i.man_days||' days work',i.man_days) --> as description,
 			i.TRANSACTION_INVOICE_DETAIL_ID as transactionInvoiceDetailId,
 			i.TRANSACTION_INVOICE_ID as transactionInvoiceHeaderId,
 			i.FEE as fee,
