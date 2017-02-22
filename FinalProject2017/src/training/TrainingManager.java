@@ -86,16 +86,14 @@ public class TrainingManager {
 		try{
 			//update data header
 			ibatis.startTransaction();
-            ibatis.update("training.updateHeader", input);
-            ibatis.commitTransaction();
+            ibatis.update("training.updateHeader", input);        
             
             //update data detail
             for(int i = 0; i<input.getDetailList().size();i++){
-		        ibatis.startTransaction();
 	            ibatis.insert("training.updateDetail", input.getDetailList().get(i));
-	            ibatis.commitTransaction();
             }
-
+            
+            ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -336,6 +334,16 @@ public class TrainingManager {
 			e.printStackTrace();
 		}
 		return result;
-		
+	}
+	public TrainingBean getTrainingByInvoiceSettlementId(int input){
+		TrainingBean result = new TrainingBean();
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			result = (TrainingBean) ibatis.queryForObject("training.getTrainingByInvoiceSettlementId", input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

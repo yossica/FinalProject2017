@@ -30,6 +30,7 @@ public class InvoiceForm extends ActionForm{
 	private GeneralInformationBean sign = new GeneralInformationBean();
 	
 	private String task;
+	private String subTask;
 	
 	private String clientId;
 	private String monthFrom;
@@ -100,6 +101,12 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setTask(String task) {
 		this.task = task;
+	}	
+	public String getSubTask() {
+		return subTask;
+	}
+	public void setSubTask(String subTask) {
+		this.subTask = subTask;
 	}
 	public String getClientId() {
 		return clientId;
