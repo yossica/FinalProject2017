@@ -48,7 +48,15 @@
 			},
 			function(isConfirm){
 			  if (isConfirm) {
-				flyToPage("balancing");
+				/* flyToPage("balancing"); */
+				 swal({title: "Good job!",
+					  text: "Transaction Success!",
+					  type: "success"}
+					 ,function(){
+					  setTimeout(function(){
+						  flyToPage("balancing");
+						  }, 10);
+						});   
 			  } else {
 			    swal("Cancelled", "Cancel Rebalance Cash in Bank", "error");
 			  }
@@ -58,6 +66,23 @@
 		document.forms[1].task.value=task;
 		document.forms[1].submit();
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 </head>
 <body>
@@ -111,6 +136,13 @@
 				<span id="errorMessage" style="color:red"></span>
 			</div>
 		</div>
+		<logic:notEmpty name="pettyCashForm"
+						property="messageList">
+						<logic:iterate id="message" name="pettyCashForm"
+							property="messageList">
+							<input type="hidden" id="err" value="<bean:write name="message" />">
+						</logic:iterate>
+					</logic:notEmpty>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel-body">

@@ -64,15 +64,15 @@
 				closeOnCancel : false
 			}, function(isConfirm) {
 				if (isConfirm) {
-					//flyToSave();
-					swal({title: "Good job!",
+					flyToSave();
+					/* swal({title: "Good job!",
 						  text: "Transaction Success!",
 						  type: "success"}
 						 ,function(){
 						  setTimeout(function(){
 							  flyToSave();
 							  }, 10);
-							}); 
+							});  */
 				} else {
 					swal("Cancelled", "Cancel Save Master Outsource", "error");
 				}
