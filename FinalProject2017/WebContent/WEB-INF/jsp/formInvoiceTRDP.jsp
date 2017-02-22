@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create Invoice</title>
 <script>
-	function insert(){
+	function validate(){
 		//validate
 		var fee = document.getElementsByName("trainingFee")[0].value;
 		var description = document.getElementsByName("trainingBean.description")[0].value;		
@@ -19,7 +19,7 @@
 		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		var errorMessage = "";
 		var flag = true;
-
+	
 		if(description == ""){
 			errorMessage = errorMessage + "Training Name must be filled!<br/>";
 		}
@@ -54,10 +54,14 @@
 		
 		if(errorMessage.length != 0){
 			document.getElementById("message").innerHTML = errorMessage;
-			return;
+			return 0;
+		}else{
+			return 1;
 		}
-		else{		
-			
+	}
+	function insert(){
+		validate();
+		if(validate()==1){			
 			swal({
 				  title: "Are you sure?",
 				  text: "System will insert these data to Invoice",
@@ -79,6 +83,31 @@
 			
 		}			
 	}
+	function update(){
+		validate();
+		if(validate()==1){			
+			swal({
+				  title: "Are you sure?",
+				  text: "System will update these data to Invoice",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Update",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+			            	flyToPage("editInvoiceTRDP");
+				  } else {
+				    swal("Cancelled", "Cancel Update Transaction", "error");
+				  }
+				});
+			
+		}			
+	}
+	
 	function flyToPage(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -93,7 +122,8 @@
 	<html:hidden property="statusId" name="invoiceForm"/>
 	<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
 	<html:hidden property="invoiceBean.ppnPercentage" name="invoiceForm"/>
-	<html:hidden property="trainingBean.transactionTrainingId" name="invoiceForm"/>
+	<html:hidden property="statusId" name="invoiceForm"/>
+	<html:hidden property="trainingBean.transactionTrainingHeaderId" name="invoiceForm"/>
 	
 	<div id="page-wrapper">
 		<div class="row">
@@ -242,7 +272,7 @@
 						<logic:equal name="invoiceForm" property="task"
 								value="editInvoiceTRDP">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('detailInvoice')">Back</button>
-							<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
+							<button type="button" class="btn btn-primary" onclick="javascript:update()">Save</button>
 						</logic:equal>
 						<logic:notEqual name="invoiceForm" property="task"
 								value="editInvoiceTRDP">
