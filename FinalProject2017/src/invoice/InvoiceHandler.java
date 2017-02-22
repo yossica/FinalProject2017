@@ -390,8 +390,8 @@ public class InvoiceHandler extends Action {
 			return null;
 		}else if("editInvoiceTRDP".equals(invoiceForm.getTask())){ 
 		
-//			InvoiceDetailBean invoiceDetailBean = new InvoiceDetailBean();
-//			invoiceDetailBean.setCreatedBy((String)session.getAttribute("username"));
+			InvoiceDetailBean invoiceDetailBean = new InvoiceDetailBean();
+			invoiceDetailBean.setChangedBy((String)session.getAttribute("username"));
 //			invoiceDetailBean.setDescription("Training \""+invoiceForm.getTrainingBean().getDescription() + "\" - DP");
 //			invoiceDetailBean.setNotes(invoiceForm.getInvoiceDetailNotes());
 //						
