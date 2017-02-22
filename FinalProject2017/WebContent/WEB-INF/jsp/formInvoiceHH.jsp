@@ -71,14 +71,15 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
-	/* function flyToDetail(transactionInvoiceHeaderId, clientId){
+	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
 		document.forms[1].client.value = clientId;
+		document.forms[1].statusId.value = statusId;
 		flyToPage("detailInvoice");
-	} */
-	function deleteDetailHH(index){
+	}
+	function deleteDetailHH(index, flyTo){
 		document.forms[1].deleteIndex.value = index;
-		flyToPage('deleteDetailHH');
+		flyToPage(flyTo);
 	}
 	function toggleNotes(idNumber) {
 	    var popup = document.getElementById("myPopup"+idNumber);
@@ -91,7 +92,6 @@
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
 	<html:hidden property="deleteIndex" name="invoiceForm" />
-	
 	<html:hidden property="invoiceBean.transactionInvoiceHeaderId" name="invoiceForm" />
 
 	<div id="page-wrapper">
@@ -220,7 +220,14 @@
 									</div>
 								</td>
 								<td>
-									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteDetailHH('${indexHH}')"><i class="fa fa-times"></i></button>
+								<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
+									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" 
+									onclick="javascript:deleteDetailHH('${indexHH}','deleteDetailHH')"><i class="fa fa-times"></i></button>
+								</logic:equal>
+								<logic:equal name="invoiceForm" property="task" value="editInvoice">
+									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" 
+									onclick="javascript:deleteDetailHH('${indexHH}','deleteDetailHHonEditPage')"><i class="fa fa-times"></i></button>
+								</logic:equal>
 								</td>
 							</tr>
 							</logic:iterate>
@@ -242,7 +249,15 @@
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertHH')">Save</button>
 						</logic:equal>
 						<logic:equal name="invoiceForm" property="task" value="editInvoice">
-							<!-- <button type="button" class="btn btn-primary" onclick="javascript:flyToPage('detailInvoice')">Back</button> -->
+							<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
+							<html:hidden property="client" name="invoiceForm"/>
+							<html:hidden property="statusId" name="invoiceForm"/>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToDetail(
+                				'<bean:write name="invoiceForm" property="transactionInvoiceHeaderId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="clientId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="statusInvoiceId" format="#"/>'
+	                		)">
+	                		Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoiceHH')">Save</button>
 						</logic:equal>
 					</div>
