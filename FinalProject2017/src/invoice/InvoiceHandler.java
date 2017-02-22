@@ -201,8 +201,13 @@ public class InvoiceHandler extends Action {
 			return mapping.findForward("formInvoiceHH");
 		} else if ("addDetailHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
-			return mapping.findForward("createInvoiceHH");
-		} else if ("createInvoiceTRDP".equals(invoiceForm.getTask())) {			
+			invoiceForm.setTask("formInvoiceHH");
+			return mapping.findForward("formInvoiceHH");
+		} else if ("editDetailHH".equals(invoiceForm.getTask())) {
+			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
+			invoiceForm.setTask("editInvoice");
+			return mapping.findForward("formInvoiceHH");
+		}else if ("createInvoiceTRDP".equals(invoiceForm.getTask())) {			
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			return mapping.findForward("formInvoiceTRDP");
@@ -358,7 +363,6 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setInvoiceDate(showDateFormat.format(getDate));
 				List<InvoiceDetailBean> detailList = invoiceManager.getDetailById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
 				invoiceForm.setHeadHunterList(detailList);
-				invoiceForm.print();
 				return mapping.findForward("formInvoiceHH");
 			} else if (invoiceTypeId == 3){
 				//Training
@@ -521,6 +525,7 @@ public class InvoiceHandler extends Action {
 			}
 			invoiceForm.getInvoiceBean().setTotalNet(netTotal);
 			invoiceForm.getInvoiceBean().setTotalPpn(invoiceForm.getInvoiceBean().getTotalGross() - netTotal);
+			invoiceForm.getInvoiceBean().setChangedBy((String)session.getAttribute("username"));
 			invoiceForm.print();
 			return mapping.findForward("formInvoiceHH");
 		}

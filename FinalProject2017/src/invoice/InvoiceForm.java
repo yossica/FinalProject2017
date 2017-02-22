@@ -238,7 +238,7 @@ public class InvoiceForm extends ActionForm{
 		//System.out.println(invoiceBean.getInvoiceTypeId());
 		//System.out.println(invoiceBean.getClientId());
 		System.out.println(invoiceBean.getTotalNet());
-		System.out.println(invoiceBean.getPpnPercentage());
+		//System.out.println(invoiceBean.getPpnPercentage());
 		System.out.println(invoiceBean.getIsGross());
 		System.out.println(invoiceBean.getTotalGross());
 		System.out.println(invoiceBean.getNotes());
