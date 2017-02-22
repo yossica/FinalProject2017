@@ -17,6 +17,28 @@
 		document.forms[1].deleteIndex.value = id;
 		flyToPage('deleteAdditionalFee');
 	}
+	function validate(){
+		var tgl = document.getElementsByName("invoiceBean.invoiceDate")[0].value;
+		
+		if (tgl=="") {
+			alert("tanggal harus diisi");
+		} else {
+			flyToPage('editInvoiceTRST');
+		}
+		
+	}
+	function flyToAdd(){
+		var desc = document.getElementById('desc').value;
+		var fee = document.getElementById('fee').value;
+		
+		if (desc==""||fee=="0.0"||fee=="") {
+			alert("deskripsi dan fee harus diisi");
+		} else if (isNaN(fee)) {
+			alert("fee harus angka");
+		} else {
+			flyToPage('addAdditionalFee');
+		}
+	}
 </script>
 </head>
 <body>
@@ -41,7 +63,7 @@
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<logic:equal value="editInvoiceTRST" property="subTask" name="invoiceForm">
-							<input type="date" name="invoiceBean.invoiceDate" class="form-control" value="<bean:write property="invoiceBean.invoiceDate" name="invoiceForm"/>">
+							<input type="date" name="invoiceBean.invoiceDate" class="form-control" value="<bean:write property="invoiceBean.invoiceDate" name="invoiceForm"/>" styleId="tgl">
 						</logic:equal>
 						<logic:notEqual value="editInvoiceTRST" property="subTask" name="invoiceForm">							
 							<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
@@ -129,15 +151,15 @@
 						</tr>
 						<tr>
 							<td>Description</td>
-							<td><html:text name="invoiceForm" property="trainingDetailBean.description"></html:text></td>
+							<td><html:text name="invoiceForm" property="trainingDetailBean.description" styleId="desc"></html:text></td>
 						</tr>
 						<tr>
 							<td>Fee</td>
-							<td><html:text name="invoiceForm" property="trainingDetailBean.fee"></html:text></td>
+							<td><html:text name="invoiceForm" property="trainingDetailBean.fee" styleId="fee"></html:text></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('addAdditionalFee')">Save</button>
+								<button type="button" class="btn btn-primary" onclick="javascript:flyToAdd()">Save</button>
 								<button type="button" class="btn btn-primary">Cancel</button>
 							</td>
 						</tr>
@@ -182,7 +204,7 @@
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<logic:equal value="editInvoiceTRST" property="subTask" name="invoiceForm">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoiceList')">Back</button>
-							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoiceTRST')">Save</button>
+							<button type="button" class="btn btn-primary" onclick="javascript:validate()">Save</button>
 						</logic:equal>
 						<logic:notEqual value="editInvoiceTRST" property="subTask" name="invoiceForm">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
