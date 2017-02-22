@@ -35,9 +35,10 @@ public class UserHandler extends Action {
 			}
 			else {
 				userForm.setTask("");
+				userForm.getMessageList().clear();
+				userForm.getMessageList().add("Ooooops Old Password does not match");
 				return mapping.findForward("login");
 			}
-
 		} else if ("changePassword".equals(userForm.getTask())) {
 			if (session.getAttribute("username") == null) {
 				return mapping.findForward("login");

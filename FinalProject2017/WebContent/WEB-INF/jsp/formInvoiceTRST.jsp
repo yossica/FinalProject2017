@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create Invoice</title>
+<title>Finance Solution</title>
 <script>
 	function flyToPage(task){
 		document.forms[1].task.value = task;
@@ -27,6 +27,8 @@
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
+
+				<h1 class="page-header">Create Invoice Training</h1>
 				<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
 					<h1 class="page-header">Edit Invoice Training Settlement</h1>
 				</logic:equal>
