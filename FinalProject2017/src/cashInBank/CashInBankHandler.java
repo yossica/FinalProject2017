@@ -81,7 +81,8 @@ public class CashInBankHandler extends Action {
 			}
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
 			cashInBankForm.setCategoryId(cashInBankForm.getCategoryId());
-			
+			/*cashInBankForm.getMessageList().add(
+					"Success!!! Cash In Bank has been balanced!");*/
 			return mapping.findForward("cashInBank");
 		}
 		else if("balancing".equals(cashInBankForm.getTask())){
@@ -260,7 +261,9 @@ public class CashInBankHandler extends Action {
 			}
 			cashInBankForm.setCategoryId("");
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-			
+			//ini
+			cashInBankForm.getMessageList().add(
+					"Success!!! Transaction has been added!");
 			return mapping.findForward("cashInBank");
 		}
 		else if("credit".equals(cashInBankForm.getTask())){
@@ -353,6 +356,8 @@ public class CashInBankHandler extends Action {
 				cashFlowCategoryBean = (CashFlowCategoryBean) obj;
 				cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()+"-"+(cashFlowCategoryBean.getIsDebit()==1?"Debit":"Credit"));
 			}
+			cashInBankForm.getMessageList().add(
+					"Success!!! Transaction has been added!");
 			cashInBankForm.setCategoryId("");
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
 			
@@ -444,7 +449,8 @@ public class CashInBankHandler extends Action {
 			cashFlowCategoryBean = new CashFlowCategoryBean();
 			cashInBankForm.setCategoryId("");
 			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-			
+			cashInBankForm.getMessageList().add(
+					"Success!!! Transaction has been added!");
 			return mapping.findForward("cashInBank");
 		}
 		else if("export".equals(cashInBankForm.getTask())){

@@ -59,7 +59,6 @@ public class IndexHandler extends Action {
 			indexForm.setCashInBankBalance(cashInBankManager
 					.getCurrentBalance());
 			indexForm.setPettyCashBalance(pettyCashManager.getCurrentBalance());
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("financeSummary");
 		} else if ("client".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("client");
@@ -134,7 +133,8 @@ public class IndexHandler extends Action {
 					.getSentOutsourceRemainderList());
 			indexForm.setListedTrainingRemainderList(trainingManager
 					.getListedTrainingRemainderList());
-			indexForm.setUsername((String) session.getAttribute("username"));
+
+
 			return mapping.findForward("success");
 		}
 	}
