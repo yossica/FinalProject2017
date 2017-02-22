@@ -60,7 +60,7 @@
 	                                    <logic:notEmpty name="indexForm" property="listedRemainderList">	
 	                                        <logic:iterate id="list" name="indexForm" property="listedRemainderList">
 		                                        <tr>
-		                                        	<td><a href="#" onclick="flyToCreate('createInvoiceIndex',
+		                                        	<td><a href="#" onclick="flyToCreate('createInvoice',
 		                                        										 '<bean:write name="list" property="clientId" format="#"/>',
 		                                        										 '<bean:write name="list" property="invoiceTypeId" format="#"/>',
 		                                        										 '<bean:write name="list" property="periodMonth" format="#"/>',
