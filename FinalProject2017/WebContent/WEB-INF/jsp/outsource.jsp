@@ -26,6 +26,23 @@
 		document.forms[1].transactionOutsourceId.value = id;
 		flyToPage('end');
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 <title>Finance Solution</title>
 </head>
@@ -40,7 +57,7 @@
 						property="messageList">
 						<logic:iterate id="message" name="outsourceForm"
 							property="messageList">
-							<bean:write name="message" />
+							<input type="hidden" id="err" value="<bean:write name="message" />">
 						</logic:iterate>
 					</logic:notEmpty>
 				</span>

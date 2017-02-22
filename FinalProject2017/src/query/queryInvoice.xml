@@ -57,7 +57,7 @@
 				</isNotEmpty>
 			</isNotNull>
 		</dynamic>
-		order by 2
+		order by 2 desc
 	</select>
 	
 	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
