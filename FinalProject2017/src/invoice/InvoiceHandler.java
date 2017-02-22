@@ -290,14 +290,14 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
 			
 			invoiceManager.insert(invoiceForm.getInvoiceBean());
-			
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 			//insert training
 			trainingManager.insert(trainingBean);
 			
 			//setting field untuk view invoice
 			invoiceForm.setClientBean(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()));
-			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceManager.getMaxInvoiceHeaderId()));
-			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceManager.getMaxInvoiceHeaderId()));
+			//invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
+			invoiceForm.setInvoiceDetailList(invoiceForm.getInvoiceBean().getDetailList());
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			
@@ -656,9 +656,9 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getMessageList().add("Success Edit Invoice");
 
 			//setting field untuk view invoice
-			invoiceForm.setClientBean(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()));
-			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceManager.getMaxInvoiceHeaderId()));
-			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceManager.getMaxInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(invoiceBean.getClientId()));
+			invoiceForm.setInvoiceBean(invoiceBean);
+			invoiceForm.setInvoiceDetailList(invoiceBean.getDetailList());
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			
