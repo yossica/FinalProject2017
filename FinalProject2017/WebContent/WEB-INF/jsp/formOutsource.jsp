@@ -23,10 +23,10 @@
 		var fee = document.getElementsByName("outsourceBean.fee")[0].value;
 		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		if (startDate == "") {
-			errorMessage = errorMessage + "Start date must be filled!<br/>";
+			errorMessage = errorMessage + "Start date must be filled! \n";
 		}
 		if (endDate == "") {
-			errorMessage = errorMessage + "End date must be filled!<br/>";
+			errorMessage = errorMessage + "End date must be filled! \n";
 		}
 		if (startDate != "" && endDate != "") {
 			var s = startDate.split("-");
@@ -37,18 +37,19 @@
 					parseInt(e[2]));
 			if (sDate > eDate) {
 				errorMessage = errorMessage
-						+ "Start Date must be later than End Date! <br/>";
+						+ "Start Date must be later than End Date! \n";
 			}
 		}
 		if (fee == "") {
-			errorMessage = errorMessage + "Fee  must be filled!<br/>";
+			errorMessage = errorMessage + "Fee  must be filled! \n";
 		} else if (!doubleReg.test(fee)) {
-			errorMessage = errorMessage + "Fee must be number!<br/>";
+			errorMessage = errorMessage + "Fee must be number! \n";
 		} else if (parseFloat(fee) < 0) {
-			errorMessage = errorMessage + "Fee cannot be negative!<br/>";
+			errorMessage = errorMessage + "Fee cannot be negative! \n";
 		}
 		if (errorMessage.length != 0) {
-			document.getElementById("message").innerHTML = errorMessage;
+			//document.getElementById("message").innerHTML = errorMessage;
+			sweetAlert("Oops...", errorMessage, "error");
 			return;
 		} else {
 			swal({
@@ -63,7 +64,15 @@
 				closeOnCancel : false
 			}, function(isConfirm) {
 				if (isConfirm) {
-					flyToSave();
+					//flyToSave();
+					swal({title: "Good job!",
+						  text: "Transaction Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  flyToSave();
+							  }, 10);
+							}); 
 				} else {
 					swal("Cancelled", "Cancel Save Master Outsource", "error");
 				}
@@ -73,6 +82,23 @@
 			} */
 		}
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 <title>Client</title>
 </head>
@@ -111,7 +137,7 @@
 										<logic:iterate id="message" name="outsourceForm"
 											property="messageList">
 											<div>
-												<bean:write name="message" />
+												<input type="hidden" id="err" value="<bean:write name="message" />">
 											</div>
 										</logic:iterate>
 									</logic:notEmpty>

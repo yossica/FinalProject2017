@@ -53,8 +53,9 @@
 						<!-- /.table-responsive -->
 						<div class="col-md-12" style="padding-left:0;" style="margin-top: 1px; margin-bottom: 10px;">
 							<div class="pull-left">
+								<button type="button" class="btn btn-primary ">Cancel</button>
 				            	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('saveChangePassword')">Save</button>
-					         	<button type="button" class="btn btn-primary ">Cancel</button>
+					         	
 					        </div>	
 					         	<div class="col-md-4" style="color:red;overflow: auto;" id="message">
 									<logic:notEmpty name="userForm" property="messageList" >

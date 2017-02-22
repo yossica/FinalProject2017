@@ -92,15 +92,18 @@
 	<html:hidden property="client" name="invoiceForm"/>
 	<html:hidden property="statusId" name="invoiceForm"/>
 	<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
+	<html:hidden property="invoiceBean.ppnPercentage" name="invoiceForm"/>
+	<html:hidden property="trainingBean.transactionTrainingId" name="invoiceForm"/>
+	
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
 				<logic:equal name="invoiceForm" property="task"
-						value="saveedit">
+						value="editInvoiceTRDP">
 					<h1 class="page-header">Edit Invoice Training</h1>
 				</logic:equal>
 				<logic:notEqual name="invoiceForm" property="task"
-						value="saveedit">
+						value="editInvoiceTRDP">
 					<h1 class="page-header">Create Invoice Training</h1>
 				</logic:notEqual>
 			</div>
@@ -109,13 +112,13 @@
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<logic:equal name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<input type="date" class="form-control" style="width: 100%;" 
 								name="invoiceBean.invoiceDate" 
 								value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />"/>
 						</logic:equal>
 						<logic:notEqual name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
 							<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 						</logic:notEqual>
@@ -156,7 +159,7 @@
 					<div class="col-md-5">
 						
 						<logic:equal name="invoiceForm" property="task"
-							value="saveedit">
+							value="editInvoiceTRDP">
 							<div class="col-md-4">
 							<html:radio name="invoiceForm"
 								property="invoiceBean.isGross" value="0" />&nbsp;Exclude
@@ -167,7 +170,7 @@
 						</logic:equal>
 					
 						<logic:notEqual name="invoiceForm" property="task"
-							value="saveedit">
+							value="editInvoiceTRDP">
 							<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
 							<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="0">
 								Exclude
@@ -184,10 +187,10 @@
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
 						<logic:equal name="invoiceForm" property="task"
-								value="saveedit"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" ></html:textarea>
+								value="editInvoiceTRDP"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" ></html:textarea>
 						</logic:equal>
 						<logic:notEqual name="invoiceForm" property="task"
-								value="saveedit"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"></html:textarea>
+								value="editInvoiceTRDP"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"></html:textarea>
 						</logic:notEqual>
 					</div>
 				</div>
@@ -237,12 +240,12 @@
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						
 						<logic:equal name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('detailInvoice')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
 						</logic:equal>
 						<logic:notEqual name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
 						</logic:notEqual>

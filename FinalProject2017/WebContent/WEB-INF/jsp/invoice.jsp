@@ -29,14 +29,17 @@
 			flyToPage('filter');
 		} else if (monthFrom != "" && yearFrom != "" && monthTo != "" && yearTo != "") {
 			if (monthFrom>monthTo && yearFrom==yearTo) {
-				document.getElementById("errorMessage").innerHTML = "Start month period must before end month period!";
+				//document.getElementById("errorMessage").innerHTML = "Start month period must before end month period!";
+				sweetAlert("Oops...", "Start month period must before end month period!", "error");
 			} else if (yearFrom>yearTo) {
-				document.getElementById("errorMessage").innerHTML = "Start year period must before end year period!";
+				//document.getElementById("errorMessage").innerHTML = "Start year period must before end year period!";
+				sweetAlert("Oops...", "Start year period must before end year period!", "error");
 			} else {
 				flyToPage('filter');
 			}
 		} else {
-			document.getElementById("errorMessage").innerHTML = "Start month and year period and month and year period must be either both filled or emptied!";
+			//document.getElementById("errorMessage").innerHTML = "Start month and year period and month and year period must be either both filled or emptied!";
+			sweetAlert("Oops...", "Start month and year period and month and year period must be either both filled or emptied!", "error");
 		}
 	}
 	function flyToPage(task)
@@ -96,6 +99,7 @@
 		document.forms[1].statusId.value = statusId;
 		flyToPage("detailInvoice");
 	}
+	
 </script>
 </head>
 <body>

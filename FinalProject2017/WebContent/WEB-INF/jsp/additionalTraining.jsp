@@ -17,20 +17,21 @@
 			var errorMessage = ""; 
 			
 			if(fee == ""){
-				errorMessage = errorMessage + "Fee must be filled!<br/>";
+				errorMessage = errorMessage + "Fee must be filled! \n";
 			}
 			else if(!doubleReg.test(fee)){
-				errorMessage = errorMessage + "Fee must be number!<br/>";
+				errorMessage = errorMessage + "Fee must be number! \n";
 			}
 			else if(parseFloat(fee) <= 0){
-				errorMessage = errorMessage + "Fee cannot be zero or negative!<br/>";	
+				errorMessage = errorMessage + "Fee cannot be zero or negative! \n";	
 			}
 			if(description == ""){
-				errorMessage = errorMessage + "Description must be filled!<br/>";
+				errorMessage = errorMessage + "Description must be filled! \n";
 			}
 			
 			if(errorMessage.length != 0){
-				document.getElementById("message").innerHTML = errorMessage;
+				//document.getElementById("message").innerHTML = errorMessage;
+				sweetAlert("Oops...", errorMessage, "error");
 				return;
 			}
 			else{		
@@ -38,8 +39,33 @@
 				var clientName = clientList.options[clientList.selectedIndex].text;
 				var trainingList = document.getElementsByName("trainingDetailBean.transactionTrainingHeaderId")[0];
 				var trainingName = trainingList.options[trainingList.selectedIndex].text;
-				if (confirm("Are you sure to insert these data as additional training fee for "+clientName+"-"+trainingName+"?")) {
-					flyToPage("insertDetail");
+				if (confirm/* ("Are you sure to insert these data as additional training fee for "+clientName+"-"+trainingName+"?") */) {
+					//flyToPage("insertDetail");
+					swal({
+						  title: "Are you sure?",
+						  text: "System will insert these data as additional training fee for "+clientName+"-"+trainingName+"?",
+						  type: "warning",
+						  showCancelButton: true,
+						  confirmButtonColor: "#ef2300",
+						  confirmButtonText: "Yes, Insert",
+						  cancelButtonText: "No, Cancel Please!",
+						  closeOnConfirm: false,
+						  closeOnCancel: false
+						},
+						function(isConfirm){
+						  if (isConfirm) {
+							  swal({title: "Good job!",
+								  text: "Transaction Success!",
+								  type: "success"}
+								 ,function(){
+								  setTimeout(function(){
+									  flyToPage("insertDetail");
+									  }, 10);
+									}); 
+						  } else {
+						    swal("Cancelled", "Cancel Insert Transaction", "error");
+						  }
+						});
 				}
 			}			
 		}
@@ -54,6 +80,23 @@
 			document.forms[1].task.value = task;
 			document.forms[1].submit();
 		}
+		function alertError() {
+			var message=document.getElementById("err");
+			if(message!=null){
+				var messageValue=message.value;
+				
+				var strValue = messageValue.substring(0, 7);
+				if(strValue=="Success"){
+					//Success
+					swal("Good job!", messageValue, "success");
+				}
+				else if(strValue=="Ooooops"){
+					//Ooooops
+					sweetAlert("Oops...", messageValue, "error");
+				}
+			}
+		}
+		window.onload = alertError;
 	</script>
 </head>
 <body>
@@ -136,7 +179,7 @@
 			        	<div class="col-md-7" id="message">
 			        		<logic:notEmpty name="trainingForm" property="messageList">
 								<logic:iterate id="message" name="trainingForm" property="messageList">
-									<bean:write name="message" /> 
+									<input type="hidden" id="err" value="<bean:write name="message" />">
 								</logic:iterate>
 							</logic:notEmpty>
 			        	</div>

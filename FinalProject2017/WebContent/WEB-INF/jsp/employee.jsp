@@ -30,10 +30,14 @@
 	    	<div class="row">
 		        <div class="col-lg-12">
 		            <h1 class="page-header">Employee List</h1>
+		            <div class="panel-body" style="margin-right: 10px;">
+						<div class="pull-right">
+							<input type="button" value="Create" class="btn btn-primary pull-right" onclick="javascript:flyToPage('create')">
+						</div>
+					</div>
 		            <div class="panel-body">
-	                    <div class="table-responsive">
-	                    	<input type="button" value="Create" class="btn btn-primary pull-right" onclick="javascript:flyToPage('create')">
-	                        <table class="table table-hover">
+	                    <div class="table-responsive" style="height:400px;overflow:auto;">
+	                    	 <table class="table table-hover">
 			                     <tr>
 				            		<th>Employee Name</th>
 				            		<th>Email</th>
