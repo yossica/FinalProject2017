@@ -30,10 +30,15 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Client List</h1>
-					<div class="panel-body">
-						<div class="table-responsive">
-							<button type="button" class="btn btn-primary pull-right"
+					<div class="panel-body" style="margin-right: 10px;">
+					<div class="pull-right">
+					<button type="button" class="btn btn-primary pull-right"
 								onclick="javascript:flyToPage('create')">Create</button>
+					</div>
+					</div>
+					<div class="panel-body">
+						<div class="table-responsive" style="height:400px;overflow:auto;">
+							
 							<table class="table table-hover">
 								<tr>
 									<th>Client Name</th>

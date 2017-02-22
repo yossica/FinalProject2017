@@ -20,24 +20,24 @@
 		var errorMessage = ""; 
 		
 		if(transactionDate == ""){
-			errorMessage = errorMessage + "Transaction date must be filled!<br/>";
+			errorMessage = errorMessage + "Transaction date must be filled! \n";
 		}
 		
 		if(amount == ""){
-			errorMessage+="Amount must be filled!<br/>";
+			errorMessage+="Amount must be filled! \n";
 		}
 		else if(!doubleReg.test(amount)){
-			errorMessage+="Amount must be number!<br/>";
+			errorMessage+="Amount must be number! \n";
 		}
 		else if(parseFloat(amount) <= 0){
-			errorMessage+="Amount cannot be zero or negative!<br/>";	
+			errorMessage+="Amount cannot be zero or negative! \n";	
 		}
 		if(description == ""){
-			errorMessage+="Description must be filled!<br/>";
+			errorMessage+="Description must be filled! \n";
 		}
 		
 		if(errorMessage.length != 0){
-			document.getElementById("message").innerHTML = errorMessage;
+			sweetAlert("Oops...", errorMessage, "error");
 			return;
 		}
 		else {
@@ -54,7 +54,14 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-			            	flyToPage();
+					  swal({title: "Good job!",
+						  text: "Transaction Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  flyToPage();
+							  }, 10);
+							}); 
 				  } else {
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
 				  }
@@ -68,6 +75,23 @@
 	function flyToPage() {
 		document.forms[1].submit();
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 <title>Finance Solution</title>
 </head>
@@ -140,7 +164,7 @@
 						<logic:notEmpty name="pettyCashForm" property="messageList">
 							<logic:iterate id="message" name="pettyCashForm"
 								property="messageList">
-								<bean:write name="message" />
+								<input type="hidden" id="err" value="<bean:write name="message" />">
 							</logic:iterate>
 						</logic:notEmpty>
 					</div>

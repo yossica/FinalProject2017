@@ -39,10 +39,10 @@
 		//validate
 		var splitenter = csv.split("\n");
 		var error = "";
-		document.getElementById("message").style.display="block";
+		/* document.getElementById("message").style.display="block"; */
 		for(var i = 0 ; i < splitenter.length ; i++){
 			if(!splitenter[i].includes(",")){
-				error += "Error: Row number "+ (i+1) + " must contain ,<br/>";
+				error += "Row number "+ (i+1) + " must contain \n";
 			}
 			else {
 				var splitcomma = splitenter[i].split(",");
@@ -52,21 +52,21 @@
 				}
 				if(splitcomma[1].length == 0){
 					if(isDateValid){
-						error += "Error: Row number "+ (i+1) +" description must be filled<br/>";
+						error += "Row number "+ (i+1) +" description must be filled \n";
 					}
 					else {
-						error += "Error: Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid, description must be filled<br/>";
+						error += "Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid, description must be filled \n";
 					}
 				}
 				else {
 					if(!isDateValid){
-						error += "Error: Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid<br/>";
+						error += "Row number "+ (i+1) +" date format (MM/dd/yyyy) is not valid \n";
 					}
 				}
 			}
 		}
 		if(error.length != 0){
-			document.getElementById("message").innerHTML = error;
+			sweetAlert("Oops...", error, "error");
 			return;
 		}
 		else{
@@ -100,8 +100,23 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
-	
-	
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else{
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 </head>
 <body>
@@ -128,10 +143,10 @@
 				           	<div style="clear:both"></div>
 				           	</div>
 			  			</div>
-			  			<div class="col-md-4" style="color:red;padding:20px;overflow: auto;background: #f7eded; border: 2px outset #f70000; display:none;" id="message">
+			  			<div class="col-md-4" id="message">
 			  				<logic:notEmpty name="holidayForm" property="messageList">
 								<logic:iterate id="message" name="holidayForm" property="messageList">
-									<bean:write name="message" /> 
+									<input type="hidden" id="err" value="<bean:write name="message" />">
 								</logic:iterate>
 							</logic:notEmpty>
 			  			</div>
