@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create Invoice</title>
+<title>Finance Solution</title>
 <script>
 	function flyToPage(task){
 		document.forms[1].task.value = task;
@@ -27,14 +27,26 @@
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
+
 				<h1 class="page-header">Create Invoice Training</h1>
+				<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
+					<h1 class="page-header">Edit Invoice Training Settlement</h1>
+				</logic:equal>
+				<logic:notEqual value="editInvoiceTRST" property="task" name="invoiceForm">
+					<h1 class="page-header">Create Invoice Training Settlement</h1>
+				</logic:notEqual>
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-10" style="padding-right: 1%">
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
-						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+						<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
+							<input type="date" name="invoiceBean.invoiceDate" class="form-control" value="<bean:write property="invoiceBean.invoiceDate" name="invoiceForm"/>">
+						</logic:equal>
+						<logic:notEqual value="editInvoiceTRST" property="task" name="invoiceForm">							
+							<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
+							<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+						</logic:notEqual>
 					</div>
 				</div>
 			</div>
@@ -84,7 +96,12 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
+						<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
+							<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"></html:textarea>
+						</logic:equal>
+						<logic:notEqual value="editInvoiceTRST" property="task" name="invoiceForm">
+							<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"></html:textarea>
+						</logic:notEqual>
 					</div>
 				</div>
 			</div>
@@ -150,8 +167,14 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTRST')">Save</button>
+						<logic:equal value="editInvoiceTRST" property="task" name="invoiceForm">
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoiceList')">Back</button>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoiceTRST')">Save</button>
+						</logic:equal>
+						<logic:notEqual value="editInvoiceTRST" property="task" name="invoiceForm">
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertTRST')">Save</button>
+						</logic:notEqual>
 					</div>
 				</div>
 			</div>
