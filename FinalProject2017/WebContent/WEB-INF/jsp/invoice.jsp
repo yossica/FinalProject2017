@@ -29,14 +29,17 @@
 			flyToPage('filter');
 		} else if (monthFrom != "" && yearFrom != "" && monthTo != "" && yearTo != "") {
 			if (monthFrom>monthTo && yearFrom==yearTo) {
-				document.getElementById("errorMessage").innerHTML = "Start month period must before end month period!";
+				//document.getElementById("errorMessage").innerHTML = "Start month period must before end month period!";
+				sweetAlert("Oops...", "Start month period must before end month period!", "error");
 			} else if (yearFrom>yearTo) {
-				document.getElementById("errorMessage").innerHTML = "Start year period must before end year period!";
+				//document.getElementById("errorMessage").innerHTML = "Start year period must before end year period!";
+				sweetAlert("Oops...", "Start year period must before end year period!", "error");
 			} else {
 				flyToPage('filter');
 			}
 		} else {
-			document.getElementById("errorMessage").innerHTML = "Start month and year period and month and year period must be either both filled or emptied!";
+			//document.getElementById("errorMessage").innerHTML = "Start month and year period and month and year period must be either both filled or emptied!";
+			sweetAlert("Oops...", "Start month and year period and month and year period must be either both filled or emptied!", "error");
 		}
 	}
 	function flyToPage(task)
@@ -96,23 +99,6 @@
 		document.forms[1].statusId.value = statusId;
 		flyToPage("detailInvoice");
 	}
-	function alertError() {
-		var message=document.getElementById("err");
-		if(message!=null){
-			var messageValue=message.value;
-			
-			var strValue = messageValue.substring(0, 7);
-			if(strValue=="Success"){
-				//Success
-				swal("Good job!", messageValue, "success");
-			}
-			else if(strValue=="Ooooops"){
-				//Ooooops
-				sweetAlert("Oops...", messageValue, "error");
-			}
-		}
-	}
-	window.onload = alertError;
 	
 </script>
 </head>
@@ -235,17 +221,8 @@
         			</div>
         			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
         				<button type="button" class="btn btn-primary" onclick="javascript:filter()">Filter</button>
-        				<!-- <span id="errorMessage" style="color:red"> -->
+        				<span id="errorMessage" style="color:red">
         			</div>
-        			<div class="col-md-4" style="color: red;"
-						id="message">
-						<logic:notEmpty name="invoiceForm" property="messageList">
-							<logic:iterate id="message" name="invoiceForm"
-								property="messageList">
-								<input type="hidden" id="err" value="<bean:write name="message" />">
-							</logic:iterate>
-						</logic:notEmpty>
-					</div>
         		</div>
 	        </div>
 	        <!-- /.col-lg-12 -->
