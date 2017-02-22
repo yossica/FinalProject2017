@@ -664,10 +664,6 @@ public class InvoiceHandler extends Action {
 				print.setTransactionTrainingHeaderId(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
 				trainingManager.insertDetail(print);
 			}
-//			//insert to invoice detail
-//			for (InvoiceDetailBean print : invoiceForm.getSettlementList()){
-//				invoiceManager.insertDetail(print);
-//			}
 			//display invoice
 			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
 			invoiceForm.setTransactionInvoiceHeaderId(idHeader);
