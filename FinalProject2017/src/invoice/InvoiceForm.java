@@ -49,10 +49,11 @@ public class InvoiceForm extends ActionForm{
 	private List invoiceTypeList = new ArrayList();
 	private List<InvoiceDetailBean> professionalServiceList = new ArrayList<InvoiceDetailBean>();
 	private List<InvoiceDetailBean> headHunterList = new ArrayList<InvoiceDetailBean>();
+	private List<InvoiceDetailBean> settlementList = new ArrayList<InvoiceDetailBean>();
+	private List<TrainingDetailBean> detailTrainingList = new ArrayList<TrainingDetailBean>();
 	private List outsourceList = new ArrayList();
 	private List invoiceDetailList = new ArrayList();
 	private List ongoingTrainingList;
-	private List detailTrainingList;
 	private int transactionTrainingDetailId;
 	
 	private List invoiceList;
@@ -171,6 +172,12 @@ public class InvoiceForm extends ActionForm{
 		}
 		return (InvoiceDetailBean) this.headHunterList.get(index);
 	}
+	public TrainingDetailBean getTrainingDetail(int index){
+		while (this.detailTrainingList.size() <= index){
+			this.detailTrainingList.add(new TrainingDetailBean());
+		}
+		return (TrainingDetailBean) this.detailTrainingList.get(index);
+	}
 	public List getOutsourceList() {
 		return outsourceList;
 	}
@@ -288,10 +295,12 @@ public class InvoiceForm extends ActionForm{
 	public void setOngoingTrainingList(List ongoingTrainingList) {
 		this.ongoingTrainingList = ongoingTrainingList;
 	}
-	public List getDetailTrainingList() {
+	public List<TrainingDetailBean> getDetailTrainingList() {
+		if(detailTrainingList == null)
+			detailTrainingList=new ArrayList();
 		return detailTrainingList;
 	}
-	public void setDetailTrainingList(List detailTrainingList) {
+	public void setDetailTrainingList(List<TrainingDetailBean> detailTrainingList) {
 		this.detailTrainingList = detailTrainingList;
 	}
 	public TrainingDetailBean getTrainingDetailBean() {
@@ -305,6 +314,12 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setTransactionTrainingDetailId(int transactionTrainingDetailId) {
 		this.transactionTrainingDetailId = transactionTrainingDetailId;
+	}
+	public List<InvoiceDetailBean> getSettlementList() {
+		return settlementList;
+	}
+	public void setSettlementList(List<InvoiceDetailBean> settlementList) {
+		this.settlementList = settlementList;
 	}
 	
 }
