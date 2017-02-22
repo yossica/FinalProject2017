@@ -168,17 +168,17 @@ public class CashInBankHandler extends Action {
 			boolean flag = true;
 			if(currBalance - amount < 0){
 				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add("Cannot create transaction that cost more than remaining balance!");
+				cashInBankForm.getMessageList().add("Ooooops!!! Cannot create transaction that cost more than remaining balance!");
 				flag = false;
 			}
 			else if(amount < min_transaction){
 				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add("Cannot create transaction less than IDR"+min_transaction+"!\nPlease do this in petty cash instead");
+				cashInBankForm.getMessageList().add("Ooooops!!! Create transaction less than IDR"+min_transaction+"!\nPlease do this in petty cash instead");
 				flag = false;
 			}
 			else if(amount > max_transaction){
 				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!");
+				cashInBankForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!");
 				flag = false;
 			}
 			
@@ -295,7 +295,7 @@ public class CashInBankHandler extends Action {
 			boolean flag = true;
 			if(amount > max_transaction){
 				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!");
+				cashInBankForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!");
 				flag = false;
 			}
 			
@@ -379,12 +379,12 @@ public class CashInBankHandler extends Action {
 			cashInBankForm.getMessageList().clear();
 			if(currCashBalance - amount < 0){
 				//kalau cash in bank tidak cukup
-				cashInBankForm.getMessageList().add("Cannot transfer more than remaining cash in bank balance!");
+				cashInBankForm.getMessageList().add("Ooooops!!! Cannot transfer more than remaining cash in bank balance!");
 				flag = false;
 			}
 			if(currPettyBalance + amount > maxPetty){
 				//kalau petty cash melewati max petty cash balance
-				cashInBankForm.getMessageList().add("Exceeded max petty cash balance if transferred (Rp."+maxPetty+")!");
+				cashInBankForm.getMessageList().add("Ooooops!!! Exceeded max petty cash balance if transferred (Rp."+maxPetty+")!");
 				flag = false;
 			}
 			if(!flag){
