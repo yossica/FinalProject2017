@@ -618,7 +618,7 @@ public class InvoiceHandler extends Action {
 
 		} else if("exportDetail".equals(invoiceForm.getTask())){
 			Integer invoiceHeaderId = invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId();
-			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceHeaderId);			
+			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceHeaderId);	
 			ClientBean clientBean = clientManager.getById(invoiceBean.getClientId());
 			
 			GeneralInformationBean rekNo = generalInformationManager.getByKey("rek_no");

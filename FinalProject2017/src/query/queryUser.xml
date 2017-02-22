@@ -8,10 +8,25 @@
 		where username = #userName#
 	</update>
 	
+	<insert id="insert" parameterClass="user.UserBean">
+		insert into master_user values (#userName#,#password#)
+	</insert>
+	
 	<select id="checkLogin" resultClass="java.lang.Integer" parameterClass="user.UserBean">
 		select count(*)
 		from master_user
 		where username = #userName#
 		and password = #password#
+	</select>
+	
+	<select id="getAll" resultClass="user.UserBean">
+		select username as userName
+		from master_user
+	</select>
+	
+	<select id="checkUsername" resultClass="java.lang.Integer" parameterClass="java.lang.String">
+		select count(1)
+		from master_user
+		where username = #userName#
 	</select>
 </sqlMap> 
