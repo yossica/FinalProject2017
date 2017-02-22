@@ -110,14 +110,11 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			return mapping.findForward("detailInvoice");
 		}else if("insertPS".equals(invoiceForm.getTask())){
-			NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
-			DecimalFormat doubleFormat = new DecimalFormat(".##");
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
 			//generate workdays
 			String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
 					+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
-			Integer workDays=holidayManager.getWorkingDays(exampleDate);
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
 			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
@@ -128,6 +125,7 @@ public class InvoiceHandler extends Action {
 				for (InvoiceDetailBean bean : invoiceForm.getProfessionalServiceList()){
 					bean.setCreatedBy((String)session.getAttribute("username"));
 					String description = "Jasa Professional Service - "+bean.getEmployeeName()+" "+ bean.getManDays() + " Work Days";
+					Integer workDays=bean.getWorkDays();
 					int manDays = bean.getManDays();
 					double fee = bean.getFee();
 					double totalFee = fee * manDays / workDays;
@@ -150,6 +148,7 @@ public class InvoiceHandler extends Action {
 				double grossTotal = 0;
 				for (InvoiceDetailBean bean : invoiceForm.getProfessionalServiceList()){
 					bean.setCreatedBy((String)session.getAttribute("username"));
+					Integer workDays=bean.getWorkDays();
 					int manDays = bean.getManDays();
 					double fee = bean.getFee() * 100 / devider;
 					double totalFee = fee * manDays / workDays;
@@ -157,8 +156,8 @@ public class InvoiceHandler extends Action {
 					String description = "Jasa Professional Service - "+bean.getEmployeeName()+" "+ bean.getManDays() + " hari";
 					netTotal += totalFee;
 					grossTotal += totalGross;
-					bean.setUnitPrice(numberFormat.parse(doubleFormat.format(fee)).doubleValue());
-					bean.setTotalFee(numberFormat.parse(doubleFormat.format(fee)).doubleValue());
+					bean.setUnitPrice(fee);
+					bean.setTotalFee(totalFee);
 					bean.setWorkDays(workDays);
 					bean.setDescription(description);
 					invoiceForm.getInvoiceBean().getDetailList().add(bean);
@@ -394,15 +393,6 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
 			invoiceForm.getInvoiceBean().setInvoiceTypeName(masterManager.getInvoiceTypeById(invoiceForm.getInvoiceBean().getInvoiceTypeId()).getName());
 			invoiceForm.setOngoingTrainingList(trainingManager.getOngoingTrainingByClient(invoiceForm.getInvoiceBean().getClientId()));
-/*<<<<<<< HEAD
-			if (invoiceForm.getOngoingTrainingList().size()==0) {
-				invoiceForm.getMessageList().add("Ooooops!!! There is no ongoing training for this client!");
-				return mapping.findForward("createInvoice");
-			} else {
-				invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
-				invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
-			}
-=======*/
 			List<TrainingBean> trainingList = invoiceForm.getOngoingTrainingList();
 			invoiceForm.getInvoiceBean().setIsGross(trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()).getIsGross());
 			invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId()));
@@ -489,16 +479,13 @@ public class InvoiceHandler extends Action {
 					
 					return mapping.findForward("formInvoiceTRST");
 				}
-				
-				
 			}
 			return null;
 		} else if ("editInvoicePS".equals(invoiceForm.getTask())) { 
-			DecimalFormat doubleFormat = new DecimalFormat(".##");
-			NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRANCE);
 			double netTotal=0;
 			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
+			invoiceForm.getInvoiceBean().setInvoiceTypeId(1);
 			if (invoiceForm.getInvoiceBean().getIsGross() == 0){
 				//Ini kalau exclude PPN
 				for (InvoiceDetailBean bean : invoiceForm.getProfessionalServiceList()){
@@ -534,8 +521,8 @@ public class InvoiceHandler extends Action {
 					String description = "Jasa Professional Service - "+bean.getEmployeeName()+" "+ bean.getManDays() + " Work Days";
 					netTotal += totalFee;
 					grossTotal += totalGross;
-					bean.setUnitPrice(numberFormat.parse(doubleFormat.format(fee)).doubleValue());
-					bean.setTotalFee(numberFormat.parse(doubleFormat.format(fee)).doubleValue());
+					bean.setUnitPrice(fee);
+					bean.setTotalFee(totalFee);
 					bean.setWorkDays(bean.getWorkDays());
 					bean.setDescription(description);
 					invoiceForm.getInvoiceBean().getDetailList().add(bean);
