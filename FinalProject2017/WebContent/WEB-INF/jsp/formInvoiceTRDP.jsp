@@ -92,6 +92,9 @@
 	<html:hidden property="client" name="invoiceForm"/>
 	<html:hidden property="statusId" name="invoiceForm"/>
 	<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
+	<html:hidden property="invoiceBean.ppnPercentage" name="invoiceForm"/>
+	<html:hidden property="trainingBean.transactionTrainingId" name="invoiceForm"/>
+	
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
