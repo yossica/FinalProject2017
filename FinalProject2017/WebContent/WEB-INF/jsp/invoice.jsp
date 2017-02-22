@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Invoice</title>
+<title>Finance Solution</title>
 <script>
 	function toggleFilter() {
 		var filter = document.getElementById("filterForm");
@@ -105,6 +105,7 @@
 	<html:hidden property="client" name="invoiceForm"/>
 	<html:hidden property="statusId" name="invoiceForm"/>
 	<html:hidden property="invoiceTypeId" name="invoiceForm"/>
+	<%-- <html:hidden property="invoiceTipeId" name="invoiceForm"/> --%>
 	<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
 	<html:hidden property="invoiceNumber" name="invoiceForm"/>
 	<div id="page-wrapper">
@@ -215,6 +216,19 @@
 			            	</div>
 		            	</div>
         			</div>
+        			<div class="col-md-12" style="margin-top:10px;">   
+	                    <div class="row">
+		                    <div class="col-md-2">   
+				            	Service Type
+				            </div>
+				            <div class="col-md-10">
+		                        <html:select property="invoiceTipeId" name="invoiceForm" styleClass="form-control">
+		                        	<html:option value="">Select</html:option>
+		                        	<html:optionsCollection property="invoiceTypeList" label="name" value="invoiceTypeId" name="invoiceForm"/>
+		                        </html:select>
+			            	</div>
+		            	</div>
+        			</div>
         			<div class="col-md-12" style="margin-top:10px;margin-bottom:10px;">
         				<button type="button" class="btn btn-primary" onclick="javascript:filter()">Filter</button>
         				<span id="errorMessage" style="color:red">
@@ -236,46 +250,53 @@
 				   		<th>Action</th>
 				   	</tr>
 	                <tbody>
-						<logic:iterate id="inv" name="invoiceForm" property="invoiceList">
-					    	<tr>
-			                	<td><bean:write name="inv" property="invoiceNumber"/></td>
-			                	<td><bean:write name="inv" property="clientName"/></td>
-			                	<td>
-			                		<bean:write name="inv" property="periodMonthName"/>&nbsp;<bean:write name="inv" property="periodYear" format="#"/>
-			                	</td>
-			                	<td><bean:write name="inv" property="invoiceTypeName"/></td>
-			                	<td><bean:write name="inv" property="invoiceDate"/></td>
-			                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
-			                	<td>
-			                		<input type="button" value="View" class="btn btn-primary" 
-			                			onclick="javascript:flyToDetail(
-			                				'<bean:write name="inv" property="transactionInvoiceHeaderId" format="#"/>',
-			                				'<bean:write name="inv" property="clientId" format="#"/>',
-			                				'<bean:write name="inv" property="statusInvoiceId" format="#"/>'
-			                		)" />
-			                		<logic:equal name="inv" property="statusInvoiceName" value="Created">
-			                			<input type="button" value="Change Status" class="btn btn-primary" 
-			                					onclick="javascript:flyToChangeStatus(
-			                								'<bean:write name="inv" property="invoiceNumber"/>',
-			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
-			                			<input type="button" value="Cancel" class="btn btn-primary" 
-			                					onclick="javascript:flyToChangeStatus(
-			                								'<bean:write name="inv" property="invoiceNumber"/>',
-			                								'4')">
-			                		</logic:equal>
-			                		<logic:equal name="inv" property="statusInvoiceName" value="Sent">
-			                			<input type="button" value="Change Status" class="btn btn-primary" 
-			                					onclick="javascript:flyToChangeStatus(
-			                								'<bean:write name="inv" property="invoiceNumber"/>',
-			                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
-			                			<input type="button" value="Cancel" class="btn btn-primary" 
-			                					onclick="javascript:flyToChangeStatus(
-			                								'<bean:write name="inv" property="invoiceNumber"/>',
-			                								'4')">
-			                		</logic:equal>
-			                	</td>
-	                		</tr>
-	                	</logic:iterate>
+	                	<logic:notEmpty name="invoiceForm" property="invoiceList">
+							<logic:iterate id="inv" name="invoiceForm" property="invoiceList">
+						    	<tr>
+				                	<td><bean:write name="inv" property="invoiceNumber"/></td>
+				                	<td><bean:write name="inv" property="clientName"/></td>
+				                	<td>
+				                		<bean:write name="inv" property="periodMonthName"/>&nbsp;<bean:write name="inv" property="periodYear" format="#"/>
+				                	</td>
+				                	<td><bean:write name="inv" property="invoiceTypeName"/></td>
+				                	<td><bean:write name="inv" property="invoiceDate"/></td>
+				                	<td><bean:write name="inv" property="statusInvoiceName"/></td>
+				                	<td>
+				                		<input type="button" value="View" class="btn btn-primary" 
+				                			onclick="javascript:flyToDetail(
+				                				'<bean:write name="inv" property="transactionInvoiceHeaderId" format="#"/>',
+				                				'<bean:write name="inv" property="clientId" format="#"/>',
+				                				'<bean:write name="inv" property="statusInvoiceId" format="#"/>'
+				                		)" />
+				                		<logic:equal name="inv" property="statusInvoiceName" value="Created">
+				                			<input type="button" value="Change Status" class="btn btn-primary" 
+				                					onclick="javascript:flyToChangeStatus(
+				                								'<bean:write name="inv" property="invoiceNumber"/>',
+				                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+				                			<input type="button" value="Cancel" class="btn btn-primary" 
+				                					onclick="javascript:flyToChangeStatus(
+				                								'<bean:write name="inv" property="invoiceNumber"/>',
+				                								'4')">
+				                		</logic:equal>
+				                		<logic:equal name="inv" property="statusInvoiceName" value="Sent">
+				                			<input type="button" value="Change Status" class="btn btn-primary" 
+				                					onclick="javascript:flyToChangeStatus(
+				                								'<bean:write name="inv" property="invoiceNumber"/>',
+				                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+				                			<input type="button" value="Cancel" class="btn btn-primary" 
+				                					onclick="javascript:flyToChangeStatus(
+				                								'<bean:write name="inv" property="invoiceNumber"/>',
+				                								'4')">
+				                		</logic:equal>
+				                	</td>
+		                		</tr>
+		                	</logic:iterate>
+	                	</logic:notEmpty>
+	                	<logic:empty name="invoiceForm" property="invoiceList">
+							<tr>
+								<td colspan="7" align="center">There are no data based on this filter</td>
+							</tr>
+						</logic:empty>
 	                </tbody>
 	            </table>
 	        </div>
