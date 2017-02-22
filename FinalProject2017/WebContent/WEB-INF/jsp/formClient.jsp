@@ -29,11 +29,8 @@
 			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
 			errorMessage = errorMessage
-<<<<<<< HEAD
 					+ "Name must be in alphabets only! \n";
-=======
 					+ "Invalid format of Name!<br/>";
->>>>>>> refs/remotes/origin/master
 		}
 		if (address == "") {
 			errorMessage = errorMessage + "Address must be filled! \n";
@@ -45,11 +42,8 @@
 			errorMessage = errorMessage + "City must be filled! \n";
 		} else if (!letters.test(city)) {
 			errorMessage = errorMessage
-<<<<<<< HEAD
 					+ "City must be in alphabets only! \n";
-=======
 					+ "Invalid format of City!<br/>";
->>>>>>> refs/remotes/origin/master
 		}
 		if (phoneNumber == "") {
 			errorMessage = errorMessage + "Phone Number must be filled! \n";
