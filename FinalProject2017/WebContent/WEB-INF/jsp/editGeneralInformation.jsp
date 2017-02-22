@@ -17,6 +17,27 @@
 	
 	function flyToSave()
 	{
+		var value = document.getElementsByName("value")[0].value;
+		var key = document.getElementsByName("key")[0].value;
+		var length = document.getElementsByName("length")[0].value;
+		var numbers = /^\d+$/;
+		var errorMessage = "";
+		if (value == "")
+		{
+			errorMessage = errorMessage + "Value must be filled! \n";
+		}
+		if(key=="addr" && value.length>length){
+			errorMessage = errorMessage + "Length of value can't be more than "+length+" ! \n";
+		}
+		if(key=="tax" && value.length>length && ){
+			errorMessage = errorMessage + "Length of value can't be more than "+length+" ! \n";
+		}
+		if (errorMessage.length != 0) {
+			sweetAlert("Oops...", errorMessage, "error");
+			/* document.getElementById("message").innerHTML = errorMessage; */
+			return;
+		}
+		else{
 			swal({
 				  title: "Are you sure?",
 				  text: "System will update these data to General Information",
@@ -30,12 +51,21 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-			            	document.forms[1].submit();
+					  swal({title: "Good job!",
+						  text: "Save Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  document.forms[1].submit();
+							  }, 10);
+							});		
+			            	
 				  } else {
 				    swal("Cancelled", "Cancel Update General Information", "error");
 				  }
 				});
 		}
+	}
 		/* if(confirm("Are you sure to update ?")){
 			document.forms[1].submit();
 		} */
@@ -75,7 +105,13 @@
 							</table>
 						</div>
 						<!-- /.table-responsive -->
-						
+						<div class="col-md-15" style="color: red;" id="message">
+						<logic:notEmpty name="generalInformationForm" property="messageList">
+							<logic:iterate id="message" name="generalInformationForm">
+								<input type="hidden" id="err" value="<bean:write name="message" />">
+							</logic:iterate>
+						</logic:notEmpty>
+					</div>
                         <div class="panel-body" style="padding-left:0;">
 				            <div class="pull-left">
 				            	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('generalInformation')">Cancel</button>	

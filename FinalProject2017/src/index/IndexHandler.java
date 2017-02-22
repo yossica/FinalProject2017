@@ -42,13 +42,10 @@ public class IndexHandler extends Action {
 		TrainingManager trainingManager = new TrainingManager();
 
 		if ("invoice".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("invoice");
 		} else if ("pettyCash".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("pettyCash");
 		} else if ("cashInBank".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("cashInBank");
 		} else if ("financeSummary".equals(indexForm.getTaskIndex())) {
 
@@ -60,28 +57,20 @@ public class IndexHandler extends Action {
 			indexForm.setCashInBankBalance(cashInBankManager
 					.getCurrentBalance());
 			indexForm.setPettyCashBalance(pettyCashManager.getCurrentBalance());
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("financeSummary");
 		} else if ("client".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("client");
 		} else if ("changePassword".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("changePassword");
 		} else if ("employee".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("employee");
 		} else if ("additionalTraining".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("additionalTraining");
 		} else if ("generalInformation".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("generalInformation");
 		} else if ("holiday".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("holiday");
 		} else if ("outsource".equals(indexForm.getTaskIndex())) {
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("outsource");
 		} else if ("logout".equals(indexForm.getTaskIndex())) {
 			session.removeAttribute("username");
@@ -141,7 +130,6 @@ public class IndexHandler extends Action {
 			indexForm.setListedTrainingRemainderList(trainingManager
 					.getListedTrainingRemainderList());
 			// System.out.println(indexForm.getListedTrainingRemainderList().size());
-			indexForm.setUsername((String) session.getAttribute("username"));
 			return mapping.findForward("success");
 		}
 	}

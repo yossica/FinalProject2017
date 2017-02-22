@@ -120,11 +120,11 @@
 	        </div>
 	        <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
            		<div class="row" style="margin-top:10px;">
-            		<div class="col-md-10" style="padding-right:1%">
-            			<div class="col-md-1">
+            		<div class="col-md-12" style="padding-right:1%">
+            			<div class="col-md-2">
 		            		Client
 		            	</div>
-		            	<div class="col-md-8">
+		            	<div class="col-md-10">
 				            <html:select property="clientId" name="trainingForm" 
 				            	styleClass="form-control" onchange="javascript:flyToPage('loadTrainingHeader')">
 				            	<logic:notEmpty name="trainingForm" property="clientList">
@@ -135,11 +135,11 @@
             		</div>
             	</div>
             	<div class="row" style="margin-top:10px;">
-            		<div class="col-md-10" style="padding-right:1%">
-            			<div class="col-md-1">
+            		<div class="col-md-12" style="padding-right:1%">
+            			<div class="col-md-2">
             				Training
             			</div>
-            			<div class="col-md-8">
+            			<div class="col-md-10">
 		            		<html:select property="trainingDetailBean.transactionTrainingHeaderId" name="trainingForm" 
 		            			styleClass="form-control" onchange="javascript:flyToPage('loadTrainingDetail')">
 		            			<logic:notEmpty name="trainingForm" property="trainingHeaderList">
@@ -150,22 +150,22 @@
             		</div>
             	</div>
             	<div class="row" style="margin-top:10px;">
-            		<div class="col-md-10" style="padding-right:1%">
-            			<div class="col-md-1">
+            		<div class="col-md-12" style="padding-right:1%">
+            			<div class="col-md-2">
             				Fee
             			</div>
-            			<div class="col-md-8">
+            			<div class="col-md-10">
 		            		<html:text property="trainingDetailBean.fee" name="trainingForm" styleClass="form-control"/>
 				        </div>
             		</div>
             	</div>
             	<div class="row" style="margin-top:10px;margin-bottom:10px;">
-            		<div class="col-md-10" style="padding-right:1%">
-            			<div class="col-md-1">
+            		<div class="col-md-12" style="padding-right:1%">
+            			<div class="col-md-2">
             				Notes
             			</div>
-            			<div class="col-md-8">
-		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control" style="height:100px">
+            			<div class="col-md-10">
+		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control-client" style="height:70px">
 						     </html:textarea>
 				        </div>
             		</div>
