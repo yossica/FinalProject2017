@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Master Client</title>
+<title>Finance Solution</title>
 <script>
 	function insert() {
 

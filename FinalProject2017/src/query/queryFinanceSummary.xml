@@ -4,8 +4,8 @@
 <sqlMap namespace="financeSummary">
 	<select id="getAll" resultClass="master.FinanceSummaryBean">	
 		select c.period, 
-			cash_in_bank_expense as cashInBankExpense, 
-			petty_cash_expense as pettyCashExpense
+			nvl(cash_in_bank_expense,0) as cashInBankExpense, 
+			nvl(petty_cash_expense,0) as pettyCashExpense
 		from (
 		    select period, sum(amount) as cash_in_bank_expense
 		    from (

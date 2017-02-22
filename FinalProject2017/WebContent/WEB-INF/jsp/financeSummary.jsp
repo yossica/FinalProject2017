@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Finance Summary</title>
+<title>Finance Solution</title>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
