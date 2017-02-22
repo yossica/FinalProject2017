@@ -30,6 +30,8 @@ public class InvoiceForm extends ActionForm{
 	private GeneralInformationBean sign = new GeneralInformationBean();
 	
 	private String task;
+	private String periodMonth;
+	private String periodYear;
 	private String subTask;
 	
 	private String clientId;
@@ -238,20 +240,20 @@ public class InvoiceForm extends ActionForm{
 
 	public void print(){
 		System.out.println(invoiceBean.getTransactionInvoiceHeaderId());
-		System.out.println(invoiceBean.getInvoiceNumber());
+		//System.out.println(invoiceBean.getInvoiceNumber());
 		System.out.println(invoiceBean.getInvoiceDate());
-		System.out.println(invoiceBean.getPeriodMonth());
-		System.out.println(invoiceBean.getPeriodYear());
-		System.out.println(invoiceBean.getStatusInvoiceId());
-		System.out.println(invoiceBean.getInvoiceTypeId());
-		System.out.println(invoiceBean.getClientId());
+		//System.out.println(invoiceBean.getPeriodMonth());
+		//System.out.println(invoiceBean.getPeriodYear());
+		//System.out.println(invoiceBean.getStatusInvoiceId());
+		//System.out.println(invoiceBean.getInvoiceTypeId());
+		//System.out.println(invoiceBean.getClientId());
 		System.out.println(invoiceBean.getTotalNet());
-		System.out.println(invoiceBean.getPpnPercentage());
+		//System.out.println(invoiceBean.getPpnPercentage());
 		System.out.println(invoiceBean.getIsGross());
 		System.out.println(invoiceBean.getTotalGross());
 		System.out.println(invoiceBean.getNotes());
-		System.out.println(invoiceBean.getCreatedBy());
-		System.out.println(invoiceBean.getCreatedDate());
+		//System.out.println(invoiceBean.getCreatedBy());
+		//System.out.println(invoiceBean.getCreatedDate());
 		System.out.println(invoiceBean.getChangedBy());
 		System.out.println(invoiceBean.getChangedDate());
 		System.out.println(invoiceBean.getTotalPpn());
@@ -335,6 +337,17 @@ public class InvoiceForm extends ActionForm{
 	public void setInvoiceTipeId(String invoiceTipeId) {
 		this.invoiceTipeId = invoiceTipeId;
 	}
-	
+	public String getPeriodMonth() {
+		return periodMonth;
+	}
+	public void setPeriodMonth(String periodMonth) {
+		this.periodMonth = periodMonth;
+	}
+	public String getPeriodYear() {
+		return periodYear;
+	}
+	public void setPeriodYear(String periodYear) {
+		this.periodYear = periodYear;
+	}
 }
 

@@ -50,7 +50,7 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-            	Hi, <bean:write name="indexForm" property="username" />
+            	Hi, <label id="myhiddenvalue" ><%= request.getSession().getAttribute("username") %></label>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>

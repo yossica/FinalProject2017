@@ -19,10 +19,13 @@
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
     <script>
-	function flyToCreate(task){
-		alert('Rencananya Mau Langsung Ke Halaman Create Invoice (Coming Soon)');
-		//document.forms[1].task.value = task;
-		//document.forms[1].submit();
+	function flyToCreate(task,clientId,invoiceTypeId,periodMonth,periodYear){
+		document.forms[1].task.value = task;
+		document.forms[1].clientId.value = clientId;
+		document.forms[1].invoiceTypeId.value = invoiceTypeId;
+		document.forms[1].periodMonth.value = periodMonth;
+		document.forms[1].periodYear.value = periodYear;
+		document.forms[1].submit();
 	}
 </script>
 </head>
@@ -30,6 +33,10 @@
 	<jsp:include page="dashboard.jsp"/>
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
+	<html:hidden property="clientId" name="invoiceForm"/>
+	<html:hidden property="invoiceTypeId" name="invoiceForm"/>
+	<html:hidden property="periodMonth" name="invoiceForm"/>
+	<html:hidden property="periodYear" name="invoiceForm"/>
 	</html:form>
 	<div id="page-wrapper">
             <div class="row">
@@ -53,8 +60,12 @@
 	                                    <logic:notEmpty name="indexForm" property="listedRemainderList">	
 	                                        <logic:iterate id="list" name="indexForm" property="listedRemainderList">
 		                                        <tr>
-		                                        	<td><a href="#" onclick="flyToCreate('createInvoice')">
-		                                        		
+		                                        	<td><a href="#" onclick="flyToCreate('createInvoice',
+		                                        										 '<bean:write name="list" property="clientId" format="#"/>',
+		                                        										 '<bean:write name="list" property="invoiceTypeId" format="#"/>',
+		                                        										 '<bean:write name="list" property="periodMonth" format="#"/>',
+		                                        										 '<bean:write name="list" property="periodYear" format="#"/>'
+		                                        										)">
 		                                        		<bean:write name="list" property="clientName"/> - Professional Service<br>
 		                                        		Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
 		                                        		<p align="right"><bean:write name="list" property="invoiceDate"/></p>

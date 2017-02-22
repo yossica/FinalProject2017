@@ -79,7 +79,7 @@
 	window.onload = alertError;
 </script>
 </head>
-<body>
+<body onload="javascript:onchangeContractServices()">
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
