@@ -171,8 +171,7 @@
 									                <td><a href="#" onclick="javascript:deleteHoliday('<bean:write name="holiday" property="holidayDate"/>-<bean:write name="holiday" property="name"/>',<bean:write name="holiday" property="holidayId" format="#"/>)">X</a></td>
 									            </tr>  
 							        		</logic:iterate>
-							        	</logic:notEmpty>
-							                   
+							        	</logic:notEmpty>   
 							         </tbody>
 		                		</table>
 		                	</div>
