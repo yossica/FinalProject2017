@@ -75,6 +75,7 @@ public class IndexHandler extends Action {
 		} else if ("outsource".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("outsource");
 		} else if ("logout".equals(indexForm.getTaskIndex())) {
+			session.removeAttribute("username");
 			return mapping.findForward("success");
 		} else {
 			Integer currentPeriod = Integer.parseInt(outsourceManager
