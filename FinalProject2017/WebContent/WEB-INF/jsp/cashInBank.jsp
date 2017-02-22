@@ -9,6 +9,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 <script type="text/javascript">
+	function toggleFilter() {
+		var filter = document.getElementById("filterForm");
+		filter.style.display = filter.style.display === 'none' ? '' : 'none';
+		if (filter.style.display == 'none'){
+			document.getElementById("listCashInBank").style.height = "400px";
+		}else{
+			document.getElementById("listCashInBank").style.height = "200px";
+		}
+	}
 	function filter(){
 		//validasi untuk masukin start date + end date (ga boleh salah satu aja)
 		var filterStartDate = document.forms[1].filterStartDate.value;
@@ -99,6 +108,7 @@
 			<div class="col-lg-12">
 				<label>Remaining Balance: <bean:write name="cashInBankForm" property="remainingBalance" format="IDR #,###.##" /></label>
 				<div class="pull-right">
+					<button id="filterButton" type="button" class="btn btn-primary" onclick="javascript:toggleFilter()">Toggle Filter</button>
 					<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('export')">Export to PDF</button>
 					<button type="button" class="btn btn-primary" onclick="javascript:balance()">Balancing</button>
 				</div>
@@ -106,8 +116,8 @@
 				<br />
 			</div>
 		</div>
-		<div class="col-lg-12"
-			style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF;">
+		<div id="filterForm" class="col-lg-12"
+			style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-12" style="padding-right: 1%">
 					<div class="col-md-2">Category</div>
@@ -147,7 +157,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel-body">
-					<div class="table-responsive" style="height:200px;overflow: auto;">
+					<div id="listCashInBank" class="table-responsive" style="height:400px;overflow: auto;">
 						<table class="table table-hover">
 							<thead>
 								<tr>
