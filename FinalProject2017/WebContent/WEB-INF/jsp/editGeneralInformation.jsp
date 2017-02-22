@@ -29,8 +29,11 @@
 		if(key=="addr" && value.length>length){
 			errorMessage = errorMessage + "Length of value can't be more than "+length+" ! \n";
 		}
-		if(key=="tax" && value.length>length && ){
+		if(key=="tax" && value.length>length){
 			errorMessage = errorMessage + "Length of value can't be more than "+length+" ! \n";
+		}
+		if(key=="tax" && !numbers.test(value)){
+			errorMessage = errorMessage + "Tax must number ! \n";
 		}
 		if (errorMessage.length != 0) {
 			sweetAlert("Oops...", errorMessage, "error");
