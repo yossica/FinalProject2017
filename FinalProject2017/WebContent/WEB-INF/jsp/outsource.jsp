@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Professional Services</title>
+<title>Finance Solution</title>
 <script>
 	function flyToPage(task) {
 		document.forms[1].task.value = task;

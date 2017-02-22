@@ -579,16 +579,6 @@ public class InvoiceHandler extends Action {
 			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			DateFormat invoiceDateFormat = new SimpleDateFormat("MM.yy");
 			Calendar cal = Calendar.getInstance();
-//			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(invoiceDateFormat.format(cal.getTime())));
-//			invoiceDateFormat = new SimpleDateFormat("MM");
-//			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
-//			invoiceDateFormat = new SimpleDateFormat("yyyy");
-//			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
-//			
-//			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
-//			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
-//			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
-//						
 			//edit training bean
 			double trainingFee = invoiceForm.getTrainingFee()/2;
 			TrainingBean trainingBean = trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
@@ -609,7 +599,10 @@ public class InvoiceHandler extends Action {
 			trainingBean.getDetailList().get(0).setDescription("Training \""+trainingBean.getDescription()+"\" - Settlement");
 			trainingBean.getDetailList().get(0).setFee(trainingFee);
 			trainingBean.getDetailList().get(0).setChangedBy((String)session.getAttribute("username"));
-						
+			
+			trainingManager.update(trainingBean);
+			
+			//invoice
 			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId());
 			invoiceBean.setDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			
@@ -867,11 +860,15 @@ public class InvoiceHandler extends Action {
 			String monthTo = invoiceForm.getMonthTo();
 			String yearTo = invoiceForm.getYearTo();
 			String status = invoiceForm.getStatusInvoiceId();
+			String tipe = invoiceForm.getInvoiceTipeId();
 			if ("".equals(client)) {
 				client = null;
 			}
 			if ("".equals(status)) {
 				status = null;
+			}
+			if ("".equals(tipe)) {
+				tipe = null;
 			}
 			if ("".equals(yearTo)) {
 				monthFrom = null;
@@ -898,11 +895,15 @@ public class InvoiceHandler extends Action {
 			String monthTo = invoiceForm.getMonthTo();
 			String yearTo = invoiceForm.getYearTo();
 			String status = invoiceForm.getStatusInvoiceId();
+			String tipe = invoiceForm.getInvoiceTipeId();
 			if ("".equals(client)) {
 				client = null;
 			}
 			if ("".equals(status)) {
 				status = null;
+			}
+			if ("".equals(tipe)) {
+				tipe = null;
 			}
 			if ("".equals(yearTo)) {
 				monthFrom = null;
@@ -917,8 +918,11 @@ public class InvoiceHandler extends Action {
 			paramMap.put("yearTo", yearTo);
 			paramMap.put("client", client);
 			paramMap.put("status", status);
+			paramMap.put("tipe", tipe);
 			invoiceForm.setStatusInvoiceList(masterManager
 					.getAllStatusInvoice());
+			invoiceForm.setInvoiceTypeList(masterManager
+					.getAllInvoiceType());
 			invoiceForm.setInvoiceList(invoiceManager
 					.getAllWithFilter(paramMap));
 			return mapping.findForward("invoice");
@@ -935,6 +939,7 @@ public class InvoiceHandler extends Action {
 			String monthTo = invoiceForm.getMonthTo();
 			String yearTo = invoiceForm.getYearTo();
 			String status = invoiceForm.getStatusInvoiceId();
+			String tipe = invoiceForm.getInvoiceTipeId();
 			if ("".equals(client)) {
 				client = null;
 				parameters.put("client", "All");
@@ -948,6 +953,13 @@ public class InvoiceHandler extends Action {
 			}
 			else {
 				parameters.put("invoiceStatus", new MasterManager().getStatusInvoiceById(Integer.parseInt(status)).getName());
+			}
+			if ("".equals(tipe)) {
+				status = null;
+				parameters.put("invoiceType", "All");
+			}
+			else {
+				parameters.put("invoiceType", new MasterManager().getInvoiceTypeById(Integer.parseInt(tipe)).getName());
 			}
 			if ("".equals(yearTo)) {
 				monthFrom = null;
@@ -968,9 +980,11 @@ public class InvoiceHandler extends Action {
 			paramMap.put("yearTo", yearTo);
 			paramMap.put("client", client);
 			paramMap.put("status", status);
+			paramMap.put("tipe", tipe);
 			invoiceForm.setStatusInvoiceList(masterManager
 					.getAllStatusInvoice());
-			
+			invoiceForm.setInvoiceTypeList(masterManager
+					.getAllInvoiceType());
 			List<InvoiceBean> invoiceSummaryData = invoiceManager
 					.getAllWithFilter(paramMap);			
 			//export to pdf
@@ -1052,8 +1066,11 @@ public class InvoiceHandler extends Action {
 			paramMap.put("yearTo", cyear);
 			paramMap.put("client", null);
 			paramMap.put("status", null);
+			paramMap.put("tipe", null);
 			invoiceForm.setStatusInvoiceList(masterManager
 					.getAllStatusInvoice());
+			invoiceForm.setInvoiceTypeList(masterManager
+					.getAllInvoiceType());
 			invoiceForm.setInvoiceList(invoiceManager
 					.getAllWithFilter(paramMap));
 			return mapping.findForward("invoice");
