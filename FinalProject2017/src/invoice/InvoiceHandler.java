@@ -592,16 +592,6 @@ public class InvoiceHandler extends Action {
 			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			DateFormat invoiceDateFormat = new SimpleDateFormat("MM.yy");
 			Calendar cal = Calendar.getInstance();
-//			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(invoiceDateFormat.format(cal.getTime())));
-//			invoiceDateFormat = new SimpleDateFormat("MM");
-//			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
-//			invoiceDateFormat = new SimpleDateFormat("yyyy");
-//			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
-//			
-//			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
-//			float ppn = Float.parseFloat(generalInformationManager.getByKey("tax").getValue());
-//			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
-//						
 			//edit training bean
 			double trainingFee = invoiceForm.getTrainingFee()/2;
 			TrainingBean trainingBean = trainingManager.getById(invoiceForm.getTrainingBean().getTransactionTrainingHeaderId());
@@ -622,7 +612,10 @@ public class InvoiceHandler extends Action {
 			trainingBean.getDetailList().get(0).setDescription("Training \""+trainingBean.getDescription()+"\" - Settlement");
 			trainingBean.getDetailList().get(0).setFee(trainingFee);
 			trainingBean.getDetailList().get(0).setChangedBy((String)session.getAttribute("username"));
-						
+			
+			trainingManager.update(trainingBean);
+			
+			//invoice
 			InvoiceBean invoiceBean = invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId());
 			invoiceBean.setDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			
