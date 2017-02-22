@@ -70,23 +70,27 @@
 	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
 		select
 		    i.transaction_invoice_id as transactionInvoiceHeaderId,
+		    i.invoice_number as invoiceNumber,
 		    i.invoice_type_id as invoiceTypeId,
-		    i.client_id as clientId,
-		    c.name as clientName,
-		    t.name as invoiceTypeName,
+		    to_char(i.invoice_date,'MM/DD/YYYY') as invoiceDate,
 		    i.period_month as periodMonth,
 		    i.period_year as periodYear,
-		    i.is_gross as isGross,
-		    i.invoice_number as invoiceNumber,
-		    to_char(i.invoice_date,'MM/DD/YYYY') as invoiceDate,
+		    i.status_invoice_id as statusInvoiceId,
+		    i.invoice_type_id as invoiceTypeId,
+		    i.client_id as clientId,
 		    i.total_net as totalNet,
-		    i.total_ppn as totalPpn,
+		    i.ppn_percentage as ppnPercentage,
+		    i.is_gross as isGross,
 		    i.total_gross as totalGross,
 		    i.notes as notes,
+		    c.name as clientName,
+		    t.name as invoiceTypeName,
+		    i.total_ppn as totalPpn,
 		    i.created_date as createdDate,
 		    i.created_by as createdBy,
 		    i.changed_date as changedDate,
-		    i.changed_by as changedBy
+		    i.changed_by as changedBy,
+		    i.total_ppn as totalPpn
 		from 
 		    transaction_invoice_header i,
 		    master_invoice_type t,
@@ -230,14 +234,14 @@
     
     <update id="updateHeaderById" parameterClass="invoice.InvoiceBean">
     	update transaction_invoice_header
-		set INVOICE_DATE = to_date('MM/dd/yyyy',#invoiceDate#),
+		set INVOICE_DATE = to_date(#invoiceDate#,'MM/dd/yyyy'),
 			TOTAL_NET = #totalNet#,
-			IS_GROSS = #totalGross#,
-			TOTAL_GROSS = ##,
-			NOTES = ##,
-			CHANGED_BY = ##,
+			IS_GROSS = #isGross#,
+			TOTAL_GROSS = #totalGross#,
+			NOTES = #notes#,
+			CHANGED_BY = #changedBy#,
 			CHANGED_DATE = sysdate,
-			TOTAL_PPN = ##
+			TOTAL_PPN = #totalPpn#
 		where TRANSACTION_INVOICE_ID = #transactionInvoiceHeaderId#
     </update>
      
