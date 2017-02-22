@@ -58,7 +58,17 @@ public class InvoiceHandler extends Action {
 		invoiceForm.setClientList(clientManager.getAll());
 		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
 
-		if ("createInvoice".equals(invoiceForm.getTask())) {
+		if ("createInvoiceIndex".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientId(Integer.parseInt(invoiceForm.getClientId()));
+			invoiceForm.getInvoiceBean().setInvoiceTypeId(Integer.parseInt(invoiceForm.getInvoiceTypeId()));
+			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceForm.getPeriodMonth()));
+			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceForm.getPeriodYear()));
+			System.out.println(invoiceForm.getInvoiceBean().getClientId());
+			System.out.println(invoiceForm.getInvoiceBean().getInvoiceTypeId());
+			System.out.println(invoiceForm.getInvoiceBean().getPeriodMonth());
+			System.out.println(invoiceForm.getInvoiceBean().getPeriodYear());
+			return mapping.findForward("createInvoice");
+		}else if ("createInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoice");
 		}else if ("formInvoicePS".equals(invoiceForm.getTask())) {
 			String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
