@@ -50,11 +50,7 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-<<<<<<< HEAD
             	Hi, <label id="myhiddenvalue" ><%= request.getSession().getAttribute("username") %></label>
-=======
-            	Hi, <%= session.getAttribute("username") %>
->>>>>>> refs/remotes/origin/master
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>

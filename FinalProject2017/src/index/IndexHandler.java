@@ -131,11 +131,8 @@ public class IndexHandler extends Action {
 					.getSentOutsourceRemainderList());
 			indexForm.setListedTrainingRemainderList(trainingManager
 					.getListedTrainingRemainderList());
-<<<<<<< HEAD
-			// System.out.println(indexForm.getListedTrainingRemainderList().size());
-=======
-			indexForm.setUsername((String) session.getAttribute("username"));
->>>>>>> refs/remotes/origin/master
+
+
 			return mapping.findForward("success");
 		}
 	}
