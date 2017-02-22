@@ -190,13 +190,13 @@ public class PettyCashHandler extends Action {
 				pettyCashForm.getMessageList().clear();
 				pettyCashForm
 						.getMessageList()
-						.add("Cannot create transaction that cost more than remaining balance!");
+						.add("Ooooops!!! Cannot create transaction that cost more than remaining balance!");
 
 				flag = false;
 			}
 			else if(amount > max_transaction){
 				pettyCashForm.getMessageList().clear();
-				pettyCashForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!\nPlease do this in cash in bank instead");
+				pettyCashForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!\nPlease do this in cash in bank instead");
 				flag = false;
 			}
 			
@@ -236,7 +236,38 @@ public class PettyCashHandler extends Action {
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			pettyCashBean.setCreatedBy((String) session
 					.getAttribute("username"));
-			pettyCashManager.insert(pettyCashBean);
+			String message = pettyCashManager.insert(pettyCashBean);
+			if(message.startsWith("Failed")){
+				pettyCashForm.getMessageList().clear();
+				pettyCashForm
+						.getMessageList()
+						.add(message);
+				pettyCashForm.setTask("saveDebit");
+				pettyCashForm.getPettyCashBean().setIsDebit(1);
+
+				pettyCashForm.setRemainingBalance(pettyCashManager
+						.getCurrentBalance());
+
+				Map paramMap = new HashMap();
+				paramMap = new HashMap();
+				paramMap.put("cashFlowType", "Petty Cash");
+				paramMap.put("isDebit", 1);
+				paramMap.put("isEnabled", "1");
+				CashFlowCategoryBean cashFlowCategoryBean;
+				List cashFlowCategoryList = masterManager
+						.getAllCashFlowCategory(paramMap);
+				for (Object obj : cashFlowCategoryList) {
+					cashFlowCategoryBean = (CashFlowCategoryBean) obj;
+					cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()
+							+ "-"
+							+ (cashFlowCategoryBean.getIsDebit() == 1 ? "Debit"
+									: "Credit"));
+				}
+				pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
+				pettyCashForm.getPettyCashBean().setTransactionDate(
+						pettyCashForm.getPettyCashBean().getTransactionDate());
+				return mapping.findForward("form");
+			}
 
 			// show cash in bank view
 			pettyCashForm.setRemainingBalance(pettyCashManager
@@ -310,7 +341,7 @@ public class PettyCashHandler extends Action {
 			boolean flag = true;
 			if(amount > max_transaction){
 				pettyCashForm.getMessageList().clear();
-				pettyCashForm.getMessageList().add("Cannot create transaction more than IDR"+max_transaction+"!");
+				pettyCashForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!");
 				flag = false;
 			}
 			

@@ -23,54 +23,82 @@
 		var fee = document.getElementsByName("outsourceBean.fee")[0].value;
 		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		if (startDate == "") {
-			errorMessage = errorMessage + "Start date must be filled!<br/>";
+			errorMessage = errorMessage + "Start date must be filled! \n";
 		}
 		if (endDate == "") {
-			errorMessage = errorMessage + "End date must be filled!<br/>";
+			errorMessage = errorMessage + "End date must be filled! \n";
 		}
-		if(startDate != "" && endDate != ""){
+		if (startDate != "" && endDate != "") {
 			var s = startDate.split("-");
-			var sDate = new Date(parseInt(s[0]),parseInt(s[1])-1,parseInt(s[2]));
+			var sDate = new Date(parseInt(s[0]), parseInt(s[1]) - 1,
+					parseInt(s[2]));
 			var e = endDate.split("-");
-			var eDate = new Date(parseInt(e[0]),parseInt(e[1])-1,parseInt(e[2]));
-			if(sDate > eDate){
-				errorMessage = errorMessage+ "Start Date must be later than End Date! <br/>";
+			var eDate = new Date(parseInt(e[0]), parseInt(e[1]) - 1,
+					parseInt(e[2]));
+			if (sDate > eDate) {
+				errorMessage = errorMessage
+						+ "Start Date must be later than End Date! \n";
 			}
 		}
 		if (fee == "") {
-			errorMessage = errorMessage + "Fee  must be filled!<br/>";
+			errorMessage = errorMessage + "Fee  must be filled! \n";
 		} else if (!doubleReg.test(fee)) {
-			errorMessage = errorMessage + "Fee must be number!<br/>";
+			errorMessage = errorMessage + "Fee must be number! \n";
 		} else if (parseFloat(fee) < 0) {
-			errorMessage = errorMessage + "Fee cannot be negative!<br/>";
+			errorMessage = errorMessage + "Fee cannot be negative! \n";
 		}
 		if (errorMessage.length != 0) {
-			document.getElementById("message").innerHTML = errorMessage;
+			//document.getElementById("message").innerHTML = errorMessage;
+			sweetAlert("Oops...", errorMessage, "error");
 			return;
 		} else {
 			swal({
-				  title: "Are you sure?",
-				  text: "System will save these data to master outsource",
-				  type: "warning",
-				  showCancelButton: true,
-				  confirmButtonColor: "#ef2300",
-				  confirmButtonText: "Yes, Save",
-				  cancelButtonText: "No, Cancel Please!",
-				  closeOnConfirm: false,
-				  closeOnCancel: false
-				},
-				function(isConfirm){
-				  if (isConfirm) {
-			            	flyToSave();
-				  } else {
-				    swal("Cancelled", "Cancel Save Master Outsource", "error");
-				  }
-				});
+				title : "Are you sure?",
+				text : "System will save these data to master outsource",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#ef2300",
+				confirmButtonText : "Yes, Save",
+				cancelButtonText : "No, Cancel Please!",
+				closeOnConfirm : false,
+				closeOnCancel : false
+			}, function(isConfirm) {
+				if (isConfirm) {
+					//flyToSave();
+					swal({title: "Good job!",
+						  text: "Transaction Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  flyToSave();
+							  }, 10);
+							}); 
+				} else {
+					swal("Cancelled", "Cancel Save Master Outsource", "error");
+				}
+			});
 			/* if (confirm("Are you sure to save data ?")) {
 				flyToSave();
 			} */
 		}
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 <title>Client</title>
 </head>
@@ -109,7 +137,7 @@
 										<logic:iterate id="message" name="outsourceForm"
 											property="messageList">
 											<div>
-												<bean:write name="message" />
+												<input type="hidden" id="err" value="<bean:write name="message" />">
 											</div>
 										</logic:iterate>
 									</logic:notEmpty>
@@ -249,11 +277,12 @@
 								<logic:notEqual name="outsourceForm" property="task"
 									value="saveend">
 									<div class="col-md-4">
-									<html:radio name="outsourceForm"
-										property="outsourceBean.isGross" value="0" />&nbsp;Exclude
-									&nbsp;
-									<html:radio name="outsourceForm"
-										property="outsourceBean.isGross" value="1" />&nbsp;Include
+										<html:radio name="outsourceForm"
+											property="outsourceBean.isGross" value="0" />
+										&nbsp;Exclude &nbsp;
+										<html:radio name="outsourceForm"
+											property="outsourceBean.isGross" value="1" />
+										&nbsp;Include
 									</div>
 								</logic:notEqual>
 								<logic:equal name="outsourceForm" property="task"
@@ -289,9 +318,10 @@
 				</div>
 				<div class="col-lg-12" style>
 					<button type="button" class="btn btn-primary"
-						onclick="javascript:validate()">Save</button>
-					<button type="button" class="btn btn-primary"
 						onclick="javascript:flyToPage('back')">Back</button>
+					<button type="button" class="btn btn-primary"
+						onclick="javascript:validate()">Save</button>
+
 				</div>
 			</div>
 		</div>

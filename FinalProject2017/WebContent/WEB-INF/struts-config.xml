@@ -58,7 +58,7 @@
 			<forward name="formInvoicePS" path="/WEB-INF/jsp/formInvoicePS.jsp"></forward>
 			<forward name="formInvoiceHH" path="/WEB-INF/jsp/formInvoiceHH.jsp"></forward>
 			<forward name="formInvoiceTRDP" path="/WEB-INF/jsp/formInvoiceTRDP.jsp"></forward>
-			<forward name="createInvoiceTRST" path="/WEB-INF/jsp/createInvoiceTRST.jsp"></forward>
+			<forward name="formInvoiceTRST" path="/WEB-INF/jsp/formInvoiceTRST.jsp"></forward>
 		</action>
 		<action path="/outsource" name="outsourceForm" type="outsource.OutsourceHandler" scope="request">
 			<forward name="outsource" path="/WEB-INF/jsp/outsource.jsp"></forward>
@@ -74,9 +74,12 @@
 		<action path="/user" name="userForm" type="user.UserHandler" scope="request">
 			<forward name="login" path="/WEB-INF/jsp/login.jsp"></forward>
 			<forward name="changePassword" path="/WEB-INF/jsp/changePassword.jsp"></forward>
+			<forward name="manageUser" path="/WEB-INF/jsp/formUser.jsp"></forward>
 		</action>
     
-		<action path="/login" forward="/user.do?task=login" />	
+		<action path="/login" forward="/user.do?task=login" />
+		<action path="/manageUser" forward="/user.do?task=manageUser" />	
 	</action-mappings>
 
 </struts-config>
+

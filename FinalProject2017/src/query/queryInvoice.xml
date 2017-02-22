@@ -57,7 +57,7 @@
 				</isNotEmpty>
 			</isNotNull>
 		</dynamic>
-		order by 2
+		order by 2 desc
 	</select>
 	
 	<select id="getHeaderById" resultClass="invoice.InvoiceBean" parameterClass="java.lang.Integer">		
@@ -215,4 +215,23 @@
     	#manDays#, #notes#, #createdBy#, sysdate, null, null, #workDays#, #unitPrice#, #totalFee#)
     </insert>
     
+    <delete id="deleteDetailByHeaderId" parameterClass="java.lang.Integer">
+    	delete 
+    		from transaction_invoice_detail 
+    	where transaction_invoice_id = #transaction_invoice_id#
+    </delete>
+    
+    <update id="updateHeaderById" parameterClass="invoice.InvoiceBean">
+    	update transaction_invoice_header
+		set INVOICE_DATE = to_date('MM/dd/yyyy',#invoiceDate#),
+			TOTAL_NET = #totalNet#,
+			IS_GROSS = #totalGross#,
+			TOTAL_GROSS = ##,
+			NOTES = ##,
+			CHANGED_BY = ##,
+			CHANGED_DATE = sysdate,
+			TOTAL_PPN = ##
+		where TRANSACTION_INVOICE_ID = #transactionInvoiceHeaderId#
+    </update>
+     
 </sqlMap> 
