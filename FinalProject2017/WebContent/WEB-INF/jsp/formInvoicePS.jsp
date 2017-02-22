@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create Invoice</title>
+<title>Finance Solution</title>
 <script>
 	function back(task){
 		document.forms[1].task.value = task;
@@ -27,7 +27,7 @@
 			else if(!numberReg.test(manDays)){
 				errorMessage+="Man Days at row "+(count+1)+" must be number and not negative!<br/>";
 			}
-			else if(manDays>workDays){
+			else if(parseInt(manDays)>parseInt(workDays)){
 				errorMessage+="Man Days at row "+(count+1)+" must lesser than Work Days!<br/>";
 			}
 
@@ -73,7 +73,12 @@
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Create Invoice Professional Service</h1>
+				<logic:equal value="createInvoice" property="task" name="invoiceForm">
+					<h1 class="page-header">Create Invoice Professional Service</h1>
+				</logic:equal>
+				<logic:equal value="editInvoice" property="task" name="invoiceForm">
+					<h1 class="page-header">Edit Invoice Professional Service</h1>
+				</logic:equal>
 			</div>
 			
 			<div class="row" style="margin-top: 10px;">
@@ -81,8 +86,14 @@
 
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
-						<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
-						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate"/>
+						<html:hidden name="invoiceForm" property="invoiceBean.transactionInvoiceHeaderId"/>
+						<logic:equal value="createInvoice" property="task" name="invoiceForm">
+							<bean:write name="invoiceForm" property="invoiceBean.invoiceDate"/>
+							<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate"/>
+						</logic:equal>
+						<logic:equal value="editInvoice" property="task" name="invoiceForm">
+							<input type="date" class="form-control-client" name="invoiceBean.invoiceDate" value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />">
+						</logic:equal>
 					</div>
 				</div>
 			</div>
@@ -143,7 +154,7 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Notes</label></div>
 					<div class="col-md-5">
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true" ></html:textarea>
+						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"/>
 					</div>
 				</div>
 			</div>
@@ -173,20 +184,32 @@
 											<bean:write property="employeeName" name="invoiceDetailPS" />
 											<html:hidden property="employeeName" name="invoiceDetailPS" indexed="true"/>
 											<html:hidden property="employeeId" name="invoiceDetailPS" indexed="true"/>
+											<html:hidden property="transactionInvoiceDetailId" name="invoiceDetailPS" indexed="true"/>
 										</td>
 										<td>
-											<bean:write property="fee" name="invoiceDetailPS" format="##,###.##"/>
-											<html:hidden property="fee" name="invoiceDetailPS" indexed="true"/>
+											<logic:equal value="createInvoice" property="task" name="invoiceForm">
+												<bean:write property="fee" name="invoiceDetailPS" format="##,###.##"/>
+												<html:hidden property="fee" name="invoiceDetailPS" indexed="true"/>
+											</logic:equal>
+											<logic:equal value="editInvoice" property="task" name="invoiceForm">
+												<html:text property="fee" name="invoiceDetailPS" indexed="true" styleClass="form-control"/>
+											</logic:equal>
 										</td>
 										<td>
 											<html:text property="workDays" name="invoiceDetailPS" styleClass="form-control" indexed="true"/>
 										</td>
 										<td>
-											<html:text property="manDays" name="invoiceDetailPS" styleClass="form-control" indexed="true" value=""/>
-											<html:hidden property="manDays" name="invoiceDetailPS" indexed="true"/>
+											<logic:equal value="createInvoice" property="task" name="invoiceForm">
+												<html:text property="manDays" name="invoiceDetailPS" styleClass="form-control" indexed="true" value=""/>
+												<%-- <html:hidden property="manDays" name="invoiceDetailPS" indexed="true"/> --%>
+											</logic:equal>
+											<logic:equal value="editInvoice" property="task" name="invoiceForm">
+												<html:text property="manDays" name="invoiceDetailPS" styleClass="form-control" indexed="true"/>
+											</logic:equal>
+											
 										</td>
 										<td>
-											<html:text property="notes" name="invoiceDetailPS" styleClass="form-control" indexed="true"></html:text>
+											<html:text property="notes" name="invoiceDetailPS" styleClass="form-control" indexed="true"/>
 											<html:hidden property="notes" name="invoiceDetailPS" indexed="true"/>
 										</td>
 									</tr>
@@ -202,7 +225,12 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<button type="button" class="btn btn-primary" onclick="javascript:back('createInvoice')">Back</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertPS')">Save</button>
+						<logic:equal value="createInvoice" property="task" name="invoiceForm">
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertPS')">Save</button>
+						</logic:equal>
+						<logic:equal value="editInvoice" property="task" name="invoiceForm">
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoicePS')">Save</button>
+						</logic:equal>
 					</div>
 				</div>
 			</div>

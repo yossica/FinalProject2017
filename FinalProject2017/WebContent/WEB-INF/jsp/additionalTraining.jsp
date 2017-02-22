@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Financial Solution</title>
+<title>Finance Solution</title>
 	<script type="text/javascript">
 		function insert(){
 			//validate

@@ -7,9 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create Invoice</title>
+<title>Finance Solution</title>
 <script>
-	function insert(){
+	function validate(){
 		//validate
 		var fee = document.getElementsByName("trainingFee")[0].value;
 		var description = document.getElementsByName("trainingBean.description")[0].value;		
@@ -19,7 +19,7 @@
 		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		var errorMessage = "";
 		var flag = true;
-
+	
 		if(description == ""){
 			errorMessage = errorMessage + "Training Name must be filled!<br/>";
 		}
@@ -54,10 +54,14 @@
 		
 		if(errorMessage.length != 0){
 			document.getElementById("message").innerHTML = errorMessage;
-			return;
+			return 0;
+		}else{
+			return 1;
 		}
-		else{		
-			
+	}
+	function insert(){
+		validate();
+		if(validate()==1){			
 			swal({
 				  title: "Are you sure?",
 				  text: "System will insert these data to Invoice",
@@ -79,6 +83,31 @@
 			
 		}			
 	}
+	function update(){
+		validate();
+		if(validate()==1){			
+			swal({
+				  title: "Are you sure?",
+				  text: "System will update these data to Invoice",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Update",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+			            	flyToPage("editInvoiceTRDP");
+				  } else {
+				    swal("Cancelled", "Cancel Update Transaction", "error");
+				  }
+				});
+			
+		}			
+	}
+	
 	function flyToPage(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -92,15 +121,19 @@
 	<html:hidden property="client" name="invoiceForm"/>
 	<html:hidden property="statusId" name="invoiceForm"/>
 	<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
+	<html:hidden property="invoiceBean.ppnPercentage" name="invoiceForm"/>
+	<html:hidden property="statusId" name="invoiceForm"/>
+	<html:hidden property="trainingBean.transactionTrainingHeaderId" name="invoiceForm"/>
+	
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
 				<logic:equal name="invoiceForm" property="task"
-						value="saveedit">
+						value="editInvoiceTRDP">
 					<h1 class="page-header">Edit Invoice Training</h1>
 				</logic:equal>
 				<logic:notEqual name="invoiceForm" property="task"
-						value="saveedit">
+						value="editInvoiceTRDP">
 					<h1 class="page-header">Create Invoice Training</h1>
 				</logic:notEqual>
 			</div>
@@ -109,13 +142,13 @@
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<logic:equal name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<input type="date" class="form-control" style="width: 100%;" 
 								name="invoiceBean.invoiceDate" 
 								value="<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />"/>
 						</logic:equal>
 						<logic:notEqual name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
 							<bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
 						</logic:notEqual>
@@ -156,7 +189,7 @@
 					<div class="col-md-5">
 						
 						<logic:equal name="invoiceForm" property="task"
-							value="saveedit">
+							value="editInvoiceTRDP">
 							<div class="col-md-4">
 							<html:radio name="invoiceForm"
 								property="invoiceBean.isGross" value="0" />&nbsp;Exclude
@@ -167,7 +200,7 @@
 						</logic:equal>
 					
 						<logic:notEqual name="invoiceForm" property="task"
-							value="saveedit">
+							value="editInvoiceTRDP">
 							<html:hidden name="invoiceForm" property="invoiceBean.isGross" />
 							<logic:equal name="invoiceForm" property="invoiceBean.isGross" value="0">
 								Exclude
@@ -184,10 +217,10 @@
 					<div class="col-md-2"><label>Invoice Note</label></div>
 					<div class="col-md-5">
 						<logic:equal name="invoiceForm" property="task"
-								value="saveedit"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" ></html:textarea>
+								value="editInvoiceTRDP"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" ></html:textarea>
 						</logic:equal>
 						<logic:notEqual name="invoiceForm" property="task"
-								value="saveedit"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"></html:textarea>
+								value="editInvoiceTRDP"><html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"></html:textarea>
 						</logic:notEqual>
 					</div>
 				</div>
@@ -237,12 +270,12 @@
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						
 						<logic:equal name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('detailInvoice')">Back</button>
-							<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
+							<button type="button" class="btn btn-primary" onclick="javascript:update()">Save</button>
 						</logic:equal>
 						<logic:notEqual name="invoiceForm" property="task"
-								value="saveedit">
+								value="editInvoiceTRDP">
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
 						</logic:notEqual>

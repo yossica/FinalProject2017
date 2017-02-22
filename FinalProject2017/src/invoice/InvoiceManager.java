@@ -119,7 +119,28 @@ public class InvoiceManager {
 	}
 	
 	public void update(InvoiceBean input){
-		
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try{
+			ibatis.startTransaction();
+
+			ibatis.update("invoice.updateHeaderById", input);
+			
+			ibatis.delete("invoice.deleteDetailByHeaderId", input.getTransactionInvoiceHeaderId());
+			
+			for(int i = 0 ;i<input.getDetailList().size();i++){
+				input.getDetailList().get(i).setTransactionInvoiceDetailId(getMaxInvoiceDetailId() + 1);
+				ibatis.insert("invoice.insertDetail", input.getDetailList().get(i));
+			}
+			ibatis.commitTransaction();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+            try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 //	public InvoiceBean getById(int input){
