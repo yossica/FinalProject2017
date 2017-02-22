@@ -38,9 +38,9 @@
 	
 	<select id="getCurrentBalance" resultClass="java.lang.Double">
 		select balance
-		from transaction_petty_cash b,
-		(select max(created_date) as max_date from transaction_petty_cash) c
-		where b.created_date = c.max_date
+        from transaction_petty_cash b,
+        (select max(transaction_petty_cash_id) as max_id from transaction_petty_cash) c
+        where b.transaction_petty_cash_id = c.max_id
 	</select>
 
 	<select id="getMaxId" resultClass="java.lang.Integer">
@@ -48,13 +48,29 @@
 		from transaction_petty_cash
     </select>
 
-	<insert id="insert" parameterClass="pettyCash.PettyCashBean">
-		insert into transaction_petty_cash (transaction_petty_cash_id, cash_flow_category_id,
-			amount, balance, description, transaction_date, 
-			is_debit, created_by, created_date)
-		values (#transactionPettyCashId#,#cashFlowCategoryId#,
-			#amount#,#balance#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
-			#isDebit#,#createdBy#, sysdate)
+	<insert id="insert" parameterClass="pettyCash.PettyCashBean">			
+		<isEqual property="isDebit" compareValue="1">
+			insert all
+			    into  transaction_petty_cash (transaction_petty_cash_id, cash_flow_category_id,
+					amount, balance, description, transaction_date, 
+					is_debit, created_by, created_date)
+		        values (#transactionPettyCashId#,#cashFlowCategoryId#,
+					#amount#,balance-#amount#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
+					#isDebit#,#createdBy#, sysdate)
+		</isEqual>
+		<isEqual property="isDebit" compareValue="0">
+			insert all
+			    into  transaction_petty_cash (transaction_petty_cash_id, cash_flow_category_id,
+					amount, balance, description, transaction_date, 
+					is_debit, created_by, created_date)
+		        values (#transactionPettyCashId#,#cashFlowCategoryId#,
+					#amount#,balance+#amount#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
+					#isDebit#,#createdBy#, sysdate)
+		</isEqual>
+			select balance
+	        from transaction_petty_cash b,
+	        (select max(transaction_petty_cash_id) as max_id from transaction_petty_cash) c
+	        where b.transaction_petty_cash_id = c.max_id
 	</insert>
 	
 </sqlMap> 

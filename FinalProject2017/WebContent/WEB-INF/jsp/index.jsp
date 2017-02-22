@@ -17,18 +17,26 @@
 	<link href="asset/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
     <link href="asset/metisMenu/metisMenu.css" rel="stylesheet">
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
-    <!-- Custom Fonts -->
     <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <script>
+	function flyToCreate(task){
+		alert('Rencananya Mau Langsung Ke Halaman Create Invoice (Coming Soon)');
+		//document.forms[1].task.value = task;
+		//document.forms[1].submit();
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="dashboard.jsp"/>
+	<html:form action="/invoice" method="post">
+	<html:hidden property="task" name="invoiceForm"/>
+	</html:form>
 	<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Monthly Notifications</h1>
                 </div>
             </div>
-            
             <!-- Table 1 -->
             <div class="row">
                 <div class="col-lg-6" style="width:1100px">
@@ -42,24 +50,25 @@
 	                            <div class="table-responsive">
 	                                <table class="table table-hover">
 	                                    <tbody>
-	                                    <logic:notEmpty name="indexForm" property="listedRemainderList">
+	                                    <logic:notEmpty name="indexForm" property="listedRemainderList">	
 	                                        <logic:iterate id="list" name="indexForm" property="listedRemainderList">
 		                                        <tr>
-		                                        	<td>
-		                                        	<bean:write name="list" property="clientName"/> - Professional Service<br>
-		                                        	Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
-		                                        	<p align="right"><bean:write name="list" property="invoiceDate"/></p>
-		                                        	</td>
+		                                        	<td><a href="#" onclick="flyToCreate('createInvoice')">
+		                                        		
+		                                        		<bean:write name="list" property="clientName"/> - Professional Service<br>
+		                                        		Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
+		                                        		<p align="right"><bean:write name="list" property="invoiceDate"/></p>
+		                                        	</a></td>
 		                                        </tr>
 	                                        </logic:iterate>
 	                                    </logic:notEmpty>
 	                                    <logic:notEmpty name="indexForm" property="listedTrainingRemainderList">
 	                                        <logic:iterate id="list" name="indexForm" property="listedTrainingRemainderList">
 		                                        <tr>
-		                                        	<td>
+		                                        	<td><a href="#" onclick="flyToCreate('createInvoice')">
 		                                        	<bean:write name="list" property="clientName"/> - Training Settlement<br>
 		                                        	Description : <bean:write name="list" property="description"/>
-		                                        	</td>
+		                                        	</a></td>
 		                                        </tr>
 	                                        </logic:iterate>
 	                                    </logic:notEmpty>

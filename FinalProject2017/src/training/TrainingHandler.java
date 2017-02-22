@@ -71,7 +71,7 @@ public class TrainingHandler extends Action{
 			//task = additionalTraining
 			List<ClientBean> clientList = trainingManager.getOngoingTrainingClient();			
 			if(clientList.size()==0){
-				trainingForm.getMessageList().add("There is no ongoing training!");
+				trainingForm.getMessageList().add("Ooooops!!! There is no ongoing training!");
 			}
 			else {
 				trainingForm.setClientList(clientList);
