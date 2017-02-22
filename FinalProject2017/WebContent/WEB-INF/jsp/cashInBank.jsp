@@ -23,13 +23,15 @@
 			var e = filterEndDate.split("-");
 			var endDate = new Date(parseInt(e[0]),parseInt(e[1])-1,parseInt(e[2]));
 			if(startDate > endDate){
-				document.getElementById("errorMessage").innerHTML = "Start Date must be later than End Date!";
+				//document.getElementById("errorMessage").innerHTML = "Start Date must be later than End Date!";
+				sweetAlert("Oops...", "Start Date must be later than End Date!", "error");
 			}else{
 				flyToPage("filter");
 			}
 		}
 		else{			
-			document.getElementById("errorMessage").innerHTML = "Start Date and End Date must be either both filled or emptied!";
+			//document.getElementById("errorMessage").innerHTML = "Start Date and End Date must be either both filled or emptied!";
+			sweetAlert("Oops...", "Start Date and End Date must be either both filled or emptied!", "error");
 		}
 	}
 	function balance(){
