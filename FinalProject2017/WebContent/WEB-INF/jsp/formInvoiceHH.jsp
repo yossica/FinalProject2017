@@ -94,7 +94,7 @@
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Create Invoice (Cont)</h1>
+				<h1 class="page-header">Create Invoice Head Hunter</h1>
 			</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-12" style="padding-right: 1%">
