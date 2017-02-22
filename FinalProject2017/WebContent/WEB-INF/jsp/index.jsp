@@ -54,8 +54,8 @@
 	                                        <logic:iterate id="list" name="indexForm" property="listedRemainderList">
 		                                        <tr>
 		                                        	<td><a href="#" onclick="flyToCreate('createInvoice')">
-		                                        		
-		                                        		<bean:write name="list" property="clientName"/> - Professional Service<br>
+		                                        				                                        		
+		                                        		<bean:write name="list" property="clientName" /> - Professional Service<br>
 		                                        		Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
 		                                        		<p align="right"><bean:write name="list" property="invoiceDate"/></p>
 		                                        	</a></td>
