@@ -30,6 +30,8 @@ public class InvoiceForm extends ActionForm{
 	private GeneralInformationBean sign = new GeneralInformationBean();
 	
 	private String task;
+	private String periodMonth;
+	private String periodYear;
 	private String subTask;
 	
 	private String clientId;
@@ -335,6 +337,17 @@ public class InvoiceForm extends ActionForm{
 	public void setInvoiceTipeId(String invoiceTipeId) {
 		this.invoiceTipeId = invoiceTipeId;
 	}
-	
+	public String getPeriodMonth() {
+		return periodMonth;
+	}
+	public void setPeriodMonth(String periodMonth) {
+		this.periodMonth = periodMonth;
+	}
+	public String getPeriodYear() {
+		return periodYear;
+	}
+	public void setPeriodYear(String periodYear) {
+		this.periodYear = periodYear;
+	}
 }
 

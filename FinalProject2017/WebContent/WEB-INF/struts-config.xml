@@ -21,7 +21,7 @@
 		<action path="/index" name="indexForm" type="index.IndexHandler" scope="request">
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
 			<forward name="invoice" path="/invoice.do?task=invoice"></forward>
-			<forward name="createInvoice" path="/invoice.do?task=createInvoice"></forward>
+			<forward name="createInvoiceIndex" path="/invoice.do?task=createInvoiceIndex"></forward>
 			<forward name="financeSummary" path="/WEB-INF/jsp/financeSummary.jsp"></forward>
 			<forward name="employee" path="/employee.do"></forward>
 			<forward name="pettyCash" path="/pettyCash.do"></forward>
