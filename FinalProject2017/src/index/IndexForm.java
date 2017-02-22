@@ -6,6 +6,7 @@ import org.apache.struts.action.ActionForm;
 
 public class IndexForm  extends ActionForm{
 	private String taskIndex;
+	private String username;
 
 	private List listedRemainderList;
 	private List listedTrainingRemainderList;
@@ -80,6 +81,14 @@ public class IndexForm  extends ActionForm{
 
 	public void setFinanceSummaryList(List financeSummaryList) {
 		this.financeSummaryList = financeSummaryList;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

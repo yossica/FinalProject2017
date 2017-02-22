@@ -15,7 +15,8 @@ import utils.IbatisHelper;
 
 public class CashInBankManager {
 	
-	public void insert(CashInBankBean input){
+	public String insert(CashInBankBean input){
+		String message = "";
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
 			ibatis.startTransaction();
@@ -29,9 +30,17 @@ public class CashInBankManager {
 			input.setTransactionCashInBankId(cashInBankId);
 			
 			ibatis.insert("cashInBank.insert", input);
+			
+			//cek if balance setelah insert jadinya minus
+			if(getCurrentBalance() < 0){
+				return "Failed to insert transaction because balance not enough";
+			}
+			
 			ibatis.commitTransaction();
+			return "Success";
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "Failed "+e.getMessage()+"\nPlease contact the system administrator";
 		} finally {
 			try {
 				ibatis.endTransaction();

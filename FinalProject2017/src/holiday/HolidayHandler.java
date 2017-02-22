@@ -33,7 +33,7 @@ public class HolidayHandler extends Action{
 			}
 			holidayForm.setHolidayList(holidayManager.getAll());
 			holidayForm.setHolidayCsv("");
-			holidayForm.getMessageList().add("All Data successfully inserted!");
+			holidayForm.getMessageList().add("Success!!! All Data successfully inserted!");
 			return mapping.findForward("holiday");
 		}
 		else if("delete".equals(holidayForm.getTask())){
@@ -41,7 +41,7 @@ public class HolidayHandler extends Action{
 
 			holidayForm.setHolidayList(holidayManager.getAll());
 			holidayForm.setHolidayCsv("");
-			holidayForm.getMessageList().add("Data successfully deleted!");
+			holidayForm.getMessageList().add("Success!!! Data successfully deleted!");
 			return mapping.findForward("holiday");
 		}
 		else{
