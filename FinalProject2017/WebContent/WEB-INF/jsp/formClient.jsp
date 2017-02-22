@@ -20,7 +20,7 @@
 
 		var letters = /^([A-Za-z ]{3,})+$/;
 		var numbers = /^\d+$/;
-		var alphanumAndSpecial = /^[ A-Za-z0-9_@.,]*$/;
+		var alphanumAndSpecial = /^[ A-Za-z0-9.,]*$/;
 		var phoneRegex = /^([+0])([\d- ])*$/;
 		var faxRegex = /^([+0])([\d. ])*$/;
 		var errorMessage = "";
@@ -138,11 +138,11 @@
 									</tr>
 									<tr>
 										<td><label>Phone</label></td>
-										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123-456'"/></td>
+										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client" onclick="this.value='e.g.: 021 123-456 / +6221 123-456'"/></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
-										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123.456'"/></td>
+										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client" onclick="this.value='e.g.: 021 123.456 / +6221 123.456'"/></td>
 									</tr>
 									<tr>
 										<td><label>Postal Code</label></td>
