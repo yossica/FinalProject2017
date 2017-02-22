@@ -45,10 +45,11 @@ public class IndexHandler extends Action {
 			return mapping.findForward("invoice");
 		} else if ("pettyCash".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("pettyCash");
+		} else if ("createInvoice".equals(indexForm.getTaskIndex())) {
+			return mapping.findForward("createInvoice");
 		} else if ("cashInBank".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("cashInBank");
 		} else if ("financeSummary".equals(indexForm.getTaskIndex())) {
-
 			MasterManager masterManager = new MasterManager();
 			PettyCashManager pettyCashManager = new PettyCashManager();
 			CashInBankManager cashInBankManager = new CashInBankManager();
@@ -73,7 +74,6 @@ public class IndexHandler extends Action {
 		} else if ("outsource".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("outsource");
 		} else if ("logout".equals(indexForm.getTaskIndex())) {
-			session.removeAttribute("username");
 			return mapping.findForward("success");
 		} else {
 			Integer currentPeriod = Integer.parseInt(outsourceManager
@@ -102,11 +102,13 @@ public class IndexHandler extends Action {
 							InvoiceBean invoiceBean = new InvoiceBean();
 							invoiceBean.setClientName(list.get(i)
 									.getClientName());
+							invoiceBean.setClientId(list.get(i)
+									.getClientId());
 							invoiceBean.setPeriodMonth(periodMonth);
 							invoiceBean.setPeriodYear(periodYear);
+							invoiceBean.setInvoiceTypeId(1);
 							arrList.add(invoiceBean);
 						}
-
 					}
 					Integer year = Integer.parseInt((currentPeriod + "")
 							.substring(0, 4));
@@ -129,7 +131,11 @@ public class IndexHandler extends Action {
 					.getSentOutsourceRemainderList());
 			indexForm.setListedTrainingRemainderList(trainingManager
 					.getListedTrainingRemainderList());
+<<<<<<< HEAD
 			// System.out.println(indexForm.getListedTrainingRemainderList().size());
+=======
+			indexForm.setUsername((String) session.getAttribute("username"));
+>>>>>>> refs/remotes/origin/master
 			return mapping.findForward("success");
 		}
 	}
