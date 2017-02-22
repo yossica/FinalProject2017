@@ -20,27 +20,30 @@
 		var errorMessage = "";
 
 		if (name == "") {
-			errorMessage = errorMessage + "Name must be filled!<br/>";
+			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
 			errorMessage = errorMessage
+					+ "Name must be in alphabets only! \n";
 					+ "Invalid format of Name!<br/>";
 		}
 
 		if (email == "") {
-			errorMessage = errorMessage + "Email must be filled!<br/>";
+			errorMessage = errorMessage + "Email must be filled! \n";
 		} else if (!emailRegex.test(email)) {
 			errorMessage = errorMessage
+					+ "Email should be in valid format! \n";
 					+ "Invalid format of Email!<br/>";
 		}
 
 		if (errorMessage.length != 0) {
-			document.getElementById("message").innerHTML = errorMessage;
+			sweetAlert("Oops...", errorMessage, "error");
+			//document.getElementById("message").innerHTML = errorMessage;
 			return;
 		} 			
 		else {
 			swal({
 				title : "Are you sure?",
-				text : "System will insert these data to client database",
+				text : "System will insert these data to employee database",
 				type : "warning",
 				showCancelButton : true,
 				confirmButtonColor : "#ef2300",
@@ -50,7 +53,14 @@
 				closeOnCancel : false
 			}, function(isConfirm) {
 				if (isConfirm) {
-					flyToPage();
+					swal({title: "Good job!",
+						  text: "Save Success!",
+						  type: "success"}
+						 ,function(){
+						  setTimeout(function(){
+							  flyToPage();
+							  }, 10);
+							});		
 				} else {
 					swal("Cancelled", "Cancel Insert New Data", "error");
 				}
@@ -124,7 +134,7 @@
 						<logic:notEmpty name="employeeForm" property="messageList">
 							<logic:iterate id="message" name="employeeForm"
 								property="messageList">
-								<bean:write name="message" />
+								<input type="hidden" id="err" value="<bean:write name="message" />">
 							</logic:iterate>
 						</logic:notEmpty>
 						
