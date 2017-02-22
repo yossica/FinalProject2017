@@ -54,14 +54,15 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					   swal({title: "Good job!",
+					   /* swal({title: "Good job!",
 						  text: "Transaction Success!",
 						  type: "success"}
 						 ,function(){
 						  setTimeout(function(){
 							  flyToPage();
 							  }, 10);
-							}); 
+							});  */
+					  flyToPage();
 				  } else {
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
 				  }
