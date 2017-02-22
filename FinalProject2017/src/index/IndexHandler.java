@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import invoice.InvoiceBean;
+import invoice.InvoiceForm;
 import invoice.InvoiceManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +46,8 @@ public class IndexHandler extends Action {
 			return mapping.findForward("invoice");
 		} else if ("pettyCash".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("pettyCash");
-		} else if ("createInvoice".equals(indexForm.getTaskIndex())) {
-			return mapping.findForward("createInvoice");
+		} else if ("createInvoiceIndex".equals(indexForm.getTaskIndex())) {
+			return mapping.findForward("createInvoiceIndex");
 		} else if ("cashInBank".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("cashInBank");
 		} else if ("financeSummary".equals(indexForm.getTaskIndex())) {
@@ -75,6 +76,7 @@ public class IndexHandler extends Action {
 		} else if ("outsource".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("outsource");
 		} else if ("logout".equals(indexForm.getTaskIndex())) {
+			session.removeAttribute("username");
 			return mapping.findForward("success");
 		} else {
 			Integer currentPeriod = Integer.parseInt(outsourceManager
