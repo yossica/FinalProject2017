@@ -14,12 +14,18 @@
 		var fee = document.getElementsByName("trainingFee")[0].value;
 		var description = document.getElementsByName("trainingBean.description")[0].value;		
 		var startDate = document.getElementsByName("trainingBean.trainingStartDate")[0].value;
-		var endDate = document.getElementsByName("trainingBean.trainingEndDate")[0].value;		
+		var endDate = document.getElementsByName("trainingBean.trainingEndDate")[0].value;	
+		var invoiceDate = document.getElementsByName("invoiceBean.invoiceDate")[0].value;	
 		
 		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		var errorMessage = "";
 		var flag = true;
-	
+		
+		if(invoiceDate == ""){
+			errorMessage = errorMessage + "Invoice Date must be filled! <br/>";
+			flag = false;
+		}
+		
 		if(description == ""){
 			errorMessage = errorMessage + "Training Name must be filled!<br/>";
 		}
