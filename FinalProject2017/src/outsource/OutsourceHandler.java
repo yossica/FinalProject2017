@@ -41,6 +41,7 @@ public class OutsourceHandler extends Action {
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
+		String message = "";
 
 		if ("create".equals(outsourceForm.getTask())) {
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
@@ -84,6 +85,10 @@ public class OutsourceHandler extends Action {
 			outsourceForm.setOutsourceBean(outsourceBean);
 
 			// date format data
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			outsourceForm.getOutsourceBean().setStartDate(
+					showDateFormat.format(cal.getTime()));
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 					.getEndDate()));
 			outsourceForm.getOutsourceBean().setEndDate(
@@ -132,13 +137,13 @@ public class OutsourceHandler extends Action {
 
 					} else {
 						flagError = 1;
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Employee already with another contract, with "
+						message = message + "Ooooops!!! Employee already with another contract, with "
 										+ tmpList.get(j).getClientName()
 										+ " in period "
 										+ tmpList.get(j).getStartDate()
 										+ " until "
-										+ tmpList.get(j).getEndDate());
+										+ tmpList.get(j).getEndDate()
+										+ "\n";
 						break;
 					}
 				}
@@ -164,15 +169,15 @@ public class OutsourceHandler extends Action {
 						.getOutsourceBean().getIsGross()) {
 					flagError = 1;
 					if (tmpList.get(0).getIsGross() == 1) {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
+						message = message + "Ooooops!!! Client already have contract "
 										+ "with tax include, new contract "
-										+ "must be tax include as well");
+										+ "must be tax include as well"
+										+ "\n";
 					} else {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
+						message = message + "Ooooops!!! Client already have contract "
 										+ "with tax exclude, new contract "
-										+ "must be tax exclude as well");
+										+ "must be tax exclude as well"
+										+ "\n";
 					}
 
 				}
@@ -180,6 +185,7 @@ public class OutsourceHandler extends Action {
 
 			if (flagError == 1) {
 				// date format show
+				outsourceForm.getMessageList().add(message);
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 						.getStartDate()));
 				outsourceForm.getOutsourceBean().setStartDate(
@@ -245,21 +251,22 @@ public class OutsourceHandler extends Action {
 									.getTransactionOutsourceId()) {
 						flagError = 1;
 						if (tmpList.get(0).getIsGross() == 1) {
-							outsourceForm.getMessageList().add(
-									"Ooooops!!! Client already have contract "
+							message = message + "Ooooops!!! Client already have contract "
 											+ "with tax include, new contract "
-											+ "must be tax include as well");
+											+ "must be tax include as well"
+											+ "\n";
 						} else {
-							outsourceForm.getMessageList().add(
-									"Ooooops!!! Client already have contract "
+							message = message + "Ooooops!!! Client already have contract "
 											+ "with tax exclude, new contract "
-											+ "must be tax exclude as well");
+											+ "must be tax exclude as well"
+											+ "\n";
 						}
 
 					}
 				}
 			}
 			if (flagError == 1) {
+				outsourceForm.getMessageList().add(message);
 				outsourceForm.setTask("saveupdate");
 				return mapping.findForward("formOutsource");
 			} else {
@@ -303,8 +310,8 @@ public class OutsourceHandler extends Action {
 			if (outsourceForm.getOutsourceBean().getClientId() == outsourceBean
 					.getClientId()) {
 				flagError = 1;
-				outsourceForm.getMessageList().add(
-						"Client must be different from previous client");
+				message = message + "Ooooops!!! Client must be different from previous client"
+							+"\n";
 			}
 
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
@@ -314,17 +321,15 @@ public class OutsourceHandler extends Action {
 			// input start date > old start date, jika tidak maka error
 			if (cal.compareTo(cal2) <= 0) {
 
-				outsourceForm.getMessageList().add(
-						"Start date must be later than previous start date ["
-								+ outsourceBean.getStartDate() + "]");
+				message = message + "Ooooops!!! Start date must be later than previous start date ["
+								+ outsourceBean.getStartDate() + "] \n";
 				flagError = 1;
 			}
 			// input start date < old end date, jika tidak maka error
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
 			if (cal.compareTo(cal2) >= 0) {
-				outsourceForm.getMessageList().add(
-						"Ooooops!!! Start date must be before than previous end date ["
-								+ outsourceBean.getEndDate() + "]");
+				message = message + "Ooooops!!! Start date must be before than previous end date ["
+								+ outsourceBean.getEndDate() + "] \n";
 				flagError = 1;
 			}
 			// cek data yang baru di input ada jadwal yang bentrok apa nggak
@@ -354,13 +359,13 @@ public class OutsourceHandler extends Action {
 
 						} else {
 							flagError = 1;
-							outsourceForm.getMessageList().add(
-									"Ooooops!!! Employee already with another contract, with "
+							message = message + "Ooooops!!! Employee already with another contract, with "
 											+ tmpList.get(j).getClientName()
 											+ " in period "
 											+ tmpList.get(j).getStartDate()
 											+ " until "
-											+ tmpList.get(j).getEndDate());
+											+ tmpList.get(j).getEndDate()
+											+ "\n";
 							break;
 						}
 					}
@@ -387,21 +392,22 @@ public class OutsourceHandler extends Action {
 						.getOutsourceBean().getIsGross()) {
 					flagError = 1;
 					if (tmpList.get(0).getIsGross() == 1) {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
+						message = message + "Ooooops!!! Client already have contract "
 										+ "with tax include, new contract "
-										+ "must be tax include as well");
+										+ "must be tax include as well"
+										+ "\n";
 					} else {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
+						message = message + "Ooooops!!! Client already have contract "
 										+ "with tax exclude, new contract "
-										+ "must be tax exclude as well");
+										+ "must be tax exclude as well"
+										+"\n";
 					}
 
 				}
 			}
 
 			if (flagError == 1) {
+				outsourceForm.getMessageList().add(message);
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 						.getStartDate()));
@@ -464,12 +470,12 @@ public class OutsourceHandler extends Action {
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
 
 			if (cal.after(cal2)) {
-				outsourceForm.getMessageList().add(
-						"Ooooops!!! End date must before than previous end date");
+				message = message + "Ooooops!!! End date must before than previous end date \n";
 				flagError = 1;
 
 			}
 			if (flagError == 1) {
+				outsourceForm.getMessageList().add(message);
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 						.getStartDate()));
