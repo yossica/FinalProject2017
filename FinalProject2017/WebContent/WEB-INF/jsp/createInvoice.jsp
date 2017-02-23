@@ -85,7 +85,6 @@
 	function onloadFunc() {
 		var today = new Date();
 		onchangeContractServices();
-		alertError();
 	}
 	function ifSettlement(){
 		var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
@@ -111,6 +110,7 @@
 		}
 	}
 	window.onload = onloadFunc;
+	window.onload = alertError;
 </script>
 </head>
 <body>
