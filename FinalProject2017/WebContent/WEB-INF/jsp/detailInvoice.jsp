@@ -13,6 +13,23 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else{
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 <title>Client</title>
 </head>
@@ -151,6 +168,13 @@
 							</logic:equal>
 							<input type="button" value="Export" class="btn btn-primary" onclick="javascript:flyToPage('exportDetail')">
 						</div>
+						<div class="col-md-4" id="message">
+			  				<logic:notEmpty name="invoiceForm" property="messageList">
+								<logic:iterate id="message" name="invoiceForm" property="messageList">
+									<input type="hidden" id="err" value="<bean:write name="message" />">
+								</logic:iterate>
+							</logic:notEmpty>
+			  			</div>
 					</div>
 				</div>
 			</div>
