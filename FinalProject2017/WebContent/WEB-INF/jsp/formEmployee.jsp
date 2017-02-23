@@ -15,7 +15,7 @@
 		var name = document.getElementsByName("name")[0].value;
 		var email = document.getElementsByName("email")[0].value;
 
-		var letters = /^([A-Za-z ]{3,})+$/;
+		var letters = /^([A-Za-z ])+$/;
 		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}])|(([A-z\-\d]+\.)+[A-z]{2,}))$/;
 		var errorMessage = "";
 
@@ -24,7 +24,7 @@
 		} else if (!letters.test(name)) {
 			errorMessage = errorMessage
 					+ "Name must be in alphabets only! \n";
-					+ "Invalid format of Name!<br/>";
+					+ "Invalid format of Name (min. 3 chars) !<br/>";
 		}
 
 		if (email == "") {
