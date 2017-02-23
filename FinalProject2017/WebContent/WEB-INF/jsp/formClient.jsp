@@ -28,7 +28,7 @@
 			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
 			errorMessage = errorMessage + "Name must be in alphabets only! \n";
-			+"Invalid format of Name!<br/>";
+			+"Invalid format of Name (min. 3 chars) !<br/>";
 		}
 		if (address == "") {
 			errorMessage = errorMessage + "Address must be filled! \n";

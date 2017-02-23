@@ -21,8 +21,25 @@
 	}
 	function flyToNextPage(){
 		var task;
+		var error = false;
+		
+		//Check Error Pertama
+		if (document.getElementById('invoiceDate').value == ''){
+			error = true;
+		}else if (document.getElementById('contractServices').value == 'Select'){
+			error = true;
+		}else if (document.getElementById('client').value == 'Select'){
+			error = true;
+		}
+		
 		if (getContractServices() == 1){
 			task = 'formInvoicePS';
+			//Error Checking Kedua
+			if (document.getElementById('periodMonth').value == 'Select'){
+				error = true;
+			}else if (document.getElementById('periodYear').value == 'Select'){
+				error = true;
+			}
 		}else if (getContractServices() == 2 || getContractServices() == 4){
 			task = 'formInvoiceHH';
 		}else if (getContractServices() == 3){
@@ -33,8 +50,15 @@
 				task = 'createInvoiceTRST';
 			}
 		}
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+		
+		//Alert kalau Error disini
+		if (error){
+			alert('Error ya...')
+		}else {
+			alert('Tidak Ada Error... Lanjut!');
+			document.forms[1].task.value = task;
+			document.forms[1].submit();
+		}
 	}
 	function onchangeContractServices(){
 		if (getContractServices() == 1){
@@ -92,7 +116,6 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
-	
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -110,7 +133,7 @@
 				<div class="row">
 					<div class="col-md-3"><label>Client</label></div>
 					<div class="col-md-8">
-						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client">
+						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client" styleId="client">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 						</html:select>
@@ -128,43 +151,73 @@
 					</div>
 				</div>
 			</div>
+			<logic:equal property="task" name="invoiceForm" value="createInvoice">
 			<div id="period" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
 					<div class="col-md-3"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-3">
-						<select class="form-control" name="invoiceBean.periodMonth">
-							<option selected disabled>Select</option>
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">August</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="11">December</option>
-						</select>
+
+						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control" id="periodMonth">
+							<html:option value="01">January</html:option>
+							<html:option value="02">February</html:option>
+							<html:option value="03">March</html:option>
+							<html:option value="04">April</html:option>
+							<html:option value="05">May</html:option>
+							<html:option value="06">June</html:option>
+							<html:option value="07">July</html:option>
+							<html:option value="08">August</html:option>
+							<html:option value="09">September</html:option>
+							<html:option value="10">October</html:option>
+							<html:option value="11">November</html:option>
+							<html:option value="12">December</html:option>
+						</html:select>
 					</div>
 					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-3">
-						<select class="form-control" name="invoiceBean.periodYear">
-							<option selected>Select</option>
-							<%
-                        		int year = Calendar.getInstance().get(Calendar.YEAR);
-                        		for(int i=2000;i<=year;i++){
-                        		%>
-                        			<option value="<%= i %>"><%= i %></option>
-                        		<% 
-                        		}
-                        	%>
-						</select>
+						<html:select name="invoiceForm" property="invoiceBean.periodYear"
+										styleClass="form-control-client" id="periodYear">
+							<html:option value="">Select All</html:option>
+							<html:optionsCollection name="invoiceForm"
+								property="optYear" value="value" label="label" />
+						</html:select>
 					</div>
 				</div>
 			</div>
+			</logic:equal>
+			<logic:equal property="task" name="invoiceForm" value="createInvoiceIndex">
+			<div id="period" class="col-md-10" style="margin-top: 10px;">
+				<div class="row">
+					<div class="col-md-3"><label>Period</label></div>
+					<div class="col-md-1"><label>Month</label></div>
+					<div class="col-md-3">
+						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control">
+							<html:option value="01">January</html:option>
+							<html:option value="02">February</html:option>
+							<html:option value="03">March</html:option>
+							<html:option value="04">April</html:option>
+							<html:option value="05">May</html:option>
+							<html:option value="06">June</html:option>
+							<html:option value="07">July</html:option>
+							<html:option value="08">August</html:option>
+							<html:option value="09">September</html:option>
+							<html:option value="10">October</html:option>
+							<html:option value="11">November</html:option>
+							<html:option value="12">December</html:option>
+						</html:select>
+					</div>
+					<div class="col-md-1"><label>Year</label></div>
+					<div class="col-md-3">
+						<html:select name="invoiceForm" property="invoiceBean.periodYear"
+										styleClass="form-control-client">
+							<html:option value="">Select All</html:option>
+							<html:optionsCollection name="invoiceForm"
+								property="optYear" value="value" label="label" />
+						</html:select>
+					</div>
+				</div>
+			</div>
+			</logic:equal>
 			<div id="payment" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
 					<div class="col-md-3"><label>Payment</label></div>
