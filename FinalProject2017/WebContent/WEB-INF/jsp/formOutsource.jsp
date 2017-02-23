@@ -158,7 +158,7 @@
 												value="savecreate">
 												<html:select name="outsourceForm"
 													property="outsourceBean.clientId"
-													styleClass="form-control-client" size="1">
+													styleClass="form-control" size="1">
 													<html:optionsCollection name="outsourceForm"
 														property="optClientList" value="clientId" label="name" />
 												</html:select>
@@ -167,7 +167,7 @@
 												value="saveupdate">
 												<html:text name="outsourceForm"
 													property="outsourceBean.clientName" readonly="true"
-													styleClass="form-control-client" />
+													styleClass="form-control" />
 												<html:hidden name="outsourceForm"
 													property="outsourceBean.clientId" />
 											</logic:equal>
@@ -175,7 +175,7 @@
 												value="savemutation">
 												<html:select name="outsourceForm"
 													property="outsourceBean.clientId"
-													styleClass="form-control-client" size="1">
+													styleClass="form-control" size="1">
 													<html:optionsCollection name="outsourceForm"
 														property="optClientList" value="clientId" label="name" />
 												</html:select>
@@ -184,7 +184,7 @@
 												value="saveend">
 												<html:text name="outsourceForm"
 													property="outsourceBean.clientName" readonly="true"
-													styleClass="form-control-client" />
+													styleClass="form-control" />
 												<html:hidden name="outsourceForm"
 													property="outsourceBean.clientId" />
 											</logic:equal>
@@ -199,7 +199,7 @@
 												value="savecreate">
 												<html:select name="outsourceForm"
 													property="outsourceBean.employeeId"
-													styleClass="form-control-client" size="1">
+													styleClass="form-control" size="1">
 													<html:optionsCollection name="outsourceForm"
 														property="optEmployeeList" value="employeeId" label="name" />
 												</html:select>
@@ -208,7 +208,7 @@
 												value="savecreate">
 												<html:text name="outsourceForm"
 													property="outsourceBean.employeeName" readonly="true"
-													styleClass="form-control-client" />
+													styleClass="form-control" />
 												<html:hidden name="outsourceForm"
 													property="outsourceBean.employeeId" />
 											</logic:notEqual>
@@ -229,7 +229,7 @@
 												value="saveupdate">
 												<html:text name="outsourceForm"
 													property="outsourceBean.startDate" readonly="true"
-													styleClass="form-control-client" />
+													styleClass="form-control" />
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task"
 												value="savemutation">
@@ -260,7 +260,7 @@
 												value="saveupdate">
 												<html:text name="outsourceForm"
 													property="outsourceBean.endDate" readonly="true"
-													styleClass="form-control-client" />
+													styleClass="form-control" />
 											</logic:equal>
 										</td>
 									</tr>
@@ -297,12 +297,12 @@
 										<logic:notEqual name="outsourceForm" property="task"
 											value="saveend">
 											<html:text name="outsourceForm" property="outsourceBean.fee"
-												styleClass="form-control-client" />
+												styleClass="form-control" />
 										</logic:notEqual>
 										<logic:equal name="outsourceForm" property="task"
 											value="saveend">
 											<html:text name="outsourceForm" property="outsourceBean.fee"
-												styleClass="form-control-client" readonly="true" />
+												styleClass="form-control" readonly="true" />
 										</logic:equal>
 									</td>
 								</tr>
