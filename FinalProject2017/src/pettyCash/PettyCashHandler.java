@@ -441,7 +441,7 @@ public class PettyCashHandler extends Action {
 			}
 			else{
 				paramMap.put("category", cat);
-				parameters.put("category", cat);
+				parameters.put("category", masterManager.getCashFlowCategoryById(cat).getName());
 			}
 			
 			if("".equals(pettyCashForm.getFilterEndDate())){
@@ -470,6 +470,8 @@ public class PettyCashHandler extends Action {
 			String fileName = "PettyCashReport_"+printDateFormat.format(cal.getTime())+".pdf";
 			ExportReportManager.exportToPdf(filePath+"\\report\\FinanceTransactionReport"+".jrxml",
 					fileName, parameters, cashInBankData);
+			pettyCashForm.getMessageList().clear();
+			pettyCashForm.getMessageList().add("Success export to D://Finance Solution Report/"+fileName);
 						
 			//show filtered page
 			pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());			

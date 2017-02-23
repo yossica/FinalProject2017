@@ -37,9 +37,10 @@
 					</div>
 					</div>
 					<div class="panel-body">
-						<div class="table-responsive" style="height:400px;overflow:auto;">
+						<div class="table-responsive" style="height:370px;overflow:auto;">
 							
 							<table class="table table-hover">
+							
 								<tr>
 									<th>Client Name</th>
 									<th>Address</th>
@@ -49,6 +50,7 @@
 									<th>Postal Code</th>
 									<th>Action</th>
 								</tr>
+							
 								<tbody>
 									<logic:iterate id="client" name="clientForm"
 										property="listClient">

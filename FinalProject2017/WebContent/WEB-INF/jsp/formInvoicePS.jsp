@@ -87,6 +87,7 @@
 					<div class="col-md-2"><label>Invoice Date</label></div>
 					<div class="col-md-5">
 						<html:hidden name="invoiceForm" property="invoiceBean.transactionInvoiceHeaderId"/>
+						<html:hidden name="invoiceForm" property="invoiceBean.statusInvoiceId"/>
 						<logic:equal value="createInvoice" property="task" name="invoiceForm">
 							<bean:write name="invoiceForm" property="invoiceBean.invoiceDate"/>
 							<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate"/>

@@ -5,6 +5,7 @@ import utils.IbatisHelper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
@@ -78,12 +79,24 @@ public class HolidayManager {
 		
 		return result;
 	}
-	public List getAll(){
+	public List getAllWithFilter(Map input){
 		List result = null;
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		
 		try {			
-			result = ibatis.queryForList("holiday.getAll", null);			
+			result = ibatis.queryForList("holiday.getAllWithFilter", input);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		return result;
+	}
+	public List getDistinctYear(){
+		List result = null;
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		
+		try {			
+			result = ibatis.queryForList("holiday.getDistinctYear", null);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
