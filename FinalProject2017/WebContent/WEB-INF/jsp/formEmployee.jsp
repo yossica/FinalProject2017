@@ -15,7 +15,7 @@
 		var name = document.getElementsByName("name")[0].value;
 		var email = document.getElementsByName("email")[0].value;
 
-		var letters = /^([A-Za-z ]{3,})+$/;
+		var letters = /^([A-Za-z ])+$/;
 		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}])|(([A-z\-\d]+\.)+[A-z]{2,}))$/;
 		var errorMessage = "";
 
