@@ -192,7 +192,7 @@
 										</tr>
 									</logic:iterate>
 								</logic:notEmpty>
-								<logic:empty property="transactionList" name="cashInpettyCashFormBankForm">
+								<logic:empty property="transactionList" name="pettyCashForm">
 									<tr>
 										<td colspan="6" align="center">There are no data based on this filter</td>
 									</tr>
