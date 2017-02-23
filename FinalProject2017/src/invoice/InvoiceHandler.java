@@ -77,7 +77,7 @@ public class InvoiceHandler extends Action {
 				//client sudah punya invoice professional service di period tsb
 				//balikin ke create invoice + message ilst dikasi
 				invoiceForm.getMessageList().clear();
-				invoiceForm.getMessageList().add("Success!!! Invoice already created");
+				invoiceForm.getMessageList().add("Ooooops!!! Invoice already created");
 				return mapping.findForward("createInvoice");
 			} else{
 				if (outsourceManager.checkContract(paramMap) != 0) {
@@ -1071,6 +1071,8 @@ public class InvoiceHandler extends Action {
 			String fileName = "InvoiceSummaryReport_"+printDateFormat.format(cal.getTime())+".pdf";
 			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceSummaryReport"+".jrxml",
 					fileName, parameters, invoiceSummaryData);
+			invoiceForm.getMessageList().clear();
+			invoiceForm.getMessageList().add("Success export to D://Finance Solution Report/"+fileName);
 			
 			invoiceForm.setInvoiceList(invoiceSummaryData);
 			return mapping.findForward("invoice");
@@ -1096,7 +1098,7 @@ public class InvoiceHandler extends Action {
 			parameters.put("clientCity", clientBean.getCity());
 			parameters.put("clientPostalCode", clientBean.getPostalCode());
 			parameters.put("clientPhoneNumber", clientBean.getPhoneNumber());
-			parameters.put("clinetFaxNumber", clientBean.getFaxNumber());
+			parameters.put("clientFaxNumber", clientBean.getFaxNumber());
 			parameters.put("totalNet", invoiceBean.getTotalNet());
 			parameters.put("totalPPN", invoiceBean.getTotalPpn());
 			parameters.put("totalGross", invoiceBean.getTotalGross());
@@ -1114,9 +1116,13 @@ public class InvoiceHandler extends Action {
 			String fileName = invoiceBean.getInvoiceNumber().replaceAll("/", "")+"_"+printDateFormat.format(cal.getTime())+".pdf";
 			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceDetailReport"+".jrxml",
 					fileName, parameters, invoiceDetailData);
+			invoiceForm.getMessageList().clear();
+			invoiceForm.getMessageList().add("Success export to D://Finance Solution Report/"+fileName);
 			
 			//return to detail invoice
 			invoiceForm.setInvoiceBean(invoiceBean);
+			invoiceForm.setClientBean(clientBean);
+			invoiceForm.setStatusId(invoiceBean.getStatusInvoiceId()+"");
 			invoiceForm.setInvoiceDetailList(invoiceDetailData);
 			invoiceForm.setNote(rekNo);
 			invoiceForm.setSign(sign);

@@ -239,9 +239,9 @@
 											</logic:equal>
 											<logic:equal name="outsourceForm" property="task"
 												value="saveend">
-												<html:text name="outsourceForm"
-													property="outsourceBean.startDate" readonly="true"
-													styleClass="form-control-client" />
+												<input type="date" class="form-control" style="width: 100%;"
+													name="outsourceBean.startDate"
+													value="<bean:write property="outsourceBean.startDate" name="outsourceForm" />" readonly/>
 											</logic:equal>
 										</td>
 									</tr>
