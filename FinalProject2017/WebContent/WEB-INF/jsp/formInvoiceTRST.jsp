@@ -14,8 +14,27 @@
 		document.forms[1].submit();
 	}
 	function flyToDelete(id){
-		document.forms[1].deleteIndex.value = id;
-		flyToPage('deleteAdditionalFee');
+		/* document.forms[1].deleteIndex.value = id;
+		flyToPage('deleteAdditionalFee'); */
+		swal({
+			  title: "Are you sure?",
+			  text: "System will delete "+id+" data from additional",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#ef2300",
+			  confirmButtonText: "Yes, Delete",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+				  document.forms[1].deleteIndex.value = id;
+					flyToPage('deleteAdditionalFee');
+			  } else {
+			    swal("Cancelled", "Cancel Delete Additional", "error");
+			  }
+			});
 	}
 	function validate(){
 		var tgl = document.getElementsByName("invoiceBean.invoiceDate")[0].value;
@@ -36,9 +55,44 @@
 		} else if (isNaN(fee)) {
 			alert("fee harus angka");
 		} else {
-			flyToPage('addAdditionalFee');
+			swal({
+				  title: "Are you sure?",
+				  text: "System will insert these data to master holiday",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Insert",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  flyToPage('addAdditionalFee');
+				  } else {
+				    swal("Cancelled", "Cancel Insert Master Holiday", "error");
+				  }
+				}); 
+			/* flyToPage('addAdditionalFee'); */
 		}
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 </head>
 <body>
@@ -222,6 +276,13 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-4" id="message">
+				<logic:notEmpty name="invoiceForm" property="messageList">
+			<logic:iterate id="message" name="invoiceForm" property="messageList">
+				<input type="hidden" id="err" value="<bean:write name="message" />">
+			</logic:iterate>
+		</logic:notEmpty>
+			</div>
 	</html:form>
 </body>
 </html>
