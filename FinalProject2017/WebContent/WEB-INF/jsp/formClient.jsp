@@ -18,19 +18,17 @@
 		var faxNumber = document.getElementsByName("faxNumber")[0].value;
 		var postalCode = document.getElementsByName("postalCode")[0].value;
 
-		var letters = /^([A-Za-z ]{3,})+$/;
+		var letters = /^([A-Za-z ])+$/;
 		var numbers = /^\d+$/;
-		var alphanumAndSpecial = /^[ A-Za-z0-9_@.,]*$/;
-		var phoneRegex = /^([+0])([\d- ])*$/;
-		var faxRegex = /^([+0])([\d. ])*$/;
+		var alphanumAndSpecial = /^[ A-Za-z0-9.,]*$/;
+		var phoneAndFaxRegex = /^([+0])([\d- ])*$/;
 		var errorMessage = "";
 
 		if (name == "") {
 			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
-			errorMessage = errorMessage
-					+ "Name must be in alphabets only! \n";
-					+ "Invalid format of Name!<br/>";
+			errorMessage = errorMessage + "Name must be in alphabets only! \n";
+			+"Invalid format of Name!<br/>";
 		}
 		if (address == "") {
 			errorMessage = errorMessage + "Address must be filled! \n";
@@ -41,20 +39,19 @@
 		if (city == "") {
 			errorMessage = errorMessage + "City must be filled! \n";
 		} else if (!letters.test(city)) {
-			errorMessage = errorMessage
-					+ "City must be in alphabets only! \n";
-					+ "Invalid format of City!<br/>";
+			errorMessage = errorMessage + "City must be in alphabets only! \n";
+			+"Invalid format of City!<br/>";
 		}
 		if (phoneNumber == "") {
 			errorMessage = errorMessage + "Phone Number must be filled! \n";
-		} else if (!phoneRegex.test(phoneNumber)) {
-			errorMessage = errorMessage
-					+ "Invalid format of phone number! \n";
+		} else if (!phoneAndFaxRegex.test(phoneNumber)) {
+			errorMessage = errorMessage + "Invalid format of phone number! \n";
 		}
-		if (faxNumber == "") {
-			errorMessage = errorMessage + "Fax Number must be filled! \n";
-		} else if (!faxRegex.test(faxNumber)) {
-			errorMessage = errorMessage + "Invalid format of fax number! \n";
+		if (faxNumber != "") {
+			if (!phoneAndFaxRegex.test(faxNumber)) {
+				errorMessage = errorMessage
+						+ "Invalid format of fax number! \n";
+			}
 		}
 		if (postalCode == "") {
 			errorMessage = errorMessage + "Postal Code must be filled! \n";
@@ -79,14 +76,15 @@
 				closeOnCancel : false
 			}, function(isConfirm) {
 				if (isConfirm) {
-					swal({title: "Good job!",
-						  text: "Save Success!",
-						  type: "success"}
-						 ,function(){
-						  setTimeout(function(){
-							  flyToPage();
-							  }, 10);
-							});			
+					swal({
+						title : "Good job!",
+						text : "Save Success!",
+						type : "success"
+					}, function() {
+						setTimeout(function() {
+							flyToPage();
+						}, 10);
+					});
 				} else {
 					swal("Cancelled", "Cancel Insert New Data", "error");
 				}
@@ -101,9 +99,8 @@
 
 	function flyToPage() {
 		document.forms[1].submit();
-		
+
 	}
-	
 </script>
 <title>Financial Solution</title>
 </head>
@@ -138,11 +135,15 @@
 									</tr>
 									<tr>
 										<td><label>Phone</label></td>
-										<td><html:text name="clientForm" property="phoneNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123-456'"/></td>
+										<td><html:text name="clientForm" property="phoneNumber"
+												styleClass="form-control-client"
+												onclick="this.value='e.g.: 021 123-456 / +6221 123-456'" /></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
-										<td><html:text name="clientForm" property="faxNumber" styleClass="form-control-client" onclick="this.value='ex: 021 123.456'"/></td>
+										<td><html:text name="clientForm" property="faxNumber"
+												styleClass="form-control-client"
+												onclick="this.value='e.g.: 021 123.456 / +6221 123.456'" /></td>
 									</tr>
 									<tr>
 										<td><label>Postal Code</label></td>
@@ -177,7 +178,8 @@
 					<div class="col-md-15" style="color: red;" id="message">
 						<logic:notEmpty name="clientForm" property="messageList">
 							<logic:iterate id="message" name="clientForm">
-								<input type="hidden" id="err" value="<bean:write name="message" />">
+								<input type="hidden" id="err"
+									value="<bean:write name="message" />">
 							</logic:iterate>
 						</logic:notEmpty>
 					</div>
