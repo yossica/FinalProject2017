@@ -43,7 +43,7 @@
 		else {
 			swal({
 				  title: "Are you sure?",
-				  text: "System will insert these data to cash in bank transaction",
+				  text: "System will insert these data to petty cash transaction",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",
@@ -153,8 +153,8 @@
 						<!-- /.table-responsive -->
 					</div>	
 					<div class="col-md-12" style="padding-right: 1%;" >
-						<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:cancel()">Cancel</button>	
+						<button type="button" class="btn btn-primary" onclick="javascript:cancel()">Cancel</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>	
 					</div>
 			
 		

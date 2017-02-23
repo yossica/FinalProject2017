@@ -37,7 +37,7 @@
 					parseInt(e[2]));
 			if (sDate > eDate) {
 				errorMessage = errorMessage
-						+ "Start Date must be later than End Date! \n";
+						+ "End Date must be later than Start Date! \n";
 			}
 		}
 		if (fee == "") {
@@ -283,9 +283,9 @@
 											<logic:equal name="outsourceForm" property="task"
 												value="saveend">
 												<html:radio name="outsourceForm"
-													property="outsourceBean.isGross" value="1" disabled="true" />Gross
+													property="outsourceBean.isGross" value="0" disabled="true" />Exclude
 												<html:radio name="outsourceForm"
-													property="outsourceBean.isGross" value="0" disabled="true" />Nett
+													property="outsourceBean.isGross" value="1" disabled="true" />Include
 											</logic:equal>
 										</td>
 									</tr>
