@@ -70,12 +70,15 @@
 	function flyToPage(task){
 		//Error Checking
 		var error = false;
+		var doubleReg = /^([\d]+)(|.[\d]+)$/;
 		if (task == 'insertHH' || task == 'editInvoiceHH'){
 			var HHSize = document.getElementById('headHunterListSize').value;
 			for(var i=0; i<HHSize; i++){
 				if (document.getElementsByName('invoiceDetailHH['+i+'].description')[0].value == ''){
 					error = true;
 				}else if (document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value == ''){
+					error = true;
+				}else if (!doubleReg.test(document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value)){
 					error = true;
 				}
 			}
