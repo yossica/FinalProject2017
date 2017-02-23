@@ -58,8 +58,15 @@
 			sweetAlert("Oops...", error, "error");
 			return;
 		} else {
-			document.forms[1].task.value = task;
-			document.forms[1].submit();
+			swal({title: "Oops..!",
+						  text: "There is no contract",
+						  type: "error"}
+						 ,function(){
+						  setTimeout(function(){
+							  document.forms[1].task.value = 'createInvoice';
+							  document.forms[1].submit();
+							  }, 10);
+							});
 		}
 	}
 	function onchangeContractServices(){
@@ -86,6 +93,7 @@
 	function onloadFunc() {
 		var today = new Date();
 		onchangeContractServices();
+		alertError();
 	}
 	function ifSettlement(){
 		var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
@@ -111,7 +119,6 @@
 		}
 	}
 	window.onload = onloadFunc;
-	window.onload = alertError;
 </script>
 </head>
 <body>
@@ -159,18 +166,17 @@
 					<div class="col-md-3"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-3">
-
-						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control" styleId="periodMonth">
+						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control-client" styleId="periodMonth">
 							<option selected disabled>Select</option>
-							<html:option value="01">January</html:option>
-							<html:option value="02">February</html:option>
-							<html:option value="03">March</html:option>
-							<html:option value="04">April</html:option>
-							<html:option value="05">May</html:option>
-							<html:option value="06">June</html:option>
-							<html:option value="07">July</html:option>
-							<html:option value="08">August</html:option>
-							<html:option value="09">September</html:option>
+							<html:option value="1">January</html:option>
+							<html:option value="2">February</html:option>
+							<html:option value="3">March</html:option>
+							<html:option value="4">April</html:option>
+							<html:option value="5">May</html:option>
+							<html:option value="6">June</html:option>
+							<html:option value="7">July</html:option>
+							<html:option value="8">August</html:option>
+							<html:option value="9">September</html:option>
 							<html:option value="10">October</html:option>
 							<html:option value="11">November</html:option>
 							<html:option value="12">December</html:option>
