@@ -66,7 +66,7 @@ public class InvoiceHandler extends Action {
 		}else if ("createInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoice");
 		}else if ("formInvoicePS".equals(invoiceForm.getTask())) {
-			String exampleDate = invoiceForm.getInvoiceBean().getPeriodMonth()
+			String exampleDate = String.format("%02d",invoiceForm.getInvoiceBean().getPeriodMonth())
 					+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
 			Map paramMap = new HashMap();
 			paramMap.put("clientId", invoiceForm.getInvoiceBean().getClientId());
