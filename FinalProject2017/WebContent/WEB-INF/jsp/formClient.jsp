@@ -18,7 +18,7 @@
 		var faxNumber = document.getElementsByName("faxNumber")[0].value;
 		var postalCode = document.getElementsByName("postalCode")[0].value;
 
-		var letters = /^([A-Za-z ])+$/;
+		var letters = /^([A-Za-z ]{3,})+$/;
 		var numbers = /^\d+$/;
 		var alphanumAndSpecial = /^[ A-Za-z0-9.,]*$/;
 		var phoneAndFaxRegex = /^([+0])([\d- ])*$/;
@@ -28,7 +28,7 @@
 			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
 			errorMessage = errorMessage + "Name must be in alphabets only! \n";
-			+"Invalid format of Name!<br/>";
+			+"Invalid format of Name (min. 3 chars) !<br/>";
 		}
 		if (address == "") {
 			errorMessage = errorMessage + "Address must be filled! \n";
