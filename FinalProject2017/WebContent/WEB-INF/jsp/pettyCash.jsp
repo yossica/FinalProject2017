@@ -11,7 +11,21 @@
 <script type="text/javascript">
 	function scrollBottom(){
 		var objDiv = document.getElementById("listPettyCash");
-	    objDiv.scrollTop = objDiv.scrollHeight;		
+	    objDiv.scrollTop = objDiv.scrollHeight;
+	    
+	    var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				sweetAlert("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
 	}
 	function toggleFilter() {
 		var filter = document.getElementById("filterForm");
@@ -84,11 +98,10 @@
 		var message=document.getElementById("err");
 		if(message!=null){
 			var messageValue=message.value;
-			
 			var strValue = messageValue.substring(0, 7);
 			if(strValue=="Success"){
 				//Success
-				swal("Good job!", messageValue, "success");
+				sweetAlert("Good job!", messageValue, "success");
 			}
 			else if(strValue=="Ooooops"){
 				//Ooooops
@@ -96,10 +109,11 @@
 			}
 		}
 	}
-	window.onload = alertError;
+	//window.onload = alertError;
+	window.onload = scrollBottom;
 </script>
 </head>
-<body onload="scrollBottom()">
+<body>
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/pettyCash" method="post">
 	<html:hidden property="task" name="pettyCashForm"/>
