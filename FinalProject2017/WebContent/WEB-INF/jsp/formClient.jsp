@@ -40,7 +40,6 @@
 			errorMessage = errorMessage + "City must be filled! \n";
 		} else if (!letters.test(city)) {
 			errorMessage = errorMessage + "City must be in alphabets only! \n";
-			+"Invalid format of City!<br/>";
 		}
 		if (phoneNumber == "") {
 			errorMessage = errorMessage + "Phone Number must be filled! \n";
