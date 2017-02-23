@@ -68,8 +68,24 @@
 </style>
 <script>
 	function flyToPage(task){
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+		//Error Checking
+		var error = false;
+		if (task == 'insertHH' || task == 'editInvoiceHH'){
+			var HHSize = document.getElementById('headHunterListSize').value;
+			for(var i=0; i<HHSize; i++){
+				if (document.getElementsByName('invoiceDetailHH['+i+'].description')[0].value == ''){
+					error = true;
+				}else if (document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value == ''){
+					error = true;
+				}
+			}
+		}
+		if (error){
+			alert('error la ya...');
+		}else {
+			document.forms[1].task.value = task;
+			document.forms[1].submit();
+		}	
 	}
 	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
@@ -85,6 +101,15 @@
 	    var popup = document.getElementById("myPopup"+idNumber);
 	    popup.classList.toggle("show");
 	}
+	function onloadFunc() {
+		var HHSize = document.getElementById('headHunterListSize').value;
+		if (HHSize == 1){
+			document.getElementById('deleteButton').style.display = 'none';
+		}else {
+			document.getElementById('deleteButton').style.display = 'table-row';
+		}
+	}
+	window.onload = onloadFunc;
 </script>
 </head>
 <body>
@@ -93,7 +118,7 @@
 	<html:hidden property="task" name="invoiceForm"/>
 	<html:hidden property="deleteIndex" name="invoiceForm" />
 	<html:hidden property="invoiceBean.transactionInvoiceHeaderId" name="invoiceForm" />
-
+	<html:hidden property="headHunterListSize" name="invoiceForm" styleId="headHunterListSize"/>
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -124,6 +149,9 @@
 					<div class="col-md-6">
 					<html:hidden name="invoiceForm" property="invoiceBean.clientId" />
 					<html:hidden name="invoiceForm" property="invoiceBean.clientName" />
+					<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
+					: 
+					</logic:equal>
 					<bean:write name="invoiceForm" property="invoiceBean.clientName"/>
 					</div>
 				</div>
@@ -134,6 +162,9 @@
 					<div class="col-md-6">
 					<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId" />
 					<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeName" />
+					<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
+					: 
+					</logic:equal>
 					<bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/>
 					</div>
 				</div>
@@ -206,10 +237,10 @@
 							<logic:iterate id="invoiceDetailHH" name="invoiceForm" property="headHunterList" indexId="indexHH">
 							<tr>
 								<td>
-									<html:text name="invoiceDetailHH" property="description" styleClass="form-control" indexed="true"></html:text>
+									<html:text name="invoiceDetailHH" property="description" styleClass="form-control description" indexed="true"></html:text>
 								</td>
 								<td>
-									<html:text name="invoiceDetailHH" property="fee" styleClass="form-control" indexed="true"></html:text>
+									<html:text name="invoiceDetailHH" property="fee" styleClass="form-control fee" indexed="true"></html:text>
 								</td>
 								<td>
 									<div class="popup">
@@ -221,11 +252,11 @@
 								</td>
 								<td>
 								<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
-									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" 
+									<button id="deleteButton" type="button" class="btn btn-primary" style="margin-bottom: 1%;" 
 									onclick="javascript:deleteDetailHH('${indexHH}','deleteDetailHH')"><i class="fa fa-times"></i></button>
 								</logic:equal>
 								<logic:equal name="invoiceForm" property="task" value="editInvoice">
-									<button type="button" class="btn btn-primary" style="margin-bottom: 1%;" 
+									<button id="deleteButton" type="button" class="btn btn-primary" style="margin-bottom: 1%;" 
 									onclick="javascript:deleteDetailHH('${indexHH}','deleteDetailHHonEditPage')"><i class="fa fa-times"></i></button>
 								</logic:equal>
 								</td>
