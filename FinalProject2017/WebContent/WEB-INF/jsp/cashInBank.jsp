@@ -11,7 +11,21 @@
 <script type="text/javascript">
 	function scrollBottom(){
 		var objDiv = document.getElementById("listCashInBank");
-	    objDiv.scrollTop = objDiv.scrollHeight;		
+	    objDiv.scrollTop = objDiv.scrollHeight;	
+	    
+	    var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				sweetAlert("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}	
 	}
 	function toggleFilter() {
 		var filter = document.getElementById("filterForm");
@@ -79,7 +93,7 @@
 		document.forms[1].task.value=task;
 		document.forms[1].submit();
 	}
-	function alertError() {
+	/* function alertError() {
 		var message=document.getElementById("err");
 		if(message!=null){
 			var messageValue=message.value;
@@ -95,7 +109,7 @@
 			}
 		}
 	}
-	window.onload = alertError;
+	window.onload = alertError; */
 </script>
 </head>
 <body onload="scrollBottom()">
