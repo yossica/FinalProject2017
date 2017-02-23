@@ -65,7 +65,7 @@
 		                                        										 '<bean:write name="list" property="invoiceTypeId" format="#"/>',
 		                                        										 '<bean:write name="list" property="periodMonth" format="#"/>',
 		                                        										 '<bean:write name="list" property="periodYear" format="#"/>'
-		                                        										)">
+		                                        										)" style="cursor:pointer">
 		                                        	<bean:write name="list" property="clientName"/> - Professional Service<br>
 	                                        		Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
 	                                        		<p align="right"><bean:write name="list" property="invoiceDate"/></p>
