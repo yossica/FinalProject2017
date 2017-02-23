@@ -136,8 +136,17 @@
 					</isNotEmpty>
 				</isNotNull>
 			</dynamic>
-			
-		order by transaction_outsource_id asc
+			<isNotNull property="employee">
+				<isNotEmpty property="employee">
+					order by start_date asc, end_date asc
+				</isNotEmpty>
+				<isEmpty property="employee">
+					order by c.name asc,start_date asc, end_date asc
+				</isEmpty>
+			</isNotNull >
+			<isNull property="employee">
+					order by c.name asc,start_date asc, end_date asc
+			</isNull>
 	</select>
 	
 	<select id="getOutsourceContract" parameterClass="java.util.Map" resultClass="outsource.OutsourceBean">
