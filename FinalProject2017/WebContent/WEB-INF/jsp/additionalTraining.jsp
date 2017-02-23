@@ -70,10 +70,32 @@
 			}			
 		}
 		function deleteAdditionalTraining(desc,id){
-			if(confirm("Are you sure to delete additional training fee "+desc+"?")){
-				document.forms[1].transactionTrainingDetailId.value = id;
-				flyToPage("deleteDetail");
-			}
+				swal({
+					  title: "Are you sure?",
+					  text: "delete additional training fee "+desc+"?",
+					  type: "warning",
+					  showCancelButton: true,
+					  confirmButtonColor: "#ef2300",
+					  confirmButtonText: "Yes, Delete",
+					  cancelButtonText: "No, Cancel Please!",
+					  closeOnConfirm: false,
+					  closeOnCancel: false
+					},
+					function(isConfirm){
+					  if (isConfirm) {
+						  swal({title: "Good job!",
+							  text: "Transaction Success!",
+							  type: "success"}
+							 ,function(){
+							  setTimeout(function(){
+								  document.forms[1].transactionTrainingDetailId.value = id;
+								  flyToPage("deleteDetail");
+								  }, 10);
+								}); 
+					  } else {
+					    swal("Cancelled", "Cancel Insert Transaction", "error");
+					  }
+					});
 		}
 		function flyToPage(task)
 		{
@@ -162,7 +184,7 @@
             	<div class="row" style="margin-top:10px;margin-bottom:10px;">
             		<div class="col-md-12" style="padding-right:1%">
             			<div class="col-md-2">
-            				Notes
+            				Description
             			</div>
             			<div class="col-md-10">
 		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control-client" style="height:70px">
@@ -205,7 +227,8 @@
 												<td><bean:write name="trainingDetail" property="description"/></td>
 												<td><bean:write name="trainingDetail" property="fee" format="#,###.##"/></td>
 												<logic:equal value="0" property="isSettlement" name="trainingDetail">
-													<td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td>
+													<%-- <td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td> --%>
+													<td><button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">Delete</button></td>
 												</logic:equal>
 												<logic:notEqual value="0" property="isSettlement" name="trainingDetail">
 													<td></td>
