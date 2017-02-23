@@ -9,6 +9,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 <script type="text/javascript">
+	function toggleFilter() {
+		var filter = document.getElementById("filterForm");
+		filter.style.display = filter.style.display === 'none' ? '' : 'none';
+		var insert = document.getElementById("insertForm");
+		insert.style.display = 'none';
+	}
+	function toggleInsert() {
+		var insert = document.getElementById("insertForm");
+		insert.style.display = insert.style.display === 'none' ? '' : 'none';
+		var filter = document.getElementById("filterForm");
+		filter.style.display = 'none';
+	}
 	function deleteHoliday(holiday,id){
 		swal({
 			  title: "Are you sure?",
@@ -38,7 +50,7 @@
 		/* document.getElementById("message").style.display="block"; */
 		for(var i = 0 ; i < splitenter.length ; i++){
 			if(!splitenter[i].includes(",")){
-				error += "Row number "+ (i+1) + " must contain \n";
+				error += "Row number "+ (i+1) + " must contain comma (,) \n";
 			}
 			else {
 				var splitcomma = splitenter[i].split(",");
@@ -124,14 +136,24 @@
 		    <div class="row">
 		        <div class="col-lg-12">
 		            <h1 class="page-header">Holiday List</h1>
-		            <div class="col-lg-11">
-		            	<div class="col-md-8">
+		            <div class="row" style="margin-top: 1%;">
+						<div class="col-lg-12">
+							<div class="pull-right">
+								<button id="filterButton" type="button" class="btn btn-primary" onclick="javascript:toggleFilter()">Toggle Filter</button>
+								<button id="insertButton" type="button" class="btn btn-primary" onclick="javascript:toggleInsert()">Insert</button>
+							</div>
+							<br />
+							<br />
+						</div>
+					</div>
+		            <div id="insertForm" class="col-lg-9" style="display:none">
+		            	<div class="col-md-12">
 				            <html:textarea property="holidayCsv" name="holidayForm" styleClass="form-control" style="width:80%;height:150px"></html:textarea>
 				            
 				           	<br/>
 				           	<div class="col-lg-12" style="padding:0px">
 				           	<div class="col-md-2" style="padding:0px; margin-top:10px;">
-				           		<button type="button" class="btn btn-primary" onclick="javascript:insertHoliday()">Insert CSV</button>
+				           		<button type="button" class="btn btn-primary" onclick="javascript:insertHoliday()">Save CSV</button>
 				           	</div>
 				           	<div class="col-md-8" style="margin-left:10px;float:left">
 				           		Format: Date(MM/dd/yyyy),Description<br/>Example:<br/>01/01/2017,New Year<br/>12/31/2017,New Year's Eve
@@ -139,17 +161,32 @@
 				           	<div style="clear:both"></div>
 				           	</div>
 			  			</div>
-			  			<div class="col-md-4" id="message">
-			  				<logic:notEmpty name="holidayForm" property="messageList">
-								<logic:iterate id="message" name="holidayForm" property="messageList">
-									<input type="hidden" id="err" value="<bean:write name="message" />">
-								</logic:iterate>
-							</logic:notEmpty>
-			  			</div>
 		            </div>
+		            <logic:notEmpty name="holidayForm" property="messageList">
+						<logic:iterate id="message" name="holidayForm" property="messageList">
+							<input type="hidden" id="err" value="<bean:write name="message" />">
+						</logic:iterate>
+					</logic:notEmpty>
+            		<div id="filterForm" class="col-lg-12"
+						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
+						<div class="row" style="margin-top: 10px;">
+							<div class="col-md-12" style="padding-right: 1%">
+								<div class="col-md-2">Year</div>
+								<div class="col-md-10">
+									<html:select property="filterYear" name="holidayForm" styleClass="form-control-client" >
+										<html:option value="">All</html:option>
+										<html:optionsCollection name="holidayForm" property="yearList" value="value" label="label"/>
+									</html:select><br />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('filter')">Filter</button>
+						</div>
+					</div>
 		            <div class="col-lg-12">
 			            <div class="panel-body">
-							<div class="table-responsive" style="height:230px;overflow:auto;">
+							<div id="listHoliday" class="table-responsive" style="height:400px;overflow:auto;">
 							    <table class="table table-hover">
 							        <thead>
 							            <tr>
@@ -164,7 +201,7 @@
 							        			<tr>
 									                <td><bean:write name="holiday" property="holidayDate"/></td>
 									                <td><bean:write name="holiday" property="name" format="#"/></td>
-									                <td><button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteHoliday('<bean:write name="holiday" property="holidayDate"/>-<bean:write name="holiday" property="name"/>',<bean:write name="holiday" property="holidayId" format="#"/>)">Delete</button></td>
+									                <td><button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick='javascript:deleteHoliday("<bean:write name="holiday" property="holidayDate"/>-<bean:write name="holiday" property="name"/>",<bean:write name="holiday" property="holidayId" format="#"/>')>Delete</button></td>
 									            </tr>  
 							        		</logic:iterate>
 							        	</logic:notEmpty>   

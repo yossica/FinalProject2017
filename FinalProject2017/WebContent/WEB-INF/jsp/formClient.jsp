@@ -18,7 +18,7 @@
 		var faxNumber = document.getElementsByName("faxNumber")[0].value;
 		var postalCode = document.getElementsByName("postalCode")[0].value;
 
-		var letters = /^([A-Za-z ]{3,})+$/;
+		var letters = /^([A-Za-z ])+$/;
 		var numbers = /^\d+$/;
 		var alphanumAndSpecial = /^[ A-Za-z0-9.,]*$/;
 		var phoneAndFaxRegex = /^([+0])([\d- ])*$/;
