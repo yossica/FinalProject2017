@@ -67,11 +67,11 @@
 					#amount#,balance+#amount#,#description#,to_date(#transactionDate#,'MM/dd/yyyy'),
 					#isDebit#,#createdBy#, sysdate)
 		</isEqual>
-		<isEqual property="transactionCashInBankId" compareValue="1">
+		<isEqual property="transactionPettyCashId" compareValue="1">
 			select 0 as balance
 			from dual
 		</isEqual>
-		<isNotEqual property="transactionCashInBankId" compareValue="1">
+		<isNotEqual property="transactionPettyCashId" compareValue="1">
 			select balance
 	        from transaction_petty_cash b,
 	        (select max(transaction_petty_cash_id) as max_id from transaction_petty_cash) c

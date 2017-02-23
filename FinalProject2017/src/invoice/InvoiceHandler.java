@@ -298,7 +298,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().getDetailList().add(invoiceDetailBean);
 			invoiceForm.getInvoiceBean().setCreatedBy((String)session.getAttribute("username"));
 			
-			invoiceManager.insert(invoiceForm.getInvoiceBean());
+			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
 			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 			//insert training
 			trainingManager.insert(trainingBean);
@@ -307,7 +307,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setStatusId("1");
 			invoiceForm.setClientBean(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()));
 			//invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId()));
-			invoiceForm.setInvoiceDetailList(invoiceForm.getInvoiceBean().getDetailList());
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(idHeader));
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
 			invoiceForm.getMessageList().add("Success!!! Invoice Training Down Payment has been Created!");
@@ -444,7 +444,7 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
 				invoiceForm.setTask("editInvoice");
 				return  mapping.findForward("formInvoicePS");
-			} else if (invoiceTypeId == 2){
+			} else if (invoiceTypeId == 2 || invoiceTypeId == 4){
 				//Head Hunter
 				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 				SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
