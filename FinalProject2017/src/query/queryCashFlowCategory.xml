@@ -33,7 +33,7 @@
 	</select>
 	
 	<select id="getById" resultClass="master.CashFlowCategoryBean"
-						 parameterClass="java.lang.Integer">		
+						 parameterClass="java.lang.String">		
 		select cash_flow_category_id as cashFlowCategoryId,
 				name as name,
 				is_debit as isDebit,

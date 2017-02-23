@@ -1,5 +1,8 @@
 package holiday;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +34,8 @@ public class HolidayHandler extends Action{
 				holidayBean.setName(column[1].trim());
 				holidayManager.insert(holidayBean);
 			}
-			holidayForm.setHolidayList(holidayManager.getAll());
+			holidayForm.setHolidayList(holidayManager.getAllWithFilter(new HashMap()));
+			holidayForm.setYearList(holidayManager.getDistinctYear());
 			holidayForm.setHolidayCsv("");
 			holidayForm.getMessageList().add("Success!!! All Data successfully inserted!");
 			return mapping.findForward("holiday");
@@ -39,13 +43,24 @@ public class HolidayHandler extends Action{
 		else if("delete".equals(holidayForm.getTask())){
 			holidayManager.delete(holidayForm.getHolidayId());
 
-			holidayForm.setHolidayList(holidayManager.getAll());
+			Map paramMap = new HashMap();
+			paramMap.put("filterYear", holidayForm.getFilterYear());
+			holidayForm.setHolidayList(holidayManager.getAllWithFilter(paramMap));
+			holidayForm.setYearList(holidayManager.getDistinctYear());
 			holidayForm.setHolidayCsv("");
 			holidayForm.getMessageList().add("Success!!! Data successfully deleted!");
 			return mapping.findForward("holiday");
 		}
+		else if("filter".equals(holidayForm.getTask())){
+			Map paramMap = new HashMap();
+			paramMap.put("filterYear", holidayForm.getFilterYear());
+			holidayForm.setHolidayList(holidayManager.getAllWithFilter(paramMap));
+			holidayForm.setYearList(holidayManager.getDistinctYear());
+			return mapping.findForward("holiday");
+		}
 		else{
-			holidayForm.setHolidayList(holidayManager.getAll());
+			holidayForm.setHolidayList(holidayManager.getAllWithFilter(new HashMap()));
+			holidayForm.setYearList(holidayManager.getDistinctYear());
 			return mapping.findForward("holiday");
 		}
 	}

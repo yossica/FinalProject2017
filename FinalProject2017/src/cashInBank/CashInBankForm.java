@@ -10,6 +10,7 @@ public class CashInBankForm extends ActionForm{
 	private List messageList;
 	
 	private double remainingBalance;
+	private double pettyCashBalance;
 	private List cashFlowCategoryList;
 	
 	private CashInBankBean cashInBankBean = new CashInBankBean();
@@ -40,6 +41,12 @@ public class CashInBankForm extends ActionForm{
 	}
 	public void setRemainingBalance(double remainingBalance) {
 		this.remainingBalance = remainingBalance;
+	}
+	public double getPettyCashBalance() {
+		return pettyCashBalance;
+	}
+	public void setPettyCashBalance(double pettyCashBalance) {
+		this.pettyCashBalance = pettyCashBalance;
 	}
 	public List getCashFlowCategoryList() {
 		return cashFlowCategoryList;

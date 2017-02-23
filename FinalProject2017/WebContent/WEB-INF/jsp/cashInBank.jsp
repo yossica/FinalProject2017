@@ -147,7 +147,7 @@
 				</span>
 			</div>
 		</div>
-		<logic:notEmpty name="cashInBankForm"
+					<logic:notEmpty name="cashInBankForm"
 						property="messageList">
 						<logic:iterate id="message" name="cashInBankForm"
 							property="messageList">
@@ -188,6 +188,11 @@
 										</tr>
 									</logic:iterate>
 								</logic:notEmpty>
+								<logic:empty property="transactionList" name="cashInBankForm">
+									<tr>
+										<td colspan="6" align="center">There are no data based on this filter</td>
+									</tr>
+								</logic:empty>
 							</tbody>
 						</table>
 					</div>
