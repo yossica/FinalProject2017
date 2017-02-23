@@ -79,7 +79,7 @@ public class UserHandler extends Action {
 			userForm.setPassword("");
 			userForm.setNewPassword("");
 			userForm.setConfirmPassword("");
-			userForm.getMessageList().add("Success Change Password Success");
+			userForm.getMessageList().add("Success Change Password");
 			userForm.setTask("");
 			return mapping.findForward("changePassword");
 		} else if ("manageUser".equals(userForm.getTask())) {
