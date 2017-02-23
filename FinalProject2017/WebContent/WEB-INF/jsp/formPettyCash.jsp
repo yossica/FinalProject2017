@@ -54,14 +54,14 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					 /*  swal({title: "Good job!",
+					  /* swal({title: "Good job!",
 						  text: "Transaction Success!",
 						  type: "success"}
 						 ,function(){
 						  setTimeout(function(){
 							  flyToPage();
 							  }, 10);
-							});  */
+							}); */  
 					  flyToPage();
 				  } else {
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
@@ -80,7 +80,6 @@
 		var message=document.getElementById("err");
 		if(message!=null){
 			var messageValue=message.value;
-			
 			var strValue = messageValue.substring(0, 7);
 			if(strValue=="Success"){
 				//Success
