@@ -21,25 +21,26 @@
 	}
 	function flyToNextPage(){
 		var task;
-		var error = false;
+		var error = "";
 		
-		
-		//Check Error Pertama
+		//Check Error
 		if (document.getElementById('invoiceDate').value == ''){
-			error = true;
-		}else if (document.getElementById('contractServices').value == 'Select'){
-			error = true;
-		}else if (document.getElementById('client').value == 'Select'){
-			error = true;
+			error += "Invoice Date must be filled\n";
 		}
-		
+		if (document.getElementById('client').value == 'Select'){
+			error += "Client must be filled\n";
+		}
+		if (document.getElementById('contractServices').value == 'Select'){
+			error += "Contract Service must be filled\n";
+		}
+				
 		if (getContractServices() == 1){
 			task = 'formInvoicePS';
 			//Error Checking Kedua
 			if (document.getElementById('periodMonth').value == 'Select'){
-				error = true;
+				error += "Period Month must be filled\n";
 			}else if (document.getElementById('periodYear').value == 'Select'){
-				error = true;
+				error += "Period Year must be filled\n";
 			}
 		}else if (getContractServices() == 2 || getContractServices() == 4){
 			task = 'formInvoiceHH';
@@ -53,10 +54,10 @@
 		}
 		
 		//Alert kalau Error disini
-		if (error){
-			alert('Error ya...')
-		}else {
-			alert('Tidak Ada Error... Lanjut!');
+		if (error.length != 0) {
+			sweetAlert("Oops...", error, "error");
+			return;
+		} else {
 			document.forms[1].task.value = task;
 			document.forms[1].submit();
 		}
