@@ -158,7 +158,7 @@
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-3">
 
-						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control" id="periodMonth">
+						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control">
 							<html:option value="01">January</html:option>
 							<html:option value="02">February</html:option>
 							<html:option value="03">March</html:option>
@@ -176,7 +176,7 @@
 					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-3">
 						<html:select name="invoiceForm" property="invoiceBean.periodYear"
-										styleClass="form-control-client" id="periodYear">
+										styleClass="form-control-client">
 							<html:option value="">Select All</html:option>
 							<html:optionsCollection name="invoiceForm"
 								property="optYear" value="value" label="label" />
