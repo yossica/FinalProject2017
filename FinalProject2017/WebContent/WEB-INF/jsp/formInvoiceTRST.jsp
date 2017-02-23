@@ -8,6 +8,64 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
+<style>
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: #337ab7;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: -140px;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+</style>
 <script>
 	function flyToPage(task){
 		document.forms[1].task.value = task;
@@ -40,7 +98,8 @@
 		var tgl = document.getElementsByName("invoiceBean.invoiceDate")[0].value;
 		
 		if (tgl=="") {
-			alert("tanggal harus diisi");
+			/* alert("tanggal harus diisi"); */
+			sweetAlert("Oops...", "tanggal harus diisi", "error");
 		} else {
 			flyToPage('editInvoiceTRST');
 		}
@@ -49,15 +108,29 @@
 	function flyToAdd(){
 		var desc = document.getElementById('desc').value;
 		var fee = document.getElementById('fee').value;
-		
-		if (desc==""||fee=="0.0"||fee=="") {
-			alert("deskripsi dan fee harus diisi");
-		} else if (isNaN(fee)) {
-			alert("fee harus angka");
-		} else {
+		var errorMessage = "";
+		if (desc=="") {
+			/* alert("deskripsi dan fee harus diisi"); */
+			errorMessage = errorMessage + "Description must be filled \n";
+			//sweetAlert("Oops...", "deskripsi harus diisi", "error");
+		}
+		if(fee=="0.0"||fee==""){
+			errorMessage = errorMessage + "Fee must be filled \n";
+			//sweetAlert("Oops...", "fee harus diisi", "error");
+		}
+		if (isNaN(fee)) {
+			/* alert("fee harus angka"); */
+			errorMessage = errorMessage + "Fee must be Number \n";
+			//sweetAlert("Oops...", "fee harus angka", "error");
+		} 
+		if (errorMessage.length != 0) {
+			sweetAlert("Oops...", errorMessage, "error");
+			/* document.getElementById("message").innerHTML = errorMessage; */
+			return;
+		}else {
 			swal({
 				  title: "Are you sure?",
-				  text: "System will insert these data to master holiday",
+				  text: "System will insert these data to additional fee",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",
@@ -70,7 +143,7 @@
 				  if (isConfirm) {
 					  flyToPage('addAdditionalFee');
 				  } else {
-				    swal("Cancelled", "Cancel Insert Master Holiday", "error");
+				    swal("Cancelled", "Cancel Insert Additional Fee", "error");
 				  }
 				}); 
 			/* flyToPage('addAdditionalFee'); */
@@ -93,6 +166,17 @@
 		}
 	}
 	window.onload = alertError;
+	
+	function toggleNotes(idNumber) {
+	    var popup = document.getElementById("myPopup"+idNumber);
+	    popup.classList.toggle("show");
+	}
+	function showTableAdditional(){
+		document.getElementById("tableAdditional").style.display = "block";
+	}
+	function hideTableAdditional(){
+		document.getElementById("tableAdditional").style.display = "none";
+	}
 </script>
 </head>
 <body>
@@ -198,9 +282,9 @@
 				</div>
 			</div>
 			<div class="pull-right" style="margin-top: 30px;">
-			<button type="button" class="btn btn-primary">Add Additional Fee</button>
+			<button type="button" class="btn btn-primary" style="display:block;" onclick="javascript:showTableAdditional()">Add Additional Fee</button>
 			</div>
-			<div class="col-md-12" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 30px;">
+			<div class="col-md-12" id="tableAdditional" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 30px;display:none;">
 				<div class="row">
 					<div class="col-md-12">
 						<table class="table table-hover">
@@ -221,7 +305,7 @@
 						<tr>
 							<td colspan="2">
 								<button type="button" class="btn btn-primary" onclick="javascript:flyToAdd()">Save</button>
-								<button type="button" class="btn btn-primary">Cancel</button>
+								<button type="button" class="btn btn-primary" onclick="javascript:hideTableAdditional()">Cancel</button>
 							</td>
 						</tr>
 						</tbody>
@@ -247,12 +331,29 @@
 				
 								</td>
 								<td><html:text name="trainingDetail" property="fee" readonly="true" indexed="true" styleClass="form-control"></html:text></td>
-								<td><html:text name="trainingDetail" property="note" indexed="true" styleClass="form-control"></html:text ></td>
+								
+								
+								
+								
+								<td><%-- <html:text name="trainingDetail" property="note" indexed="true" styleClass="form-control"> --%>
+								
+									<div class="popup">
+										<span class="popuptext" id="myPopup${indexDetail}">
+											<html:textarea name="trainingDetail" property="note" styleClass="form-control" indexed="true" rows="7"></html:textarea>
+										</span>
+										<button type="button" class="btn btn-primary" onclick="javascript:toggleNotes(${indexDetail})">Notes</button>
+									</div>
+								</td>
 								<td>
 									<html:hidden name="trainingDetail" property="isSettlement" indexed="true"/>
 									<logic:equal name="trainingDetail" property="isSettlement" value="0">
-										<button type="button" class="btn btn-primary" onclick="javascript:flyToDelete('${indexDetail}')">Delete</button>
+										<button type="button" class="btn btn-primary" onclick="javascript:flyToDelete('${indexDetail}')"><i class="fa fa-times"></i></button>
 									</logic:equal>
+									
+									
+						
+									
+									
 								</td>
 							</tr>
 						</logic:iterate>
