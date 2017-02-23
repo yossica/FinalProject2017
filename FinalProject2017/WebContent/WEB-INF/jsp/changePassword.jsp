@@ -11,9 +11,63 @@
 <script>
 	function flyToPage(task)
 	{
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+		var password = document.forms[1].password.value;
+		var newPassword = document.forms[1].newPassword.value;
+		var confirmPassword = document.forms[1].confirmPassword.value;
+		var error = "";
+		if(password==""){
+			error +="Password must be filled\n";
+		}
+		if(newPassword==""){
+			error +="New Password must be filled\n";
+		}
+		if(confirmPassword==""){
+			error +="Confirm Password must be filled\n";
+		}
+		
+		if(error.length != 0){
+			sweetAlert("Oops...", error, "error");
+			return;
+		}
+		else{
+			swal({
+				  title: "Are you sure?",
+				  text: "old password will be replaced to new password",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Change",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  document.forms[1].task.value = task;
+					  document.forms[1].submit();
+				  } else {
+				    swal("Cancelled", "Cancel change password", "error");
+				  }
+				}); 
+		}
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else{
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 <title>Finance Solution</title>
 </head>
@@ -55,16 +109,14 @@
 							<div class="pull-left">
 								<button type="button" class="btn btn-primary ">Cancel</button>
 				            	<button type="button" class="btn btn-primary " onclick="javascript:flyToPage('saveChangePassword')">Save</button>
-					         	
 					        </div>	
-					         	<div class="col-md-4" style="color:red;overflow: auto;" id="message">
-									<logic:notEmpty name="userForm" property="messageList" >
-										<logic:iterate id="message" name="userForm" property="messageList">
-											<bean:write name="message" /> 
-										</logic:iterate>
-									</logic:notEmpty>
-								</div>
-				            
+				         	<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+								<logic:notEmpty name="userForm" property="messageList" >
+									<logic:iterate id="message" name="userForm" property="messageList">
+										<input type="hidden" id="err" value="<bean:write name="message" />">
+									</logic:iterate>
+								</logic:notEmpty>
+							</div>
 				        </div>
 					</div>
 				</div>
