@@ -18,7 +18,7 @@
 		var faxNumber = document.getElementsByName("faxNumber")[0].value;
 		var postalCode = document.getElementsByName("postalCode")[0].value;
 
-		var letters = /^([A-Za-z ])+$/;
+		var letters = /^([A-Za-z ]{3,})+$/;
 		var numbers = /^\d+$/;
 		var alphanumAndSpecial = /^[ A-Za-z0-9.,]*$/;
 		var phoneAndFaxRegex = /^([+0])([\d- ])*$/;
@@ -143,7 +143,7 @@
 										<td><label>Fax</label></td>
 										<td><html:text name="clientForm" property="faxNumber"
 												styleClass="form-control-client"
-												onclick="this.value='e.g.: 021 123.456 / +6221 123.456'" /></td>
+												onclick="this.value='e.g.: 021 123-456 / +6221 123-456'" /></td>
 									</tr>
 									<tr>
 										<td><label>Postal Code</label></td>
