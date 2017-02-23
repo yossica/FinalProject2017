@@ -179,6 +179,11 @@
 									</tr>
 								</logic:iterate>
 							</logic:notEmpty>
+							<logic:empty property="outsourceList" name="outsourceForm">
+								<tr>
+									<td colspan="6" align="center">There are no data based on this filter</td>
+								</tr>
+							</logic:empty>
 						</tbody>
 					</table>
 				</div>
