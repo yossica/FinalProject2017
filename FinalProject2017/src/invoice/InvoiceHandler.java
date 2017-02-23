@@ -77,7 +77,7 @@ public class InvoiceHandler extends Action {
 				//client sudah punya invoice professional service di period tsb
 				//balikin ke create invoice + message ilst dikasi
 				invoiceForm.getMessageList().clear();
-				invoiceForm.getMessageList().add("Success!!! Invoice already created");
+				invoiceForm.getMessageList().add("Ooooops!!! Invoice already created");
 				return mapping.findForward("createInvoice");
 			} else{
 				if (outsourceManager.checkContract(paramMap) != 0) {
