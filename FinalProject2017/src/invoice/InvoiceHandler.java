@@ -57,7 +57,6 @@ public class InvoiceHandler extends Action {
 		GeneralInformationManager generalInformationManager =  new GeneralInformationManager();
 		invoiceForm.setClientList(clientManager.getAll());
 		invoiceForm.setInvoiceTypeList(masterManager.getAllInvoiceType());
-
 		if ("createInvoiceIndex".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientId(Integer.parseInt(invoiceForm.getClientId()));
 			invoiceForm.getInvoiceBean().setInvoiceTypeId(Integer.parseInt(invoiceForm.getInvoiceTypeId()));
@@ -204,14 +203,17 @@ public class InvoiceHandler extends Action {
 			Integer year = Integer.parseInt(dateFormatYear.format(date));
 			invoiceForm.getInvoiceBean().setPeriodMonth(month);
 			invoiceForm.getInvoiceBean().setPeriodYear(year);
+			invoiceForm.setHeadHunterListSize(invoiceForm.getHeadHunterList().size());
 			return mapping.findForward("formInvoiceHH");
 		} else if ("addDetailHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
 			invoiceForm.setTask("formInvoiceHH");
+			invoiceForm.setHeadHunterListSize(invoiceForm.getHeadHunterList().size());
 			return mapping.findForward("formInvoiceHH");
 		} else if ("editDetailHH".equals(invoiceForm.getTask())) {
 			invoiceForm.getHeadHunterList().add(new InvoiceDetailBean());
 			invoiceForm.setTask("editInvoice");
+			invoiceForm.setHeadHunterListSize(invoiceForm.getHeadHunterList().size());
 			return mapping.findForward("formInvoiceHH");
 		}else if ("createInvoiceTRDP".equals(invoiceForm.getTask())) {			
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
@@ -454,6 +456,7 @@ public class InvoiceHandler extends Action {
 				invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
 				invoiceForm.setClientId(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
 				invoiceForm.setStatusInvoiceId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+				invoiceForm.setHeadHunterListSize(invoiceForm.getHeadHunterList().size());
 				return mapping.findForward("formInvoiceHH");
 			} else if (invoiceTypeId == 3){
 				//Training
@@ -822,10 +825,12 @@ public class InvoiceHandler extends Action {
 		} else if("deleteDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
 			invoiceForm.setTask("formInvoiceHH");
+			invoiceForm.setHeadHunterListSize(invoiceForm.getHeadHunterList().size());
 			return mapping.findForward("formInvoiceHH");
 		} else if("deleteDetailHHonEditPage".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
 			invoiceForm.setTask("editInvoice");
+			invoiceForm.setHeadHunterListSize(invoiceForm.getHeadHunterList().size());
 			return mapping.findForward("formInvoiceHH");
 		}
 		else if ("insertHH".equals(invoiceForm.getTask())) {
@@ -1063,6 +1068,8 @@ public class InvoiceHandler extends Action {
 			String fileName = "InvoiceSummaryReport_"+printDateFormat.format(cal.getTime())+".pdf";
 			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceSummaryReport"+".jrxml",
 					fileName, parameters, invoiceSummaryData);
+			invoiceForm.getMessageList().clear();
+			invoiceForm.getMessageList().add("Success export to D://Finance Solution Report/"+fileName);
 			
 			invoiceForm.setInvoiceList(invoiceSummaryData);
 			return mapping.findForward("invoice");
@@ -1088,7 +1095,7 @@ public class InvoiceHandler extends Action {
 			parameters.put("clientCity", clientBean.getCity());
 			parameters.put("clientPostalCode", clientBean.getPostalCode());
 			parameters.put("clientPhoneNumber", clientBean.getPhoneNumber());
-			parameters.put("clinetFaxNumber", clientBean.getFaxNumber());
+			parameters.put("clientFaxNumber", clientBean.getFaxNumber());
 			parameters.put("totalNet", invoiceBean.getTotalNet());
 			parameters.put("totalPPN", invoiceBean.getTotalPpn());
 			parameters.put("totalGross", invoiceBean.getTotalGross());
@@ -1106,9 +1113,13 @@ public class InvoiceHandler extends Action {
 			String fileName = invoiceBean.getInvoiceNumber().replaceAll("/", "")+"_"+printDateFormat.format(cal.getTime())+".pdf";
 			ExportReportManager.exportToPdf(filePath+"\\report\\InvoiceDetailReport"+".jrxml",
 					fileName, parameters, invoiceDetailData);
+			invoiceForm.getMessageList().clear();
+			invoiceForm.getMessageList().add("Success export to D://Finance Solution Report/"+fileName);
 			
 			//return to detail invoice
 			invoiceForm.setInvoiceBean(invoiceBean);
+			invoiceForm.setClientBean(clientBean);
+			invoiceForm.setStatusId(invoiceBean.getStatusInvoiceId()+"");
 			invoiceForm.setInvoiceDetailList(invoiceDetailData);
 			invoiceForm.setNote(rekNo);
 			invoiceForm.setSign(sign);

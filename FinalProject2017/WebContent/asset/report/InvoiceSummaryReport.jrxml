@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-02-22T11:33:45 -->
+<!-- 2017-02-23T07:54:14 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummaryReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="510b7907-006d-4a45-8c72-f21287b89704">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
@@ -165,9 +165,9 @@
 		</band>
 	</title>
 	<detail>
-		<band height="223" splitType="Stretch">
+		<band height="166" splitType="Stretch">
 			<componentElement>
-				<reportElement x="10" y="10" width="534" height="200" uuid="83d485c3-43e7-4a1a-b01e-2f34bf279fc2">
+				<reportElement x="10" y="10" width="534" height="140" uuid="83d485c3-43e7-4a1a-b01e-2f34bf279fc2">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>

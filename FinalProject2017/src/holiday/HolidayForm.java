@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 public class HolidayForm extends ActionForm{
 	private String task;
@@ -12,6 +13,9 @@ public class HolidayForm extends ActionForm{
 	
 	private int holidayId;
 	private List holidayList;
+	
+	private String filterYear;
+	private List<LabelValueBean> yearList;
 	public String getTask() {
 		return task;
 	}
@@ -44,6 +48,29 @@ public class HolidayForm extends ActionForm{
 	}
 	public void setHolidayList(List holidayList) {
 		this.holidayList = holidayList;
+	}
+	public String getFilterYear() {
+		return filterYear;
+	}
+	public void setFilterYear(String filterYear) {
+		this.filterYear = filterYear;
+	}
+	public List<LabelValueBean> getYearList() {
+		if (this.yearList == null) {
+			this.yearList = new ArrayList();
+		}
+		return yearList;
+	}
+	public void setYearList(List<String> yearList) {
+		if (this.yearList == null) {
+			this.yearList = new ArrayList();
+		}
+		for(String string : yearList){
+			LabelValueBean temp = new LabelValueBean();
+			temp.setLabel(string);
+			temp.setValue(string);
+			this.yearList.add(temp);
+		}
 	}	
 	
 }

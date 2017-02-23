@@ -19,22 +19,26 @@
 	{
 		var value = document.getElementsByName("value")[0].value;
 		var key = document.getElementsByName("key")[0].value;
+		var type = document.getElementsByName("dataType")[0].value;
 		var length = document.getElementsByName("length")[0].value;
-		var numbers = /^\d+$/;
+		var phoneAndFaxRegEx = /^([+0])([\d-])*$/;
+		var intOrDouble = /^[0-9]+([,.][0-9]+)?$/;
+		
 		var errorMessage = "";
+		
 		if (value == "")
 		{
 			errorMessage = errorMessage + "Value must be filled! \n";
 		}
-		if(key=="addr" && value.length>length){
+		
+		if (value.length>length){
 			errorMessage = errorMessage + "Length of value can't be more than "+length+" ! \n";
+		} else if (type=="Integer" && !intOrDouble.test(value)) {
+			errorMessage = errorMessage + key +" value must be numeric ! \n";
+		} else if (key=="telp" && !phoneAndFaxRegEx.test(value) || key=="fax" && !phoneAndFaxRegEx.test(value)){
+			errorMessage = errorMessage + key +" format is wrong! \n ex: 021-123456 \n";
 		}
-		if(key=="tax" && value.length>length){
-			errorMessage = errorMessage + "Length of value can't be more than "+length+" ! \n";
-		}
-		if(key=="tax" && !numbers.test(value)){
-			errorMessage = errorMessage + "Tax must number ! \n";
-		}
+		
 		if (errorMessage.length != 0) {
 			sweetAlert("Oops...", errorMessage, "error");
 			/* document.getElementById("message").innerHTML = errorMessage; */
