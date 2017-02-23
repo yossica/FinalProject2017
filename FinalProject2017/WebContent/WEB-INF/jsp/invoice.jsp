@@ -119,7 +119,22 @@
 		document.forms[1].statusId.value = statusId;
 		flyToPage("detailInvoice");
 	}
-	
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 </head>
 <body>
@@ -326,6 +341,14 @@
 	        </div>
     	</div>
     </div>
+    <div class="col-md-4" style="color:red;overflow: auto;" id="message">
+  				<logic:notEmpty name="invoiceForm" property="messageList">
+					<logic:iterate id="message" name="invoiceForm" property="messageList">
+						<%-- <bean:write name="message" />  --%>
+						<input type="hidden" id="err" value="<bean:write name="message" />">
+					</logic:iterate>
+				</logic:notEmpty>
+			</div>
     </html:form>
 </body>
 </html>
