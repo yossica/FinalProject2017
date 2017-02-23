@@ -58,15 +58,21 @@
 			sweetAlert("Oops...", error, "error");
 			return;
 		} else {
-			swal({title: "Oops..!",
-						  text: "There is no contract",
-						  type: "error"}
-						 ,function(){
-						  setTimeout(function(){
-							  document.forms[1].task.value = 'createInvoice';
-							  document.forms[1].submit();
-							  }, 10);
-							});
+			if(document.getElementById("message").value!="Ooooops"){
+				document.forms[1].task.value = task;
+				document.forms[1].submit();
+			}
+			else{
+				swal({title: "Oops..!",
+				  text: "There is no contract",
+				  type: "error"}
+				 ,function(){
+				  setTimeout(function(){
+					  document.forms[1].task.value = 'createInvoice';
+					  document.forms[1].submit();
+					  }, 10);
+					});
+			}
 		}
 	}
 	function onchangeContractServices(){
@@ -160,7 +166,7 @@
 					</div>
 				</div>
 			</div>
-			<logic:equal property="task" name="invoiceForm" value="createInvoice">
+			<logic:notEqual property="task" name="invoiceForm" value="createInvoiceIndex">
 			<div id="period" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
 					<div class="col-md-3"><label>Period</label></div>
@@ -193,7 +199,7 @@
 					</div>
 				</div>
 			</div>
-			</logic:equal>
+			</logic:notEqual>
 			<logic:equal property="task" name="invoiceForm" value="createInvoiceIndex">
 			<div id="period" class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
