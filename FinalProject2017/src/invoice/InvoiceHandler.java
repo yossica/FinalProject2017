@@ -77,7 +77,7 @@ public class InvoiceHandler extends Action {
 				//client sudah punya invoice professional service di period tsb
 				//balikin ke create invoice + message ilst dikasi
 				invoiceForm.getMessageList().clear();
-				invoiceForm.getMessageList().add("Success!!! Invoice already created");
+				invoiceForm.getMessageList().add("Ooooops!!! Invoice already created");
 				return mapping.findForward("createInvoice");
 			} else{
 				if (outsourceManager.checkContract(paramMap) != 0) {
@@ -310,7 +310,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceDetailList(invoiceForm.getInvoiceBean().getDetailList());
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
-			
+			invoiceForm.getMessageList().add("Success!!! Invoice Training Down Payment has been Created!");
 			return mapping.findForward("detailInvoice");
 		} else if ("createInvoiceTRST".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
@@ -406,6 +406,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			
 			return mapping.findForward("detailInvoice");
 		} else if ("getTax".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
@@ -574,7 +575,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setChangedBy((String)session.getAttribute("username"));
 			invoiceManager.update(invoiceForm.getInvoiceBean());
 			invoiceForm.getMessageList().clear();
-			invoiceForm.getMessageList().add("Success Edit Invoice");
+			invoiceForm.getMessageList().add("Success!!! Edit Invoice");
 
 			//setting field untuk view invoice
 			invoiceForm.setTask("detailInvoice");
@@ -659,7 +660,7 @@ public class InvoiceHandler extends Action {
 				invoiceBean.setTotalPpn(ppnValue);
 			}
 			invoiceManager.update(invoiceBean);
-			invoiceForm.getMessageList().add("Success Edit Invoice");
+			invoiceForm.getMessageList().add("Success!!! Edit Invoice");
 
 			//setting field untuk view invoice
 			invoiceForm.setClientBean(clientManager.getById(invoiceBean.getClientId()));
@@ -718,6 +719,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			invoiceForm.getMessageList().add("Success!!! Edit Invoice");
 			return mapping.findForward("detailInvoice");
 		}
 		else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
@@ -821,6 +823,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			invoiceForm.getMessageList().add("Success!!! Invoice Training Settlement has been Created!");
 			return mapping.findForward("detailInvoice");
 		} else if("deleteDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
