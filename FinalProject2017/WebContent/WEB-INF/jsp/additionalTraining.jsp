@@ -162,7 +162,7 @@
             	<div class="row" style="margin-top:10px;margin-bottom:10px;">
             		<div class="col-md-12" style="padding-right:1%">
             			<div class="col-md-2">
-            				Notes
+            				Description
             			</div>
             			<div class="col-md-10">
 		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control-client" style="height:70px">
