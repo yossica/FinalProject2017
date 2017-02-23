@@ -277,6 +277,7 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			} else if (invoiceForm.getInvoiceBean().getIsGross() == 1){
 				//include ppn
+				
 				double divider = 100+ppn;
 				double netTotal;
 				double grossTotal = 0;
@@ -448,6 +449,11 @@ public class InvoiceHandler extends Action {
 				invoiceForm.getInvoiceBean().setInvoiceDate(showDateFormat.format(getDate));
 				List<InvoiceDetailBean> detailList = invoiceManager.getDetailById(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
 				invoiceForm.setHeadHunterList(detailList);
+				
+				
+				invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+				invoiceForm.setClientId(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+				invoiceForm.setStatusInvoiceId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 				return mapping.findForward("formInvoiceHH");
 			} else if (invoiceTypeId == 3){
 				//Training
@@ -670,6 +676,7 @@ public class InvoiceHandler extends Action {
 					netTotal += bean.getFee();
 					bean.setUnitPrice(bean.getFee());
 					bean.setTotalFee(bean.getFee());
+					bean.setTransactionInvoiceHeaderId(invoiceForm.getTransactionInvoiceHeaderId());
 					invoiceForm.getInvoiceBean().getDetailList().add(bean);
 				}
 				double formula = netTotal+(netTotal*ppn/100);
@@ -685,6 +692,7 @@ public class InvoiceHandler extends Action {
 					grossTotal += bean.getFee();
 					bean.setUnitPrice(netFee);
 					bean.setTotalFee(netFee);
+					bean.setTransactionInvoiceHeaderId(invoiceForm.getTransactionInvoiceHeaderId());
 					invoiceForm.getInvoiceBean().getDetailList().add(bean);
 				}
 				invoiceForm.getInvoiceBean().setTotalGross(grossTotal);
@@ -692,8 +700,22 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setTotalNet(netTotal);
 			invoiceForm.getInvoiceBean().setTotalPpn(invoiceForm.getInvoiceBean().getTotalGross() - netTotal);
 			invoiceForm.getInvoiceBean().setChangedBy((String)session.getAttribute("username"));
-			invoiceForm.print();
-			return mapping.findForward("formInvoiceHH");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date temp = (Date) showDateFormat.parseObject(invoiceForm.getInvoiceBean().getInvoiceDate());
+			invoiceForm.getInvoiceBean().setInvoiceDate(dateFormat.format(temp));
+			invoiceManager.update(invoiceForm.getInvoiceBean());
+			//display invoice
+			invoiceForm.setClient(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+			invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+			invoiceForm.setTask("detailInvoice");
+			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setClientBean(clientManager.getById(Integer.parseInt(invoiceForm.getClient())));
+			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
+			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
+			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			return mapping.findForward("detailInvoice");
 		}
 		else if ("addAdditionalFee".equals(invoiceForm.getTask())) {
 			invoiceForm.getInvoiceBean().setClientName(clientManager.getById(invoiceForm.getInvoiceBean().getClientId()).getName());
@@ -799,8 +821,14 @@ public class InvoiceHandler extends Action {
 			return mapping.findForward("detailInvoice");
 		} else if("deleteDetailHH".equals(invoiceForm.getTask())){
 			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
-			return mapping.findForward("createInvoiceHH");
-		} else if ("insertHH".equals(invoiceForm.getTask())) {
+			invoiceForm.setTask("formInvoiceHH");
+			return mapping.findForward("formInvoiceHH");
+		} else if("deleteDetailHHonEditPage".equals(invoiceForm.getTask())){
+			invoiceForm.getHeadHunterList().remove(invoiceForm.getDeleteIndex());
+			invoiceForm.setTask("editInvoice");
+			return mapping.findForward("formInvoiceHH");
+		}
+		else if ("insertHH".equals(invoiceForm.getTask())) {
 			DateFormat dateFormat = new SimpleDateFormat("MM.yy");
 			Date date = new Date();
 			invoiceForm.getInvoiceBean().setInvoiceNumber(invoiceManager.getInvoiceNumber(dateFormat.format(date)));

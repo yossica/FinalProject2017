@@ -9,6 +9,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 <script type="text/javascript">
+	function scrollBottom(){
+		var objDiv = document.getElementById("listPettyCash");
+	    objDiv.scrollTop = objDiv.scrollHeight;		
+	}
+	function toggleFilter() {
+		var filter = document.getElementById("filterForm");
+		filter.style.display = filter.style.display === 'none' ? '' : 'none';
+		if (filter.style.display == 'none'){
+			document.getElementById("listPettyCash").style.height = "400px";
+		}else{
+			document.getElementById("listPettyCash").style.height = "200px";
+		}
+	}
+	
 	function filter(){
 		//validasi untuk masukin start date + end date (ga boleh salah satu aja)
 		var filterStartDate = document.forms[1].filterStartDate.value;
@@ -48,7 +62,15 @@
 			},
 			function(isConfirm){
 			  if (isConfirm) {
-				flyToPage("balancing");
+				/* flyToPage("balancing"); */
+				 swal({title: "Good job!",
+					  text: "Transaction Success!",
+					  type: "success"}
+					 ,function(){
+					  setTimeout(function(){
+						  flyToPage("balancing");
+						  }, 10);
+						});   
 			  } else {
 			    swal("Cancelled", "Cancel Rebalance Cash in Bank", "error");
 			  }
@@ -58,9 +80,26 @@
 		document.forms[1].task.value=task;
 		document.forms[1].submit();
 	}
+	function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError;
 </script>
 </head>
-<body>
+<body onload="scrollBottom()">
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/pettyCash" method="post">
 	<html:hidden property="task" name="pettyCashForm"/>
@@ -74,6 +113,7 @@
 			<div class="col-lg-12">
 				<label>Remaining Balance: <bean:write name="pettyCashForm" property="remainingBalance" format="IDR #,###.##" /></label>
 				<div class="pull-right">
+					<button id="filterButton" type="button" class="btn btn-primary" onclick="javascript:toggleFilter()">Toggle Filter</button>
 					<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('export')">Export to PDF</button>
 					<button type="button" class="btn btn-primary" onclick="javascript:balance()">Balancing</button>
 				</div>
@@ -81,8 +121,8 @@
 				<br />
 			</div>
 		</div>
-		<div class="col-lg-12"
-			style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF;">
+		<div id="filterForm"  class="col-lg-12"
+			style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-12" style="padding-right: 1%">
 					<div class="col-md-2">Category</div>
@@ -111,10 +151,17 @@
 				<span id="errorMessage" style="color:red"></span>
 			</div>
 		</div>
+		<logic:notEmpty name="pettyCashForm"
+						property="messageList">
+						<logic:iterate id="message" name="pettyCashForm"
+							property="messageList">
+							<input type="hidden" id="err" value="<bean:write name="message" />">
+						</logic:iterate>
+					</logic:notEmpty>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel-body">
-					<div class="table-responsive" style="height:200px;overflow: auto;">
+					<div id="listPettyCash" class="table-responsive" style="height:400px;overflow: auto;">
 						<table class="table table-hover">
 							<thead>
 								<tr>
