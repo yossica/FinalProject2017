@@ -60,6 +60,7 @@
 	function onloadFunc() {
 		var today = new Date();
 		onchangeContractServices();
+		alertError();
 	}
 	function ifSettlement(){
 		var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
@@ -72,14 +73,22 @@
 	function alertError() {
 		var message=document.getElementById("err");
 		if(message!=null){
-			sweetAlert("Oops...", message.value, "error");
+			var messageValue=message.value;
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
 		}
 	}
 	window.onload = onloadFunc;
-	window.onload = alertError;
 </script>
 </head>
-<body onload="javascript:onchangeContractServices()">
+<body>
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
