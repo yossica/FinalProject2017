@@ -142,11 +142,11 @@
 	        </div>
 	        <div class="col-lg-12" style="border:solid 2px gray;border-radius: 10px; background-color: #EFEFEF;">
            		<div class="row" style="margin-top:10px;">
-            		<div class="col-md-12" style="padding-right:1%">
-            			<div class="col-md-2">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-1">
 		            		Client
 		            	</div>
-		            	<div class="col-md-10">
+		            	<div class="col-md-8">
 				            <html:select property="clientId" name="trainingForm" 
 				            	styleClass="form-control" onchange="javascript:flyToPage('loadTrainingHeader')">
 				            	<logic:notEmpty name="trainingForm" property="clientList">
@@ -157,11 +157,11 @@
             		</div>
             	</div>
             	<div class="row" style="margin-top:10px;">
-            		<div class="col-md-12" style="padding-right:1%">
-            			<div class="col-md-2">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-1">
             				Training
             			</div>
-            			<div class="col-md-10">
+            			<div class="col-md-8">
 		            		<html:select property="trainingDetailBean.transactionTrainingHeaderId" name="trainingForm" 
 		            			styleClass="form-control" onchange="javascript:flyToPage('loadTrainingDetail')">
 		            			<logic:notEmpty name="trainingForm" property="trainingHeaderList">
@@ -172,11 +172,11 @@
             		</div>
             	</div>
             	<div class="row" style="margin-top:10px;">
-            		<div class="col-md-12" style="padding-right:1%">
-            			<div class="col-md-2">
+            		<div class="col-md-10" style="padding-right:1%">
+            			<div class="col-md-1">
             				Fee
             			</div>
-            			<div class="col-md-10">
+            			<div class="col-md-8">
 		            		<html:text property="trainingDetailBean.fee" name="trainingForm" styleClass="form-control"/>
 				        </div>
             		</div>
@@ -186,8 +186,8 @@
             			<div class="col-md-2">
             				Description
             			</div>
-            			<div class="col-md-10">
-		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control-client" style="height:70px">
+            			<div class="col-md-8">
+		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control" style="height:100px">
 						     </html:textarea>
 				        </div>
             		</div>
@@ -227,7 +227,6 @@
 												<td><bean:write name="trainingDetail" property="description"/></td>
 												<td><bean:write name="trainingDetail" property="fee" format="#,###.##"/></td>
 												<logic:equal value="0" property="isSettlement" name="trainingDetail">
-													<%-- <td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td> --%>
 													<td><button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">Delete</button></td>
 												</logic:equal>
 												<logic:notEqual value="0" property="isSettlement" name="trainingDetail">
