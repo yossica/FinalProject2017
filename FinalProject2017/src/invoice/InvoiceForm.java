@@ -5,10 +5,12 @@ import generalInformation.GeneralInformationBean;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.util.LabelValueBean;
 
 import training.TrainingBean;
 import training.TrainingDetailBean;
@@ -33,7 +35,7 @@ public class InvoiceForm extends ActionForm{
 	private String periodMonth;
 	private String periodYear;
 	private String subTask;
-	
+	private List<LabelValueBean> optYear;
 	private String clientId;
 	private String monthFrom;
 	private String yearFrom;
@@ -354,6 +356,24 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setHeadHunterListSize(int headHunterListSize) {
 		this.headHunterListSize = headHunterListSize;
+  }
+  
+  public List<LabelValueBean> getOptYear() {
+		if (this.optYear == null) {
+			this.optYear = new ArrayList();
+		}
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		for (int i = 2000; i <= year; i++) {		
+			LabelValueBean temp = new LabelValueBean();
+			temp.setLabel(String.valueOf(i));
+			temp.setValue(String.valueOf(i));
+			optYear.add(temp);
+		}
+		
+		return optYear;
+  }
+	public void setOptYear(List<LabelValueBean> optYear) {
+		this.optYear = optYear;
 	}
 }
 
