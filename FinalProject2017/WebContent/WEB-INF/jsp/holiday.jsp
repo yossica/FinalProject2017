@@ -28,11 +28,7 @@
 			  } else {
 			    swal("Cancelled", "Cancel Delete Master Holiday", "error");
 			  }
-			});
-		/* if(confirm("Are you sure to delete "+holiday+"?")){
-			document.forms[1].holidayId.value = id;
-			flyToPage("delete");
-		} */		
+			});	
 	}
 	function insertHoliday(){
 		var csv = document.forms[1].holidayCsv.value;
@@ -168,7 +164,7 @@
 							        			<tr>
 									                <td><bean:write name="holiday" property="holidayDate"/></td>
 									                <td><bean:write name="holiday" property="name" format="#"/></td>
-									                <td><a href="#" onclick="javascript:deleteHoliday('<bean:write name="holiday" property="holidayDate"/>-<bean:write name="holiday" property="name"/>',<bean:write name="holiday" property="holidayId" format="#"/>)">X</a></td>
+									                <td><button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteHoliday('<bean:write name="holiday" property="holidayDate"/>-<bean:write name="holiday" property="name"/>',<bean:write name="holiday" property="holidayId" format="#"/>)">Delete</button></td>
 									            </tr>  
 							        		</logic:iterate>
 							        	</logic:notEmpty>   

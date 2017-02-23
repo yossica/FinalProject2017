@@ -60,16 +60,16 @@
 	                                    <logic:notEmpty name="indexForm" property="listedRemainderList">	
 	                                        <logic:iterate id="list" name="indexForm" property="listedRemainderList">
 		                                        <tr>
-		                                        	<td><a href="#" onclick="flyToCreate('createInvoice',
+		                                        	<td onclick="flyToCreate('createInvoiceIndex',
 		                                        										 '<bean:write name="list" property="clientId" format="#"/>',
 		                                        										 '<bean:write name="list" property="invoiceTypeId" format="#"/>',
 		                                        										 '<bean:write name="list" property="periodMonth" format="#"/>',
 		                                        										 '<bean:write name="list" property="periodYear" format="#"/>'
 		                                        										)">
-		                                        		<bean:write name="list" property="clientName"/> - Professional Service<br>
-		                                        		Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
-		                                        		<p align="right"><bean:write name="list" property="invoiceDate"/></p>
-		                                        	</a></td>
+		                                        	<bean:write name="list" property="clientName"/> - Professional Service<br>
+	                                        		Period: <bean:write name="list" property="periodMonth" format="#"/>/<bean:write name="list" property="periodYear" format="#"/>
+	                                        		<p align="right"><bean:write name="list" property="invoiceDate"/></p>
+	                                        		</td>
 		                                        </tr>
 	                                        </logic:iterate>
 	                                    </logic:notEmpty>

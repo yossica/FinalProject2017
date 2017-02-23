@@ -122,7 +122,7 @@ public class InvoiceManager {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try{
 			ibatis.startTransaction();
-
+			
 			ibatis.update("invoice.updateHeaderById", input);
 			
 			ibatis.delete("invoice.deleteDetailByHeaderId", input.getTransactionInvoiceHeaderId());
