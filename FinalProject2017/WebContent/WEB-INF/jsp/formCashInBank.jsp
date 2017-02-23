@@ -114,8 +114,18 @@
 										<td><label>Remaining Balance</label></td>
 										<td>
 											<bean:write name="cashInBankForm" property="remainingBalance"
-												format="IDR #,###.##" /></td>
+												format="IDR #,###.##" />
+										</td>
 									</tr>
+									<logic:equal value="saveTransfer" property="task" name="cashInBankForm">
+										<tr>
+											<td><label>Current Petty Cash Balance</label></td>
+											<td>
+												<bean:write name="cashInBankForm" property="pettyCashBalance"
+													format="IDR #,###.##" />
+											</td>
+										</tr>
+									</logic:equal>
 									<tr>
 										<td><label>Transaction Date</label></td>
 										<td><input type="date" class="form-control-client"
