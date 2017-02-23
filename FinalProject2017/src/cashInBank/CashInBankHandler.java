@@ -367,6 +367,7 @@ public class CashInBankHandler extends Action {
 			cashInBankForm.setTask("saveTransfer");
 			cashInBankForm.getCashInBankBean().setIsDebit(-1);
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
+			cashInBankForm.setPettyCashBalance(new PettyCashManager().getCurrentBalance());
 						
 			cashInBankForm.getCashInBankBean().setTransactionDate(showDateFormat.format(Calendar.getInstance().getTime()));
 			
@@ -396,6 +397,7 @@ public class CashInBankHandler extends Action {
 				cashInBankForm.setTask("saveTransfer");
 				cashInBankForm.getCashInBankBean().setIsDebit(-1);
 				cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());
+				cashInBankForm.setPettyCashBalance(pettyCashManager.getCurrentBalance());
 								
 				cashInBankForm.getCashInBankBean().setTransactionDate(cashInBankForm.getCashInBankBean().getTransactionDate());
 				
@@ -471,7 +473,7 @@ public class CashInBankHandler extends Action {
 			}
 			else{
 				paramMap.put("category", cat);
-				parameters.put("category", cat);
+				parameters.put("category", masterManager.getCashFlowCategoryById(cat).getName());
 			}
 			
 			if("".equals(cashInBankForm.getFilterEndDate())){
@@ -500,6 +502,8 @@ public class CashInBankHandler extends Action {
 			String fileName = "CashInBankReport_"+printDateFormat.format(cal.getTime())+".pdf";
 			ExportReportManager.exportToPdf(filePath+"\\report\\FinanceTransactionReport"+".jrxml",
 					fileName, parameters, cashInBankData);
+			cashInBankForm.getMessageList().clear();
+			cashInBankForm.getMessageList().add("Success export to D://Finance Solution Report/"+fileName);
 						
 			//show filtered page
 			cashInBankForm.setRemainingBalance(cashInBankManager.getCurrentBalance());			

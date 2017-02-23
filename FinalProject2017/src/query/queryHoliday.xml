@@ -29,7 +29,7 @@
 		) holiday
 	</select>
 	
-	<select id="getAll" resultClass="holiday.HolidayBean">
+	<select id="getAllWithFilter" parameterClass="java.util.Map" resultClass="holiday.HolidayBean">
 		select
 			holiday_id as holidayId,
 			to_char(holiday_date, 'MM/dd/yyyy') as holidayDate,
@@ -37,7 +37,22 @@
 			created_by as createdBy,
 			to_char(created_date, 'MM/dd/yyyy') as createdDate
 		from master_holiday
+		where 1=1
+			<dynamic prepend="AND">
+				<isNotNull property="filterYear">
+					<isNotEmpty property="filterYear">
+						extract(year from holiday_date) = #filterYear#
+					</isNotEmpty>
+				</isNotNull>
+			</dynamic>	
 		order by holiday_date
+	</select>
+	
+	<select id="getDistinctYear" resultClass="java.lang.String">
+		select distinct
+		    extract(year from holiday_date)
+		from master_holiday
+		order by extract(year from holiday_date)
 	</select>
 	
 	<select id="getMaxId" resultClass="java.lang.Integer">
