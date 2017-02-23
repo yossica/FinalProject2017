@@ -21,8 +21,25 @@
 	}
 	function flyToNextPage(){
 		var task;
+		var error = false;
+		
+		//Check Error Pertama
+		if (document.getElementById('invoiceDate').value == ''){
+			error = true;
+		}else if (document.getElementById('contractServices').value == 'Select'){
+			error = true;
+		}else if (document.getElementById('client').value == 'Select'){
+			error = true;
+		}
+		
 		if (getContractServices() == 1){
 			task = 'formInvoicePS';
+			//Error Checking Kedua
+			if (document.getElementById('periodMonth').value == 'Select'){
+				error = true;
+			}else if (document.getElementById('periodYear').value == 'Select'){
+				error = true;
+			}
 		}else if (getContractServices() == 2 || getContractServices() == 4){
 			task = 'formInvoiceHH';
 		}else if (getContractServices() == 3){
@@ -33,8 +50,15 @@
 				task = 'createInvoiceTRST';
 			}
 		}
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+		
+		//Alert kalau Error disini
+		if (error){
+			alert('Error ya...')
+		}else {
+			alert('Tidak Ada Error... Lanjut!');
+			document.forms[1].task.value = task;
+			document.forms[1].submit();
+		}
 	}
 	function onchangeContractServices(){
 		if (getContractServices() == 1){
@@ -60,6 +84,10 @@
 	function onloadFunc() {
 		var today = new Date();
 		onchangeContractServices();
+		var message=document.getElementById("err");
+		if(message!=null){
+			sweetAlert("Oops...", message.value, "error");
+		}
 	}
 	function ifSettlement(){
 		var payment = document.querySelector('input[name = "paymentRadio"]:checked').value;
@@ -69,14 +97,7 @@
 			document.getElementById("tax").style.display = "block";
 		}
 	}
-	function alertError() {
-		var message=document.getElementById("err");
-		if(message!=null){
-			sweetAlert("Oops...", message.value, "error");
-		}
-	}
 	window.onload = onloadFunc;
-	window.onload = alertError;
 </script>
 </head>
 <body onload="javascript:onchangeContractServices()">
@@ -101,7 +122,7 @@
 				<div class="row">
 					<div class="col-md-3"><label>Client</label></div>
 					<div class="col-md-8">
-						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client">
+						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client" styleId="client">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 						</html:select>
@@ -124,7 +145,7 @@
 					<div class="col-md-3"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-3">
-						<select class="form-control" name="invoiceBean.periodMonth">
+						<select class="form-control" name="invoiceBean.periodMonth" id="periodMonth">
 							<option selected disabled>Select</option>
                             <option value="01">January</option>
                             <option value="02">February</option>
@@ -142,7 +163,7 @@
 					</div>
 					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-3">
-						<select class="form-control" name="invoiceBean.periodYear">
+						<select class="form-control" name="invoiceBean.periodYear" id="periodYear">
 							<option selected>Select</option>
 							<%
                         		int year = Calendar.getInstance().get(Calendar.YEAR);

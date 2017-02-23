@@ -53,6 +53,7 @@ public class InvoiceForm extends ActionForm{
 	private List invoiceTypeList = new ArrayList();
 	private List<InvoiceDetailBean> professionalServiceList = new ArrayList<InvoiceDetailBean>();
 	private List<InvoiceDetailBean> headHunterList = new ArrayList<InvoiceDetailBean>();
+	private int headHunterListSize;
 	private List<InvoiceDetailBean> settlementList = new ArrayList<InvoiceDetailBean>();
 	private List<TrainingDetailBean> detailTrainingList = new ArrayList<TrainingDetailBean>();
 	private List outsourceList = new ArrayList();
@@ -71,8 +72,7 @@ public class InvoiceForm extends ActionForm{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		invoiceBean.setInvoiceDate(dateFormat.format(date));
-		InvoiceDetailBean bean = new InvoiceDetailBean();
-		headHunterList.add(bean);
+		headHunterList.add(new InvoiceDetailBean());
 	}
 	public InvoiceBean getInvoiceBean() {
 		return invoiceBean;
@@ -348,6 +348,12 @@ public class InvoiceForm extends ActionForm{
 	}
 	public void setPeriodYear(String periodYear) {
 		this.periodYear = periodYear;
+	}
+	public int getHeadHunterListSize() {
+		return headHunterListSize;
+	}
+	public void setHeadHunterListSize(int headHunterListSize) {
+		this.headHunterListSize = headHunterListSize;
 	}
 }
 
