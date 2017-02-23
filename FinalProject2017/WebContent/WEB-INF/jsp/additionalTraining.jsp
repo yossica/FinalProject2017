@@ -182,8 +182,8 @@
             		</div>
             	</div>
             	<div class="row" style="margin-top:10px;margin-bottom:10px;">
-            		<div class="col-md-10" style="padding-right:1%">
-            			<div class="col-md-1">
+            		<div class="col-md-12" style="padding-right:1%">
+            			<div class="col-md-2">
             				Description
             			</div>
             			<div class="col-md-8">
@@ -227,7 +227,6 @@
 												<td><bean:write name="trainingDetail" property="description"/></td>
 												<td><bean:write name="trainingDetail" property="fee" format="#,###.##"/></td>
 												<logic:equal value="0" property="isSettlement" name="trainingDetail">
-													<%-- <td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td> --%>
 													<td><button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">Delete</button></td>
 												</logic:equal>
 												<logic:notEqual value="0" property="isSettlement" name="trainingDetail">
