@@ -55,7 +55,7 @@ public class InvoiceManager {
 			e.printStackTrace();
 		}
 		if (id == null){
-			id = 1;
+			id = 0;
 		}
 		return id;
 		
@@ -70,7 +70,7 @@ public class InvoiceManager {
 			e.printStackTrace();
 		}
 		if (id == null){
-			id = 1;
+			id = 0;
 		}
 		return id;	
 	}
