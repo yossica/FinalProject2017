@@ -21,8 +21,25 @@
 	}
 	function flyToNextPage(){
 		var task;
+		var error = false;
+		
+		//Check Error Pertama
+		if (document.getElementById('invoiceDate').value == ''){
+			error = true;
+		}else if (document.getElementById('contractServices').value == 'Select'){
+			error = true;
+		}else if (document.getElementById('client').value == 'Select'){
+			error = true;
+		}
+		
 		if (getContractServices() == 1){
 			task = 'formInvoicePS';
+			//Error Checking Kedua
+			if (document.getElementById('periodMonth').value == 'Select'){
+				error = true;
+			}else if (document.getElementById('periodYear').value == 'Select'){
+				error = true;
+			}
 		}else if (getContractServices() == 2 || getContractServices() == 4){
 			task = 'formInvoiceHH';
 		}else if (getContractServices() == 3){
@@ -33,8 +50,15 @@
 				task = 'createInvoiceTRST';
 			}
 		}
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+		
+		//Alert kalau Error disini
+		if (error){
+			alert('Error ya...')
+		}else {
+			alert('Tidak Ada Error... Lanjut!');
+			document.forms[1].task.value = task;
+			document.forms[1].submit();
+		}
 	}
 	function onchangeContractServices(){
 		if (getContractServices() == 1){
@@ -92,7 +116,6 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
 	<html:hidden property="task" name="invoiceForm"/>
-	
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -110,7 +133,7 @@
 				<div class="row">
 					<div class="col-md-3"><label>Client</label></div>
 					<div class="col-md-8">
-						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client">
+						<html:select property="invoiceBean.clientId" name="invoiceForm" style="width: 100%;" styleClass="form-control-client" styleId="client">
 							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm" property="clientList" label="name" value="clientId"/>
 						</html:select>
@@ -134,7 +157,8 @@
 					<div class="col-md-3"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-3">
-						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control">
+
+						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control" id="periodMonth">
 							<html:option value="01">January</html:option>
 							<html:option value="02">February</html:option>
 							<html:option value="03">March</html:option>
@@ -152,7 +176,7 @@
 					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-3">
 						<html:select name="invoiceForm" property="invoiceBean.periodYear"
-										styleClass="form-control-client">
+										styleClass="form-control-client" id="periodYear">
 							<html:option value="">Select All</html:option>
 							<html:optionsCollection name="invoiceForm"
 								property="optYear" value="value" label="label" />
