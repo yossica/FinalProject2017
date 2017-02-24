@@ -274,7 +274,7 @@
 				</div>
 			</div>
 			<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
-				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoice')">Back</button>
+				<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoice')">Cancel</button>
 				<button type="button" class="btn btn-primary" onclick="javascript:flyToNextPage()">Next</button>
 			</div>
 			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
