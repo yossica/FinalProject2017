@@ -30,6 +30,7 @@ public class UserHandler extends Action {
 			int count = userManager.checkLogin(userBean);
 			if (count > 0) {
 				session.setAttribute("username", userBean.getUserName());
+				session.setMaxInactiveInterval(30*60);//30 menit
 				response.sendRedirect("/FinalProject2017/index.do");
 				return null;
 			}
