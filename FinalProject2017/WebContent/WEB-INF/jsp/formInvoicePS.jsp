@@ -9,6 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 <script>
+	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
+		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
+		document.forms[1].client.value = clientId;
+		document.forms[1].statusId.value = statusId;
+		back("detailInvoice");
+	}
 	function back(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -156,7 +162,12 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Notes</label></div>
 					<div class="col-md-5">
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"/>
+						<logic:equal name="invoiceForm" property="task" value="editInvoice"> 
+							<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"/>
+						</logic:equal>
+						<logic:notEqual name="invoiceForm" property="task" value="editInvoice">
+							<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"/>
+						</logic:notEqual>
 					</div>
 				</div>
 			</div>
@@ -226,11 +237,20 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
-						<button type="button" class="btn btn-primary" onclick="javascript:back('createInvoice')">Back</button>
 						<logic:equal value="createInvoice" property="task" name="invoiceForm">
+							<button type="button" class="btn btn-primary" onclick="javascript:back('createInvoice')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertPS')">Save</button>
 						</logic:equal>
 						<logic:equal value="editInvoice" property="task" name="invoiceForm">
+							<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
+							<html:hidden property="client" name="invoiceForm"/>
+							<html:hidden property="statusId" name="invoiceForm"/>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToDetail(
+                				'<bean:write name="invoiceForm" property="transactionInvoiceHeaderId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="clientId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="statusInvoiceId" format="#"/>'
+	                		)">
+	                		Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoicePS')">Save</button>
 						</logic:equal>
 					</div>

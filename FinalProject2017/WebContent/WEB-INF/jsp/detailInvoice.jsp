@@ -107,8 +107,8 @@
 									<tr height=40px>
 										<td style="text-align:center;"><bean:write name="inv" property="numb" format="#"/></td>
 										<td style="padding:10px;"><bean:write name="inv" property="description"/></td>
-										<td style="padding:10px;"><bean:write name="inv" property="unitPrice" format="#,###.##"/></td>
-										<td style="padding:10px;"><bean:write name="inv" property="totalFee" format="#,###.##"/></td>
+										<td style="padding:10px;text-align:right"><bean:write name="inv" property="unitPrice" format="#,###.##"/></td>
+										<td style="padding:10px;text-align:right"><bean:write name="inv" property="totalFee" format="#,###.##"/></td>
 										<td style="padding:10px;"><bean:write name="inv" property="notes"/></td>
 									</tr>
 								</logic:iterate>
@@ -116,15 +116,18 @@
 								<table border="0" style="margin-top:10px;margin-bottom:30px;padding:100px;" width=100%>
 								<tr>
 									<td width=60% style="text-align:right;">Total  :&nbsp;</td>
-									<td width=40% style="padding:10px;"><bean:write name="invoiceForm" property="invoiceBean.totalNet" format="#,###.##"/></td>
+									<td width=15% style="padding:10px;text-align:right"><bean:write name="invoiceForm" property="invoiceBean.totalNet" format="#,###.##"/></td>
+									<td width=25%></td>
 								</tr>
 								<tr>
-									<td width=55% style="text-align:right;">PPN 10%  :&nbsp;</td>
-									<td width=45% style="padding:10px;"><bean:write name="invoiceForm" property="invoiceBean.totalPpn" format="#,###.##"/></td>
+									<td width=55% style="text-align:right;">PPN <bean:write property="invoiceBean.ppnPercentage" name="invoiceForm" format="#"/>%  :&nbsp;</td>
+									<td width=15% style="padding:10px;text-align:right"><bean:write name="invoiceForm" property="invoiceBean.totalPpn" format="#,###.##"/></td>
+									<td width=25%></td>
 								</tr>
 								<tr>
 									<td width=55% style="text-align:right;">Grand Total  :&nbsp;</td>
-									<td width=45% style="padding:10px;"><bean:write name="invoiceForm" property="invoiceBean.totalGross" format="#,###.##"/></td>
+									<td width=15% style="padding:10px;text-align:right"><bean:write name="invoiceForm" property="invoiceBean.totalGross" format="#,###.##"/></td>
+									<td width=25%></td>
 								</tr>
 							</table>
 						</div>
