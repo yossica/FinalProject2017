@@ -67,6 +67,12 @@
 }
 </style>
 <script>
+	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
+		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
+		document.forms[1].client.value = clientId;
+		document.forms[1].statusId.value = statusId;
+		flyToPage("detailInvoice");
+	}
 	function flyToPage(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -365,7 +371,15 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<logic:equal value="editInvoiceTRST" property="subTask" name="invoiceForm">
-							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('invoiceList')">Back</button>
+							<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
+							<html:hidden property="client" name="invoiceForm"/>
+							<html:hidden property="statusId" name="invoiceForm"/>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToDetail(
+                				'<bean:write name="invoiceForm" property="transactionInvoiceHeaderId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="clientId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="statusInvoiceId" format="#"/>'
+	                		)">
+	                		Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:validate()">Save</button>
 						</logic:equal>
 						<logic:notEqual value="editInvoiceTRST" property="subTask" name="invoiceForm">
