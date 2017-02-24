@@ -74,8 +74,27 @@
 		flyToPage("detailInvoice");
 	}
 	function flyToPage(task){
-		document.forms[1].task.value = task;
-		document.forms[1].submit();
+		swal({
+			  title: "Are you sure?",
+			  text: "System will insert these data to invoice training settlement",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#ef2300",
+			  confirmButtonText: "Yes, Insert",
+			  cancelButtonText: "No, Cancel Please!",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+				  document.forms[1].task.value = task;
+					document.forms[1].submit();
+			  } else {
+			    swal("Cancelled", "Cancel Insert Invoice Training Settlement", "error");
+			  }
+			}); 
+		/* document.forms[1].task.value = task;
+		document.forms[1].submit(); */
 	}
 	function flyToDelete(id){
 		/* document.forms[1].deleteIndex.value = id;
