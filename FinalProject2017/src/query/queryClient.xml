@@ -4,10 +4,10 @@
 <sqlMap namespace="client">
 	<insert id="insert" parameterClass="client.ClientBean">
 		insert into master_client 
-			(client_id,name,address,city,phone_number,fax_number,postal_code,
+			(client_id,name,address,city,phone_number,fax_number,postal_code,contact_person,
 			is_enabled,created_by,created_date, changed_by, changed_date)
 		values (#clientId#,#name#,#address#,#city#,#phoneNumber#,#faxNumber#,
-				#postalCode#,#isEnabled#,#createdBy#,sysdate,null,null)
+				#postalCode#,#contactPerson#,#isEnabled#,#createdBy#,sysdate,null,null)
 	</insert>
 	<update id="update" parameterClass="client.ClientBean">
 		update master_client set
@@ -17,6 +17,7 @@
 			phone_number = #phoneNumber#,
 			fax_number = #faxNumber#,
 			postal_code = #postalCode#,
+			contact_person = #contactPerson#,
 			is_enabled = #isEnabled#,
 			changed_by = #changedBy#, 
 			changed_date = sysdate
@@ -32,6 +33,7 @@
 			phone_number as phoneNumber,
 			fax_number as faxNumber,
 			postal_code as postalCode,
+			contact_person as contactPerson,
 			is_enabled as isEnabled,
 			created_by as createdBy,
 			to_char(created_date, 'MM/dd/yyyy') as createdDate,
@@ -51,6 +53,7 @@
 			phone_number as phoneNumber,
 			fax_number as faxNumber,
 			postal_code as postalCode,
+			contact_person as contactPerson,
 			is_enabled as isEnabled,
 			created_by as createdBy,
 			to_char(created_date, 'MM/dd/yyyy') as createdDate,
@@ -69,6 +72,7 @@
 			phone_number as phone_number,
 			fax_number as fax_number,
 			postal_code as postalCode,
+			contact_person as contactPerson,
 			is_enabled as isEnabled,
 			created_by as createdBy,
 			to_char(created_date, 'MM/dd/yyyy') as createdDate,
