@@ -172,10 +172,12 @@ public class CashInBankHandler extends Action {
 				cashInBankForm.getMessageList().add("Ooooops!!! Cannot create transaction that cost more than remaining balance!");
 				flag = false;
 			}
-			else if(amount < min_transaction){
-				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add("Ooooops!!! Create transaction less than IDR"+min_transaction+"!\nPlease do this in petty cash instead");
-				flag = false;
+			else if(!"1c-cor".equals(cashInBankForm.getCashInBankBean().getCashFlowCategoryId())){
+				if(amount < min_transaction){
+					cashInBankForm.getMessageList().clear();
+					cashInBankForm.getMessageList().add("Ooooops!!! Create transaction less than IDR"+min_transaction+"!\nPlease do this in petty cash instead");
+					flag = false;
+				}
 			}
 			else if(amount > max_transaction){
 				cashInBankForm.getMessageList().clear();

@@ -91,11 +91,11 @@
 		}
 	}
 	
-	function placeholder() {
-		if(document.getElementsByName("phoneNumber")[0].value == "") {
+	function placehold() {
+		if(document.getElementsByName("phoneNumber")[0].value === "") {
 			document.getElementsByName("phoneNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
 		}
-		else if(document.getElementsByName("faxNumber")[0].value == "") {
+		else if(document.getElementsByName("faxNumber")[0].value === "") {
 			document.getElementsByName("faxNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
 		}
 	}
@@ -145,17 +145,22 @@
 										<td><label>Phone</label></td>
 										<td><html:text name="clientForm" property="phoneNumber"
 												styleClass="form-control-client"
-												onclick="javascript:placeholder()" /></td>
+												onclick="javascript:placehold()" /></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
 										<td><html:text name="clientForm" property="faxNumber"
 												styleClass="form-control-client"
-												onclick="javascript:placeholder()" /></td>
+												onclick="javascript:placehold()" /></td>
 									</tr>
 									<tr>
 										<td><label>Postal Code</label></td>
 										<td><html:text name="clientForm" property="postalCode"
+												styleClass="form-control-client" /></td>
+									</tr>
+									<tr>
+										<td><label>Contact Person</label></td>
+										<td><html:text name="clientForm" property="contactPerson"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
