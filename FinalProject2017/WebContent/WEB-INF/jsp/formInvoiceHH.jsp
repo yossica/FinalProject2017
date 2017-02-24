@@ -71,24 +71,53 @@
 		//Error Checking
 		var error = false;
 		var doubleReg = /^([\d]+)(|.[\d]+)$/;
+		var errorMessage = "";
+		
 		if (task == 'insertHH' || task == 'editInvoiceHH'){
 			var HHSize = document.getElementById('headHunterListSize').value;
 			for(var i=0; i<HHSize; i++){
 				if (document.getElementsByName('invoiceDetailHH['+i+'].description')[0].value == ''){
-					alert('Error Deskripsi Kosong');
-					error = true;
+					/* alert('Error Deskripsi Kosong');
+					error = true; */
+					errorMessage+="Description must be filled! \n";
 				}else if (document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value == ''){
-					alert('Error Fee Kosong');
-					error = true;
+					/* alert('Error Fee Kosong');
+					error = true; */
+					errorMessage+="Fee must be filled! \n";
 				}else if (!doubleReg.test(document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value)){
-					alert('Error Fee tidak sesuai format');
-					error = true;
+					/* alert('Error Fee tidak sesuai format');
+					error = true; */
+					errorMessage+="Fee must be Number! \n";
 				}
 			}
 		}
-		if (!error){
-			document.forms[1].task.value = task;
-			document.forms[1].submit();
+		if(errorMessage.length != 0){
+			sweetAlert("Oops...", errorMessage, "error");
+			//document.getElementById("message").innerHTML = errorMessage;
+			return;
+		}
+		else{
+			/* document.forms[1].task.value = task;
+			document.forms[1].submit(); */
+			swal({
+				  title: "Are you sure?",
+				  text: "System will insert these data to additional fee",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Insert",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  	document.forms[1].task.value = task;
+						document.forms[1].submit();
+				  } else {
+				    swal("Cancelled", "Cancel Insert Additional Fee", "error");
+				  }
+				}); 
 		}
 	}
 	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
@@ -112,8 +141,42 @@
 		}else {
 			document.getElementById('deleteButton').style.display = 'table-row';
 		}
+		
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
 	}
 	window.onload = onloadFunc;
+	
+	/* function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	} */
+	//window.onload = alertError;
+	
 </script>
 </head>
 <body>
@@ -300,6 +363,14 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+  				<logic:notEmpty name="invoiceForm" property="messageList">
+					<logic:iterate id="message" name="invoiceForm" property="messageList">
+						<%-- <bean:write name="message" />  --%>
+						<input type="hidden" id="err" value="<bean:write name="message" />">
+					</logic:iterate>
+				</logic:notEmpty>
+			</div>
 	</html:form>
 	
 </body>

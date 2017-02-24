@@ -894,6 +894,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+			invoiceForm.getMessageList().add("Success!!! Invoice HH has been created!");
 			return mapping.findForward("detailInvoice");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
