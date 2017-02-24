@@ -28,6 +28,7 @@ public class InvoiceBean implements Serializable {
 	private String changedDate;
 	private double totalPpn;
 	private String detailSize;
+	private String settlementInvoiceId;
 	private List<InvoiceDetailBean> detailList;
 
 	public int getTransactionInvoiceHeaderId() {
@@ -224,6 +225,14 @@ public class InvoiceBean implements Serializable {
 
 	public void setDetailSize(String detailSize) {
 		this.detailSize = detailSize;
+	}
+
+	public String getSettlementInvoiceId() {
+		return settlementInvoiceId;
+	}
+
+	public void setSettlementInvoiceId(String settlementInvoiceId) {
+		this.settlementInvoiceId = settlementInvoiceId;
 	}
 	
 }
