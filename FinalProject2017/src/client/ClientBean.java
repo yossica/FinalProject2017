@@ -10,6 +10,7 @@ public class ClientBean implements Serializable {
 	private String phoneNumber;
 	private String faxNumber;
 	private String postalCode;
+	private String contactPerson;
 	private int isEnabled;
 	private String createdBy;
 	private String createdDate;
@@ -57,6 +58,12 @@ public class ClientBean implements Serializable {
 	}
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}	
+	public String getContactPerson() {
+		return contactPerson;
+	}
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
 	}
 	public int getIsEnabled() {
 		return isEnabled;
