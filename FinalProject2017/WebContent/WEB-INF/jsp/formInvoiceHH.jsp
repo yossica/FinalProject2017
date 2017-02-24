@@ -180,7 +180,7 @@
 					<h1 class="page-header">Create Invoice Head Hunter</h1>
 				</logic:equal>
 				<logic:equal name="invoiceForm" property="task" value="editInvoice">
-					<h1 class="page-header">Edit Invoice</h1>
+					<h1 class="page-header">Edit Invoice Head Hunter</h1>
 				</logic:equal>
 			</div>
 			<div class="row" style="margin-top: 10px;">
