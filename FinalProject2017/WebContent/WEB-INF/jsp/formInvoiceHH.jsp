@@ -97,6 +97,7 @@
 			return;
 		}
 		else{
+
 			swal({
 				  title: "Are you sure?",
 				  text: "System will insert these data to Invoice Professional Service",
@@ -141,6 +142,7 @@
 		}else {
 			document.getElementById('deleteButton').style.display = 'table-row';
 		}
+
 		var message=document.getElementById("err");
 		if(message!=null){
 			var messageValue=message.value;
@@ -157,6 +159,25 @@
 		}
 	}
 	window.onload = onloadFunc;
+	
+	/* function alertError() {
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	} */
+	//window.onload = alertError;
+	
 </script>
 </head>
 <body>
