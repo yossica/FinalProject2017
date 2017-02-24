@@ -90,6 +90,15 @@
 			});
 		}
 	}
+	
+	function placeholder() {
+		if(document.getElementsByName("phoneNumber")[0].value == "") {
+			document.getElementsByName("phoneNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
+		}
+		else if(document.getElementsByName("faxNumber")[0].value == "") {
+			document.getElementsByName("faxNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
+		}
+	}
 
 	function cancel() {
 		document.forms[1].task.value = "client";
@@ -136,13 +145,13 @@
 										<td><label>Phone</label></td>
 										<td><html:text name="clientForm" property="phoneNumber"
 												styleClass="form-control-client"
-												onclick="this.value='e.g.: 021 123-456 / +6221 123-456'" /></td>
+												onclick="javascript:placeholder()" /></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
 										<td><html:text name="clientForm" property="faxNumber"
 												styleClass="form-control-client"
-												onclick="this.value='e.g.: 021 123-456 / +6221 123-456'" /></td>
+												onclick="javascript:placeholder()" /></td>
 									</tr>
 									<tr>
 										<td><label>Postal Code</label></td>
