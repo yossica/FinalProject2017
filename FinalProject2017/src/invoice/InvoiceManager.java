@@ -45,47 +45,31 @@ public class InvoiceManager {
 		}
 		return invoiceNumber;
 	}
-	
-	public Integer getMaxInvoiceHeaderId(){
-		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		Integer id = null;
-		try {
-			id = (Integer) ibatis.queryForObject("invoice.getMaxIdHeader", null);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		if (id == null){
-			id = 1;
-		}
-		return id;
 		
-	}
-	
-	public Integer getMaxInvoiceDetailId(){
-		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		Integer id = null;
-		try {
-			id = (Integer) ibatis.queryForObject("invoice.getMaxIdDetail", null);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		if (id == null){
-			id = 1;
-		}
-		return id;	
-	}
-	
 	public Integer insert(InvoiceBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		Integer idHeader = null;
 		try{
 			ibatis.startTransaction();
-			idHeader = getMaxInvoiceHeaderId() + 1;
+			idHeader = (Integer) ibatis.queryForObject("invoice.getMaxIdHeader", null);
+			if(idHeader == null){
+				idHeader = 1;
+			}
+			else {
+				idHeader++;
+			}
 			input.setTransactionInvoiceHeaderId(idHeader);
 			ibatis.insert("invoice.insertHeader", input);
 			for (InvoiceDetailBean bean : input.getDetailList()){
 				bean.setTransactionInvoiceHeaderId(idHeader);
-				bean.setTransactionInvoiceDetailId(getMaxInvoiceDetailId() + 1);
+				Integer idDetail = (Integer) ibatis.queryForObject("invoice.getMaxIdDetail", null);
+				if(idDetail == null){
+					idDetail = 1;
+				}
+				else{
+					idDetail++;
+				}
+				bean.setTransactionInvoiceDetailId(idDetail);
 				ibatis.insert("invoice.insertDetail", bean);
 			}
 			ibatis.commitTransaction();
@@ -125,7 +109,14 @@ public class InvoiceManager {
 			ibatis.update("invoice.updateHeaderById", input);
 			ibatis.delete("invoice.deleteDetailByHeaderId", input.getTransactionInvoiceHeaderId());
 			for(int i = 0 ;i<input.getDetailList().size();i++){
-				input.getDetailList().get(i).setTransactionInvoiceDetailId(getMaxInvoiceDetailId() + 1);
+				Integer idDetail = (Integer) ibatis.queryForObject("invoice.getMaxIdDetail", null);
+				if(idDetail == null){
+					idDetail = 1;
+				}
+				else{
+					idDetail++;
+				}
+				input.getDetailList().get(i).setTransactionInvoiceDetailId(idDetail);
 				ibatis.insert("invoice.insertDetail", input.getDetailList().get(i));
 			}
 			ibatis.commitTransaction();
