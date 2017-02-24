@@ -149,7 +149,7 @@ public class PettyCashHandler extends Action {
 								: "Credit"));
 			}
 			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-		/*	pettyCashForm.getMessageList().add(
+		/*pettyCashForm.getMessageList().add(
 					"Success!!! Petty Cash has been balanced!");*/
 			return mapping.findForward("pettyCash");
 		} else if ("debit".equals(pettyCashForm.getTask())) {
