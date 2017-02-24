@@ -22,26 +22,27 @@
 			var numberReg = /^\d+$/; 
 			
 			if(manDays == ""){
-				errorMessage+="Man Days at row "+(count+1)+" must be filled!<br/>";
+				errorMessage+="Man Days at row "+(count+1)+" must be filled! \n";
 			}
 			else if(!numberReg.test(manDays)){
-				errorMessage+="Man Days at row "+(count+1)+" must be number and not negative!<br/>";
+				errorMessage+="Man Days at row "+(count+1)+" must be number and not negative! \n";
 			}
 			else if(parseInt(manDays)>parseInt(workDays)){
-				errorMessage+="Man Days at row "+(count+1)+" must lesser than Work Days!<br/>";
+				errorMessage+="Man Days at row "+(count+1)+" must lesser than Work Days! \n";
 			}
 
 			if(workDays == ""){
-				errorMessage+="Work Days at row "+(count+1)+" must be filled!<br/>";
+				errorMessage+="Work Days at row "+(count+1)+" must be filled! \n";
 			}
 			else if(!numberReg.test(workDays)){
-				errorMessage+="Work Days at row "+(count+1)+" must be number and not negative!<br/>";
+				errorMessage+="Work Days at row "+(count+1)+" must be number and not negative! \n";
 			}
 			
          }
 
 		if(errorMessage.length != 0){
-			document.getElementById("message").innerHTML = errorMessage;
+			sweetAlert("Oops...", errorMessage, "error");
+			//document.getElementById("message").innerHTML = errorMessage;
 			return;
 		}
 		 swal({
@@ -235,7 +236,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4" style="color: red;" id="message">
+			<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+  				<logic:notEmpty name="invoiceForm" property="messageList">
+					<logic:iterate id="message" name="invoiceForm" property="messageList">
+						<%-- <bean:write name="message" />  --%>
+						<input type="hidden" id="err" value="<bean:write name="message" />">
+					</logic:iterate>
+				</logic:notEmpty>
 			</div>
 		</div>
 	</div>
