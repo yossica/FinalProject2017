@@ -117,15 +117,18 @@
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
 				  }
 				});
-			/* document.forms[1].task.value = task;
-			document.forms[1].submit(); */
 		}
 	}
-	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
+	function flyToDetail(task,transactionInvoiceHeaderId, clientId, statusId){
+		document.forms[1].task.value = task;
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
 		document.forms[1].client.value = clientId;
 		document.forms[1].statusId.value = statusId;
-		flyToPage("detailInvoice");
+		document.forms[1].submit();
+	}
+	function flyToCancel(task){
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
 	}
 	function deleteDetailHH(index, flyTo){
 		document.forms[1].deleteIndex.value = index;
@@ -160,23 +163,6 @@
 	}
 	window.onload = onloadFunc;
 	
-	/* function alertError() {
-		var message=document.getElementById("err");
-		if(message!=null){
-			var messageValue=message.value;
-			
-			var strValue = messageValue.substring(0, 7);
-			if(strValue=="Success"){
-				//Success
-				swal("Good job!", messageValue, "success");
-			}
-			else if(strValue=="Ooooops"){
-				//Ooooops
-				sweetAlert("Oops...", messageValue, "error");
-			}
-		}
-	} */
-	//window.onload = alertError;
 	
 </script>
 </head>
@@ -191,7 +177,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
-					<h1 class="page-header">Create Invoice (Cont)</h1>
+					<h1 class="page-header">Create Invoice Head Hunter</h1>
 				</logic:equal>
 				<logic:equal name="invoiceForm" property="task" value="editInvoice">
 					<h1 class="page-header">Edit Invoice</h1>
@@ -344,7 +330,7 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
-							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToCancel('createInvoice')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertHH')">Save</button>
 						</logic:equal>
 						<logic:equal name="invoiceForm" property="task" value="editInvoice">
@@ -352,6 +338,7 @@
 							<html:hidden property="client" name="invoiceForm"/>
 							<html:hidden property="statusId" name="invoiceForm"/>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToDetail(
+								'detailInvoice',
                 				'<bean:write name="invoiceForm" property="transactionInvoiceHeaderId" format="#"/>',
                 				'<bean:write name="invoiceForm" property="clientId" format="#"/>',
                 				'<bean:write name="invoiceForm" property="statusInvoiceId" format="#"/>'
