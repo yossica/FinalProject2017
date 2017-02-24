@@ -27,8 +27,8 @@
 		if (name == "") {
 			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
-			errorMessage = errorMessage + "Name must be in alphabets only! \n";
-			+"Invalid format of Name (min. 3 chars) !<br/>";
+			errorMessage = errorMessage
+					+ "Invalid format of Name (min. 3 chars, alphabets only!) ! \n";
 		}
 		if (address == "") {
 			errorMessage = errorMessage + "Address must be filled! \n";
@@ -40,7 +40,6 @@
 			errorMessage = errorMessage + "City must be filled! \n";
 		} else if (!letters.test(city)) {
 			errorMessage = errorMessage + "City must be in alphabets only! \n";
-			+"Invalid format of City!<br/>";
 		}
 		if (phoneNumber == "") {
 			errorMessage = errorMessage + "Phone Number must be filled! \n";

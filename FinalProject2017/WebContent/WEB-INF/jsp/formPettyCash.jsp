@@ -43,7 +43,7 @@
 		else {
 			swal({
 				  title: "Are you sure?",
-				  text: "System will insert these data to cash in bank transaction",
+				  text: "System will insert these data to petty cash transaction",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",
@@ -54,14 +54,14 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					 /*  swal({title: "Good job!",
+					  /* swal({title: "Good job!",
 						  text: "Transaction Success!",
 						  type: "success"}
 						 ,function(){
 						  setTimeout(function(){
 							  flyToPage();
 							  }, 10);
-							});  */
+							}); */  
 					  flyToPage();
 				  } else {
 				    swal("Cancelled", "Cancel Insert Transaction", "error");
@@ -80,7 +80,6 @@
 		var message=document.getElementById("err");
 		if(message!=null){
 			var messageValue=message.value;
-			
 			var strValue = messageValue.substring(0, 7);
 			if(strValue=="Success"){
 				//Success
@@ -153,8 +152,8 @@
 						<!-- /.table-responsive -->
 					</div>	
 					<div class="col-md-12" style="padding-right: 1%;" >
-						<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:cancel()">Cancel</button>	
+						<button type="button" class="btn btn-primary" onclick="javascript:cancel()">Cancel</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:insert()">Save</button>	
 					</div>
 			
 		
