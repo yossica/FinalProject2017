@@ -443,6 +443,9 @@ public class InvoiceHandler extends Action {
 					invoiceDetailBean.setWorkDays(temp.getWorkDays());
 					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
 				}
+				invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+				invoiceForm.setClientId(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+				invoiceForm.setStatusInvoiceId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 				invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
 				invoiceForm.setTask("editInvoice");
 				return  mapping.findForward("formInvoicePS");
@@ -505,6 +508,11 @@ public class InvoiceHandler extends Action {
 					TrainingBean trainingBean = trainingManager.getTrainingByInvoiceSettlementId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
 					invoiceForm.setTrainingBean(trainingBean);
 					invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(trainingBean.getTransactionTrainingHeaderId()));					
+
+					invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+					invoiceForm.setClientId(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+					invoiceForm.setStatusInvoiceId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+					invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
 					return mapping.findForward("formInvoiceTRST");
 				}
 			}
