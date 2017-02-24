@@ -48,6 +48,8 @@ public class IndexHandler extends Action {
 			return mapping.findForward("pettyCash");
 		} else if ("createInvoiceIndex".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("createInvoiceIndex");
+		} else if ("createInvoiceIndexTr".equals(indexForm.getTaskIndex())) {
+			return mapping.findForward("createInvoiceIndex");
 		} else if ("cashInBank".equals(indexForm.getTaskIndex())) {
 			return mapping.findForward("cashInBank");
 		} else if ("financeSummary".equals(indexForm.getTaskIndex())) {

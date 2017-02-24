@@ -63,9 +63,24 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceForm.getPeriodMonth()));
 			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceForm.getPeriodYear()));
 			return mapping.findForward("createInvoice");
+		}else if ("createInvoiceIndexTr".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientId(Integer.parseInt(invoiceForm.getClientId()));
+			invoiceForm.getInvoiceBean().setInvoiceTypeId(Integer.parseInt(invoiceForm.getInvoiceTypeId()));
+			invoiceForm.getInvoiceBean().setSettlementInvoiceId(invoiceForm.getSettlementInvoiceId());
+			return mapping.findForward("createInvoice");
 		}else if ("createInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoice");
 		}else if ("formInvoicePS".equals(invoiceForm.getTask())) {
+			//check apakah invoice yang akan dibuat >= bulan ini
+			String currentPeriod = outsourceManager.getPeriod();
+			if(Integer.parseInt(""+invoiceForm.getInvoiceBean().getPeriodYear()
+						+ String.format("%02d",invoiceForm.getInvoiceBean().getPeriodMonth()))
+						> Integer.parseInt(currentPeriod)){
+				//invoice yang akan dibuat >= bulan ini (masih berjalan dan ada kemungkinan bertambah)
+				invoiceForm.getMessageList().clear();
+				invoiceForm.getMessageList().add("Ooooops!!! You can only create previous months invoice");
+				return mapping.findForward("createInvoice");
+			}
 			String exampleDate = String.format("%02d",invoiceForm.getInvoiceBean().getPeriodMonth())
 					+ "/01/" + invoiceForm.getInvoiceBean().getPeriodYear();
 			Map paramMap = new HashMap();
@@ -251,7 +266,6 @@ public class InvoiceHandler extends Action {
 			trainingBean.setIsGross(invoiceForm.getInvoiceBean().getIsGross());
 			trainingBean.setSettlementInvoiceId(0);
 			trainingBean.setClientId(invoiceForm.getInvoiceBean().getClientId());
-			trainingBean.setDpInvoiceId(invoiceManager.getMaxInvoiceHeaderId()+1);
 			cal.setTime(showDateFormat.parse(trainingBean.getTrainingStartDate()));
 			trainingBean.setTrainingStartDate(dateFormat.format(cal.getTime()));
 			cal.setTime(showDateFormat.parse(trainingBean.getTrainingEndDate()));
@@ -303,6 +317,7 @@ public class InvoiceHandler extends Action {
 			Integer idHeader = invoiceManager.insert(invoiceForm.getInvoiceBean());
 			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 			//insert training
+			trainingBean.setDpInvoiceId(idHeader);
 			trainingManager.insert(trainingBean);
 			
 			//setting field untuk view invoice
@@ -902,6 +917,9 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+
+			invoiceForm.getMessageList().add("Success!!! Invoice Head Hunter has been Created!");
+
 			return mapping.findForward("detailInvoice");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();

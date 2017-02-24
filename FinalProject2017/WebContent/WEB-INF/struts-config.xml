@@ -22,6 +22,7 @@
 			<forward name="success" path="/WEB-INF/jsp/index.jsp"></forward>
 			<forward name="invoice" path="/invoice.do?task=invoice"></forward>
 			<forward name="createInvoiceIndex" path="/invoice.do?task=createInvoiceIndex"></forward>
+			<forward name="createInvoiceIndexTr" path="/invoice.do?task=createInvoiceIndexTr"></forward>
 			<forward name="financeSummary" path="/WEB-INF/jsp/financeSummary.jsp"></forward>
 			<forward name="employee" path="/employee.do"></forward>
 			<forward name="pettyCash" path="/pettyCash.do"></forward>

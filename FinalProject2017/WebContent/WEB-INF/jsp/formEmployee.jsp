@@ -9,13 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 <script>
-
 	function insert() {
 
 		var name = document.getElementsByName("name")[0].value;
 		var email = document.getElementsByName("email")[0].value;
 
-		var letters = /^([A-Za-z ])+$/;
+		var letters = /^([A-Za-z ]{3,})+$/;
 		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}])|(([A-z\-\d]+\.)+[A-z]{2,}))$/;
 		var errorMessage = "";
 
@@ -23,24 +22,21 @@
 			errorMessage = errorMessage + "Name must be filled! \n";
 		} else if (!letters.test(name)) {
 			errorMessage = errorMessage
-					+ "Name must be in alphabets only! \n";
-					+ "Invalid format of Name (min. 3 chars) !<br/>";
+					+ "Invalid format of Name (min. 3 chars, in alphabets only) ! \n";
 		}
 
 		if (email == "") {
 			errorMessage = errorMessage + "Email must be filled! \n";
 		} else if (!emailRegex.test(email)) {
-			errorMessage = errorMessage
-					+ "Email should be in valid format! \n";
-					+ "Invalid format of Email!<br/>";
+			errorMessage = errorMessage + "Email should be in valid format! \n";
+			+"Invalid format of Email!<br/>";
 		}
 
 		if (errorMessage.length != 0) {
 			sweetAlert("Oops...", errorMessage, "error");
 			//document.getElementById("message").innerHTML = errorMessage;
 			return;
-		} 			
-		else {
+		} else {
 			swal({
 				title : "Are you sure?",
 				text : "System will insert these data to employee database",
@@ -53,14 +49,15 @@
 				closeOnCancel : false
 			}, function(isConfirm) {
 				if (isConfirm) {
-					swal({title: "Good job!",
-						  text: "Save Success!",
-						  type: "success"}
-						 ,function(){
-						  setTimeout(function(){
-							  flyToPage();
-							  }, 10);
-							});		
+					swal({
+						title : "Good job!",
+						text : "Save Success!",
+						type : "success"
+					}, function() {
+						setTimeout(function() {
+							flyToPage();
+						}, 10);
+					});
 				} else {
 					swal("Cancelled", "Cancel Insert New Data", "error");
 				}
@@ -77,7 +74,6 @@
 	function flyToPage() {
 		document.forms[1].submit();
 	}
-	
 </script>
 <title>Finance Solution</title>
 </head>
@@ -92,23 +88,26 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Employee</h1>
-				<div class="panel-body">
+					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<tbody>
 									<tr>
 										<td><label>Employee Name</label></td>
-										<td><html:text property="name" name="employeeForm" styleClass="form-control-client"/></td>
+										<td><html:text property="name" name="employeeForm"
+												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Email</label></td>
-										<td><html:text property="email" name="employeeForm" styleClass="form-control-client"/></td>
+										<td><html:text property="email" name="employeeForm"
+												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Employee Status</label></td>
 										<td>
-											<div class="col-lg-13" >
-												<html:select property="isEnabled" name="employeeForm" styleClass="form-control-client">
+											<div class="col-lg-13">
+												<html:select property="isEnabled" name="employeeForm"
+													styleClass="form-control-client">
 													<html:option value="1">Enabled</html:option>
 													<html:option value="0">Disabled</html:option>
 												</html:select>
@@ -117,32 +116,38 @@
 									</tr>
 								</tbody>
 							</table>
-						</div> <!-- /.table-responsive -->
-          </div><!-- /.panel-body -->
-          
-						<div class="col-md-12" style="padding-left:0;">
-							<div class="pull-left">
-								 <button type="button" class="btn btn-primary"
-										onclick="javascript:cancel()">Cancel</button>
-									<button type="button" class="btn btn-primary"
-										onclick="javascript:insert()">Save</button>
-			          </div>
-					  </div>
+						</div>
+						<!-- /.table-responsive -->
+					</div>
+					<!-- /.panel-body -->
 
-					<div class="col-md-12" style="color: red;" id="message" >	
-										
+					<div class="col-md-12" style="padding-left: 0;">
+						<div class="pull-left">
+							<button type="button" class="btn btn-primary"
+								onclick="javascript:cancel()">Cancel</button>
+							<button type="button" class="btn btn-primary"
+								onclick="javascript:insert()">Save</button>
+						</div>
+					</div>
+
+					<div class="col-md-12" style="color: red;" id="message">
+
 						<logic:notEmpty name="employeeForm" property="messageList">
 							<logic:iterate id="message" name="employeeForm"
 								property="messageList">
-								<input type="hidden" id="err" value="<bean:write name="message" />">
+								<input type="hidden" id="err"
+									value="<bean:write name="message" />">
 							</logic:iterate>
 						</logic:notEmpty>
-						
+
 					</div>
 
-				</div><!-- /.col lg 12 -->
-			</div><!-- /.row -->
-		</div><!-- /.page wrapper -->
+				</div>
+				<!-- /.col lg 12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.page wrapper -->
 
 	</html:form>
 
