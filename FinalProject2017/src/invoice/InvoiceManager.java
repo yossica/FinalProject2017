@@ -45,7 +45,36 @@ public class InvoiceManager {
 		}
 		return invoiceNumber;
 	}
+	
+	public Integer getMaxInvoiceHeaderId(){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		Integer id = null;
+		try {
+			id = (Integer) ibatis.queryForObject("invoice.getMaxIdHeader", null);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (id == null){
+			id = 0;
+		}
+		return id;
 		
+	}
+	
+	public Integer getMaxInvoiceDetailId(){
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		Integer id = null;
+		try {
+			id = (Integer) ibatis.queryForObject("invoice.getMaxIdDetail", null);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if (id == null){
+			id = 0;
+		}
+		return id;	
+	}
+
 	public Integer insert(InvoiceBean input){
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		Integer idHeader = null;
