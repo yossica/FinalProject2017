@@ -48,6 +48,7 @@
 									<th>Phone</th>
 									<th>Fax</th>
 									<th>Postal Code</th>
+									<th>Contact Person</th>
 									<th>Action</th>
 								</tr>
 							
@@ -61,6 +62,7 @@
 											<td><bean:write name="client" property="phoneNumber" /></td>
 											<td><bean:write name="client" property="faxNumber" /></td>
 											<td><bean:write name="client" property="postalCode" /></td>
+											<td><bean:write name="client" property="contactPerson" /></td>
 											<td><input type="button" value="Edit"
 												class="btn btn-primary"
 												onclick="javascript:flyToUpdate('<bean:write name="client" 
