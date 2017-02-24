@@ -75,20 +75,21 @@
 			var HHSize = document.getElementById('headHunterListSize').value;
 			for(var i=0; i<HHSize; i++){
 				if (document.getElementsByName('invoiceDetailHH['+i+'].description')[0].value == ''){
+					alert('Error Deskripsi Kosong');
 					error = true;
 				}else if (document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value == ''){
+					alert('Error Fee Kosong');
 					error = true;
 				}else if (!doubleReg.test(document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value)){
+					alert('Error Fee tidak sesuai format');
 					error = true;
 				}
 			}
 		}
-		if (error){
-			alert('error la ya...');
-		}else {
+		if (!error){
 			document.forms[1].task.value = task;
 			document.forms[1].submit();
-		}	
+		}
 	}
 	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
@@ -230,7 +231,7 @@
 			<div class="col-md-12" style="border:solid 1px gray; border-radius: 10px; background-color: #EFEFEF; margin-top: 30px;">
 				<div class="row">
 					<div class="col-md-12" style="text-align: center;">
-						<table class="table table-hover">
+						<table class="table table-hover" style="width: 95%;">
 							<tr>
 								<th>Description</th>
 								<th>Fee</th>
