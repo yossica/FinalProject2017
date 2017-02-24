@@ -79,15 +79,15 @@
 				if (document.getElementsByName('invoiceDetailHH['+i+'].description')[0].value == ''){
 					/* alert('Error Deskripsi Kosong');
 					error = true; */
-					errorMessage+="Description must be filled! \n";
+					errorMessage = errorMessage + "Description must be filled! \n";
 				}else if (document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value == ''){
 					/* alert('Error Fee Kosong');
 					error = true; */
-					errorMessage+="Fee must be filled! \n";
+					errorMessage = errorMessage + "Fee must be filled! \n";
 				}else if (!doubleReg.test(document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value)){
 					/* alert('Error Fee tidak sesuai format');
 					error = true; */
-					errorMessage+="Fee must be Number! \n";
+					errorMessage = errorMessage + "Fee must be Number! \n";
 				}
 			}
 		}
@@ -97,11 +97,10 @@
 			return;
 		}
 		else{
-			/* document.forms[1].task.value = task;
-			document.forms[1].submit(); */
+
 			swal({
 				  title: "Are you sure?",
-				  text: "System will insert these data to additional fee",
+				  text: "System will insert these data to Invoice Professional Service",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",
@@ -112,12 +111,14 @@
 				},
 				function(isConfirm){
 				  if (isConfirm) {
-					  	document.forms[1].task.value = task;
+					  document.forms[1].task.value = task;
 						document.forms[1].submit();
 				  } else {
-				    swal("Cancelled", "Cancel Insert Additional Fee", "error");
+				    swal("Cancelled", "Cancel Insert Transaction", "error");
 				  }
-				}); 
+				});
+			/* document.forms[1].task.value = task;
+			document.forms[1].submit(); */
 		}
 	}
 	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
@@ -141,7 +142,7 @@
 		}else {
 			document.getElementById('deleteButton').style.display = 'table-row';
 		}
-		
+
 		var message=document.getElementById("err");
 		if(message!=null){
 			var messageValue=message.value;

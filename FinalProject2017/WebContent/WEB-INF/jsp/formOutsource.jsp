@@ -313,7 +313,7 @@
 				<div class="col-lg-12" style="padding-left:0;">
 					<div class="pull-left">
 						<button type="button" class="btn btn-primary"
-							onclick="javascript:flyToPage('back')">Back</button>
+							onclick="javascript:flyToPage('back')">Cancel</button>
 						<button type="button" class="btn btn-primary"
 							onclick="javascript:validate()">Save</button>
 					</div>
