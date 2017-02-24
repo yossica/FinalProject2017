@@ -8,7 +8,75 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
+<style>
+/* Popup container - can be anything you want */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: #337ab7;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: -140px;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+</style>
 <script>
+	function toggleNotes(idNumber) {
+	    var popup = document.getElementById("myPopup"+idNumber);
+	    popup.classList.toggle("show");
+	}
+	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
+		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
+		document.forms[1].client.value = clientId;
+		document.forms[1].statusId.value = statusId;
+		back("detailInvoice");
+	}
 	function back(task){
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
@@ -156,7 +224,12 @@
 				<div class="row">
 					<div class="col-md-2"><label>Invoice Notes</label></div>
 					<div class="col-md-5">
-						<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"/>
+						<logic:equal name="invoiceForm" property="task" value="editInvoice"> 
+							<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control"/>
+						</logic:equal>
+						<logic:notEqual name="invoiceForm" property="task" value="editInvoice">
+							<html:textarea name="invoiceForm" property="invoiceBean.notes" styleClass="form-control" readonly="true"/>
+						</logic:notEqual>
 					</div>
 				</div>
 			</div>
@@ -180,7 +253,7 @@
 							<html:hidden name="invoiceForm" property="invoiceBean.detailSize" />
 							<logic:notEmpty property="professionalServiceList" name="invoiceForm">
 								<logic:iterate id="invoiceDetailPS" property="professionalServiceList"
-									name="invoiceForm">
+									name="invoiceForm" indexId="indexPS">
 									<tr>
 										<td>
 											<bean:write property="employeeName" name="invoiceDetailPS" />
@@ -211,8 +284,12 @@
 											
 										</td>
 										<td>
-											<html:text property="notes" name="invoiceDetailPS" styleClass="form-control" indexed="true"/>
-											<html:hidden property="notes" name="invoiceDetailPS" indexed="true"/>
+											<div class="popup">
+												<span class="popuptext" id="myPopup${indexPS}">
+													<html:textarea name="invoiceDetailPS" property="notes" styleClass="form-control" indexed="true" rows="7"></html:textarea>
+												</span>
+												<button type="button" class="btn btn-primary" onclick="javascript:toggleNotes(${indexPS})">Notes</button>
+											</div>
 										</td>
 									</tr>
 								</logic:iterate>
@@ -226,11 +303,20 @@
 			<div class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
-						<button type="button" class="btn btn-primary" onclick="javascript:back('createInvoice')">Back</button>
 						<logic:equal value="createInvoice" property="task" name="invoiceForm">
+							<button type="button" class="btn btn-primary" onclick="javascript:back('createInvoice')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertPS')">Save</button>
 						</logic:equal>
 						<logic:equal value="editInvoice" property="task" name="invoiceForm">
+							<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm"/>
+							<html:hidden property="client" name="invoiceForm"/>
+							<html:hidden property="statusId" name="invoiceForm"/>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToDetail(
+                				'<bean:write name="invoiceForm" property="transactionInvoiceHeaderId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="clientId" format="#"/>',
+                				'<bean:write name="invoiceForm" property="statusInvoiceId" format="#"/>'
+	                		)">
+	                		Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('editInvoicePS')">Save</button>
 						</logic:equal>
 					</div>

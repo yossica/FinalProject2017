@@ -185,8 +185,10 @@
     
 	<select id="getListedTrainingRemainderList" resultClass="training.TrainingBean">
 		select
+		    t.client_id as clientId,
 		    c.name as clientName,
-		    t.description as description
+		    t.description as description,
+		    t.settlement_invoice_id
 		from
 		    transaction_training_header t,master_client c
 		where

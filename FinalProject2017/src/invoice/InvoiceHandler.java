@@ -63,6 +63,11 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceForm.getPeriodMonth()));
 			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceForm.getPeriodYear()));
 			return mapping.findForward("createInvoice");
+		}else if ("createInvoiceIndexTr".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientId(Integer.parseInt(invoiceForm.getClientId()));
+			invoiceForm.getInvoiceBean().setInvoiceTypeId(Integer.parseInt(invoiceForm.getInvoiceTypeId()));
+			invoiceForm.getInvoiceBean().setSettlementInvoiceId(invoiceForm.getSettlementInvoiceId());
+			return mapping.findForward("createInvoice");
 		}else if ("createInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoice");
 		}else if ("formInvoicePS".equals(invoiceForm.getTask())) {
@@ -453,6 +458,9 @@ public class InvoiceHandler extends Action {
 					invoiceDetailBean.setWorkDays(temp.getWorkDays());
 					invoiceForm.getProfessionalServiceList().add(invoiceDetailBean);
 				}
+				invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+				invoiceForm.setClientId(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+				invoiceForm.setStatusInvoiceId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 				invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
 				invoiceForm.setTask("editInvoice");
 				return  mapping.findForward("formInvoicePS");
@@ -515,6 +523,11 @@ public class InvoiceHandler extends Action {
 					TrainingBean trainingBean = trainingManager.getTrainingByInvoiceSettlementId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
 					invoiceForm.setTrainingBean(trainingBean);
 					invoiceForm.setDetailTrainingList(trainingManager.getDetailByIdHeader(trainingBean.getTransactionTrainingHeaderId()));					
+
+					invoiceForm.setTransactionInvoiceHeaderId(invoiceForm.getInvoiceBean().getTransactionInvoiceHeaderId());
+					invoiceForm.setClientId(String.valueOf(invoiceForm.getInvoiceBean().getClientId()));
+					invoiceForm.setStatusInvoiceId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
+					invoiceForm.getInvoiceBean().setDetailSize(String.valueOf(invoiceForm.getProfessionalServiceList().size()));
 					return mapping.findForward("formInvoiceTRST");
 				}
 			}
@@ -904,6 +917,9 @@ public class InvoiceHandler extends Action {
 			invoiceForm.setInvoiceDetailList(invoiceManager.getDetailById(invoiceForm.getTransactionInvoiceHeaderId()));
 			invoiceForm.setNote(generalInformationManager.getByKey("rek_no"));
 			invoiceForm.setSign(generalInformationManager.getByKey("sign"));
+
+			invoiceForm.getMessageList().add("Success!!! Invoice Head Hunter has been Created!");
+
 			return mapping.findForward("detailInvoice");
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
