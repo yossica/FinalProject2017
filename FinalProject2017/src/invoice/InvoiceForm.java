@@ -43,6 +43,7 @@ public class InvoiceForm extends ActionForm{
 	private String yearTo;
 	private String statusInvoiceId;
 	private String invoiceTipeId;
+	private String settlementInvoiceId;
 	
 	private String client;
 	private String invoiceNumber;
@@ -374,6 +375,12 @@ public class InvoiceForm extends ActionForm{
   }
 	public void setOptYear(List<LabelValueBean> optYear) {
 		this.optYear = optYear;
+	}
+	public String getSettlementInvoiceId() {
+		return settlementInvoiceId;
+	}
+	public void setSettlementInvoiceId(String settlementInvoiceId) {
+		this.settlementInvoiceId = settlementInvoiceId;
 	}
 }
 

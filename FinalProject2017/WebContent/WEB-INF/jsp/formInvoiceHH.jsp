@@ -71,31 +71,64 @@
 		//Error Checking
 		var error = false;
 		var doubleReg = /^([\d]+)(|.[\d]+)$/;
+		var errorMessage = "";
+		
 		if (task == 'insertHH' || task == 'editInvoiceHH'){
 			var HHSize = document.getElementById('headHunterListSize').value;
 			for(var i=0; i<HHSize; i++){
 				if (document.getElementsByName('invoiceDetailHH['+i+'].description')[0].value == ''){
-					alert('Error Deskripsi Kosong');
-					error = true;
+					/* alert('Error Deskripsi Kosong');
+					error = true; */
+					errorMessage = errorMessage + "Description must be filled! \n";
 				}else if (document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value == ''){
-					alert('Error Fee Kosong');
-					error = true;
+					/* alert('Error Fee Kosong');
+					error = true; */
+					errorMessage = errorMessage + "Fee must be filled! \n";
 				}else if (!doubleReg.test(document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value)){
-					alert('Error Fee tidak sesuai format');
-					error = true;
+					/* alert('Error Fee tidak sesuai format');
+					error = true; */
+					errorMessage = errorMessage + "Fee must be Number! \n";
 				}
 			}
 		}
-		if (!error){
-			document.forms[1].task.value = task;
-			document.forms[1].submit();
+		if(errorMessage.length != 0){
+			sweetAlert("Oops...", errorMessage, "error");
+			//document.getElementById("message").innerHTML = errorMessage;
+			return;
+		}
+		else{
+
+			swal({
+				  title: "Are you sure?",
+				  text: "System will insert these data to Invoice Professional Service",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Insert",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+					  document.forms[1].task.value = task;
+						document.forms[1].submit();
+				  } else {
+				    swal("Cancelled", "Cancel Insert Transaction", "error");
+				  }
+				});
 		}
 	}
-	function flyToDetail(transactionInvoiceHeaderId, clientId, statusId){
+	function flyToDetail(task,transactionInvoiceHeaderId, clientId, statusId){
+		document.forms[1].task.value = task;
 		document.forms[1].transactionInvoiceHeaderId.value = transactionInvoiceHeaderId;
 		document.forms[1].client.value = clientId;
 		document.forms[1].statusId.value = statusId;
-		flyToPage("detailInvoice");
+		document.forms[1].submit();
+	}
+	function flyToCancel(task){
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
 	}
 	function deleteDetailHH(index, flyTo){
 		document.forms[1].deleteIndex.value = index;
@@ -112,8 +145,25 @@
 		}else {
 			document.getElementById('deleteButton').style.display = 'table-row';
 		}
+
+		var message=document.getElementById("err");
+		if(message!=null){
+			var messageValue=message.value;
+			
+			var strValue = messageValue.substring(0, 7);
+			if(strValue=="Success"){
+				//Success
+				swal("Good job!", messageValue, "success");
+			}
+			else if(strValue=="Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
 	}
 	window.onload = onloadFunc;
+	
+	
 </script>
 </head>
 <body>
@@ -127,10 +177,10 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
-					<h1 class="page-header">Create Invoice (Cont)</h1>
+					<h1 class="page-header">Create Invoice Head Hunter</h1>
 				</logic:equal>
 				<logic:equal name="invoiceForm" property="task" value="editInvoice">
-					<h1 class="page-header">Edit Invoice</h1>
+					<h1 class="page-header">Edit Invoice Head Hunter</h1>
 				</logic:equal>
 			</div>
 			<div class="row" style="margin-top: 10px;">
@@ -280,7 +330,7 @@
 				<div class="row">
 					<div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px;">
 						<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
-							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('createInvoice')">Back</button>
+							<button type="button" class="btn btn-primary" onclick="javascript:flyToCancel('createInvoice')">Back</button>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToPage('insertHH')">Save</button>
 						</logic:equal>
 						<logic:equal name="invoiceForm" property="task" value="editInvoice">
@@ -288,6 +338,7 @@
 							<html:hidden property="client" name="invoiceForm"/>
 							<html:hidden property="statusId" name="invoiceForm"/>
 							<button type="button" class="btn btn-primary" onclick="javascript:flyToDetail(
+								'detailInvoice',
                 				'<bean:write name="invoiceForm" property="transactionInvoiceHeaderId" format="#"/>',
                 				'<bean:write name="invoiceForm" property="clientId" format="#"/>',
                 				'<bean:write name="invoiceForm" property="statusInvoiceId" format="#"/>'
@@ -300,6 +351,14 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-4" style="color:red;overflow: auto;" id="message">
+  				<logic:notEmpty name="invoiceForm" property="messageList">
+					<logic:iterate id="message" name="invoiceForm" property="messageList">
+						<%-- <bean:write name="message" />  --%>
+						<input type="hidden" id="err" value="<bean:write name="message" />">
+					</logic:iterate>
+				</logic:notEmpty>
+			</div>
 	</html:form>
 	
 </body>
