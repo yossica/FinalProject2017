@@ -19,12 +19,19 @@
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
     <script>
-	function flyToCreate(task,clientId,invoiceTypeId,periodMonth,periodYear){
+	function flyToCreatePS(task,clientId,invoiceTypeId,periodMonth,periodYear){
 		document.forms[1].task.value = task;
 		document.forms[1].clientId.value = clientId;
 		document.forms[1].invoiceTypeId.value = invoiceTypeId;
 		document.forms[1].periodMonth.value = periodMonth;
 		document.forms[1].periodYear.value = periodYear;
+		document.forms[1].submit();
+	}
+	function flyToCreateTr(task,clientId,invoiceTypeId,settlementInvoiceId){
+		document.forms[1].task.value = task;
+		document.forms[1].clientId.value = clientId;
+		document.forms[1].invoiceTypeId.value = invoiceTypeId;
+		document.forms[1].settlementInvoiceId.value = settlementInvoiceId;
 		document.forms[1].submit();
 	}
 </script>
@@ -37,6 +44,7 @@
 	<html:hidden property="invoiceTypeId" name="invoiceForm"/>
 	<html:hidden property="periodMonth" name="invoiceForm"/>
 	<html:hidden property="periodYear" name="invoiceForm"/>
+	<html:hidden property="settlementInvoiceId" name="invoiceForm"/>
 	</html:form>
 	<div id="page-wrapper">
             <div class="row">
@@ -60,7 +68,7 @@
 	                                    <logic:notEmpty name="indexForm" property="listedRemainderList">	
 	                                        <logic:iterate id="list" name="indexForm" property="listedRemainderList">
 		                                        <tr>
-		                                        	<td onclick="flyToCreate('createInvoiceIndex',
+		                                        	<td onclick="flyToCreatePS('createInvoiceIndex',
 		                                        										 '<bean:write name="list" property="clientId" format="#"/>',
 		                                        										 '<bean:write name="list" property="invoiceTypeId" format="#"/>',
 		                                        										 '<bean:write name="list" property="periodMonth" format="#"/>',
@@ -76,10 +84,14 @@
 	                                    <logic:notEmpty name="indexForm" property="listedTrainingRemainderList">
 	                                        <logic:iterate id="list" name="indexForm" property="listedTrainingRemainderList">
 		                                        <tr>
-		                                        	<td><a href="#" onclick="flyToCreate('createInvoice')">
+		                                        	<td onclick="flyToCreateTr('createInvoiceIndexTr',
+		                                        									'<bean:write name="list" property="clientId" format="#"/>',
+		                                        									3,
+		                                        									'<bean:write name="list" property="settlementInvoiceId" format="#"/>'
+		                                        								)" style="cursor:pointer">
 		                                        	<bean:write name="list" property="clientName"/> - Training Settlement<br>
 		                                        	Description : <bean:write name="list" property="description"/>
-		                                        	</a></td>
+													</td>
 		                                        </tr>
 	                                        </logic:iterate>
 	                                    </logic:notEmpty>

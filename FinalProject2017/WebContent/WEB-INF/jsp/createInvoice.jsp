@@ -98,7 +98,13 @@
 	}
 	function onloadFunc() {
 		var today = new Date();
-		onchangeContractServices();
+		var task=document.forms[1].task.value;
+		if(task=="createInvoiceIndexTr"){
+			document.getElementById("payment").style.display = "block";
+			document.getElementById("tax").style.display = "none";
+		}else{
+			onchangeContractServices();
+		}
 		alertError();
 	}
 	function ifSettlement(){
@@ -237,6 +243,7 @@
 				<div class="row">
 					<div class="col-md-3"><label>Payment</label></div>
 					<div class="col-md-5">
+					<logic:notEqual property="task" name="invoiceForm" value="createInvoiceIndexTr">
 						<div class="radio">
 							<label>
 								<input type="radio" name="paymentRadio" id="paymentOption1" value="option1" onchange="javascript:ifSettlement()" checked>DP
@@ -246,6 +253,18 @@
 								<input type="radio" name="paymentRadio" id="paymentOption1" value="option2" onchange="javascript:ifSettlement()">Settlement
 						    </label>
 						</div>
+					</logic:notEqual>
+					<logic:equal property="task" name="invoiceForm" value="createInvoiceIndexTr">
+						<div class="radio">
+							<label>
+								<input type="radio" name="paymentRadio" id="paymentOption1" value="option1" onchange="javascript:ifSettlement()">DP
+						    </label>
+						    &nbsp;
+						    <label>
+								<input type="radio" name="paymentRadio" id="paymentOption1" value="option2" onchange="javascript:ifSettlement()" checked>Settlement
+						    </label>
+						</div>
+					</logic:equal>
 					</div>
 				</div>
 			</div>

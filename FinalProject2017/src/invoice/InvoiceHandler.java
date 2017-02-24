@@ -63,6 +63,11 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setPeriodMonth(Integer.parseInt(invoiceForm.getPeriodMonth()));
 			invoiceForm.getInvoiceBean().setPeriodYear(Integer.parseInt(invoiceForm.getPeriodYear()));
 			return mapping.findForward("createInvoice");
+		}else if ("createInvoiceIndexTr".equals(invoiceForm.getTask())) {
+			invoiceForm.getInvoiceBean().setClientId(Integer.parseInt(invoiceForm.getClientId()));
+			invoiceForm.getInvoiceBean().setInvoiceTypeId(Integer.parseInt(invoiceForm.getInvoiceTypeId()));
+			invoiceForm.getInvoiceBean().setSettlementInvoiceId(invoiceForm.getSettlementInvoiceId());
+			return mapping.findForward("createInvoice");
 		}else if ("createInvoice".equals(invoiceForm.getTask())) {
 			return mapping.findForward("createInvoice");
 		}else if ("formInvoicePS".equals(invoiceForm.getTask())) {
