@@ -186,8 +186,8 @@
             			<div class="col-md-2">
             				Description
             			</div>
-            			<div class="col-md-10">
-		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control-client" style="height:70px">
+            			<div class="col-md-8">
+		            		 <html:textarea property="trainingDetailBean.description" name="trainingForm" styleClass="form-control" style="height:100px">
 						     </html:textarea>
 				        </div>
             		</div>
@@ -227,7 +227,6 @@
 												<td><bean:write name="trainingDetail" property="description"/></td>
 												<td><bean:write name="trainingDetail" property="fee" format="#,###.##"/></td>
 												<logic:equal value="0" property="isSettlement" name="trainingDetail">
-													<%-- <td><a href="#" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">X</a></td> --%>
 													<td><button type="button" class="btn btn-primary" style="margin-bottom: 1%;" onclick="javascript:deleteAdditionalTraining('<bean:write name="trainingDetail" property="description"/>',<bean:write name="trainingDetail" property="transactionTrainingDetailId" format="#"/>)">Delete</button></td>
 												</logic:equal>
 												<logic:notEqual value="0" property="isSettlement" name="trainingDetail">

@@ -21,24 +21,26 @@
 	}
 	function flyToNextPage(){
 		var task;
-		var error = false;
+		var error = "";
 		
-		//Check Error Pertama
+		//Check Error
 		if (document.getElementById('invoiceDate').value == ''){
-			error = true;
-		}else if (document.getElementById('contractServices').value == 'Select'){
-			error = true;
-		}else if (document.getElementById('client').value == 'Select'){
-			error = true;
+			error += "Invoice Date must be filled\n";
 		}
-		
+		if (document.getElementById('client').value == 'Select'){
+			error += "Client must be filled\n";
+		}
+		if (document.getElementById('contractServices').value == 'Select'){
+			error += "Contract Service must be filled\n";
+		}
+				
 		if (getContractServices() == 1){
 			task = 'formInvoicePS';
 			//Error Checking Kedua
 			if (document.getElementById('periodMonth').value == 'Select'){
-				error = true;
+				error += "Period Month must be filled\n";
 			}else if (document.getElementById('periodYear').value == 'Select'){
-				error = true;
+				error += "Period Year must be filled\n";
 			}
 		}else if (getContractServices() == 2 || getContractServices() == 4){
 			task = 'formInvoiceHH';
@@ -52,12 +54,25 @@
 		}
 		
 		//Alert kalau Error disini
-		if (error){
-			alert('Error ya...')
-		}else {
-			alert('Tidak Ada Error... Lanjut!');
-			document.forms[1].task.value = task;
-			document.forms[1].submit();
+		if (error.length != 0) {
+			sweetAlert("Oops...", error, "error");
+			return;
+		} else {
+			if(document.getElementById("message").value!="Ooooops"){
+				document.forms[1].task.value = task;
+				document.forms[1].submit();
+			}
+			else{
+				swal({title: "Oops..!",
+				  text: "There is no contract",
+				  type: "error"}
+				 ,function(){
+				  setTimeout(function(){
+					  document.forms[1].task.value = 'createInvoice';
+					  document.forms[1].submit();
+					  }, 10);
+					});
+			}
 		}
 	}
 	function onchangeContractServices(){
@@ -151,23 +166,23 @@
 					</div>
 				</div>
 			</div>
-			<logic:equal property="task" name="invoiceForm" value="createInvoice">
+			<logic:notEqual property="task" name="invoiceForm" value="createInvoiceIndex">
 			<div id="period" class="col-md-10" style="margin-top: 10px; display: none;">
 				<div class="row">
 					<div class="col-md-3"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-3">
-
-						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control">
-							<html:option value="01">January</html:option>
-							<html:option value="02">February</html:option>
-							<html:option value="03">March</html:option>
-							<html:option value="04">April</html:option>
-							<html:option value="05">May</html:option>
-							<html:option value="06">June</html:option>
-							<html:option value="07">July</html:option>
-							<html:option value="08">August</html:option>
-							<html:option value="09">September</html:option>
+						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control-client" styleId="periodMonth">
+							<option selected disabled>Select</option>
+							<html:option value="1">January</html:option>
+							<html:option value="2">February</html:option>
+							<html:option value="3">March</html:option>
+							<html:option value="4">April</html:option>
+							<html:option value="5">May</html:option>
+							<html:option value="6">June</html:option>
+							<html:option value="7">July</html:option>
+							<html:option value="8">August</html:option>
+							<html:option value="9">September</html:option>
 							<html:option value="10">October</html:option>
 							<html:option value="11">November</html:option>
 							<html:option value="12">December</html:option>
@@ -176,22 +191,22 @@
 					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-3">
 						<html:select name="invoiceForm" property="invoiceBean.periodYear"
-										styleClass="form-control-client">
-							<html:option value="">Select All</html:option>
+										styleClass="form-control-client" styleId="periodYear">
+							<option selected disabled>Select</option>
 							<html:optionsCollection name="invoiceForm"
 								property="optYear" value="value" label="label" />
 						</html:select>
 					</div>
 				</div>
 			</div>
-			</logic:equal>
+			</logic:notEqual>
 			<logic:equal property="task" name="invoiceForm" value="createInvoiceIndex">
 			<div id="period" class="col-md-10" style="margin-top: 10px;">
 				<div class="row">
 					<div class="col-md-3"><label>Period</label></div>
 					<div class="col-md-1"><label>Month</label></div>
 					<div class="col-md-3">
-						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control">
+						<html:select name="invoiceForm" property="invoiceBean.periodMonth" styleClass="form-control" styleId="periodMonth">
 							<html:option value="01">January</html:option>
 							<html:option value="02">February</html:option>
 							<html:option value="03">March</html:option>
@@ -209,7 +224,7 @@
 					<div class="col-md-1"><label>Year</label></div>
 					<div class="col-md-3">
 						<html:select name="invoiceForm" property="invoiceBean.periodYear"
-										styleClass="form-control-client">
+										styleClass="form-control-client" styleId="periodYear">
 							<html:option value="">Select All</html:option>
 							<html:optionsCollection name="invoiceForm"
 								property="optYear" value="value" label="label" />

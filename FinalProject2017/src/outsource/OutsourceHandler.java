@@ -41,6 +41,7 @@ public class OutsourceHandler extends Action {
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
+		String message = "";
 
 		if ("create".equals(outsourceForm.getTask())) {
 			outsourceForm.setOptClientList(clientManager.getAllEnabled());
@@ -84,6 +85,10 @@ public class OutsourceHandler extends Action {
 			outsourceForm.setOutsourceBean(outsourceBean);
 
 			// date format data
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			outsourceForm.getOutsourceBean().setStartDate(
+					showDateFormat.format(cal.getTime()));
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 					.getEndDate()));
 			outsourceForm.getOutsourceBean().setEndDate(
@@ -132,13 +137,13 @@ public class OutsourceHandler extends Action {
 
 					} else {
 						flagError = 1;
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Employee already with another contract, with "
+						message = message + "Ooooops!!! Employee already with another contract, with "
 										+ tmpList.get(j).getClientName()
 										+ " in period "
 										+ tmpList.get(j).getStartDate()
 										+ " until "
-										+ tmpList.get(j).getEndDate());
+										+ tmpList.get(j).getEndDate()
+										+ "\n";
 						break;
 					}
 				}
@@ -148,38 +153,56 @@ public class OutsourceHandler extends Action {
 			}
 
 			// cek ada contract dengan client yang sama atau tidak
-			// start date input < end date contract yang sudah ada
+			// yang overlap
 			// maka is grossnya harus sama
+			cal2 = Calendar.getInstance();
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			cal2.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getEndDate()));
+			cal3 = Calendar.getInstance();
+			cal4 = Calendar.getInstance();
 			Map filter = new HashMap();
-			filter.put("client", outsourceForm.getOutsourceBean().getClientId());
-			filter.put("gtEndDate", outsourceForm.getOutsourceBean()
-					.getStartDate().substring(0, 3)
-					+ "01"
-					+ outsourceForm.getOutsourceBean().getStartDate()
-							.substring(5, 10));
-			List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
-			tmpList = outsourceManager.getAllWithFilter(filter);
-			if (tmpList.size() > 0) {
-				if (tmpList.get(0).getIsGross() != outsourceForm
-						.getOutsourceBean().getIsGross()) {
-					flagError = 1;
-					if (tmpList.get(0).getIsGross() == 1) {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
-										+ "with tax include, new contract "
-										+ "must be tax include as well");
-					} else {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
-										+ "with tax exclude, new contract "
-										+ "must be tax exclude as well");
-					}
+			for (int i = cal.get(Calendar.YEAR); i <= cal2.get(Calendar.YEAR); i++) {
+				filter = new HashMap();
+				filter.put("client", outsourceForm.getOutsourceBean()
+						.getClientId());
+				filter.put("year", i);
+				List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
+				tmpList = outsourceManager.getAllWithFilter(filter);
+				for (int j = 0; j < tmpList.size(); j++) {
+					cal3.setTime(dateFormat
+							.parse(tmpList.get(j).getStartDate()));
+					cal4.setTime(dateFormat.parse(tmpList.get(j).getEndDate()));
+					if (cal.after(cal4) || cal2.before(cal3)) {
 
+					} else {
+						if (tmpList.get(j).getIsGross() != outsourceForm
+								.getOutsourceBean().getIsGross()) {
+							flagError = 1;
+							if (tmpList.get(j).getIsGross() == 1) {
+								message = message + "Ooooops!!! Client already have contract "
+												+ "with tax include, new contract "
+												+ "must be tax include as well"
+												+ "\n";
+							} else {
+								message = message + "Ooooops!!! Client already have contract "
+												+ "with tax exclude, new contract "
+												+ "must be tax exclude as well"
+												+ "\n";
+							}
+							break;
+						}
+					}
+				}
+				if (flagError == 1) {
+					break;
 				}
 			}
 
 			if (flagError == 1) {
 				// date format show
+				outsourceForm.getMessageList().add(message);
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 						.getStartDate()));
 				outsourceForm.getOutsourceBean().setStartDate(
@@ -245,21 +268,22 @@ public class OutsourceHandler extends Action {
 									.getTransactionOutsourceId()) {
 						flagError = 1;
 						if (tmpList.get(0).getIsGross() == 1) {
-							outsourceForm.getMessageList().add(
-									"Ooooops!!! Client already have contract "
+							message = message + "Ooooops!!! Client already have contract "
 											+ "with tax include, new contract "
-											+ "must be tax include as well");
+											+ "must be tax include as well"
+											+ "\n";
 						} else {
-							outsourceForm.getMessageList().add(
-									"Ooooops!!! Client already have contract "
+							message = message + "Ooooops!!! Client already have contract "
 											+ "with tax exclude, new contract "
-											+ "must be tax exclude as well");
+											+ "must be tax exclude as well"
+											+ "\n";
 						}
 
 					}
 				}
 			}
 			if (flagError == 1) {
+				outsourceForm.getMessageList().add(message);
 				outsourceForm.setTask("saveupdate");
 				return mapping.findForward("formOutsource");
 			} else {
@@ -303,8 +327,8 @@ public class OutsourceHandler extends Action {
 			if (outsourceForm.getOutsourceBean().getClientId() == outsourceBean
 					.getClientId()) {
 				flagError = 1;
-				outsourceForm.getMessageList().add(
-						"Client must be different from previous client");
+				message = message + "Ooooops!!! Client must be different from previous client"
+							+"\n";
 			}
 
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
@@ -314,17 +338,15 @@ public class OutsourceHandler extends Action {
 			// input start date > old start date, jika tidak maka error
 			if (cal.compareTo(cal2) <= 0) {
 
-				outsourceForm.getMessageList().add(
-						"Start date must be later than previous start date ["
-								+ outsourceBean.getStartDate() + "]");
+				message = message + "Ooooops!!! Start date must be later than previous start date ["
+								+ outsourceBean.getStartDate() + "] \n";
 				flagError = 1;
 			}
 			// input start date < old end date, jika tidak maka error
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
 			if (cal.compareTo(cal2) >= 0) {
-				outsourceForm.getMessageList().add(
-						"Ooooops!!! Start date must be before than previous end date ["
-								+ outsourceBean.getEndDate() + "]");
+				message = message + "Ooooops!!! Start date must be before than previous end date ["
+								+ outsourceBean.getEndDate() + "] \n";
 				flagError = 1;
 			}
 			// cek data yang baru di input ada jadwal yang bentrok apa nggak
@@ -335,8 +357,9 @@ public class OutsourceHandler extends Action {
 					.getEndDate()));
 			Calendar cal3 = Calendar.getInstance();
 			Calendar cal4 = Calendar.getInstance();
+			Map filter = new HashMap();
 			for (int i = cal.get(Calendar.YEAR); i <= cal2.get(Calendar.YEAR); i++) {
-				Map filter = new HashMap();
+				filter = new HashMap();
 				filter.put("employee", outsourceForm.getOutsourceBean()
 						.getEmployeeId());
 				filter.put("year", i);
@@ -354,13 +377,13 @@ public class OutsourceHandler extends Action {
 
 						} else {
 							flagError = 1;
-							outsourceForm.getMessageList().add(
-									"Ooooops!!! Employee already with another contract, with "
+							message = message + "Ooooops!!! Employee already with another contract, with "
 											+ tmpList.get(j).getClientName()
 											+ " in period "
 											+ tmpList.get(j).getStartDate()
 											+ " until "
-											+ tmpList.get(j).getEndDate());
+											+ tmpList.get(j).getEndDate()
+											+ "\n";
 							break;
 						}
 					}
@@ -371,37 +394,54 @@ public class OutsourceHandler extends Action {
 			}
 
 			// cek ada contract dengan client yang sama atau tidak
-			// start date input < end date contract yang sudah ada
+			// yang overlap
 			// maka is grossnya harus sama
-			Map filter = new HashMap();
-			filter.put("client", outsourceForm.getOutsourceBean().getClientId());
-			filter.put("gtEndDate", outsourceForm.getOutsourceBean()
-					.getStartDate().substring(0, 3)
-					+ "01"
-					+ outsourceForm.getOutsourceBean().getStartDate()
-							.substring(5, 10));
-			List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
-			tmpList = outsourceManager.getAllWithFilter(filter);
-			if (tmpList.size() > 0) {
-				if (tmpList.get(0).getIsGross() != outsourceForm
-						.getOutsourceBean().getIsGross()) {
-					flagError = 1;
-					if (tmpList.get(0).getIsGross() == 1) {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
-										+ "with tax include, new contract "
-										+ "must be tax include as well");
-					} else {
-						outsourceForm.getMessageList().add(
-								"Ooooops!!! Client already have contract "
-										+ "with tax exclude, new contract "
-										+ "must be tax exclude as well");
-					}
+			cal2 = Calendar.getInstance();
+			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			cal2.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
+					.getEndDate()));
+			cal3 = Calendar.getInstance();
+			cal4 = Calendar.getInstance();
+			for (int i = cal.get(Calendar.YEAR); i <= cal2.get(Calendar.YEAR); i++) {
+				filter = new HashMap();
+				filter.put("client", outsourceForm.getOutsourceBean()
+						.getClientId());
+				filter.put("year", i);
+				List<OutsourceBean> tmpList = new ArrayList<OutsourceBean>();
+				tmpList = outsourceManager.getAllWithFilter(filter);
+				for (int j = 0; j < tmpList.size(); j++) {
+					cal3.setTime(dateFormat
+							.parse(tmpList.get(j).getStartDate()));
+					cal4.setTime(dateFormat.parse(tmpList.get(j).getEndDate()));
+					if (cal.after(cal4) || cal2.before(cal3)) {
 
+					} else {
+						if (tmpList.get(j).getIsGross() != outsourceForm
+								.getOutsourceBean().getIsGross()) {
+							flagError = 1;
+							if (tmpList.get(j).getIsGross() == 1) {
+								message = message + "Ooooops!!! Client already have contract "
+												+ "with tax include, new contract "
+												+ "must be tax include as well"
+												+ "\n";
+							} else {
+								message = message + "Ooooops!!! Client already have contract "
+												+ "with tax exclude, new contract "
+												+ "must be tax exclude as well"
+												+ "\n";
+							}
+							break;
+						}
+					}
+				}
+				if (flagError == 1) {
+					break;
 				}
 			}
 
 			if (flagError == 1) {
+				outsourceForm.getMessageList().add(message);
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 						.getStartDate()));
@@ -448,6 +488,10 @@ public class OutsourceHandler extends Action {
 		} else if ("saveend".equals(outsourceForm.getTask())) {
 			// date format data
 			cal.setTime(showDateFormat.parse(outsourceForm.getOutsourceBean()
+					.getStartDate()));
+			outsourceForm.getOutsourceBean().setStartDate(
+					dateFormat.format(cal.getTime()));
+			cal.setTime(showDateFormat.parse(outsourceForm.getOutsourceBean()
 					.getEndDate()));
 			outsourceForm.getOutsourceBean().setEndDate(
 					dateFormat.format(cal.getTime()));
@@ -464,12 +508,12 @@ public class OutsourceHandler extends Action {
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
 
 			if (cal.after(cal2)) {
-				outsourceForm.getMessageList().add(
-						"Ooooops!!! End date must before than previous end date");
+				message = message + "Ooooops!!! End date must before than previous end date \n";
 				flagError = 1;
 
 			}
 			if (flagError == 1) {
+				outsourceForm.getMessageList().add(message);
 				// date format show
 				cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
 						.getStartDate()));
