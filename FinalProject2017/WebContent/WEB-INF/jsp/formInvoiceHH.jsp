@@ -100,7 +100,7 @@
 
 			swal({
 				  title: "Are you sure?",
-				  text: "System will insert these data to Invoice Professional Service",
+				  text: "System will insert these data to Invoice Head Hunter",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",

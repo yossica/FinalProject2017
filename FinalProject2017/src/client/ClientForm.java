@@ -15,6 +15,8 @@ public class ClientForm extends ActionForm{
 	private String phoneNumber;
 	private String faxNumber;
 	private String postalCode;
+	private String contactPerson;
+	
 	private int isEnabled;
 	
 	private List listClient;
@@ -50,6 +52,14 @@ public class ClientForm extends ActionForm{
 
 	public String getPostalCode() {
 		return postalCode;
+	}
+	
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
 	}
 
 	public List getListClient() {
