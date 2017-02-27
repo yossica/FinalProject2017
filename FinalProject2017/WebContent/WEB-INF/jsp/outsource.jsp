@@ -13,9 +13,9 @@
 	function toggleFilter() {
 		var filter = document.getElementById("filterForm");
 		filter.style.display = filter.style.display === 'none' ? '' : 'none';
-		if (filter.style.display == 'none'){
+		if (filter.style.display == 'none') {
 			document.getElementById("listOutsource").style.height = "400px";
-		}else{
+		} else {
 			document.getElementById("listOutsource").style.height = "200px";
 		}
 	}
@@ -36,16 +36,15 @@
 		flyToPage('end');
 	}
 	function alertError() {
-		var message=document.getElementById("err");
-		if(message!=null){
-			var messageValue=message.value;
-			
+		var message = document.getElementById("err");
+		if (message != null) {
+			var messageValue = message.value;
+
 			var strValue = messageValue.substring(0, 7);
-			if(strValue=="Success"){
+			if (strValue == "Success") {
 				//Success
 				swal("Good job!", messageValue, "success");
-			}
-			else if(strValue=="Ooooops"){
+			} else if (strValue == "Ooooops") {
 				//Ooooops
 				sweetAlert("Oops...", messageValue, "error");
 			}
@@ -66,7 +65,8 @@
 						property="messageList">
 						<logic:iterate id="message" name="outsourceForm"
 							property="messageList">
-							<input type="hidden" id="err" value="<bean:write name="message" />">
+							<input type="hidden" id="err"
+								value="<bean:write name="message" />">
 						</logic:iterate>
 					</logic:notEmpty>
 				</span>
@@ -74,13 +74,14 @@
 					<h1 class="page-header">Profesional Service Contract List</h1>
 					<div class="panel-body" style="padding-right: 0;">
 						<div class="pull-right">
-							<button id="filterButton" type="button" class="btn btn-primary" onclick="javascript:toggleFilter()">Toggle Filter</button>
+							<button id="filterButton" type="button" class="btn btn-primary"
+								onclick="javascript:toggleFilter()">Toggle Filter</button>
 							<button type="button" class="btn btn-primary"
 								onclick="javascript:flyToPage('create')">Create</button>
 						</div>
 					</div>
 					<div id="filterForm" class="col-lg-12"
-						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF;  display: none;">
+						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 						<div class="row" style="margin-top: 10px;">
 							<div class="col-md-12" style="padding-right: 1%">
 								<div class="col-md-2">Client</div>
@@ -148,8 +149,9 @@
 				<!-- /.col-lg-12 -->
 			</div>
 			<div class="panel-body">
-				
-				<div id="listOutsource" class="table-responsive" style="height:400px;overflow:auto;">
+
+				<div id="listOutsource" class="table-responsive"
+					style="height: 400px; overflow: auto;">
 					<table class="table table-hover">
 						<tr>
 							<th>Client</th>
@@ -181,7 +183,8 @@
 							</logic:notEmpty>
 							<logic:empty property="outsourceList" name="outsourceForm">
 								<tr>
-									<td colspan="6" align="center">There are no data based on this filter</td>
+									<td colspan="6" align="center">There are no data based on
+										this filter</td>
 								</tr>
 							</logic:empty>
 						</tbody>

@@ -137,13 +137,12 @@ public class OutsourceHandler extends Action {
 
 					} else {
 						flagError = 1;
-						message = message + "Ooooops!!! Employee already with another contract, with "
-										+ tmpList.get(j).getClientName()
-										+ " in period "
-										+ tmpList.get(j).getStartDate()
-										+ " until "
-										+ tmpList.get(j).getEndDate()
-										+ "\n";
+						message = message
+								+ "Ooooops!!! Employee already with another contract, with "
+								+ tmpList.get(j).getClientName()
+								+ " in period " + tmpList.get(j).getStartDate()
+								+ " until " + tmpList.get(j).getEndDate()
+								+ "\n";
 						break;
 					}
 				}
@@ -181,15 +180,15 @@ public class OutsourceHandler extends Action {
 								.getOutsourceBean().getIsGross()) {
 							flagError = 1;
 							if (tmpList.get(j).getIsGross() == 1) {
-								message = message + "Ooooops!!! Client already have contract "
-												+ "with tax include, new contract "
-												+ "must be tax include as well"
-												+ "\n";
+								message = message
+										+ "Ooooops!!! Client already have contract "
+										+ "with tax include, new contract "
+										+ "must be tax include as well" + "\n";
 							} else {
-								message = message + "Ooooops!!! Client already have contract "
-												+ "with tax exclude, new contract "
-												+ "must be tax exclude as well"
-												+ "\n";
+								message = message
+										+ "Ooooops!!! Client already have contract "
+										+ "with tax exclude, new contract "
+										+ "must be tax exclude as well" + "\n";
 							}
 							break;
 						}
@@ -219,8 +218,9 @@ public class OutsourceHandler extends Action {
 				return mapping.findForward("formOutsource");
 			} else {
 				outsourceManager.insert(outsourceForm.getOutsourceBean());
-				outsourceForm.getMessageList().add(
-						"Success!!! Profesional Service Contract has been Created!");
+				outsourceForm
+						.getMessageList()
+						.add("Success!!! Profesional Service Contract has been Created!");
 
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
 				outsourceForm.setOptEmployeeList(employeeManager
@@ -268,15 +268,15 @@ public class OutsourceHandler extends Action {
 									.getTransactionOutsourceId()) {
 						flagError = 1;
 						if (tmpList.get(0).getIsGross() == 1) {
-							message = message + "Ooooops!!! Client already have contract "
-											+ "with tax include, new contract "
-											+ "must be tax include as well"
-											+ "\n";
+							message = message
+									+ "Ooooops!!! Client already have contract "
+									+ "with tax include, new contract "
+									+ "must be tax include as well" + "\n";
 						} else {
-							message = message + "Ooooops!!! Client already have contract "
-											+ "with tax exclude, new contract "
-											+ "must be tax exclude as well"
-											+ "\n";
+							message = message
+									+ "Ooooops!!! Client already have contract "
+									+ "with tax exclude, new contract "
+									+ "must be tax exclude as well" + "\n";
 						}
 
 					}
@@ -288,8 +288,9 @@ public class OutsourceHandler extends Action {
 				return mapping.findForward("formOutsource");
 			} else {
 				outsourceManager.update(outsourceForm.getOutsourceBean());
-				outsourceForm.getMessageList().add(
-						"Success!!! Profesional Service Contract has been Updated!");
+				outsourceForm
+						.getMessageList()
+						.add("Success!!! Profesional Service Contract has been Updated!");
 
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
 				outsourceForm.setOptEmployeeList(employeeManager
@@ -327,8 +328,9 @@ public class OutsourceHandler extends Action {
 			if (outsourceForm.getOutsourceBean().getClientId() == outsourceBean
 					.getClientId()) {
 				flagError = 1;
-				message = message + "Ooooops!!! Client must be different from previous client"
-							+"\n";
+				message = message
+						+ "Ooooops!!! Client must be different from previous client"
+						+ "\n";
 			}
 
 			cal.setTime(dateFormat.parse(outsourceForm.getOutsourceBean()
@@ -338,15 +340,17 @@ public class OutsourceHandler extends Action {
 			// input start date > old start date, jika tidak maka error
 			if (cal.compareTo(cal2) <= 0) {
 
-				message = message + "Ooooops!!! Start date must be later than previous start date ["
-								+ outsourceBean.getStartDate() + "] \n";
+				message = message
+						+ "Ooooops!!! Start date must be later than previous start date ["
+						+ outsourceBean.getStartDate() + "] \n";
 				flagError = 1;
 			}
 			// input start date < old end date, jika tidak maka error
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
 			if (cal.compareTo(cal2) >= 0) {
-				message = message + "Ooooops!!! Start date must be before than previous end date ["
-								+ outsourceBean.getEndDate() + "] \n";
+				message = message
+						+ "Ooooops!!! Start date must be before than previous end date ["
+						+ outsourceBean.getEndDate() + "] \n";
 				flagError = 1;
 			}
 			// cek data yang baru di input ada jadwal yang bentrok apa nggak
@@ -377,13 +381,12 @@ public class OutsourceHandler extends Action {
 
 						} else {
 							flagError = 1;
-							message = message + "Ooooops!!! Employee already with another contract, with "
-											+ tmpList.get(j).getClientName()
-											+ " in period "
-											+ tmpList.get(j).getStartDate()
-											+ " until "
-											+ tmpList.get(j).getEndDate()
-											+ "\n";
+							message = message
+									+ "Ooooops!!! Employee already with another contract, with "
+									+ tmpList.get(j).getClientName()
+									+ " in period "
+									+ tmpList.get(j).getStartDate() + " until "
+									+ tmpList.get(j).getEndDate() + "\n";
 							break;
 						}
 					}
@@ -421,15 +424,15 @@ public class OutsourceHandler extends Action {
 								.getOutsourceBean().getIsGross()) {
 							flagError = 1;
 							if (tmpList.get(j).getIsGross() == 1) {
-								message = message + "Ooooops!!! Client already have contract "
-												+ "with tax include, new contract "
-												+ "must be tax include as well"
-												+ "\n";
+								message = message
+										+ "Ooooops!!! Client already have contract "
+										+ "with tax include, new contract "
+										+ "must be tax include as well" + "\n";
 							} else {
-								message = message + "Ooooops!!! Client already have contract "
-												+ "with tax exclude, new contract "
-												+ "must be tax exclude as well"
-												+ "\n";
+								message = message
+										+ "Ooooops!!! Client already have contract "
+										+ "with tax exclude, new contract "
+										+ "must be tax exclude as well" + "\n";
 							}
 							break;
 						}
@@ -468,7 +471,8 @@ public class OutsourceHandler extends Action {
 				outsourceManager.update(outsourceBean);
 				// insert data baru
 				outsourceManager.insert(outsourceForm.getOutsourceBean());
-				outsourceForm.getMessageList().add("Success!!! Employee has been Mutated!");
+				outsourceForm.getMessageList().add(
+						"Success!!! Employee has been Mutated!");
 
 				// for view data
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
@@ -508,7 +512,8 @@ public class OutsourceHandler extends Action {
 			cal2.setTime(dateFormat.parse(outsourceBean.getEndDate()));
 
 			if (cal.after(cal2)) {
-				message = message + "Ooooops!!! End date must before than previous end date \n";
+				message = message
+						+ "Ooooops!!! End date must before than previous end date \n";
 				flagError = 1;
 
 			}
@@ -528,7 +533,8 @@ public class OutsourceHandler extends Action {
 				return mapping.findForward("formOutsource");
 			} else {
 				outsourceManager.update(outsourceForm.getOutsourceBean());
-				outsourceForm.getMessageList().add("Success!!! Employee Contract has been Ended!");
+				outsourceForm.getMessageList().add(
+						"Success!!! Employee Contract has been Ended!");
 				// for view data
 				outsourceForm.setOptClientList(clientManager.getAllEnabled());
 				outsourceForm.setOptEmployeeList(employeeManager

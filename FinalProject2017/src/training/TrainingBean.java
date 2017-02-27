@@ -8,7 +8,7 @@ public class TrainingBean implements Serializable {
 	private int transactionTrainingHeaderId;
 	private int clientId;
 	private String clientName;
-	
+
 	private int dpInvoiceId;
 	private String trainingStartDate;
 	private String trainingEndDate;
@@ -159,5 +159,5 @@ public class TrainingBean implements Serializable {
 	public void setIsSettlement(int isSettlement) {
 		this.isSettlement = isSettlement;
 	}
-	
+
 }

@@ -35,8 +35,7 @@ public class InvoiceBean implements Serializable {
 		return transactionInvoiceHeaderId;
 	}
 
-	public void setTransactionInvoiceHeaderId(
-			int transactionInvoiceHeaderId) {
+	public void setTransactionInvoiceHeaderId(int transactionInvoiceHeaderId) {
 		this.transactionInvoiceHeaderId = transactionInvoiceHeaderId;
 	}
 
@@ -67,7 +66,7 @@ public class InvoiceBean implements Serializable {
 	public int getPeriodYear() {
 		return periodYear;
 	}
-	
+
 	public String getPeriodMonthName() {
 		return periodMonthName;
 	}
@@ -75,7 +74,7 @@ public class InvoiceBean implements Serializable {
 	public void setPeriodMonthName(String periodMonthName) {
 		this.periodMonthName = periodMonthName;
 	}
-	
+
 	public void setPeriodYear(int periodYear) {
 		this.periodYear = periodYear;
 	}
@@ -201,7 +200,7 @@ public class InvoiceBean implements Serializable {
 	}
 
 	public List<InvoiceDetailBean> getDetailList() {
-		if (this.detailList == null){
+		if (this.detailList == null) {
 			detailList = new ArrayList();
 		}
 		return detailList;
@@ -234,6 +233,5 @@ public class InvoiceBean implements Serializable {
 	public void setSettlementInvoiceId(String settlementInvoiceId) {
 		this.settlementInvoiceId = settlementInvoiceId;
 	}
-	
+
 }
-	

@@ -4,75 +4,70 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ibatis.sqlmap.client.SqlMapClient;
-
-import utils.Filter;
 import utils.IbatisHelper;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class EmployeeManager {
-	public void insert(EmployeeBean input){
+	public void insert(EmployeeBean input) {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		try{
+		try {
 			ibatis.startTransaction();
-			Integer maxId = (Integer) ibatis.queryForObject("employee.getMaxId", null);
-            if(maxId==null){
-            	maxId = 1;
-            }else{
-            	maxId++;
-            }
-            input.setEmployeeId(maxId);
-            ibatis.insert("employee.insert", input);
-            ibatis.commitTransaction();
+			Integer maxId = (Integer) ibatis.queryForObject(
+					"employee.getMaxId", null);
+			if (maxId == null) {
+				maxId = 1;
+			} else {
+				maxId++;
+			}
+			input.setEmployeeId(maxId);
+			ibatis.insert("employee.insert", input);
+			ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-            try {
+		} finally {
+			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
-	public void update(EmployeeBean input){
+
+	public void update(EmployeeBean input) {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		try{
+		try {
 			ibatis.startTransaction();
-            ibatis.update("employee.update", input);
-            ibatis.commitTransaction();
+			ibatis.update("employee.update", input);
+			ibatis.commitTransaction();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-            try {
+		} finally {
+			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
-	public EmployeeBean getById(int input){
+
+	public EmployeeBean getById(int input) {
 		EmployeeBean result = new EmployeeBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
-			result = (EmployeeBean) ibatis.queryForObject("employee.getById", input);
+			result = (EmployeeBean) ibatis.queryForObject("employee.getById",
+					input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	public List getAllWithFilter(Filter input){
-		List result = new ArrayList();
-		return result;
-	}
-	
-	public List getAll (){
+
+	public List getAll() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
@@ -83,7 +78,8 @@ public class EmployeeManager {
 		}
 		return result;
 	}
-	public List getAllEnabled (){
+
+	public List getAllEnabled() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {

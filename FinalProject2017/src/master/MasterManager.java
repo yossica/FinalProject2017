@@ -2,29 +2,14 @@ package master;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import utils.Filter;
 import utils.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class MasterManager {
-	/*public List getAllCashFlowCategory() {
-		// hanya mengambil yang enabled
-		List result = new ArrayList();
-
-		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		try {
-			result = ibatis.queryForList("cashFlowCategory.getAll", null);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-	}*/
 	public List getAllCashFlowCategory(Map input) {
 		// hanya mengambil yang enabled + cash type sesuai + debit/kredit
 		// map nanti akan diisi di handler
@@ -43,7 +28,8 @@ public class MasterManager {
 
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
-			result = (CashFlowCategoryBean) ibatis.queryForObject("cashFlowCategory.getById", input);
+			result = (CashFlowCategoryBean) ibatis.queryForObject(
+					"cashFlowCategory.getById", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,7 +53,8 @@ public class MasterManager {
 		InvoiceTypeBean result = new InvoiceTypeBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
-			result = (InvoiceTypeBean) ibatis.queryForObject("invoiceType.getById", input);
+			result = (InvoiceTypeBean) ibatis.queryForObject(
+					"invoiceType.getById", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,15 +78,16 @@ public class MasterManager {
 		StatusInvoiceBean result = new StatusInvoiceBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
-			result = (StatusInvoiceBean) ibatis.queryForObject("statusInvoice.getById", input);
+			result = (StatusInvoiceBean) ibatis.queryForObject(
+					"statusInvoice.getById", input);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	public List getAllFinanceSummary(){
+
+	public List getAllFinanceSummary() {
 		List result = null;
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
@@ -109,12 +97,13 @@ public class MasterManager {
 		}
 		return result;
 	}
-	
-	public String getNextStatus(String input){
+
+	public String getNextStatus(String input) {
 		String result = null;
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
-			result = (String) ibatis.queryForObject("statusInvoice.getNextStatus", input);
+			result = (String) ibatis.queryForObject(
+					"statusInvoice.getNextStatus", input);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -123,15 +112,15 @@ public class MasterManager {
 
 	public void setNextStatus(Map paramMap) {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		try{
+		try {
 			ibatis.startTransaction();
 			ibatis.update("statusInvoice.updateStatus", paramMap);
-            ibatis.commitTransaction();
+			ibatis.commitTransaction();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-            try {
+		} finally {
+			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
