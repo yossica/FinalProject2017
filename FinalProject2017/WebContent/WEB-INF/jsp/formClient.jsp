@@ -90,12 +90,11 @@
 			});
 		}
 	}
-	
+
 	function placehold() {
-		if(document.getElementsByName("phoneNumber")[0].value === "") {
+		if (document.getElementsByName("phoneNumber")[0].value === "") {
 			document.getElementsByName("phoneNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
-		}
-		else if(document.getElementsByName("faxNumber")[0].value === "") {
+		} else if (document.getElementsByName("faxNumber")[0].value === "") {
 			document.getElementsByName("faxNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
 		}
 	}
