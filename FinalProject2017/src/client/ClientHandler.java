@@ -42,7 +42,8 @@ public class ClientHandler extends Action {
 			return mapping.findForward("client");
 		} else if ("update".equals(clientForm.getTask())) {
 			clientForm.setTask("save" + clientForm.getTask());
-			ClientBean clientBean = clientManager.getById(clientForm.getClientId());
+			ClientBean clientBean = clientManager.getById(clientForm
+					.getClientId());
 			clientForm.setClientId(clientBean.getClientId());
 			clientForm.setName(clientBean.getName());
 			clientForm.setAddress(clientBean.getAddress());

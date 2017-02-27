@@ -31,16 +31,17 @@
 				<div class="col-lg-12">
 					<h1 class="page-header">Client List</h1>
 					<div class="panel-body" style="margin-right: 10px;">
-					<div class="pull-right">
-					<button type="button" class="btn btn-primary pull-right"
+						<div class="pull-right">
+							<button type="button" class="btn btn-primary pull-right"
 								onclick="javascript:flyToPage('create')">Create</button>
-					</div>
+						</div>
 					</div>
 					<div class="panel-body">
-						<div class="table-responsive" style="height:370px;overflow:auto;">
-							
+						<div class="table-responsive"
+							style="height: 370px; overflow: auto;">
+
 							<table class="table table-hover">
-							
+
 								<tr>
 									<th>Client Name</th>
 									<th>Address</th>
@@ -51,7 +52,7 @@
 									<th>Contact Person</th>
 									<th>Action</th>
 								</tr>
-							
+
 								<tbody>
 									<logic:iterate id="client" name="clientForm"
 										property="listClient">
