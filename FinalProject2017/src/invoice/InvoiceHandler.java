@@ -720,8 +720,7 @@ public class InvoiceHandler extends Action {
 					dateFormat.format(cal.getTime()));
 
 			double netTotal = 0;
-			float ppn = Float.parseFloat(generalInformationManager.getByKey(
-					"tax").getValue());
+			float ppn = (float) invoiceForm.getInvoiceBean().getPpnPercentage();
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			invoiceForm.getInvoiceBean().setInvoiceTypeId(1);
 			if (invoiceForm.getInvoiceBean().getIsGross() == 0) {
