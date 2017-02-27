@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
-public class IndexForm  extends ActionForm{
+public class IndexForm extends ActionForm {
 	private String taskIndex;
 	private String username;
 
@@ -12,8 +12,8 @@ public class IndexForm  extends ActionForm{
 	private List listedTrainingRemainderList;
 	private List createdRemainderList;
 	private List sentOutsourceRemainderList;
-    
-	//finance summary
+
+	// finance summary
 	private double cashInBankBalance;
 	private double pettyCashBalance;
 	private List financeSummaryList;
@@ -25,7 +25,7 @@ public class IndexForm  extends ActionForm{
 	public void setTaskIndex(String taskIndex) {
 		this.taskIndex = taskIndex;
 	}
-  
+
 	public List getListedRemainderList() {
 		return listedRemainderList;
 	}
@@ -54,8 +54,7 @@ public class IndexForm  extends ActionForm{
 		return listedTrainingRemainderList;
 	}
 
-	public void setListedTrainingRemainderList(
-			List listedTrainingRemainderList) {
+	public void setListedTrainingRemainderList(List listedTrainingRemainderList) {
 		this.listedTrainingRemainderList = listedTrainingRemainderList;
 	}
 

@@ -14,7 +14,7 @@ public class UserForm extends ActionForm {
 
 	private String newPassword;
 	private String confirmPassword;
-	
+
 	private String newUser;
 	private List userList;
 
