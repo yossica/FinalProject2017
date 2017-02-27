@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
-public class ClientForm extends ActionForm{
+public class ClientForm extends ActionForm {
 	private String task;
-	
+
 	private int clientId;
 	private String name;
 	private String address;
@@ -15,8 +15,10 @@ public class ClientForm extends ActionForm{
 	private String phoneNumber;
 	private String faxNumber;
 	private String postalCode;
+	private String contactPerson;
+
 	private int isEnabled;
-	
+
 	private List listClient;
 	private List messageList;
 
@@ -50,6 +52,14 @@ public class ClientForm extends ActionForm{
 
 	public String getPostalCode() {
 		return postalCode;
+	}
+
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
 	}
 
 	public List getListClient() {
@@ -101,7 +111,7 @@ public class ClientForm extends ActionForm{
 	}
 
 	public List getMessageList() {
-		if(messageList == null)
+		if (messageList == null)
 			messageList = new ArrayList();
 		return messageList;
 	}
@@ -109,6 +119,5 @@ public class ClientForm extends ActionForm{
 	public void setMessageList(List messageList) {
 		this.messageList = messageList;
 	}
-	
-	
+
 }

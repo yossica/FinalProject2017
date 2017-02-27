@@ -34,6 +34,7 @@ public class ClientHandler extends Action {
 			clientBean.setPhoneNumber(clientForm.getPhoneNumber());
 			clientBean.setFaxNumber(clientForm.getFaxNumber());
 			clientBean.setPostalCode(clientForm.getPostalCode());
+			clientBean.setContactPerson(clientForm.getContactPerson());
 			clientBean.setIsEnabled(clientForm.getIsEnabled());
 			clientBean.setCreatedBy((String) session.getAttribute("username"));
 			clientManager.insert(clientBean);
@@ -41,7 +42,8 @@ public class ClientHandler extends Action {
 			return mapping.findForward("client");
 		} else if ("update".equals(clientForm.getTask())) {
 			clientForm.setTask("save" + clientForm.getTask());
-			ClientBean clientBean = clientManager.getById(clientForm.getClientId());
+			ClientBean clientBean = clientManager.getById(clientForm
+					.getClientId());
 			clientForm.setClientId(clientBean.getClientId());
 			clientForm.setName(clientBean.getName());
 			clientForm.setAddress(clientBean.getAddress());
@@ -49,6 +51,7 @@ public class ClientHandler extends Action {
 			clientForm.setPhoneNumber(clientBean.getPhoneNumber());
 			clientForm.setFaxNumber(clientBean.getFaxNumber());
 			clientForm.setPostalCode(clientBean.getPostalCode());
+			clientForm.setContactPerson(clientBean.getContactPerson());
 			clientForm.setIsEnabled(clientBean.getIsEnabled());
 			return mapping.findForward("formClient");
 		} else if ("saveupdate".equals(clientForm.getTask())) {
@@ -60,6 +63,7 @@ public class ClientHandler extends Action {
 			clientBean.setPhoneNumber(clientForm.getPhoneNumber());
 			clientBean.setFaxNumber(clientForm.getFaxNumber());
 			clientBean.setPostalCode(clientForm.getPostalCode());
+			clientBean.setContactPerson(clientForm.getContactPerson());
 			clientBean.setIsEnabled(clientForm.getIsEnabled());
 			clientBean.setChangedBy((String) session.getAttribute("username"));
 			clientManager.update(clientBean);

@@ -1,13 +1,12 @@
 package index;
 
+import invoice.InvoiceBean;
+import invoice.InvoiceManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import invoice.InvoiceBean;
-import invoice.InvoiceForm;
-import invoice.InvoiceManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +21,9 @@ import org.apache.struts.action.ActionMapping;
 
 import outsource.OutsourceBean;
 import outsource.OutsourceManager;
+import pettyCash.PettyCashManager;
 import training.TrainingManager;
 import cashInBank.CashInBankManager;
-import pettyCash.PettyCashManager;
 
 public class IndexHandler extends Action {
 	@Override
@@ -106,8 +105,7 @@ public class IndexHandler extends Action {
 							InvoiceBean invoiceBean = new InvoiceBean();
 							invoiceBean.setClientName(list.get(i)
 									.getClientName());
-							invoiceBean.setClientId(list.get(i)
-									.getClientId());
+							invoiceBean.setClientId(list.get(i).getClientId());
 							invoiceBean.setPeriodMonth(periodMonth);
 							invoiceBean.setPeriodYear(periodYear);
 							invoiceBean.setInvoiceTypeId(1);
@@ -135,7 +133,6 @@ public class IndexHandler extends Action {
 					.getSentOutsourceRemainderList());
 			indexForm.setListedTrainingRemainderList(trainingManager
 					.getListedTrainingRemainderList());
-
 
 			return mapping.findForward("success");
 		}
