@@ -1436,8 +1436,7 @@ public class InvoiceHandler extends Action {
 			parameters.put("totalGross", invoiceBean.getTotalGross());
 			parameters.put("invoiceNote", invoiceBean.getNotes() == null ? ""
 					: invoiceBean.getNotes());
-			parameters.put("ppn", generalInformationManager.getByKey("tax")
-					.getValue());
+			parameters.put("ppn", invoiceBean.getPpnPercentage()+"");
 			parameters.put("accountDetail", rekNo.getValue());
 			parameters.put("manager", sign.getValue());
 
