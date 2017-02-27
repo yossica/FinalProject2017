@@ -10,17 +10,8 @@ import org.apache.struts.util.LabelValueBean;
 import client.ClientBean;
 import employee.EmployeeBean;
 
-public class OutsourceForm extends ActionForm{
+public class OutsourceForm extends ActionForm {
 	private int transactionOutsourceId;
-//	private int clientId;
-//	private String clientName;
-//	private int employeeId;
-//	private String employeeName;
-//	
-//	private String startDate;
-//	private String endDate;
-//	private int isGross;
-//	private double fee;
 	private OutsourceBean outsourceBean = new OutsourceBean();
 	private String task;
 	private List messageList;
@@ -29,14 +20,13 @@ public class OutsourceForm extends ActionForm{
 	private String filterEmployee;
 	private String filterMonth;
 	private String filterYear;
-	
+
 	private List<ClientBean> optClientList;
 	private List<LabelValueBean> optYear;
 	private List<EmployeeBean> optEmployeeList;
-	
+
 	private List<OutsourceBean> outsourceList;
-		
-	
+
 	public String getFilterEmployee() {
 		return filterEmployee;
 	}
@@ -66,13 +56,13 @@ public class OutsourceForm extends ActionForm{
 			this.optYear = new ArrayList();
 		}
 		int year = Calendar.getInstance().get(Calendar.YEAR);
-		for (int i = 2000; i <= year; i++) {		
+		for (int i = 2000; i <= year; i++) {
 			LabelValueBean temp = new LabelValueBean();
 			temp.setLabel(String.valueOf(i));
 			temp.setValue(String.valueOf(i));
 			optYear.add(temp);
 		}
-		
+
 		return optYear;
 	}
 
@@ -146,6 +136,5 @@ public class OutsourceForm extends ActionForm{
 	public void setTransactionOutsourceId(int transactionOutsourceId) {
 		this.transactionOutsourceId = transactionOutsourceId;
 	}
-	
 
 }
