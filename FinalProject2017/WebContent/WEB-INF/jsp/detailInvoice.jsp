@@ -9,21 +9,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
 <script>
-	function flyToPage(task){
+	function flyToPage(task) {
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
 	function alertError() {
-		var message=document.getElementById("err");
-		if(message!=null){
-			var messageValue=message.value;
-			
+		var message = document.getElementById("err");
+		if (message != null) {
+			var messageValue = message.value;
+
 			var strValue = messageValue.substring(0, 7);
-			if(strValue=="Success"){
+			if (strValue == "Success") {
 				//Success
 				swal("Good job!", messageValue, "success");
-			}
-			else{
+			} else {
 				//Ooooops
 				sweetAlert("Oops...", messageValue, "error");
 			}
@@ -41,149 +40,186 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Invoice Detail</h1>
-					
+
 					<div class="panel-body">
-					
+
 						<div class="col-lg-2">
-							<strong>
-								Invoice No : 
-							</strong>
+							<strong> Invoice No : </strong>
 						</div>
 						<div class="col-lg-4">
-							<strong>
-								<html:hidden name="invoiceForm" property="invoiceBean.transactionInvoiceHeaderId"/>
-								<html:hidden name="invoiceForm" property="invoiceBean.invoiceTypeId"/>
-								<bean:write name="invoiceForm" property="invoiceBean.invoiceNumber"/>
+							<strong> <html:hidden name="invoiceForm"
+									property="invoiceBean.transactionInvoiceHeaderId" /> <html:hidden
+									name="invoiceForm" property="invoiceBean.invoiceTypeId" /> <bean:write
+									name="invoiceForm" property="invoiceBean.invoiceNumber" />
 							</strong>
 						</div>
-						<div class="col-lg-4" style="text-align:right;">
-							<strong>
-								Date :
-							</strong> 
+						<div class="col-lg-4" style="text-align: right;">
+							<strong> Date : </strong>
 						</div>
-						<div class="col-lg-2" style="text-align:right;">
-							<strong>
-								<bean:write name="invoiceForm" property="invoiceBean.invoiceDate"/>
+						<div class="col-lg-2" style="text-align: right;">
+							<strong> <bean:write name="invoiceForm"
+									property="invoiceBean.invoiceDate" />
 							</strong>
 						</div>
 						<div class="col-lg-12">
-						<div class="table-responsive">
-							<table style="border:3px double black;margin-top:30px;margin-bottom:10px;" width=100% >
-								<tr>
-									<td style="padding-left:10px;padding-top:10px;">Name</td>
-									<td style="padding-left:10px;padding-top:10px;">: <bean:write name="invoiceForm" property="clientBean.name"/></td>
-									<td style="padding-left:10px;padding-top:10px;">City</td>
-									<td style="padding-left:10px;padding-top:10px;">: <bean:write name="invoiceForm" property="clientBean.city"/></td>
-								</tr>
-								<tr>
-									<td rowspan="3" style="padding-left:10px;">Address</td>
-									<td rowspan="3" style="padding-left:10px;">: <bean:write name="invoiceForm" property="clientBean.address"/></td>
-									<td style="padding-left:10px;padding-top:10px;">Telp</td>
-									<td style="padding-left:10px;padding-top:10px;">: <bean:write name="invoiceForm" property="clientBean.phoneNumber"/></td>
-								</tr>
-								<tr>
-									<td style="padding-left:10px;padding-top:10px;">Zip Code</td>
-									<td style="padding-left:10px;padding-top:10px;">: <bean:write name="invoiceForm" property="clientBean.postalCode"/></td>
-								</tr>
-								<tr>
-									<td style="padding-left:10px;padding-top:10px;">Fax</td>
-									<td style="padding-left:10px;padding-top:10px;padding-bottom:10px;">: <bean:write name="invoiceForm" property="clientBean.faxNumber"/></td>
-								</tr>
-							</table>
-						</div>
-						</div>
-						<br>
-						<div class="col-lg-12">
-						<div class="table-responsive">
-							<table border="2" style="margin-top:30px;margin-bottom:10px;padding:100px;" width=100% >
-								<tr>
-									<th width=5% style="text-align:center;">No.</th>
-									<th width=40% style="text-align:center;">Description</th>
-									<th width=15% style="text-align:center;">Unit Price</th>
-									<th width=15% style="text-align:center;">Total</th>
-									<th width=25% style="text-align:center;">Notes</th>
-								</tr>
-								<logic:iterate id="inv" name="invoiceForm" property="invoiceDetailList">
-									<tr height=40px>
-										<td style="text-align:center;"><bean:write name="inv" property="numb" format="#"/></td>
-										<td style="padding:10px;"><bean:write name="inv" property="description"/></td>
-										<td style="padding:10px;text-align:right"><bean:write name="inv" property="unitPrice" format="#,###.##"/></td>
-										<td style="padding:10px;text-align:right"><bean:write name="inv" property="totalFee" format="#,###.##"/></td>
-										<td style="padding:10px;"><bean:write name="inv" property="notes"/></td>
+							<div class="table-responsive">
+								<table
+									style="border: 3px double black; margin-top: 30px; margin-bottom: 10px;"
+									width=100%>
+									<tr>
+										<td style="padding-left: 10px; padding-top: 10px;">Name</td>
+										<td style="padding-left: 10px; padding-top: 10px;">: <bean:write
+												name="invoiceForm" property="clientBean.name" /></td>
+										<td style="padding-left: 10px; padding-top: 10px;">City</td>
+										<td style="padding-left: 10px; padding-top: 10px;">: <bean:write
+												name="invoiceForm" property="clientBean.city" /></td>
 									</tr>
-								</logic:iterate>
+									<tr>
+										<td rowspan="3" style="padding-left: 10px;">Address</td>
+										<td rowspan="3" style="padding-left: 10px;">: <bean:write
+												name="invoiceForm" property="clientBean.address" /></td>
+										<td style="padding-left: 10px; padding-top: 10px;">Telp</td>
+										<td style="padding-left: 10px; padding-top: 10px;">: <bean:write
+												name="invoiceForm" property="clientBean.phoneNumber" /></td>
+									</tr>
+									<tr>
+										<td style="padding-left: 10px; padding-top: 10px;">Zip
+											Code</td>
+										<td style="padding-left: 10px; padding-top: 10px;">: <bean:write
+												name="invoiceForm" property="clientBean.postalCode" /></td>
+									</tr>
+									<tr>
+										<td style="padding-left: 10px; padding-top: 10px;">Fax</td>
+										<td
+											style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">:
+											<bean:write name="invoiceForm"
+												property="clientBean.faxNumber" />
+										</td>
+									</tr>
 								</table>
-								<table border="0" style="margin-top:10px;margin-bottom:30px;padding:100px;" width=100%>
-								<tr>
-									<td width=60% style="text-align:right;">Total  :&nbsp;</td>
-									<td width=15% style="padding:10px;text-align:right"><bean:write name="invoiceForm" property="invoiceBean.totalNet" format="#,###.##"/></td>
-									<td width=25%></td>
-								</tr>
-								<tr>
-									<td width=55% style="text-align:right;">PPN <bean:write property="invoiceBean.ppnPercentage" name="invoiceForm" format="#"/>%  :&nbsp;</td>
-									<td width=15% style="padding:10px;text-align:right"><bean:write name="invoiceForm" property="invoiceBean.totalPpn" format="#,###.##"/></td>
-									<td width=25%></td>
-								</tr>
-								<tr>
-									<td width=55% style="text-align:right;">Grand Total  :&nbsp;</td>
-									<td width=15% style="padding:10px;text-align:right"><bean:write name="invoiceForm" property="invoiceBean.totalGross" format="#,###.##"/></td>
-									<td width=25%></td>
-								</tr>
-							</table>
-						</div>
+							</div>
 						</div>
 						<br>
 						<div class="col-lg-12">
-						<div class="table-responsive">
-							<table style="margin-top:30px;margin-bottom:10px;" width=50% >
-								<tr>
-									<td class="col-lg-1">Note :</td>
-									<td class="col-lg-5" style="padding:10px;"><bean:write name="invoiceForm" property="invoiceBean.notes"/></td>
-								</tr>
-							</table>
-						</div>
+							<div class="table-responsive">
+								<table border="2"
+									style="margin-top: 30px; margin-bottom: 10px; padding: 100px;"
+									width=100%>
+									<tr>
+										<th width=5% style="text-align: center;">No.</th>
+										<th width=40% style="text-align: center;">Description</th>
+										<th width=15% style="text-align: center;">Unit Price</th>
+										<th width=15% style="text-align: center;">Total</th>
+										<th width=25% style="text-align: center;">Notes</th>
+									</tr>
+									<logic:iterate id="inv" name="invoiceForm"
+										property="invoiceDetailList">
+										<tr height=40px>
+											<td style="text-align: center;"><bean:write name="inv"
+													property="numb" format="#" /></td>
+											<td style="padding: 10px;"><bean:write name="inv"
+													property="description" /></td>
+											<td style="padding: 10px; text-align: right"><bean:write
+													name="inv" property="unitPrice" format="#,###.##" /></td>
+											<td style="padding: 10px; text-align: right"><bean:write
+													name="inv" property="totalFee" format="#,###.##" /></td>
+											<td style="padding: 10px;"><bean:write name="inv"
+													property="notes" /></td>
+										</tr>
+									</logic:iterate>
+								</table>
+								<table border="0"
+									style="margin-top: 10px; margin-bottom: 30px; padding: 100px;"
+									width=100%>
+									<tr>
+										<td width=60% style="text-align: right;">Total :&nbsp;</td>
+										<td width=15% style="padding: 10px; text-align: right"><bean:write
+												name="invoiceForm" property="invoiceBean.totalNet"
+												format="#,###.##" /></td>
+										<td width=25%></td>
+									</tr>
+									<tr>
+										<td width=55% style="text-align: right;">PPN <bean:write
+												property="invoiceBean.ppnPercentage" name="invoiceForm"
+												format="#.##" />% :&nbsp;
+										</td>
+										<td width=15% style="padding: 10px; text-align: right"><bean:write
+												name="invoiceForm" property="invoiceBean.totalPpn"
+												format="#,###.##" /></td>
+										<td width=25%></td>
+									</tr>
+									<tr>
+										<td width=55% style="text-align: right;">Grand Total
+											:&nbsp;</td>
+										<td width=15% style="padding: 10px; text-align: right"><bean:write
+												name="invoiceForm" property="invoiceBean.totalGross"
+												format="#,###.##" /></td>
+										<td width=25%></td>
+									</tr>
+								</table>
+							</div>
 						</div>
 						<br>
 						<div class="col-lg-12">
-						<div class="table-responsive">
-							<table style="border:3px double black;margin-top:30px;margin-bottom:10px;overflow: auto; max-height: 400px;" width=35% >
-								<tr>
-									<td style="padding:10px;">
-										Nomor Rekening:
-									</td>
-								</tr>
-								<tr>
-									<td style="padding:10px;">
-										<bean:write name="invoiceForm" property="note.value"/>
-									</td>
-								</tr>
-							</table>
-						<br>
-						<div class="pull-right"><bean:write name="invoiceForm" property="sign.value"/></div>
-						
-						<div class="pull-left" style="margin-top:40px;margin-bottom:10px;">
-							<input type="button" value="Back" class="btn btn-primary" onclick="javascript:flyToPage('invoice')">
-							<logic:equal name="invoiceForm" property="statusId" value="1">
-								<input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editInvoice')">
-							</logic:equal>
-							<logic:equal name="invoiceForm" property="statusId" value="2">
-								<input type="button" value="Edit" class="btn btn-primary" onclick="javascript:flyToPage('editInvoice')">
-							</logic:equal>
-							<input type="button" value="Export" class="btn btn-primary" onclick="javascript:flyToPage('exportDetail')">
+							<div class="table-responsive">
+								<table style="margin-top: 30px; margin-bottom: 10px;" width=50%>
+									<tr>
+										<td class="col-lg-1">Note :</td>
+										<td class="col-lg-5" style="padding: 10px;"><bean:write
+												name="invoiceForm" property="invoiceBean.notes" /></td>
+									</tr>
+								</table>
+							</div>
 						</div>
-						<div class="col-md-4" id="message">
-			  				<logic:notEmpty name="invoiceForm" property="messageList">
-								<logic:iterate id="message" name="invoiceForm" property="messageList">
-									<input type="hidden" id="err" value="<bean:write name="message" />">
-								</logic:iterate>
-							</logic:notEmpty>
-			  			</div>
+						<br>
+						<div class="col-lg-12">
+							<div class="table-responsive">
+								<table
+									style="border: 3px double black; margin-top: 30px; margin-bottom: 10px; overflow: auto; max-height: 400px;"
+									width=35%>
+									<tr>
+										<td style="padding: 10px;">Nomor Rekening:</td>
+									</tr>
+									<tr>
+										<td style="padding: 10px;"><bean:write name="invoiceForm"
+												property="note.value" /></td>
+									</tr>
+								</table>
+								<br>
+								<div class="pull-right">
+									<bean:write name="invoiceForm" property="sign.value" />
+								</div>
+
+								<div class="pull-left"
+									style="margin-top: 40px; margin-bottom: 10px;">
+									<input type="button" value="Back" class="btn btn-primary"
+										onclick="javascript:flyToPage('invoice')">
+									<logic:equal name="invoiceForm" property="statusId" value="1">
+										<input type="button" value="Edit" class="btn btn-primary"
+											onclick="javascript:flyToPage('editInvoice')">
+									</logic:equal>
+									<logic:equal name="invoiceForm" property="statusId" value="2">
+										<input type="button" value="Edit" class="btn btn-primary"
+											onclick="javascript:flyToPage('editInvoice')">
+									</logic:equal>
+									<input type="button" value="Export" class="btn btn-primary"
+										onclick="javascript:flyToPage('exportDetail')">
+								</div>
+								<div class="col-md-4" id="message">
+									<logic:notEmpty name="invoiceForm" property="messageList">
+										<logic:iterate id="message" name="invoiceForm"
+											property="messageList">
+											<input type="hidden" id="err"
+												value="<bean:write name="message" />">
+										</logic:iterate>
+									</logic:notEmpty>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
 	</html:form>
 </body>
 </html>
