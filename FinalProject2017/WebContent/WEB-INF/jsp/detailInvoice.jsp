@@ -141,7 +141,7 @@
 									<tr>
 										<td width=55% style="text-align: right;">PPN <bean:write
 												property="invoiceBean.ppnPercentage" name="invoiceForm"
-												format="#" />% :&nbsp;
+												format="#.##" />% :&nbsp;
 										</td>
 										<td width=15% style="padding: 10px; text-align: right"><bean:write
 												name="invoiceForm" property="invoiceBean.totalPpn"
