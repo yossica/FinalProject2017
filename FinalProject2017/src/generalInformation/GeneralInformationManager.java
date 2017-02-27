@@ -4,44 +4,44 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.*;
-import client.ClientBean;
+import utils.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class GeneralInformationManager {
-	public void update(GeneralInformationBean input){
+	public void update(GeneralInformationBean input) {
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		try{
+		try {
 			ibatis.startTransaction();
-            ibatis.update("generalInformation.update", input);
-            ibatis.commitTransaction();
+			ibatis.update("generalInformation.update", input);
+			ibatis.commitTransaction();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-            try {
+		} finally {
+			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	public GeneralInformationBean getByKey(String input){
+
+	public GeneralInformationBean getByKey(String input) {
 		GeneralInformationBean result = new GeneralInformationBean();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
-		
+
 		try {
-			result = (GeneralInformationBean) ibatis.queryForObject("generalInformation.getByKey", input);
+			result = (GeneralInformationBean) ibatis.queryForObject(
+					"generalInformation.getByKey", input);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	public List getAll (){
+
+	public List getAll() {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
 		try {
@@ -52,6 +52,5 @@ public class GeneralInformationManager {
 		}
 		return result;
 	}
-	
-	
+
 }
