@@ -179,18 +179,28 @@ to {
 <body>
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/invoice" method="post">
-		<html:hidden property="task" name="invoiceForm" />
-		<html:hidden property="deleteIndex" name="invoiceForm" />
-		<html:hidden property="invoiceBean.transactionInvoiceHeaderId"
-			name="invoiceForm" />
-		<html:hidden property="headHunterListSize" name="invoiceForm"
-			styleId="headHunterListSize" />
-		<div id="page-wrapper">
-			<div class="row">
-				<div class="col-lg-12">
-					<logic:equal name="invoiceForm" property="task"
-						value="formInvoiceHH">
-						<h1 class="page-header">Create Invoice Head Hunter</h1>
+	<html:hidden property="task" name="invoiceForm"/>
+	<html:hidden property="deleteIndex" name="invoiceForm" />
+	<html:hidden property="invoiceBean.transactionInvoiceHeaderId" name="invoiceForm" />
+	<html:hidden property="headHunterListSize" name="invoiceForm" styleId="headHunterListSize"/>
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="col-lg-12">
+				<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
+					<h1 class="page-header">Create Invoice <bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/></h1>
+				</logic:equal>
+				<logic:equal name="invoiceForm" property="task" value="editInvoice">
+					<h1 class="page-header">Edit Invoice <bean:write name="invoiceForm" property="invoiceBean.invoiceTypeName"/></h1>
+				</logic:equal>
+			</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-12" style="padding-right: 1%">
+					<div class="col-md-2"><label>Invoice Date</label></div>
+					<div class="col-md-6">
+					<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
+						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
+						: <bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
+
 					</logic:equal>
 					<logic:equal name="invoiceForm" property="task" value="editInvoice">
 						<h1 class="page-header">Edit Invoice Head Hunter</h1>

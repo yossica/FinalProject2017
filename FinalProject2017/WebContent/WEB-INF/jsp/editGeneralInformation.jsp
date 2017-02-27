@@ -37,6 +37,8 @@
 				|| key == "fax" && !phoneAndFaxRegEx.test(value)) {
 			errorMessage = errorMessage + key
 					+ " format is wrong! \n ex: 021-123456 \n";
+		} else if (key=="rek_no" && isNaN(value)) {
+			errorMessage = errorMessage + "Account number must be numeric! \n";
 		}
 
 		if (errorMessage.length != 0) {
