@@ -15,7 +15,7 @@
 		                when 1 then amount
 		            end as amount, is_debit
 		        from transaction_cash_in_bank
-		        where cash_flow_category_id not in ('0c-bal', '1c-trf')
+		        where cash_flow_category_id not in ('0c-bal', '1c-bal', '1c-trf')
 		    ) cash_in_bank_transaction
 		    group by period
 		) c full outer join (    
@@ -27,7 +27,7 @@
 		                when 1 then amount
 		            end as amount, is_debit
 		        from transaction_petty_cash
-		        where cash_flow_category_id not in ('0p-bal', '0p-trf')
+		        where cash_flow_category_id not in ('0p-bal', '1p-bal', '0p-trf')
 		    ) petty_cash_transaction
 		    group by period
 		) p on c.period = p.period

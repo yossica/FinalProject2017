@@ -2,12 +2,17 @@ package cashInBank;
 
 import generalInformation.GeneralInformationManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -201,6 +206,12 @@ public class CashInBankHandler extends Action {
 						.getMessageList()
 						.add("Ooooops!!! Cannot create transaction that cost more than remaining balance!");
 				flag = false;
+			} else if (amount > max_transaction) {
+				cashInBankForm.getMessageList().clear();
+				cashInBankForm.getMessageList().add(
+						"Ooooops!!! Cannot create transaction more than IDR"
+								+ max_transaction + "!");
+				flag = false;
 			} else if (!"1c-cor".equals(cashInBankForm.getCashInBankBean()
 					.getCashFlowCategoryId())) {
 				if (amount < min_transaction) {
@@ -212,12 +223,6 @@ public class CashInBankHandler extends Action {
 									+ "!\nPlease do this in petty cash instead");
 					flag = false;
 				}
-			} else if (amount > max_transaction) {
-				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add(
-						"Ooooops!!! Cannot create transaction more than IDR"
-								+ max_transaction + "!");
-				flag = false;
 			}
 
 			if (!flag) {
@@ -622,9 +627,36 @@ public class CashInBankHandler extends Action {
 					"yyyyMMddhhmmss");
 			String fileName = "CashInBankReport_"
 					+ printDateFormat.format(cal.getTime()) + ".pdf";
-			ExportReportManager.exportToPdf(filePath
+			String resultServerPath = ExportReportManager.exportToPdf(filePath
 					+ "\\report\\FinanceTransactionReport" + ".jrxml",
 					fileName, parameters, cashInBankData);
+			
+			//download to client
+			response.setContentType("application/octet-stream");
+			String disHeader = "Attachment; Filename=\""+fileName+"\"";
+			response.setHeader("Content-Disposition", disHeader);
+
+			InputStream in = null;
+			ServletOutputStream outs = response.getOutputStream();
+
+			try {
+			in = new BufferedInputStream(new FileInputStream(resultServerPath));
+			int ch;
+			while ((ch = in.read()) != -1) {
+			outs.print((char) ch);
+			}
+			}
+			finally {
+			if (in != null) in.close(); // very important
+			}
+
+			outs.flush();
+			outs.close();
+			in.close();
+			
+			//download until here
+			
+			
 			cashInBankForm.getMessageList().clear();
 			cashInBankForm.getMessageList()
 					.add("Success export to D://Finance Solution Report/"

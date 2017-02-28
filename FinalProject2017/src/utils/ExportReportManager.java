@@ -15,7 +15,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class ExportReportManager {
-	public static void exportToPdf(String filePath, String fileName,
+	public static String exportToPdf(String filePath, String fileName,
 			Map<String, Object> parameters, List input) {
 		JasperReport jasperReport = null;
 		try {
@@ -41,11 +41,11 @@ public class ExportReportManager {
 		// JFileChooser jfc = new JFileChooser();
 		// jfc.setAcceptAllFileFilterUsed(false);
 		// jfc.setFileFilter(new FileNameExtensionFilter("PDF Files", "pdf"));
-
+		String path = "";
 		try {
 			File outDir = new File("D://Finance Solution Reports/");
 			outDir.mkdirs();
-			String path = outDir.getAbsolutePath() + "\\" + fileName;
+			path = outDir.getAbsolutePath() + "\\" + fileName;
 			String compare = path.toLowerCase();
 			if (!compare.endsWith(".pdf"))
 				path += ".pdf";
@@ -54,10 +54,14 @@ public class ExportReportManager {
 
 			JasperExportManager.exportReportToPdfStream(jasperPrint,
 					outputStream);
-
+			
+			outputStream.close();
 		} catch (Exception e) {
 			System.out.println("error export");
 			e.printStackTrace();
 		}
+		
+		//for download file
+		return path;
 	}
 }
