@@ -1,7 +1,5 @@
 package user;
 
-import index.IndexForm;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +19,7 @@ public class UserHandler extends Action {
 		HttpSession session = request.getSession(true);
 
 		if ("login".equals(userForm.getTask())) {
-			if(userForm.getUserName() == null){
+			if (userForm.getUserName() == null) {
 				return mapping.findForward("login");
 			}
 			UserBean userBean = new UserBean();
@@ -30,14 +28,14 @@ public class UserHandler extends Action {
 			int count = userManager.checkLogin(userBean);
 			if (count > 0) {
 				session.setAttribute("username", userBean.getUserName());
-				session.setMaxInactiveInterval(30*60);//30 menit
+				session.setMaxInactiveInterval(30 * 60);// 30 menit
 				response.sendRedirect("/FinalProject2017/index.do");
 				return null;
-			}
-			else {
+			} else {
 				userForm.setTask("");
 				userForm.getMessageList().clear();
-				userForm.getMessageList().add("Ooooops incorrect Username or Password");
+				userForm.getMessageList().add(
+						"Ooooops incorrect Username or Password");
 				return mapping.findForward("login");
 			}
 		} else if ("changePassword".equals(userForm.getTask())) {
@@ -52,23 +50,26 @@ public class UserHandler extends Action {
 			if (session.getAttribute("username") == null) {
 				return mapping.findForward("login");
 			}
-			
+
 			boolean flag = true;
 			// validasi old password sama ga sama yang di database
 			UserBean userBean = new UserBean();
-			userBean.setUserName((String)session.getAttribute("username"));
+			userBean.setUserName((String) session.getAttribute("username"));
 			userBean.setPassword(userForm.getPassword());
 			userForm.getMessageList().clear();
-			if(userManager.checkLogin(userBean) == 0){
-				userForm.getMessageList().add("Ooooops Old Password does not match");
+			if (userManager.checkLogin(userBean) == 0) {
+				userForm.getMessageList().add(
+						"Ooooops Old Password does not match");
 				flag = false;
 			}
 			// validasi new password dengan confirm password sama apa nggak
-			if(!userForm.getNewPassword().equals(userForm.getConfirmPassword())){
-				userForm.getMessageList().add("Ooooops New Password is not same as Confirm Password");
+			if (!userForm.getNewPassword()
+					.equals(userForm.getConfirmPassword())) {
+				userForm.getMessageList().add(
+						"Ooooops New Password is not same as Confirm Password");
 				flag = false;
 			}
-			if(!flag) {
+			if (!flag) {
 				userForm.setPassword("");
 				userForm.setNewPassword("");
 				userForm.setConfirmPassword("");
@@ -88,7 +89,7 @@ public class UserHandler extends Action {
 			return mapping.findForward("manageUser");
 		} else if ("insertUser".equals(userForm.getTask())) {
 			userForm.getMessageList().clear();
-			if(userManager.checkUsername(userForm.getNewUser()) > 0){
+			if (userManager.checkUsername(userForm.getNewUser()) > 0) {
 				userForm.getMessageList().add("Username already exist!");
 				return mapping.findForward("manageUser");
 			}

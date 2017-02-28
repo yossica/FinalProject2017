@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.ibatis.sqlmap.client.SqlMapClient;
-
 import utils.IbatisHelper;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class OutsourceManager {
 	public void insert(OutsourceBean input) {

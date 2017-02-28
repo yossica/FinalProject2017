@@ -3,7 +3,6 @@ package pettyCash;
 import generalInformation.GeneralInformationManager;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -98,18 +97,17 @@ public class PettyCashHandler extends Action {
 
 			Calendar cal = Calendar.getInstance();
 
-			double amount = maxBalance-currBalance;
+			double amount = maxBalance - currBalance;
 			PettyCashBean pettyCashBean = new PettyCashBean();
-			if(amount <= 0){
+			if (amount <= 0) {
 				pettyCashBean.setCashFlowCategoryId("1p-bal");
 				pettyCashBean.setAmount(Math.abs(amount));
 				pettyCashBean.setIsDebit(1);
-			}
-			else {
+			} else {
 				pettyCashBean.setCashFlowCategoryId("0p-bal");
 				pettyCashBean.setAmount(amount);
 				pettyCashBean.setIsDebit(0);
-			}	
+			}
 			pettyCashBean.setBalance(maxBalance);
 			pettyCashBean.setDescription("Balancing Petty Cash "
 					+ dateFormat.format(cal.getTime()));
@@ -149,8 +147,10 @@ public class PettyCashHandler extends Action {
 								: "Credit"));
 			}
 			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-		/*pettyCashForm.getMessageList().add(
-					"Success!!! Petty Cash has been balanced!");*/
+			/*
+			 * pettyCashForm.getMessageList().add(
+			 * "Success!!! Petty Cash has been balanced!");
+			 */
 			return mapping.findForward("pettyCash");
 		} else if ("debit".equals(pettyCashForm.getTask())) {
 			pettyCashForm.setTask("saveDebit");
@@ -184,23 +184,27 @@ public class PettyCashHandler extends Action {
 			Calendar cal = Calendar.getInstance();
 			// validate, if false, go back to form
 			double currBalance = pettyCashManager.getCurrentBalance();
-			double max_transaction = Double.parseDouble(generalInformationManager.getByKey("max_trans_petty").getValue());
+			double max_transaction = Double
+					.parseDouble(generalInformationManager.getByKey(
+							"max_trans_petty").getValue());
 			double amount = pettyCashForm.getPettyCashBean().getAmount();
 			boolean flag = true;
-			if(currBalance - amount < 0){
+			if (currBalance - amount < 0) {
 				pettyCashForm.getMessageList().clear();
 				pettyCashForm
 						.getMessageList()
 						.add("Ooooops!!! Cannot create transaction that cost more than remaining balance!");
 
 				flag = false;
-			}
-			else if(amount > max_transaction){
+			} else if (amount > max_transaction) {
 				pettyCashForm.getMessageList().clear();
-				pettyCashForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!\nPlease do this in cash in bank instead");
+				pettyCashForm.getMessageList().add(
+						"Ooooops!!! Cannot create transaction more than IDR"
+								+ max_transaction
+								+ "!\nPlease do this in cash in bank instead");
 				flag = false;
 			}
-			
+
 			if (!flag) {
 				pettyCashForm.setTask("saveDebit");
 				pettyCashForm.getPettyCashBean().setIsDebit(1);
@@ -238,11 +242,9 @@ public class PettyCashHandler extends Action {
 			pettyCashBean.setCreatedBy((String) session
 					.getAttribute("username"));
 			String message = pettyCashManager.insert(pettyCashBean);
-			if(message.startsWith("Failed")){
+			if (message.startsWith("Failed")) {
 				pettyCashForm.getMessageList().clear();
-				pettyCashForm
-						.getMessageList()
-						.add(message);
+				pettyCashForm.getMessageList().add(message);
 				pettyCashForm.setTask("saveDebit");
 				pettyCashForm.getPettyCashBean().setIsDebit(1);
 
@@ -338,15 +340,19 @@ public class PettyCashHandler extends Action {
 			Calendar cal = Calendar.getInstance();
 			// validate, if false, go back to form
 			double currBalance = pettyCashManager.getCurrentBalance();
-			double max_transaction = Double.parseDouble(generalInformationManager.getByKey("max_trans_petty").getValue());
+			double max_transaction = Double
+					.parseDouble(generalInformationManager.getByKey(
+							"max_trans_petty").getValue());
 			double amount = pettyCashForm.getPettyCashBean().getAmount();
 			boolean flag = true;
-			if(amount > max_transaction){
+			if (amount > max_transaction) {
 				pettyCashForm.getMessageList().clear();
-				pettyCashForm.getMessageList().add("Ooooops!!! Cannot create transaction more than IDR"+max_transaction+"!");
+				pettyCashForm.getMessageList().add(
+						"Ooooops!!! Cannot create transaction more than IDR"
+								+ max_transaction + "!");
 				flag = false;
 			}
-			
+
 			if (!flag) {
 				pettyCashForm.setTask("saveCredit");
 				pettyCashForm.getPettyCashBean().setIsDebit(0);
@@ -377,8 +383,7 @@ public class PettyCashHandler extends Action {
 
 			// save to cash in bank
 			PettyCashBean pettyCashBean = pettyCashForm.getPettyCashBean();
-			pettyCashBean.setBalance(currBalance
-					+ amount);
+			pettyCashBean.setBalance(currBalance + amount);
 			cal.setTime(showDateFormat.parse(pettyCashForm.getPettyCashBean()
 					.getTransactionDate()));
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
@@ -426,57 +431,72 @@ public class PettyCashHandler extends Action {
 		} else if ("export".equals(pettyCashForm.getTask())) {
 			Map paramMap = new HashMap();
 			Calendar cal = Calendar.getInstance();
-			
-			//get all filter field
+
+			// get all filter field
 			Map<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("name", generalInformationManager.getByKey("name").getValue());
-			parameters.put("address", generalInformationManager.getByKey("addr").getValue()+
-					"\nPhone:"+generalInformationManager.getByKey("telp").getValue()+
-					"\nFax: "+generalInformationManager.getByKey("fax").getValue());
+			parameters.put("name", generalInformationManager.getByKey("name")
+					.getValue());
+			parameters.put("address", generalInformationManager
+					.getByKey("addr").getValue()
+					+ "\nPhone:"
+					+ generalInformationManager.getByKey("telp").getValue()
+					+ "\nFax: "
+					+ generalInformationManager.getByKey("fax").getValue());
 			parameters.put("reportType", "Petty Cash");
 			String cat = pettyCashForm.getCategoryId();
-			if("".equals(cat)){
+			if ("".equals(cat)) {
 				paramMap.put("category", null);
 				parameters.put("category", "All");
-			}
-			else{
+			} else {
 				paramMap.put("category", cat);
-				parameters.put("category", masterManager.getCashFlowCategoryById(cat).getName());
+				parameters.put("category", masterManager
+						.getCashFlowCategoryById(cat).getName());
 			}
-			
-			if("".equals(pettyCashForm.getFilterEndDate())){
-				paramMap.put("endDate",null);
-				paramMap.put("startDate",null);
-				parameters.put("endDate","All");
-				parameters.put("startDate","All");
-			}
-			else{
-				cal.setTime(showDateFormat.parse(pettyCashForm.getFilterEndDate()));
-				paramMap.put("endDate",dateFormat.format(cal.getTime()));
-				parameters.put("endDate",dateFormat.format(cal.getTime()));
-				pettyCashForm.setFilterEndDate(showDateFormat.format(cal.getTime()));
-				cal.setTime(showDateFormat.parse(pettyCashForm.getFilterStartDate()));
+
+			if ("".equals(pettyCashForm.getFilterEndDate())) {
+				paramMap.put("endDate", null);
+				paramMap.put("startDate", null);
+				parameters.put("endDate", "All");
+				parameters.put("startDate", "All");
+			} else {
+				cal.setTime(showDateFormat.parse(pettyCashForm
+						.getFilterEndDate()));
+				paramMap.put("endDate", dateFormat.format(cal.getTime()));
+				parameters.put("endDate", dateFormat.format(cal.getTime()));
+				pettyCashForm.setFilterEndDate(showDateFormat.format(cal
+						.getTime()));
+				cal.setTime(showDateFormat.parse(pettyCashForm
+						.getFilterStartDate()));
 				paramMap.put("startDate", dateFormat.format(cal.getTime()));
-				parameters.put("startDate",dateFormat.format(cal.getTime()));
-				pettyCashForm.setFilterStartDate(showDateFormat.format(cal.getTime()));
+				parameters.put("startDate", dateFormat.format(cal.getTime()));
+				pettyCashForm.setFilterStartDate(showDateFormat.format(cal
+						.getTime()));
 			}
-			//get petty cash data based on filter field
+			// get petty cash data based on filter field
 			List cashInBankData = pettyCashManager.getAllWithFilter(paramMap);
-			//export to pdf
-			String filePath = this.getServlet().getServletContext().getRealPath("/asset/");
+			// export to pdf
+			String filePath = this.getServlet().getServletContext()
+					.getRealPath("/asset/");
 			parameters.put("filePath", filePath);
 			cal = Calendar.getInstance();
-			SimpleDateFormat printDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-			String fileName = "PettyCashReport_"+printDateFormat.format(cal.getTime())+".pdf";
-			ExportReportManager.exportToPdf(filePath+"\\report\\FinanceTransactionReport"+".jrxml",
+			SimpleDateFormat printDateFormat = new SimpleDateFormat(
+					"yyyyMMddhhmmss");
+			String fileName = "PettyCashReport_"
+					+ printDateFormat.format(cal.getTime()) + ".pdf";
+			ExportReportManager.exportToPdf(filePath
+					+ "\\report\\FinanceTransactionReport" + ".jrxml",
 					fileName, parameters, cashInBankData);
 			pettyCashForm.getMessageList().clear();
-			pettyCashForm.getMessageList().add("Success export to D://Finance Solution Report/"+fileName);
-						
-			//show filtered page
-			pettyCashForm.setRemainingBalance(pettyCashManager.getCurrentBalance());			
+			pettyCashForm.getMessageList()
+					.add("Success export to D://Finance Solution Report/"
+							+ fileName);
 
-			pettyCashForm.setTransactionList(pettyCashManager.getAllWithFilter(paramMap));
+			// show filtered page
+			pettyCashForm.setRemainingBalance(pettyCashManager
+					.getCurrentBalance());
+
+			pettyCashForm.setTransactionList(pettyCashManager
+					.getAllWithFilter(paramMap));
 
 			paramMap = new HashMap();
 			paramMap.put("cashFlowType", "Petty Cash");
