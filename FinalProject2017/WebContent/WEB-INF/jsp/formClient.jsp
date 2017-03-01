@@ -11,12 +11,12 @@
 <script>
 	function insert() {
 
-		var name = document.getElementsByName("name")[0].value;
-		var address = document.getElementsByName("address")[0].value;
-		var city = document.getElementsByName("city")[0].value;
-		var phoneNumber = document.getElementsByName("phoneNumber")[0].value;
-		var faxNumber = document.getElementsByName("faxNumber")[0].value;
-		var postalCode = document.getElementsByName("postalCode")[0].value;
+		var name = document.getElementsByName("clientBean.name")[0].value;
+		var address = document.getElementsByName("clientBean.address")[0].value;
+		var city = document.getElementsByName("clientBean.city")[0].value;
+		var phoneNumber = document.getElementsByName("clientBean.phoneNumber")[0].value;
+		var faxNumber = document.getElementsByName("clientBean.faxNumber")[0].value;
+		var postalCode = document.getElementsByName("clientBean.postalCode")[0].value;
 
 		var letters = /^([A-Za-z ]{3,})+$/;
 		var numbers = /^\d+$/;
@@ -91,14 +91,6 @@
 		}
 	}
 
-	function placehold() {
-		if (document.getElementsByName("phoneNumber")[0].value === "") {
-			document.getElementsByName("phoneNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
-		} else if (document.getElementsByName("faxNumber")[0].value === "") {
-			document.getElementsByName("faxNumber")[0].value = 'e.g.: 021 123-456 / +6221 123-456';
-		}
-	}
-
 	function cancel() {
 		document.forms[1].task.value = "client";
 		flyToPage();
@@ -115,58 +107,68 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/client" method="post">
 		<html:hidden property="task" name="clientForm" />
-		<html:hidden property="clientId" name="clientForm" />
+		<html:hidden property="clientBean.clientId" name="clientForm" />
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Form Client</h1>
-
 					<div class="panel-body">
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<tbody>
 									<tr>
-										<td><label>Client Name</label></td>
-										<td><html:text name="clientForm" property="name"
+
+										<td><label>Client Name <b
+												style="color: red; font-size: 18px">*</b></label></td>
+										<td><html:text name="clientForm"
+												property="clientBean.name" styleClass="form-control-client" /></td>
+
+									</tr>
+									<tr>
+										<td><label>Address <b
+												style="color: red; font-size: 18px">*</b></label></td>
+										<td><html:text name="clientForm"
+												property="clientBean.address"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
-										<td><label>Address</label></td>
-										<td><html:text name="clientForm" property="address"
-												styleClass="form-control-client" /></td>
+										<td><label>City <b
+												style="color: red; font-size: 18px">*</b></label></td>
+										<td><html:text name="clientForm"
+												property="clientBean.city" styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
-										<td><label>City</label></td>
-										<td><html:text name="clientForm" property="city"
-												styleClass="form-control-client" /></td>
-									</tr>
-									<tr>
-										<td><label>Phone</label></td>
-										<td><html:text name="clientForm" property="phoneNumber"
-												styleClass="form-control-client"
-												onclick="javascript:placehold()" /></td>
+										<td><label>Phone <b
+												style="color: red; font-size: 18px">*</b></label></td>
+										<td><input type="text" name="clientBean.phoneNumber"
+											placeholder="e.g.: 021 123-456 / +6221 123-456"
+											value="<bean:write name="clientForm" property="clientBean.phoneNumber"/>"></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
-										<td><html:text name="clientForm" property="faxNumber"
-												styleClass="form-control-client"
-												onclick="javascript:placehold()" /></td>
+										<td><input type="text" name="clientBean.faxNumber"
+											placeholder="e.g.: 021 123-456 / +6221 123-456"
+											value="<bean:write name="clientForm" property="clientBean.faxNumber"/>"></td>
 									</tr>
 									<tr>
-										<td><label>Postal Code</label></td>
-										<td><html:text name="clientForm" property="postalCode"
+										<td><label>Postal Code <b
+												style="color: red; font-size: 18px">*</b></label></td>
+										<td><html:text name="clientForm"
+												property="clientBean.postalCode"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Contact Person</label></td>
-										<td><html:text name="clientForm" property="contactPerson"
+										<td><html:text name="clientForm"
+												property="clientBean.contactPerson"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Client Status</label></td>
 										<td>
 											<div class="col-lg-13">
-												<html:select name="clientForm" property="isEnabled"
+												<html:select name="clientForm"
+													property="clientBean.isEnabled"
 													styleClass="form-control-client">
 													<html:option value="1">Enabled</html:option>
 													<html:option value="0">Disabled</html:option>
@@ -175,6 +177,8 @@
 									</tr>
 								</tbody>
 							</table>
+							<b style="color: red; font-size: 12px"><i>*Field is
+									required</i></b>
 						</div>
 						<!-- /.table-responsive -->
 					</div>
@@ -191,7 +195,7 @@
 						<logic:notEmpty name="clientForm" property="messageList">
 							<logic:iterate id="message" name="clientForm">
 								<input type="hidden" id="err"
-									value="<bean:write name="message" />">
+									value="<bean:write name="message"/>">
 							</logic:iterate>
 						</logic:notEmpty>
 					</div>

@@ -5,20 +5,11 @@ import java.util.List;
 
 import org.apache.struts.action.ActionForm;
 
+import training.TrainingBean;
+
 public class ClientForm extends ActionForm {
 	private String task;
-
-	private int clientId;
-	private String name;
-	private String address;
-	private String city;
-	private String phoneNumber;
-	private String faxNumber;
-	private String postalCode;
-	private String contactPerson;
-
-	private int isEnabled;
-
+	private ClientBean clientBean = new ClientBean();
 	private List listClient;
 	private List messageList;
 
@@ -26,88 +17,16 @@ public class ClientForm extends ActionForm {
 		return task;
 	}
 
-	public int getClientId() {
-		return clientId;
+	public void setTask(String task) {
+		this.task = task;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public String getFaxNumber() {
-		return faxNumber;
-	}
-
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public String getContactPerson() {
-		return contactPerson;
-	}
-
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
-
+	
 	public List getListClient() {
 		return listClient;
 	}
 
-	public void setTask(String task) {
-		this.task = task;
-	}
-
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public void setFaxNumber(String faxNumber) {
-		this.faxNumber = faxNumber;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-
 	public void setListClient(List listClient) {
 		this.listClient = listClient;
-	}
-
-	public int getIsEnabled() {
-		return isEnabled;
-	}
-
-	public void setIsEnabled(int isEnabled) {
-		this.isEnabled = isEnabled;
 	}
 
 	public List getMessageList() {
@@ -119,5 +38,15 @@ public class ClientForm extends ActionForm {
 	public void setMessageList(List messageList) {
 		this.messageList = messageList;
 	}
+
+	public ClientBean getClientBean() {
+		return clientBean;
+	}
+
+	public void setClientBean(ClientBean clientBean) {
+		this.clientBean = clientBean;
+	}
+
+	
 
 }

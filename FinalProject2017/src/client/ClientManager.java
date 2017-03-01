@@ -61,7 +61,6 @@ public class ClientManager {
 			result = (ClientBean) ibatis
 					.queryForObject("client.getById", input);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
@@ -73,7 +72,6 @@ public class ClientManager {
 		try {
 			result = ibatis.queryForList("client.getAll", null);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
@@ -85,7 +83,6 @@ public class ClientManager {
 		try {
 			result = ibatis.queryForList("client.getAllEnabled", null);
 		} catch (SQLException e) {
-			// TODO Autenerated catch block
 			e.printStackTrace();
 		}
 		return result;

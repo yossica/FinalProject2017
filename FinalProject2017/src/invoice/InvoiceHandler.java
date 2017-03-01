@@ -4,6 +4,10 @@ import generalInformation.GeneralInformationBean;
 import generalInformation.GeneralInformationManager;
 import holiday.HolidayManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1387,16 +1392,13 @@ public class InvoiceHandler extends Action {
 					"yyyyMMddhhmmss");
 			String fileName = "InvoiceSummaryReport_"
 					+ printDateFormat.format(cal.getTime()) + ".pdf";
-			ExportReportManager.exportToPdf(filePath
+			String resultServerPath = ExportReportManager.exportToPdf(filePath
 					+ "\\report\\InvoiceSummaryReport" + ".jrxml", fileName,
 					parameters, invoiceSummaryData);
-			invoiceForm.getMessageList().clear();
-			invoiceForm.getMessageList()
-					.add("Success export to D://Finance Solution Report/"
-							+ fileName);
-
-			invoiceForm.setInvoiceList(invoiceSummaryData);
-			return mapping.findForward("invoice");
+			
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
+			
+			return null;
 
 		} else if ("exportDetail".equals(invoiceForm.getTask())) {
 			Integer invoiceHeaderId = invoiceForm.getInvoiceBean()
@@ -1408,6 +1410,8 @@ public class InvoiceHandler extends Action {
 
 			GeneralInformationBean rekNo = generalInformationManager
 					.getByKey("rek_no");
+			GeneralInformationBean rekNama = generalInformationManager
+					.getByKey("rek_nama");
 			GeneralInformationBean sign = generalInformationManager
 					.getByKey("sign");
 
@@ -1435,7 +1439,8 @@ public class InvoiceHandler extends Action {
 			parameters.put("invoiceNote", invoiceBean.getNotes() == null ? ""
 					: invoiceBean.getNotes());
 			parameters.put("ppn", invoiceBean.getPpnPercentage()+"");
-			parameters.put("accountDetail", rekNo.getValue());
+			parameters.put("accountNo", rekNo.getValue().toString());
+			parameters.put("accountName", rekNama.getValue());
 			parameters.put("manager", sign.getValue());
 
 			List invoiceDetailData = invoiceManager
@@ -1451,22 +1456,13 @@ public class InvoiceHandler extends Action {
 					.replaceAll("/", "")
 					+ "_"
 					+ printDateFormat.format(cal.getTime()) + ".pdf";
-			ExportReportManager.exportToPdf(filePath
+			String resultServerPath = ExportReportManager.exportToPdf(filePath
 					+ "\\report\\InvoiceDetailReport" + ".jrxml", fileName,
 					parameters, invoiceDetailData);
-			invoiceForm.getMessageList().clear();
-			invoiceForm.getMessageList()
-					.add("Success export to D://Finance Solution Report/"
-							+ fileName);
-
-			// return to detail invoice
-			invoiceForm.setInvoiceBean(invoiceBean);
-			invoiceForm.setClientBean(clientBean);
-			invoiceForm.setStatusId(invoiceBean.getStatusInvoiceId() + "");
-			invoiceForm.setInvoiceDetailList(invoiceDetailData);
-			invoiceForm.setNote(rekNo);
-			invoiceForm.setSign(sign);
-			return mapping.findForward("detailInvoice");
+			
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
+			
+			return null;
 		} else {
 			Calendar cc = Calendar.getInstance();
 			int cyear = cc.get(Calendar.YEAR);

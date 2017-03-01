@@ -12,6 +12,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
+
+<!-- Select -->
+<script src="asset/jquery/jquery.min.js"></script>
+<link rel="stylesheet" href="dist/css/bootstrap-select.css">
+<script src="dist/js/bootstrap-select.js"></script>
+
 <!-- Bootstrap Core CSS -->
 <link href="asset/bootstrap/css/bootstrap.css" type="text/css"
 	rel="stylesheet" media="all">
@@ -21,6 +27,7 @@
 <!-- Custom Fonts -->
 <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet"
 	type="text/css">
+	
 
 <script src="dist/sweetalert.min.js"></script>
 <script>
@@ -67,7 +74,7 @@
 								class="fa fa-user fa-fw"></i> Change Password</a></li>
 						<li class="divider"></li>
 						<%if (request.getSession().getAttribute("username") != null) {%>
-							<%if (request.getSession().getAttribute("username").equals("Aldhi")) {%>
+							<%if (request.getSession().getAttribute("username").equals("MrScrooge")) {%>
 								<%out.print("<li>"); %>
 								<%out.print("<a href=\"#\" onclick=\"javascript:flyToPageIndex('manageUser')\"><i class=\"fa fa-user fa-fw\"></i> Manage Users</a>"); %>
 								<%out.print("</li>"); %>
@@ -132,7 +139,6 @@
 			</div>
 			<!-- /.navbar-static-side --> </nav>
 		</div>
-		<script src="asset/jquery/jquery.min.js"></script>
 		<script src="asset/bootstrap/js/bootstrap.min.js"></script>
 		<script src="asset/metisMenu/metisMenu.min.js"></script>
 		<script src="dist/js/sb-admin-2.js"></script>

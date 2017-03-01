@@ -106,7 +106,7 @@
 				<div class="col-lg-12">
 					<h1 class="page-header">Petty Cash Transaction</h1>
 					<div class="panel-body">
-						<div class="table-responsive">
+						<div>
 							<table class="table table-hover">
 								<tbody>
 									<tr>
@@ -126,7 +126,7 @@
 										<td><label>Transaction Category</label></td>
 										<td><html:select
 												property="pettyCashBean.cashFlowCategoryId"
-												name="pettyCashForm" styleClass="form-control-client">
+												name="pettyCashForm" styleClass="form-control" styleId="basic">
 												<html:optionsCollection property="cashFlowCategoryList"
 													label="name" value="cashFlowCategoryId"
 													name="pettyCashForm" />
@@ -154,10 +154,6 @@
 						<button type="button" class="btn btn-primary"
 							onclick="javascript:insert()">Save</button>
 					</div>
-
-
-
-
 					<div class="col-md-4" style="color: red;" id="message">
 						<logic:notEmpty name="pettyCashForm" property="messageList">
 							<logic:iterate id="message" name="pettyCashForm"
@@ -170,8 +166,12 @@
 				</div>
 			</div>
 		</div>
-
-
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });});
+</script>
 </body>
 </html>

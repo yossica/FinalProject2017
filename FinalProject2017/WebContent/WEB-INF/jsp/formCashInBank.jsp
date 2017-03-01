@@ -107,7 +107,7 @@
 				<div class="col-lg-12">
 					<h1 class="page-header">Cash in Bank Transaction</h1>
 					<div class="panel-body">
-						<div class="table-responsive">
+						<div>
 							<table class="table table-hover">
 								<tbody>
 									<tr>
@@ -137,7 +137,7 @@
 											</logic:equal> <logic:notEqual value="saveTransfer" property="task"
 												name="cashInBankForm">
 												<html:select property="cashInBankBean.cashFlowCategoryId"
-													name="cashInBankForm" styleClass="form-control-client">
+													name="cashInBankForm" styleClass="form-control" styleId="basic">
 													<html:optionsCollection property="cashFlowCategoryList"
 														label="name" value="cashFlowCategoryId"
 														name="cashInBankForm" />
@@ -183,5 +183,11 @@
 			</div>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });});
+</script>
 </body>
 </html>

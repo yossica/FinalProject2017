@@ -14,9 +14,9 @@
 		var filter = document.getElementById("filterForm");
 		filter.style.display = filter.style.display === 'none' ? '' : 'none';
 		if (filter.style.display == 'none') {
-			document.getElementById("listInvoice").style.height = "400px";
+			document.getElementById("listInvoice").style.height = "495px";
 		} else {
-			document.getElementById("listInvoice").style.height = "200px";
+			document.getElementById("listInvoice").style.height = "265px";
 		}
 	}
 	function filter() {
@@ -180,11 +180,11 @@
 					<div id="filterForm" class="col-lg-12"
 						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 						<div class="row" style="margin-top: 10px;">
-							<div class="col-md-12" style="padding-right: 1%">
+							<div class="col-md-12">
 								<div class="col-md-2">Client</div>
 								<div class="col-md-10">
 									<html:select property="clientId" name="invoiceForm"
-										styleClass="form-control-client">
+										styleClass="form-control" styleId="basic">
 										<html:option value="">Select</html:option>
 										<html:optionsCollection name="invoiceForm"
 											property="clientList" label="name" value="clientId" />
@@ -300,7 +300,7 @@
 			</div>
 			<div class="panel-body">
 				<div id="listInvoice" class="table-responsive"
-					style="height: 400px; overflow: auto;">
+					style="height: 495px; overflow: auto;">
 					<table class="table table-hover">
 						<tr>
 							<th>Invoice No.</th>
@@ -377,5 +377,12 @@
 			</logic:notEmpty>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });
+});
+</script>
 </body>
 </html>
