@@ -20,7 +20,7 @@ public class TrainingBean implements Serializable {
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-	private int fee;
+	private Integer fee;
 
 	private List<TrainingDetailBean> detailList;
 
@@ -144,11 +144,11 @@ public class TrainingBean implements Serializable {
 		this.transactionTrainingDetailId = transactionTrainingDetailId;
 	}
 
-	public int getFee() {
+	public Integer getFee() {
 		return fee;
 	}
 
-	public void setFee(int fee) {
+	public void setFee(Integer fee) {
 		this.fee = fee;
 	}
 
