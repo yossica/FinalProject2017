@@ -19,6 +19,9 @@ public class UserHandler extends Action {
 		HttpSession session = request.getSession(true);
 
 		if ("login".equals(userForm.getTask())) {
+			if (session.getAttribute("username") != null) {
+				return mapping.findForward("index");
+			}
 			if (userForm.getUserName() == null) {
 				return mapping.findForward("login");
 			}
@@ -104,6 +107,9 @@ public class UserHandler extends Action {
 			userForm.getMessageList().add("Success!!! Password Has Been Reset!");
 			return mapping.findForward("manageUser");
 		} else {
+			if (session.getAttribute("username") != null) {
+				return mapping.findForward("index");
+			}
 			return mapping.findForward("login");
 		}
 	}

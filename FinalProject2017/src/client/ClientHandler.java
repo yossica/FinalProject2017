@@ -16,9 +16,7 @@ public class ClientHandler extends Action {
 			throws Exception {
 
 		HttpSession session = request.getSession();
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
+
 		ClientForm clientForm = (ClientForm) form;
 		ClientManager clientManager = new ClientManager();
 

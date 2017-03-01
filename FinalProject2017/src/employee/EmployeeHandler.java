@@ -16,9 +16,6 @@ public class EmployeeHandler extends Action {
 			throws Exception {
 
 		HttpSession session = request.getSession();
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
 
 		EmployeeForm employeeForm = (EmployeeForm) form;
 		EmployeeManager employeeManager = new EmployeeManager();
