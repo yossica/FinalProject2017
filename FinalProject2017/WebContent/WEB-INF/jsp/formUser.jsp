@@ -33,26 +33,108 @@
 	function insertUser() {
 		var regex = /^[A-Za-z0-9]*$/;
 		var newUser = document.forms[1].newUser.value;
+		var errorMessage = "";
+		if (newUser == "") {
+			errorMessage = errorMessage + "Username must be filled! \n";
+		}
 		if (!regex.test(newUser)) {
-			alert("New Username must consist of only alphanumeric!");
+			errorMessage = errorMessage + "New Username must consist of only alphanumeric!";
+			//alert("New Username must consist of only alphanumeric!");
 			return;
 		}
-		if (confirm("Are you sure to insert this user?")) {
-			flyToPage("insertUser");
+		if (errorMessage.length != 0) {
+			sweetAlert("Oops...", errorMessage, "error");
+			/* document.getElementById("message").innerHTML = errorMessage; */
+			return;
+		} else {
+			swal({
+				title : "Are you sure?",
+				text : "System will insert these data new User",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#ef2300",
+				confirmButtonText : "Yes, Update",
+				cancelButtonText : "No, Cancel Please!",
+				closeOnConfirm : false,
+				closeOnCancel : false
+			}, function(isConfirm) {
+				if (isConfirm) {
+					swal({
+						title : "Good job!",
+						text : "Save Success!",
+						type : "success"
+					}, function() {
+						setTimeout(function() {
+							flyToPage("insertUser");
+						}, 10);
+					});
+
+				} else {
+					swal("Cancelled", "Cancel Insert New User",
+							"error");
+				}
+			});
+			/* flyToPage("insertUser"); */
 		}
 	}
 
 	function resetPassword(username) {
-		if (confirm("Are you sure to reset this user password?")) {
+		swal({
+			title : "Are you sure?",
+			text : "System will reset password",
+			type : "warning",
+			showCancelButton : true,
+			confirmButtonColor : "#ef2300",
+			confirmButtonText : "Yes, Update",
+			cancelButtonText : "No, Cancel Please!",
+			closeOnConfirm : false,
+			closeOnCancel : false
+		}, function(isConfirm) {
+			if (isConfirm) {
+				swal({
+					title : "Good job!",
+					text : "Save Success!",
+					type : "success"
+				}, function() {
+					setTimeout(function() {
+						//flyToPage("insertUser");
+						document.forms[1].userName.value = username;
+						flyToPage("resetPassword");
+					}, 10);
+				});
+
+			} else {
+				swal("Cancelled", "Cancel Reset Password",
+						"error");
+			}
+		});
+		/* if (confirm("Are you sure to reset this user password?")) {
 			document.forms[1].userName.value = username;
 			flyToPage("resetPassword");
-		}
+		} */
 	}
 
 	function flyToPage(task) {
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	
+	function alertError() {
+		var message = document.getElementById("err");
+		if (message != null) {
+			var messageValue = message.value;
+
+			var strValue = messageValue.substring(0, 7);
+			if (strValue == "Success") {
+				//Success
+				swal("Good job!", messageValue, "success");
+			} else if (strValue == "Ooooops"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError; 
 </script>
 </head>
 <body>
@@ -77,7 +159,8 @@
 							<logic:notEmpty name="userForm" property="messageList">
 								<logic:iterate id="message" name="userForm"
 									property="messageList">
-									<bean:write name="message" />
+									<input type="hidden" id="err"
+										value="<bean:write name="message" />">
 								</logic:iterate>
 							</logic:notEmpty>
 						</div>
@@ -116,6 +199,7 @@
 				<!-- /.col-lg-12 -->
 			</div>
 		</div>
+		
 	</html:form>
 </body>
 </html>

@@ -76,7 +76,7 @@
 						<%if (request.getSession().getAttribute("username") != null) {%>
 							<%if (request.getSession().getAttribute("username").equals("MrScrooge")) {%>
 								<%out.print("<li>"); %>
-								<%out.print("<a href=\"#\" onclick=\"javascript:flyToPageIndex('manageUser')\"><i class=\"fa fa-user fa-fw\"></i> Manage Users</a>"); %>
+								<%out.print("<a href=\"#\" onclick=\"javascript:flyToPageIndex('manageUser')\"><i class=\"fa fa-group fa-fw\"></i> Manage Users</a>"); %>
 								<%out.print("</li>"); %>
 								<%out.print("<li class=\"divider\"></li>"); %>
 								<!-- <li><a href="#"
