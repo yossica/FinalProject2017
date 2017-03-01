@@ -29,7 +29,7 @@
             to_char(invoice_date, 'MM/dd/yyyy') as invoiceDate,
             tih.status_invoice_id as statusInvoiceId,
             msi.name as statusInvoiceName,
-            tih.paid_date as paidDate
+            to_char(tih.paid_date, 'MM/dd/yyyy') as paidDate
         from transaction_invoice_header tih
         join master_client mc on (tih.client_id=mc.client_id)
         join master_invoice_type mit on (tih.invoice_type_id=mit.invoice_type_id)

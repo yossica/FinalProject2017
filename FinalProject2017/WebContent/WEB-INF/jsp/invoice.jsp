@@ -153,7 +153,7 @@
 												function() {
 													document.forms[1].invoiceNumber.value = invoiceNumber;
 													document.forms[1].statusId.value = statusId;
-													document.forms[1].paidDate.value = "";
+													document.forms[1].paidDate.value = null;
 													flyToPage("changeStatus");
 												}, 10);
 									});
@@ -191,10 +191,17 @@
 												function() {
 													document.forms[1].invoiceNumber.value = invoiceNumber;
 													document.forms[1].statusId.value = statusId;
+													
 													if(statusId == 2){
-														document.forms[1].paidDate.value = document.getElementById(idPaidDate);
+														var paidDate = document.getElementById(idPaidDate).value;
+														if (paidDate == null){
+															alert("error");
+															//error karena mau ubah jadi paid tapi gak di input tanggal pembayarannya
+														}else{
+															document.forms[1].paidDate.value = paidDate;
+														}
 													}else{
-														document.forms[1].paidDate.value = "";
+														document.forms[1].paidDate.value = null;
 													}
 													flyToPage("changeStatus");
 												}, 10);
@@ -401,7 +408,11 @@
 												name="inv" property="periodYear" format="#" /></td>
 										<td><bean:write name="inv" property="invoiceTypeName" /></td>
 										<td><bean:write name="inv" property="invoiceDate" /></td>
-										<td><bean:write name="inv" property="statusInvoiceName" /></td>
+										<td><bean:write name="inv" property="statusInvoiceName" />
+											<p><logic:equal name="inv" property="statusInvoiceName"
+												value="Paid"> on <bean:write name="inv" property="paidDate" /></p>
+											</logic:equal>
+										</td>
 										<td><input type="button" value="View"
 											class="btn btn-primary"
 											onclick="javascript:flyToDetail(
@@ -425,15 +436,21 @@
 				                								'0')">
 											</logic:equal> 
 											<logic:equal name="inv" property="statusInvoiceName"
-												value="Sent"><div class="popup">
+												value="Sent">
+												<div class="popup">
 													<span class="popuptext" id="myPopup${indexInv}"> 
-														<input type="date" id="paidDate${indexInv}" class="form-control-client"
-															style="width: 100%;" name="invoiceList[${indexInv}].paidDate"
-															value="<bean:write name="inv" property="paidDate" />">
-														<input type="button" value="OK" class="btn btn-primary" onclick="javascript:flyToChangeStatus(
+														<div> Input Paid Date:</div>
+														<div>
+															<input type="date" id="paidDate${indexInv}" class="form-control-client"
+																style="width: 100%;"
+																value="<bean:write name="inv" property="paidDate" />">
+														</div>
+														<div>
+															<input type="button" value="OK" class="btn btn-primary" onclick="javascript:flyToChangeStatus(
 				                								'<bean:write name="inv" property="invoiceNumber"/>',
 				                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>',
 				                								'paidDate${indexInv}')">
+		                								</div>
 													</span>
 														<input type="button" value="Change Status"
 															class="btn btn-primary"

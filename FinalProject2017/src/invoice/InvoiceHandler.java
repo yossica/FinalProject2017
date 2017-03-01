@@ -1241,7 +1241,15 @@ public class InvoiceHandler extends Action {
 				paramMap = new HashMap();
 				paramMap.put("invoiceNumber", invoiceNumber);
 				paramMap.put("nextStatusId", nextStatusId);
-				paramMap.put("paidDate", paidDate);
+				// date format data
+				if(currentStatus.equals("2")){
+					Calendar cal = Calendar.getInstance();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+					SimpleDateFormat showDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					cal.setTime(showDateFormat.parse(paidDate));	
+					paramMap.put("paidDate", dateFormat.format(cal.getTime()));		
+				}
+				
 				invoiceManager.setNextStatus(paramMap);
 			}
 			String client = invoiceForm.getClientId();
