@@ -25,15 +25,7 @@ public class ClientHandler extends Action {
 			clientForm.setTask("save" + clientForm.getTask());
 			return mapping.findForward("formClient");
 		} else if ("savecreate".equals(clientForm.getTask())) {
-			ClientBean clientBean = new ClientBean();
-			clientBean.setName(clientForm.getName());
-			clientBean.setAddress(clientForm.getAddress());
-			clientBean.setCity(clientForm.getCity());
-			clientBean.setPhoneNumber(clientForm.getPhoneNumber());
-			clientBean.setFaxNumber(clientForm.getFaxNumber());
-			clientBean.setPostalCode(clientForm.getPostalCode());
-			clientBean.setContactPerson(clientForm.getContactPerson());
-			clientBean.setIsEnabled(clientForm.getIsEnabled());
+			ClientBean clientBean = clientForm.getClientBean();
 			clientBean.setCreatedBy((String) session.getAttribute("username"));
 			clientManager.insert(clientBean);
 			clientForm.setListClient(clientManager.getAll());
@@ -41,30 +33,13 @@ public class ClientHandler extends Action {
 		} else if ("update".equals(clientForm.getTask())) {
 			clientForm.setTask("save" + clientForm.getTask());
 			ClientBean clientBean = clientManager.getById(clientForm
-					.getClientId());
-			clientForm.setClientId(clientBean.getClientId());
-			clientForm.setName(clientBean.getName());
-			clientForm.setAddress(clientBean.getAddress());
-			clientForm.setCity(clientBean.getCity());
-			clientForm.setPhoneNumber(clientBean.getPhoneNumber());
-			clientForm.setFaxNumber(clientBean.getFaxNumber());
-			clientForm.setPostalCode(clientBean.getPostalCode());
-			clientForm.setContactPerson(clientBean.getContactPerson());
-			clientForm.setIsEnabled(clientBean.getIsEnabled());
+					.getClientBean().getClientId());
+			clientForm.setClientBean(clientBean);
 			return mapping.findForward("formClient");
 		} else if ("saveupdate".equals(clientForm.getTask())) {
-			ClientBean clientBean = new ClientBean();
-			clientBean.setClientId(clientForm.getClientId());
-			clientBean.setName(clientForm.getName());
-			clientBean.setAddress(clientForm.getAddress());
-			clientBean.setCity(clientForm.getCity());
-			clientBean.setPhoneNumber(clientForm.getPhoneNumber());
-			clientBean.setFaxNumber(clientForm.getFaxNumber());
-			clientBean.setPostalCode(clientForm.getPostalCode());
-			clientBean.setContactPerson(clientForm.getContactPerson());
-			clientBean.setIsEnabled(clientForm.getIsEnabled());
-			clientBean.setChangedBy((String) session.getAttribute("username"));
-			clientManager.update(clientBean);
+			clientForm.getClientBean().setChangedBy(
+					(String) session.getAttribute("username"));
+			clientManager.update(clientForm.getClientBean());
 			clientForm.setListClient(clientManager.getAll());
 			return mapping.findForward("client");
 		} else {

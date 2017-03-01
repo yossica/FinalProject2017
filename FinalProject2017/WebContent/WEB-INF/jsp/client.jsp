@@ -15,7 +15,7 @@
 	}
 
 	function flyToUpdate(clientId) {
-		document.forms[1].clientId.value = clientId;
+		document.getElementsByName("clientBean.clientId")[0].value = clientId;
 		flyToPage("update");
 	}
 </script>
@@ -25,7 +25,7 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/client" method="post">
 		<html:hidden property="task" name="clientForm" />
-		<html:hidden property="clientId" name="clientForm" />
+		<html:hidden property="clientBean.clientId" name="clientForm" />
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">

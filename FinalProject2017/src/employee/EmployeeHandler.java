@@ -25,9 +25,6 @@ public class EmployeeHandler extends Action {
 			return mapping.findForward("formEmployee");
 		} else if ("savecreate".equals(employeeForm.getTask())) {
 			EmployeeBean employeeBean = new EmployeeBean();
-			employeeBean.setName(employeeForm.getName());
-			employeeBean.setEmail(employeeForm.getEmail());
-			employeeBean.setIsEnabled(employeeForm.getIsEnabled());
 			employeeBean
 					.setCreatedBy((String) session.getAttribute("username"));
 			employeeManager.insert(employeeBean);
@@ -36,21 +33,13 @@ public class EmployeeHandler extends Action {
 		} else if ("update".equals(employeeForm.getTask())) {
 			employeeForm.setTask("save" + employeeForm.getTask());
 			EmployeeBean employeeBean = employeeManager.getById(employeeForm
-					.getEmployeeId());
-			employeeForm.setEmployeeId(employeeBean.getEmployeeId());
-			employeeForm.setName(employeeBean.getName());
-			employeeForm.setEmail(employeeBean.getEmail());
-			employeeForm.setIsEnabled(employeeBean.getIsEnabled());
+					.getEmployeeBean().getEmployeeId());
+			employeeForm.setEmployeeBean(employeeBean);
 			return mapping.findForward("formEmployee");
 		} else if ("saveupdate".equals(employeeForm.getTask())) {
-			EmployeeBean employeeBean = new EmployeeBean();
-			employeeBean.setEmployeeId(employeeForm.getEmployeeId());
-			employeeBean.setName(employeeForm.getName());
-			employeeBean.setEmail(employeeForm.getEmail());
-			employeeBean.setIsEnabled(employeeForm.getIsEnabled());
-			employeeBean
-					.setChangedBy((String) session.getAttribute("username"));
-			employeeManager.update(employeeBean);
+			employeeForm.getEmployeeBean().setChangedBy(
+					(String) session.getAttribute("username"));
+			employeeManager.update(employeeForm.getEmployeeBean());
 			employeeForm.setEmployeeList(employeeManager.getAll());
 			return mapping.findForward("employee");
 		} else {

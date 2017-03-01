@@ -33,6 +33,7 @@
 			<forward name="holiday" path="/holiday.do"></forward>
 			<forward name="outsource" path="/outsource.do"></forward>
 			<forward name="changePassword" path="/user.do?task=changePassword"></forward>
+			<forward name="manageUser" path="/user.do?task=manageUser"></forward>
 			<forward name="additionalTraining" path="/training.do?task=additionalTraining"></forward>			
 		</action>
 		<action path="/cashInBank" name="cashInBankForm" type="cashInBank.CashInBankHandler" scope="request">
@@ -81,7 +82,7 @@
 		</action>
     
 		<action path="/login" forward="/user.do?task=login" />
-		<action path="/manageUser" forward="/user.do?task=manageUser" />	
+		<!-- <action path="/manageUser" forward="/user.do?task=manageUser" /> -->	
 	</action-mappings>
 
 </struts-config>
