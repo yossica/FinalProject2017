@@ -21,7 +21,6 @@
 <!-- Custom Fonts -->
 <link href="asset/font-awesome/css/font-awesome.css" rel="stylesheet"
 	type="text/css">
-
 <script src="dist/sweetalert.min.js"></script>
 <script>
 	function flyToPageIndex(taskIndex) {
@@ -33,7 +32,7 @@
 <script type="text/javascript">
 	function insertUser() {
 		var regex = /^[A-Za-z0-9]*$/;
-		var newUser = document.forms[0].newUser.value;
+		var newUser = document.forms[1].newUser.value;
 		if (!regex.test(newUser)) {
 			alert("New Username must consist of only alphanumeric!");
 			return;
@@ -45,22 +44,23 @@
 
 	function resetPassword(username) {
 		if (confirm("Are you sure to reset this user password?")) {
-			document.forms[0].userName.value = username;
+			document.forms[1].userName.value = username;
 			flyToPage("resetPassword");
 		}
 	}
 
 	function flyToPage(task) {
-		document.forms[0].task.value = task;
-		document.forms[0].submit();
+		document.forms[1].task.value = task;
+		document.forms[1].submit();
 	}
 </script>
 </head>
 <body>
+	<jsp:include page="dashboard.jsp" />
 	<html:form action="/user" method="post">
 		<html:hidden property="task" name="userForm" />
 		<html:hidden property="userName" name="userForm" />
-		<div id="page-wrapper" style="margin-left: 0; padding-top: 0">
+		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Manage User</h1>
@@ -85,7 +85,7 @@
 					<div class="col-lg-8">
 						<div class="panel-body">
 							<div class="table-responsive"
-								style="height: 270px; overflow: auto;">
+								style="height: 420px; overflow: auto;">
 								<table class="table table-hover">
 									<thead>
 										<tr>
