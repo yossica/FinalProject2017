@@ -11,8 +11,8 @@
 <script>
 	function insert() {
 
-		var name = document.getElementsByName("name")[0].value;
-		var email = document.getElementsByName("email")[0].value;
+		var name = document.getElementsByName("employeeBean.name")[0].value;
+		var email = document.getElementsByName("employeeBean.email")[0].value;
 
 		var letters = /^([A-Za-z ]{3,})+$/;
 		var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}])|(([A-z\-\d]+\.)+[A-z]{2,}))$/;
@@ -82,7 +82,7 @@
 	<html:form action="/employee" method="post">
 
 		<html:hidden property="task" name="employeeForm" />
-		<html:hidden property="employeeId" name="employeeForm" />
+		<html:hidden property="employeeBean.employeeId" name="employeeForm" />
 
 		<div id="page-wrapper">
 			<div class="row">
@@ -94,19 +94,19 @@
 								<tbody>
 									<tr>
 										<td><label>Employee Name</label></td>
-										<td><html:text property="name" name="employeeForm"
+										<td><html:text property="employeeBean.name" name="employeeForm"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Email</label></td>
-										<td><html:text property="email" name="employeeForm"
+										<td><html:text property="employeeBean.email" name="employeeForm"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Employee Status</label></td>
 										<td>
 											<div class="col-lg-13">
-												<html:select property="isEnabled" name="employeeForm"
+												<html:select property="employeeBean.isEnabled" name="employeeForm"
 													styleClass="form-control-client">
 													<html:option value="1">Enabled</html:option>
 													<html:option value="0">Disabled</html:option>

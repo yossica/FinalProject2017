@@ -25,7 +25,7 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/employee" method="post">
 		<html:hidden property="task" name="employeeForm" />
-		<html:hidden property="employeeId" name="employeeForm" />
+		<html:hidden property="employeeBean.employeeId" name="employeeForm" />
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
@@ -47,14 +47,14 @@
 									<th>Action</th>
 								</tr>
 								<tbody>
-									<logic:iterate id="emp" name="employeeForm"
+									<logic:iterate id="employee" name="employeeForm"
 										property="employeeList">
 										<tr>
-											<td><bean:write name="emp" property="name" /></td>
-											<td><bean:write name="emp" property="email" /></td>
+											<td><bean:write name="employee" property="name" /></td>
+											<td><bean:write name="employee" property="email" /></td>
 											<td><input type="button" value="Edit"
 												class="btn btn-primary"
-												onclick="javascript:flyToUpdate('<bean:write name="emp" property="employeeId" format="#"/>')"></td>
+												onclick="javascript:flyToUpdate('<bean:write name="employee" property="employeeId" format="#"/>')"></td>
 										</tr>
 									</logic:iterate>
 								</tbody>

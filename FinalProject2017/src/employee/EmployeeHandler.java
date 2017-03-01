@@ -28,9 +28,10 @@ public class EmployeeHandler extends Action {
 			return mapping.findForward("formEmployee");
 		} else if ("savecreate".equals(employeeForm.getTask())) {
 			EmployeeBean employeeBean = new EmployeeBean();
-			employeeBean.setName(employeeForm.getName());
-			employeeBean.setEmail(employeeForm.getEmail());
-			employeeBean.setIsEnabled(employeeForm.getIsEnabled());
+			employeeBean.setName(employeeForm.getEmployeeBean().getName());
+			employeeBean.setEmail(employeeForm.getEmployeeBean().getEmail());
+			employeeBean.setIsEnabled(employeeForm.getEmployeeBean()
+					.getIsEnabled());
 			employeeBean
 					.setCreatedBy((String) session.getAttribute("username"));
 			employeeManager.insert(employeeBean);
@@ -39,18 +40,18 @@ public class EmployeeHandler extends Action {
 		} else if ("update".equals(employeeForm.getTask())) {
 			employeeForm.setTask("save" + employeeForm.getTask());
 			EmployeeBean employeeBean = employeeManager.getById(employeeForm
-					.getEmployeeId());
-			employeeForm.setEmployeeId(employeeBean.getEmployeeId());
-			employeeForm.setName(employeeBean.getName());
-			employeeForm.setEmail(employeeBean.getEmail());
-			employeeForm.setIsEnabled(employeeBean.getIsEnabled());
+					.getEmployeeBean().getEmployeeId());
+			employeeForm.getEmployeeBean().setEmployeeId(employeeBean.getEmployeeId());
+			employeeForm.getEmployeeBean().setName(employeeBean.getName());
+			employeeForm.getEmployeeBean().setEmail(employeeBean.getEmail());
+			employeeForm.getEmployeeBean().setIsEnabled(employeeBean.getIsEnabled());
 			return mapping.findForward("formEmployee");
 		} else if ("saveupdate".equals(employeeForm.getTask())) {
 			EmployeeBean employeeBean = new EmployeeBean();
-			employeeBean.setEmployeeId(employeeForm.getEmployeeId());
-			employeeBean.setName(employeeForm.getName());
-			employeeBean.setEmail(employeeForm.getEmail());
-			employeeBean.setIsEnabled(employeeForm.getIsEnabled());
+			employeeBean.setEmployeeId(employeeForm.getEmployeeBean().getEmployeeId());
+			employeeBean.setName(employeeForm.getEmployeeBean().getName());
+			employeeBean.setEmail(employeeForm.getEmployeeBean().getEmail());
+			employeeBean.setIsEnabled(employeeForm.getEmployeeBean().getIsEnabled());
 			employeeBean
 					.setChangedBy((String) session.getAttribute("username"));
 			employeeManager.update(employeeBean);
