@@ -28,13 +28,5 @@
 		    a.status_invoice_id = #statusInvoiceId# and
 		    b.status_invoice_id = a.to_id
 	 </select>
-	 
-	 <update id="updateStatus" parameterClass="java.util.Map">
-	 	update
-		    transaction_invoice_header
-		set
-		    status_invoice_id = #nextStatusId#
-		where
-		    invoice_number = #invoiceNumber#
-	 </update>
+
 </sqlMap> 

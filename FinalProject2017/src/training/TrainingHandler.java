@@ -20,9 +20,6 @@ public class TrainingHandler extends Action {
 			throws Exception {
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
 		TrainingForm trainingForm = (TrainingForm) form;
 		TrainingManager trainingManager = new TrainingManager();
 

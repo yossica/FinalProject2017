@@ -21,4 +21,18 @@
     <servlet-name>action</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
+
+	<filter>
+		<filter-name>SessionFilter</filter-name>
+		<filter-class>utils.SessionFilter</filter-class>
+	
+		<init-param>
+			<param-name>avoid_urls</param-name>
+			<param-value>/login.do,/user.do</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
 </web-app>
