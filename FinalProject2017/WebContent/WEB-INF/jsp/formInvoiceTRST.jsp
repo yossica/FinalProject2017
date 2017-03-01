@@ -84,9 +84,9 @@ to {
 		flyToPage("detailInvoice");
 	}
 	function flyToPage(task){
-		swal({
+		 swal({
 			  title: "Are you sure?",
-			  text: "System will insert these data to invoice training settlement",
+			  text: "System will insert these data ",
 			  type: "warning",
 			  showCancelButton: true,
 			  confirmButtonColor: "#ef2300",
@@ -100,16 +100,16 @@ to {
 				  document.forms[1].task.value = task;
 					document.forms[1].submit();
 			  } else {
-			    swal("Cancelled", "Cancel Insert Invoice Training Settlement", "error");
+			    swal("Cancelled", "Cancel Insert ", "error");
 			  }
-			}); 
-		/* document.forms[1].task.value = task;
-		document.forms[1].submit(); */
+			});  
+	/* 	 document.forms[1].task.value = task;
+		document.forms[1].submit();  */
 	}
 	function flyToDelete(id){
-		/* document.forms[1].deleteIndex.value = id;
-		flyToPage('deleteAdditionalFee'); */
-		swal({
+		 document.forms[1].deleteIndex.value = id;
+		flyToPage('deleteAdditionalFee'); 
+		/* swal({
 			  title: "Are you sure?",
 			  text: "System will delete "+id+" data from additional",
 			  type: "warning",
@@ -127,7 +127,7 @@ to {
 			  } else {
 			    swal("Cancelled", "Cancel Delete Additional", "error");
 			  }
-			});
+			}); */
 	}
 	function validate(){
 		var tgl = document.getElementsByName("invoiceBean.invoiceDate")[0].value;
@@ -163,7 +163,7 @@ to {
 			/* document.getElementById("message").innerHTML = errorMessage; */
 			return;
 		}else {
-			swal({
+			/* swal({
 				  title: "Are you sure?",
 				  text: "System will insert these data to additional fee",
 				  type: "warning",
@@ -180,8 +180,8 @@ to {
 				  } else {
 				    swal("Cancelled", "Cancel Insert Additional Fee", "error");
 				  }
-				}); 
-			/* flyToPage('addAdditionalFee'); */
+				});  */
+			 flyToPage('addAdditionalFee'); 
 		}
 	}
 	function alertError() {
@@ -386,10 +386,10 @@ to {
 									</tr>
 									<tr>
 										<td colspan="2">
+										<button type="button" class="btn btn-primary"
+												onclick="javascript:hideTableAdditional()">Cancel</button>
 											<button type="button" class="btn btn-primary"
 												onclick="javascript:flyToAdd()">Save</button>
-											<button type="button" class="btn btn-primary"
-												onclick="javascript:hideTableAdditional()">Cancel</button>
 										</td>
 									</tr>
 								</tbody>

@@ -15,6 +15,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class ExportReportManager {
+	//buat nyambungin ke Jasper
 	public static void exportToPdf(String filePath, String fileName,
 			Map<String, Object> parameters, List input) {
 		JasperReport jasperReport = null;
@@ -26,6 +27,7 @@ public class ExportReportManager {
 
 		JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(
 				input);
+		//ini yang isi table di Jasper reportnya LIST
 		parameters.put("ItemDataSource", itemsJRBean);
 
 		JasperPrint jasperPrint = null;
@@ -44,6 +46,7 @@ public class ExportReportManager {
 
 		try {
 			File outDir = new File("D://Finance Solution Reports/");
+			//bikin direktori kalo gada
 			outDir.mkdirs();
 			String path = outDir.getAbsolutePath() + "\\" + fileName;
 			String compare = path.toLowerCase();
