@@ -2,12 +2,17 @@ package pettyCash;
 
 import generalInformation.GeneralInformationManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +25,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import cashInBank.CashInBankBean;
+import cashInBank.CashInBankManager;
 import utils.ExportReportManager;
 
 public class PettyCashHandler extends Action {
@@ -28,10 +35,6 @@ public class PettyCashHandler extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		HttpSession session = request.getSession();
-
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
 
 		PettyCashForm pettyCashForm = (PettyCashForm) form;
 		PettyCashManager pettyCashManager = new PettyCashManager();
@@ -99,23 +102,37 @@ public class PettyCashHandler extends Action {
 
 			double amount = maxBalance - currBalance;
 			PettyCashBean pettyCashBean = new PettyCashBean();
+			CashInBankBean cashInBankBean = new CashInBankBean();
 			if (amount <= 0) {
 				pettyCashBean.setCashFlowCategoryId("1p-bal");
 				pettyCashBean.setAmount(Math.abs(amount));
 				pettyCashBean.setIsDebit(1);
+				cashInBankBean.setCashFlowCategoryId("0c-bal");
+				cashInBankBean.setAmount(Math.abs(amount));
+				cashInBankBean.setIsDebit(0);
 			} else {
 				pettyCashBean.setCashFlowCategoryId("0p-bal");
 				pettyCashBean.setAmount(amount);
 				pettyCashBean.setIsDebit(0);
+				cashInBankBean.setCashFlowCategoryId("1c-bal");
+				cashInBankBean.setAmount(amount);
+				cashInBankBean.setIsDebit(1);
 			}
-			pettyCashBean.setBalance(maxBalance);
-			pettyCashBean.setDescription("Balancing Petty Cash "
-					+ dateFormat.format(cal.getTime()));
+			String desc = "Balancing Petty Cash "
+					+ dateFormat.format(cal.getTime());
+			pettyCashBean.setDescription(desc);
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			pettyCashBean.setCreatedBy((String) session
 					.getAttribute("username"));
 			pettyCashManager.insert(pettyCashBean);
-
+			//insert transaction to cash in bank
+			cashInBankBean.setDescription(desc);
+			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
+			cashInBankBean.setCreatedBy((String) session
+					.getAttribute("username"));
+			new CashInBankManager().insert(cashInBankBean);
+			
+			//view list petty cash
 			pettyCashForm.setRemainingBalance(pettyCashManager
 					.getCurrentBalance());
 
@@ -483,40 +500,13 @@ public class PettyCashHandler extends Action {
 					"yyyyMMddhhmmss");
 			String fileName = "PettyCashReport_"
 					+ printDateFormat.format(cal.getTime()) + ".pdf";
-			ExportReportManager.exportToPdf(filePath
+			String resultServerPath = ExportReportManager.exportToPdf(filePath
 					+ "\\report\\FinanceTransactionReport" + ".jrxml",
 					fileName, parameters, cashInBankData);
-			pettyCashForm.getMessageList().clear();
-			pettyCashForm.getMessageList()
-					.add("Success export to D://Finance Solution Report/"
-							+ fileName);
 
-			// show filtered page
-			pettyCashForm.setRemainingBalance(pettyCashManager
-					.getCurrentBalance());
-
-			pettyCashForm.setTransactionList(pettyCashManager
-					.getAllWithFilter(paramMap));
-
-			paramMap = new HashMap();
-			paramMap.put("cashFlowType", "Petty Cash");
-			paramMap.put("isDebit", null);
-			paramMap.put("isEnabled", null);
-			CashFlowCategoryBean cashFlowCategoryBean;
-			List cashFlowCategoryList = masterManager
-					.getAllCashFlowCategory(paramMap);
-			for (Object obj : cashFlowCategoryList) {
-				cashFlowCategoryBean = (CashFlowCategoryBean) obj;
-				cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()
-						+ "-"
-						+ (cashFlowCategoryBean.getIsDebit() == 1 ? "Debit"
-								: "Credit"));
-			}
-			cashFlowCategoryBean = new CashFlowCategoryBean();
-			pettyCashForm.setCategoryId("");
-			pettyCashForm.setCashFlowCategoryList(cashFlowCategoryList);
-
-			return mapping.findForward("pettyCash");
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
+			
+			return null;
 		} else {
 			pettyCashForm.setRemainingBalance(pettyCashManager
 					.getCurrentBalance());

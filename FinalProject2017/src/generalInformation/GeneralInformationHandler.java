@@ -15,9 +15,7 @@ public class GeneralInformationHandler extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		HttpSession session = request.getSession();
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
+
 		GeneralInformationForm generalInformationForm = (GeneralInformationForm) form;
 		GeneralInformationManager generalInformationManager = new GeneralInformationManager();
 
@@ -25,26 +23,13 @@ public class GeneralInformationHandler extends Action {
 			generalInformationForm.setTask("save"
 					+ generalInformationForm.getTask());
 			GeneralInformationBean generalInformationBean = generalInformationManager
-					.getByKey(generalInformationForm.getKey());
-			generalInformationForm.setValue(generalInformationBean.getValue());
-			generalInformationForm.setDataType(generalInformationBean
-					.getDataType());
-			generalInformationForm
-					.setLength(generalInformationBean.getLength());
-
-			generalInformationManager.getByKey(generalInformationForm.getKey());
+					.getByKey(generalInformationForm.getGeneralInformationBean().getKey());
+			generalInformationForm.setGeneralInformationBean(generalInformationBean);
 			return mapping.findForward("editGeneralInformation");
 		} else if ("saveupdate".equals(generalInformationForm.getTask())) {
-			GeneralInformationBean generalInformationBean = new GeneralInformationBean();
-			generalInformationBean.setKey(generalInformationForm.getKey());
-			generalInformationBean.setValue(generalInformationForm.getValue());
-			generalInformationBean.setChangedBy((String) session
-					.getAttribute("username"));
-			generalInformationManager.update(generalInformationBean);
-
-			generalInformationForm
-					.setListGeneralInformation(generalInformationManager
-							.getAll());
+			generalInformationForm.getGeneralInformationBean().setChangedBy((String)session.getAttribute("username"));
+			generalInformationManager.update(generalInformationForm.getGeneralInformationBean());
+			generalInformationForm.setListGeneralInformation(generalInformationManager.getAll());
 			return mapping.findForward("generalInformation");
 		}
 

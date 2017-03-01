@@ -11,6 +11,7 @@ public class UserForm extends ActionForm {
 	private List messageList;
 	private String userName;
 	private String password;
+	private String createdDate;
 
 	private String newPassword;
 	private String confirmPassword;
@@ -83,5 +84,13 @@ public class UserForm extends ActionForm {
 
 	public void setUserList(List userList) {
 		this.userList = userList;
+	}
+
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 }

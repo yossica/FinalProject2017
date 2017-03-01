@@ -9,7 +9,7 @@
 	</update>
 	
 	<insert id="insert" parameterClass="user.UserBean">
-		insert into master_user values (#userName#,#password#)
+		insert into master_user values (#userName#,#password#,sysdate)
 	</insert>
 	
 	<select id="checkLogin" resultClass="java.lang.Integer" parameterClass="user.UserBean">
@@ -20,7 +20,7 @@
 	</select>
 	
 	<select id="getAll" resultClass="user.UserBean">
-		select username as userName
+		select username as userName, created_date as createdDate
 		from master_user
 	</select>
 	

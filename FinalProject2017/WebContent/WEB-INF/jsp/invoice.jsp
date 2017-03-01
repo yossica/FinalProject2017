@@ -82,9 +82,9 @@
 		var filter = document.getElementById("filterForm");
 		filter.style.display = filter.style.display === 'none' ? '' : 'none';
 		if (filter.style.display == 'none') {
-			document.getElementById("listInvoice").style.height = "400px";
+			document.getElementById("listInvoice").style.height = "495px";
 		} else {
-			document.getElementById("listInvoice").style.height = "200px";
+			document.getElementById("listInvoice").style.height = "265px";
 		}
 	}
 	function filter() {
@@ -386,7 +386,7 @@
 			</div>
 			<div class="panel-body">
 				<div id="listInvoice" class="table-responsive"
-					style="height: 400px; overflow: auto;">
+					style="height: 495px; overflow: auto;">
 					<table class="table table-hover">
 						<tr>
 							<th>Invoice No.</th>

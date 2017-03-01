@@ -6,12 +6,7 @@ import org.apache.struts.action.ActionForm;
 
 public class EmployeeForm extends ActionForm {
 	private String task;
-
-	private int employeeId;
-	private String name;
-	private String email;
-	private int isEnabled;
-
+	private EmployeeBean employeeBean = new EmployeeBean();
 	private List employeeList;
 	private List messageList;
 
@@ -21,38 +16,6 @@ public class EmployeeForm extends ActionForm {
 
 	public void setTask(String task) {
 		this.task = task;
-	}
-
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public int getIsEnabled() {
-		return isEnabled;
-	}
-
-	public void setIsEnabled(int isEnabled) {
-		this.isEnabled = isEnabled;
 	}
 
 	public List getEmployeeList() {
@@ -69,5 +32,13 @@ public class EmployeeForm extends ActionForm {
 
 	public void setMessageList(List messageList) {
 		this.messageList = messageList;
+	}
+
+	public EmployeeBean getEmployeeBean() {
+		return employeeBean;
+	}
+
+	public void setEmployeeBean(EmployeeBean employeeBean) {
+		this.employeeBean = employeeBean;
 	}
 }
