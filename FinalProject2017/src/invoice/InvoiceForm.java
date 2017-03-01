@@ -48,6 +48,7 @@ public class InvoiceForm extends ActionForm {
 	private String client;
 	private String invoiceNumber;
 	private String statusId;
+	private String paidDate;
 
 	private int transactionInvoiceHeaderId;
 	private String invoiceTypeId;
@@ -70,6 +71,14 @@ public class InvoiceForm extends ActionForm {
 	private List messageList;
 
 	private int deleteIndex;
+
+	public String getPaidDate() {
+		return paidDate;
+	}
+
+	public void setPaidDate(String paidDate) {
+		this.paidDate = paidDate;
+	}
 
 	public InvoiceForm() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

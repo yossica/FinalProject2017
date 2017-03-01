@@ -9,6 +9,74 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Finance Solution</title>
+<style>
+	/* Popup container - can be anything you want */
+	.popup {
+		position: relative;
+		display: inline-block;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	
+	/* The actual popup */
+	.popup .popuptext {
+		visibility: hidden;
+		width: 200px;
+		background-color: #337ab7;
+		color: #fff;
+		text-align: center;
+		border-radius: 6px;
+		padding: 8px;
+		position: absolute;
+		z-index: 1;
+		bottom: 125%;
+		left: -200px;
+		margin-left: -80px;
+	}
+	
+	/* Popup arrow */
+	.popup .popuptext::after {
+		content: "";
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin-left: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: #555 transparent transparent transparent;
+	}
+	
+	/* Toggle this class - hide and show the popup */
+	.popup .show {
+		visibility: visible;
+		-webkit-animation: fadeIn 1s;
+		animation: fadeIn 1s;
+	}
+	
+	/* Add animation (fade in the popup) */
+	@
+	-webkit-keyframes fadeIn {
+		from {opacity: 0;
+	}
+	
+	to {
+		opacity: 1;
+	}
+	
+	}
+	@
+	keyframes fadeIn {
+		from {opacity: 0;
+	}
+	
+	to {
+		opacity: 1;
+	}
+	}
+</style>
 <script>
 	function toggleFilter() {
 		var filter = document.getElementById("filterForm");
@@ -54,7 +122,11 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
-	function flyToChangeStatus(invoiceNumber, statusId) {
+	function toggleNotes(idNumber) {
+	    var popup = document.getElementById("myPopup"+idNumber);
+	    popup.classList.toggle("show");
+	}
+	function flyToChangeStatus(invoiceNumber, statusId, idPaidDate) {
 		if (statusId == 4) {
 			swal(
 					{
@@ -81,6 +153,7 @@
 												function() {
 													document.forms[1].invoiceNumber.value = invoiceNumber;
 													document.forms[1].statusId.value = statusId;
+													document.forms[1].paidDate.value = "";
 													flyToPage("changeStatus");
 												}, 10);
 									});
@@ -92,7 +165,7 @@
 									"error");
 						}
 					});
-		} else {
+		} else{
 			swal(
 					{
 						title : "Are you sure?",
@@ -118,6 +191,11 @@
 												function() {
 													document.forms[1].invoiceNumber.value = invoiceNumber;
 													document.forms[1].statusId.value = statusId;
+													if(statusId == 2){
+														document.forms[1].paidDate.value = document.getElementById(idPaidDate);
+													}else{
+														document.forms[1].paidDate.value = "";
+													}
 													flyToPage("changeStatus");
 												}, 10);
 									});
@@ -160,6 +238,7 @@
 		<html:hidden property="client" name="invoiceForm" />
 		<html:hidden property="statusId" name="invoiceForm" />
 		<html:hidden property="invoiceTypeId" name="invoiceForm" />
+		<html:hidden property="paidDate" name="invoiceForm" />
 		<%-- <html:hidden property="invoiceTipeId" name="invoiceForm"/> --%>
 		<html:hidden property="transactionInvoiceHeaderId" name="invoiceForm" />
 		<html:hidden property="invoiceNumber" name="invoiceForm" />
@@ -314,7 +393,7 @@
 						<tbody>
 							<logic:notEmpty name="invoiceForm" property="invoiceList">
 								<logic:iterate id="inv" name="invoiceForm"
-									property="invoiceList">
+									property="invoiceList" indexId="indexInv">
 									<tr>
 										<td><bean:write name="inv" property="invoiceNumber" /></td>
 										<td><bean:write name="inv" property="clientName" /></td>
@@ -332,26 +411,39 @@
 				                		)" />
 											<logic:equal name="inv" property="statusInvoiceName"
 												value="Created">
-												<input type="button" value="Change Status"
-													class="btn btn-primary"
-													onclick="javascript:flyToChangeStatus(
-				                								'<bean:write name="inv" property="invoiceNumber"/>',
-				                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+												
+													<input type="button" value="Change Status"
+														class="btn btn-primary"
+														onclick="javascript:flyToChangeStatus(
+					                								'<bean:write name="inv" property="invoiceNumber"/>',
+					                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>',
+					                								'0')">
 												<input type="button" value="Cancel" class="btn btn-primary"
 													onclick="javascript:flyToChangeStatus(
 				                								'<bean:write name="inv" property="invoiceNumber"/>',
-				                								'4')">
-											</logic:equal> <logic:equal name="inv" property="statusInvoiceName"
-												value="Sent">
-												<input type="button" value="Change Status"
-													class="btn btn-primary"
-													onclick="javascript:flyToChangeStatus(
+				                								'4',
+				                								'0')">
+											</logic:equal> 
+											<logic:equal name="inv" property="statusInvoiceName"
+												value="Sent"><div class="popup">
+													<span class="popuptext" id="myPopup${indexInv}"> 
+														<input type="date" id="paidDate${indexInv}" class="form-control-client"
+															style="width: 100%;" name="invoiceList[${indexInv}].paidDate"
+															value="<bean:write name="inv" property="paidDate" />">
+														<input type="button" value="OK" class="btn btn-primary" onclick="javascript:flyToChangeStatus(
 				                								'<bean:write name="inv" property="invoiceNumber"/>',
-				                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>')">
+				                								'<bean:write name="inv" property="statusInvoiceId" format="#"/>',
+				                								'paidDate${indexInv}')">
+													</span>
+														<input type="button" value="Change Status"
+															class="btn btn-primary"
+															onclick="javascript:toggleNotes(${indexInv})">
+												</div>
 												<input type="button" value="Cancel" class="btn btn-primary"
 													onclick="javascript:flyToChangeStatus(
 				                								'<bean:write name="inv" property="invoiceNumber"/>',
-				                								'4')">
+				                								'4',
+				                								'0')">
 											</logic:equal></td>
 									</tr>
 								</logic:iterate>

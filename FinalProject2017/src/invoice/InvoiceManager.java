@@ -294,4 +294,21 @@ public class InvoiceManager {
 		}
 		return result;
 	}
+	public void setNextStatus(Map paramMap) {
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			ibatis.startTransaction();
+			ibatis.update("invoice.updateStatus", paramMap);
+			ibatis.commitTransaction();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

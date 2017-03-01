@@ -1200,13 +1200,15 @@ public class InvoiceHandler extends Action {
 		} else if ("changeStatus".equals(invoiceForm.getTask())) {
 			String invoiceNumber = invoiceForm.getInvoiceNumber();
 			String currentStatus = invoiceForm.getStatusId();
+			String paidDate = invoiceForm.getPaidDate();
 			Map paramMap;
 			if ("4".equals(currentStatus)) {
 				// cancel
 				paramMap = new HashMap();
 				paramMap.put("invoiceNumber", invoiceNumber);
 				paramMap.put("nextStatusId", 4);
-				masterManager.setNextStatus(paramMap);
+				paramMap.put("paidDate", paidDate);
+				invoiceManager.setNextStatus(paramMap);
 
 				// cek if training
 				InvoiceBean invoiceBean = invoiceManager
@@ -1239,7 +1241,8 @@ public class InvoiceHandler extends Action {
 				paramMap = new HashMap();
 				paramMap.put("invoiceNumber", invoiceNumber);
 				paramMap.put("nextStatusId", nextStatusId);
-				masterManager.setNextStatus(paramMap);
+				paramMap.put("paidDate", paidDate);
+				invoiceManager.setNextStatus(paramMap);
 			}
 			String client = invoiceForm.getClientId();
 			String monthFrom = invoiceForm.getMonthFrom();

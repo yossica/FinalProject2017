@@ -29,7 +29,16 @@ public class InvoiceBean implements Serializable {
 	private double totalPpn;
 	private String detailSize;
 	private String settlementInvoiceId;
+	private String paidDate;
 	private List<InvoiceDetailBean> detailList;
+
+	public String getPaidDate() {
+		return paidDate;
+	}
+
+	public void setPaidDate(String paidDate) {
+		this.paidDate = paidDate;
+	}
 
 	public int getTransactionInvoiceHeaderId() {
 		return transactionInvoiceHeaderId;
