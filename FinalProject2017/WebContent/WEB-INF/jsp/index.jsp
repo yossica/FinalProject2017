@@ -61,12 +61,12 @@
 			<div class="col-lg-6" style="width: 1100px">
 				<div class="col-lg-2" style="width: 350px">
 					<div class="panel panel-default">
-						<div class="panel-heading">Listed</div>
+						<div class="panel-heading" style="background-color:#ffc4c1/* #d5d9e0 */">Listed</div>
 						<!-- /.panel-heading -->
-						<div class="panel-body" style="height: 450px; overflow: auto;">
-							<div class="table-responsive">
+						<div class="panel-body" style="height: 450px; overflow: auto;background-color:/* #ffc4c1 */ #ffd6d6 ;">
+							<div class="table-responsive" >
 								<table class="table table-hover">
-									<tbody>
+									<tbody style="background-color:/* #ffc4c1 */#ffd6d6;">
 										<logic:notEmpty name="indexForm"
 											property="listedRemainderList">
 											<logic:iterate id="list" name="indexForm"
@@ -127,12 +127,12 @@
 				</div>
 				<div class="col-lg-2" style="width: 350px">
 					<div class="panel panel-default">
-						<div class="panel-heading">Created</div>
+						<div class="panel-heading" style="background-color:#ffcb87">Created</div>
 						<!-- /.panel-heading -->
-						<div class="panel-body" style="height: 450px; overflow: auto;">
+						<div class="panel-body" style="height: 450px; overflow: auto; background-color:#ffdcaf">
 							<div class="table-responsive">
 								<table class="table table-hover">
-									<tbody>
+									<tbody style="background-color:#ffdcaf; ">
 										<logic:notEmpty name="indexForm"
 											property="createdRemainderList">
 											<logic:iterate id="list" name="indexForm"
@@ -163,12 +163,12 @@
 				<!-- /.panel -->
 				<div class="col-lg-2" style="width: 350px">
 					<div class="panel panel-default">
-						<div class="panel-heading">Sent</div>
+						<div class="panel-heading" style="background-color:#a5d3ff">Sent</div>
 						<!-- /.panel-heading -->
-						<div class="panel-body" style="height: 450px; overflow: auto;">
-							<div class="table-responsive">
+						<div class="panel-body" style="height: 450px; overflow: auto;background-color:#e2edff;">
+							<div class="table-responsive" >
 								<table class="table table-hover">
-									<tbody>
+									<tbody style="background-color:#e2edff">
 										<logic:notEmpty name="indexForm"
 											property="sentOutsourceRemainderList">
 											<logic:iterate id="list" name="indexForm"
