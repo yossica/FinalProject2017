@@ -44,6 +44,7 @@
 			   changed_by as changedBy,
 			   to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from master_employee
+		order by name
 	</select>
 		
 	<select id="getAllEnabled" resultClass="employee.EmployeeBean">		
@@ -57,7 +58,7 @@
 			   to_char(changed_date, 'MM/dd/yyyy') as changedDate
 		from master_employee
 		where is_enabled = 1
-		order by employee_id
+		order by name
 	</select>
 	
     <select id="getMaxId" resultClass="java.lang.Integer">
