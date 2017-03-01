@@ -4,6 +4,9 @@ import generalInformation.GeneralInformationBean;
 import generalInformation.GeneralInformationManager;
 import holiday.HolidayManager;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -1388,16 +1392,38 @@ public class InvoiceHandler extends Action {
 					"yyyyMMddhhmmss");
 			String fileName = "InvoiceSummaryReport_"
 					+ printDateFormat.format(cal.getTime()) + ".pdf";
-			ExportReportManager.exportToPdf(filePath
+			String resultServerPath = ExportReportManager.exportToPdf(filePath
 					+ "\\report\\InvoiceSummaryReport" + ".jrxml", fileName,
 					parameters, invoiceSummaryData);
-			invoiceForm.getMessageList().clear();
-			invoiceForm.getMessageList()
-					.add("Success export to D://Finance Solution Report/"
-							+ fileName);
+			
+			//download to client
+			//https://coderanch.com/t/293523/java/Download-file-Server-client-machine
+			response.setContentType("application/octet-stream");
+			String disHeader = "Attachment; Filename=\""+fileName+"\"";
+			response.setHeader("Content-Disposition", disHeader);
 
-			invoiceForm.setInvoiceList(invoiceSummaryData);
-			return mapping.findForward("invoice");
+			InputStream in = null;
+			ServletOutputStream outs = response.getOutputStream();
+
+			try {
+				in = new BufferedInputStream(new FileInputStream(
+						resultServerPath));
+				int ch;
+				while ((ch = in.read()) != -1) {
+					outs.print((char) ch);
+				}
+			} finally {
+				if(outs != null){
+					outs.flush();
+				}
+				if (in != null)
+					in.close(); // very important
+			}
+
+			response.setContentType("text/javascript");
+			//download until here
+			
+			return null;
 
 		} else if ("exportDetail".equals(invoiceForm.getTask())) {
 			Integer invoiceHeaderId = invoiceForm.getInvoiceBean()
@@ -1452,22 +1478,38 @@ public class InvoiceHandler extends Action {
 					.replaceAll("/", "")
 					+ "_"
 					+ printDateFormat.format(cal.getTime()) + ".pdf";
-			ExportReportManager.exportToPdf(filePath
+			String resultServerPath = ExportReportManager.exportToPdf(filePath
 					+ "\\report\\InvoiceDetailReport" + ".jrxml", fileName,
 					parameters, invoiceDetailData);
-			invoiceForm.getMessageList().clear();
-			invoiceForm.getMessageList()
-					.add("Success export to D://Finance Solution Report/"
-							+ fileName);
+			
+			//download to client
+			//https://coderanch.com/t/293523/java/Download-file-Server-client-machine
+			response.setContentType("application/octet-stream");
+			String disHeader = "Attachment; Filename=\""+fileName+"\"";
+			response.setHeader("Content-Disposition", disHeader);
 
-			// return to detail invoice
-			invoiceForm.setInvoiceBean(invoiceBean);
-			invoiceForm.setClientBean(clientBean);
-			invoiceForm.setStatusId(invoiceBean.getStatusInvoiceId() + "");
-			invoiceForm.setInvoiceDetailList(invoiceDetailData);
-			invoiceForm.setNote(rekNo);
-			invoiceForm.setSign(sign);
-			return mapping.findForward("detailInvoice");
+			InputStream in = null;
+			ServletOutputStream outs = response.getOutputStream();
+
+			try {
+				in = new BufferedInputStream(new FileInputStream(
+						resultServerPath));
+				int ch;
+				while ((ch = in.read()) != -1) {
+					outs.print((char) ch);
+				}
+			} finally {
+				if(outs != null){
+					outs.flush();
+				}
+				if (in != null)
+					in.close(); // very important
+			}
+
+			response.setContentType("text/javascript");
+			//download until here
+			
+			return null;
 		} else {
 			Calendar cc = Calendar.getInstance();
 			int cyear = cc.get(Calendar.YEAR);

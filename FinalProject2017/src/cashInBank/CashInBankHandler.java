@@ -632,6 +632,7 @@ public class CashInBankHandler extends Action {
 					fileName, parameters, cashInBankData);
 			
 			//download to client
+			//https://coderanch.com/t/293523/java/Download-file-Server-client-machine
 			response.setContentType("application/octet-stream");
 			String disHeader = "Attachment; Filename=\""+fileName+"\"";
 			response.setHeader("Content-Disposition", disHeader);
@@ -640,54 +641,24 @@ public class CashInBankHandler extends Action {
 			ServletOutputStream outs = response.getOutputStream();
 
 			try {
-			in = new BufferedInputStream(new FileInputStream(resultServerPath));
-			int ch;
-			while ((ch = in.read()) != -1) {
-			outs.print((char) ch);
-			}
-			}
-			finally {
-			if (in != null) in.close(); // very important
+				in = new BufferedInputStream(new FileInputStream(
+						resultServerPath));
+				int ch;
+				while ((ch = in.read()) != -1) {
+					outs.print((char) ch);
+				}
+			} finally {
+				if(outs != null){
+					outs.flush();
+				}
+				if (in != null)
+					in.close(); // very important
 			}
 
-			outs.flush();
-			outs.close();
-			in.close();
-			
+			response.setContentType("text/javascript");
 			//download until here
 			
-			
-			cashInBankForm.getMessageList().clear();
-			cashInBankForm.getMessageList()
-					.add("Success export to D://Finance Solution Report/"
-							+ fileName);
-
-			// show filtered page
-			cashInBankForm.setRemainingBalance(cashInBankManager
-					.getCurrentBalance());
-
-			cashInBankForm.setTransactionList(cashInBankManager
-					.getAllWithFilter(paramMap));
-
-			paramMap = new HashMap();
-			paramMap.put("cashFlowType", "Cash In Bank");
-			paramMap.put("isDebit", null);
-			paramMap.put("isEnabled", null);
-			CashFlowCategoryBean cashFlowCategoryBean;
-			List cashFlowCategoryList = masterManager
-					.getAllCashFlowCategory(paramMap);
-			for (Object obj : cashFlowCategoryList) {
-				cashFlowCategoryBean = (CashFlowCategoryBean) obj;
-				cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()
-						+ "-"
-						+ (cashFlowCategoryBean.getIsDebit() == 1 ? "Debit"
-								: "Credit"));
-			}
-			cashFlowCategoryBean = new CashFlowCategoryBean();
-			cashInBankForm.setCategoryId("");
-			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-
-			return mapping.findForward("cashInBank");
+			return null;
 		} else {
 			cashInBankForm.setRemainingBalance(cashInBankManager
 					.getCurrentBalance());
