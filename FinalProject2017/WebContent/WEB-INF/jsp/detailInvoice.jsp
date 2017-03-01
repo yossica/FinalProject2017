@@ -51,6 +51,7 @@
 									property="invoiceBean.transactionInvoiceHeaderId" /> <html:hidden
 									name="invoiceForm" property="invoiceBean.invoiceTypeId" /> <bean:write
 									name="invoiceForm" property="invoiceBean.invoiceNumber" />
+									<html:hidden name="invoiceForm" property="invoiceBean.ppnPercentage"/>
 							</strong>
 						</div>
 						<div class="col-lg-4" style="text-align: right;">

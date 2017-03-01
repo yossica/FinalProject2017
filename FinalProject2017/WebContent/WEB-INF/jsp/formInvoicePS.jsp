@@ -172,6 +172,8 @@ to {
 								property="invoiceBean.transactionInvoiceHeaderId" />
 							<html:hidden name="invoiceForm"
 								property="invoiceBean.statusInvoiceId" />
+							<html:hidden name="invoiceForm" 
+								property="invoiceBean.ppnPercentage"/>
 							<logic:equal value="createInvoice" property="task"
 								name="invoiceForm">
 								<bean:write name="invoiceForm"
