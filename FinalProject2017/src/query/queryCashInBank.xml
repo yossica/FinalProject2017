@@ -39,7 +39,8 @@
 	<select id="getCurrentBalance" resultClass="java.lang.Double">
 		select balance
         from transaction_cash_in_bank b,
-        (select max(transaction_cash_in_bank_id) as max_id from transaction_cash_in_bank) c
+        (select max(transaction_cash_in_bank_id) as max_id 
+        from transaction_cash_in_bank) c
         where b.transaction_cash_in_bank_id = c.max_id
 	</select>
 	

@@ -37,7 +37,7 @@
 							<table class="table table-hover">
 								<tr>
 									<th>Key</th>
-									<th>Name</th>
+									<th>Value</th>
 									<th>Data Type</th>
 									<th>Length</th>
 									<th>Action</th>

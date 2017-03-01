@@ -23,7 +23,7 @@ public class InvoiceForm extends ActionForm {
 	private TrainingBean trainingBean = new TrainingBean();
 	private TrainingDetailBean trainingDetailBean = new TrainingDetailBean();
 
-	private double trainingFee;
+	private Double trainingFee;
 	private String invoiceDetailNotes;
 
 	private ClientBean clientBean = new ClientBean();
@@ -94,11 +94,11 @@ public class InvoiceForm extends ActionForm {
 		this.trainingBean = trainingBean;
 	}
 
-	public double getTrainingFee() {
+	public Double getTrainingFee() {
 		return trainingFee;
 	}
 
-	public void setTrainingFee(double trainingFee) {
+	public void setTrainingFee(Double trainingFee) {
 		this.trainingFee = trainingFee;
 	}
 

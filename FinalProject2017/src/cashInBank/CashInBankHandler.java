@@ -2,12 +2,17 @@ package cashInBank;
 
 import generalInformation.GeneralInformationManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -201,6 +206,12 @@ public class CashInBankHandler extends Action {
 						.getMessageList()
 						.add("Ooooops!!! Cannot create transaction that cost more than remaining balance!");
 				flag = false;
+			} else if (amount > max_transaction) {
+				cashInBankForm.getMessageList().clear();
+				cashInBankForm.getMessageList().add(
+						"Ooooops!!! Cannot create transaction more than IDR"
+								+ max_transaction + "!");
+				flag = false;
 			} else if (!"1c-cor".equals(cashInBankForm.getCashInBankBean()
 					.getCashFlowCategoryId())) {
 				if (amount < min_transaction) {
@@ -212,12 +223,6 @@ public class CashInBankHandler extends Action {
 									+ "!\nPlease do this in petty cash instead");
 					flag = false;
 				}
-			} else if (amount > max_transaction) {
-				cashInBankForm.getMessageList().clear();
-				cashInBankForm.getMessageList().add(
-						"Ooooops!!! Cannot create transaction more than IDR"
-								+ max_transaction + "!");
-				flag = false;
 			}
 
 			if (!flag) {
@@ -622,40 +627,13 @@ public class CashInBankHandler extends Action {
 					"yyyyMMddhhmmss");
 			String fileName = "CashInBankReport_"
 					+ printDateFormat.format(cal.getTime()) + ".pdf";
-			ExportReportManager.exportToPdf(filePath
+			String resultServerPath = ExportReportManager.exportToPdf(filePath
 					+ "\\report\\FinanceTransactionReport" + ".jrxml",
 					fileName, parameters, cashInBankData);
-			cashInBankForm.getMessageList().clear();
-			cashInBankForm.getMessageList()
-					.add("Success export to D://Finance Solution Report/"
-							+ fileName);
-
-			// show filtered page
-			cashInBankForm.setRemainingBalance(cashInBankManager
-					.getCurrentBalance());
-
-			cashInBankForm.setTransactionList(cashInBankManager
-					.getAllWithFilter(paramMap));
-
-			paramMap = new HashMap();
-			paramMap.put("cashFlowType", "Cash In Bank");
-			paramMap.put("isDebit", null);
-			paramMap.put("isEnabled", null);
-			CashFlowCategoryBean cashFlowCategoryBean;
-			List cashFlowCategoryList = masterManager
-					.getAllCashFlowCategory(paramMap);
-			for (Object obj : cashFlowCategoryList) {
-				cashFlowCategoryBean = (CashFlowCategoryBean) obj;
-				cashFlowCategoryBean.setName(cashFlowCategoryBean.getName()
-						+ "-"
-						+ (cashFlowCategoryBean.getIsDebit() == 1 ? "Debit"
-								: "Credit"));
-			}
-			cashFlowCategoryBean = new CashFlowCategoryBean();
-			cashInBankForm.setCategoryId("");
-			cashInBankForm.setCashFlowCategoryList(cashFlowCategoryList);
-
-			return mapping.findForward("cashInBank");
+			
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
+			
+			return null;
 		} else {
 			cashInBankForm.setRemainingBalance(cashInBankManager
 					.getCurrentBalance());

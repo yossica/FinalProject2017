@@ -12,7 +12,7 @@ public class OutsourceBean implements Serializable {
 	private String startDate;
 	private String endDate;
 	private int isGross;
-	private double fee;
+	private Double fee;
 	private String createdBy;
 	private String createdDate;
 	private String changedBy;
@@ -82,11 +82,11 @@ public class OutsourceBean implements Serializable {
 		this.isGross = isGross;
 	}
 
-	public double getFee() {
+	public Double getFee() {
 		return fee;
 	}
 
-	public void setFee(double fee) {
+	public void setFee(Double fee) {
 		this.fee = fee;
 	}
 

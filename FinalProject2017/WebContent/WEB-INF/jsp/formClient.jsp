@@ -117,10 +117,12 @@
 							<table class="table table-hover">
 								<tbody>
 									<tr>
+
 										<td><label>Client Name <b
 												style="color: red; font-size: 18px">*</b></label></td>
 										<td><html:text name="clientForm"
 												property="clientBean.name" styleClass="form-control-client" /></td>
+
 									</tr>
 									<tr>
 										<td><label>Address <b
@@ -193,7 +195,7 @@
 						<logic:notEmpty name="clientForm" property="messageList">
 							<logic:iterate id="message" name="clientForm">
 								<input type="hidden" id="err"
-									value="<bean:write name="message" />">
+									value="<bean:write name="message"/>">
 							</logic:iterate>
 						</logic:notEmpty>
 					</div>

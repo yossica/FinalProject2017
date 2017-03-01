@@ -143,11 +143,11 @@
 			<div id="filterForm" class="col-lg-12"
 				style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-12" style="padding-right: 1%">
+					<div class="col-md-12">
 						<div class="col-md-2">Category</div>
 						<div class="col-md-10">
 							<html:select property="categoryId" name="pettyCashForm"
-								styleClass="form-control-client">
+								styleClass="form-control" styleId="basic">
 								<html:option value="">All</html:option>
 								<html:optionsCollection property="cashFlowCategoryList"
 									label="name" value="cashFlowCategoryId" name="pettyCashForm" />
@@ -246,5 +246,11 @@
 			</div>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });});
+</script>
 </body>
 </html>

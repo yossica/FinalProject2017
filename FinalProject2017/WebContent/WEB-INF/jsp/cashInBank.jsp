@@ -96,23 +96,6 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
-	/* function alertError() {
-		var message=document.getElementById("err");
-		if(message!=null){
-			var messageValue=message.value;
-			
-			var strValue = messageValue.substring(0, 7);
-			if(strValue=="Success"){
-				//Success
-				swal("Good job!", messageValue, "success");
-			}
-			else if(strValue=="Ooooops"){
-				//Ooooops
-				sweetAlert("Oops...", messageValue, "error");
-			}
-		}
-	}
-	window.onload = alertError; */
 </script>
 </head>
 <body onload="scrollBottom()">
@@ -143,11 +126,11 @@
 			<div id="filterForm" class="col-lg-12"
 				style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-12" style="padding-right: 1%">
+					<div class="col-md-12">
 						<div class="col-md-2">Category</div>
 						<div class="col-md-10">
 							<html:select property="categoryId" name="cashInBankForm"
-								styleClass="form-control-client">
+								styleClass="form-control" styleId="basic">
 								<html:option value="">All</html:option>
 								<html:optionsCollection property="cashFlowCategoryList"
 									label="name" value="cashFlowCategoryId" name="cashInBankForm" />
@@ -251,5 +234,11 @@
 			</div>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });});
+</script>
 </body>
 </html>
