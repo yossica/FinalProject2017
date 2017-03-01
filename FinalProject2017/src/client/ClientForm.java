@@ -47,4 +47,6 @@ public class ClientForm extends ActionForm {
 		this.clientBean = clientBean;
 	}
 
+	
+
 }

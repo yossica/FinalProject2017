@@ -15,7 +15,7 @@
 	}
 
 	function flyToUpdate(clientId) {
-		document.forms[1].clientId.value = clientId;
+		document.getElementsByName("clientBean.clientId")[0].value = clientId;
 		flyToPage("update");
 	}
 </script>

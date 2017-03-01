@@ -93,21 +93,24 @@
 							<table class="table table-hover">
 								<tbody>
 									<tr>
-										<td><label>Employee Name</label></td>
-										<td><html:text property="employeeBean.name" name="employeeForm"
-												styleClass="form-control-client" /></td>
+										<td><label>Employee Name <b
+												style="color: red; font-size: 18px">*</b></label></td>
+										<td><html:text property="employeeBean.name"
+												name="employeeForm" styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
-										<td><label>Email</label></td>
-										<td><html:text property="employeeBean.email" name="employeeForm"
-												styleClass="form-control-client" /></td>
+										<td><label>Email <b
+												style="color: red; font-size: 18px">*</b></label></td>
+										<td><input type="text" name="employeeBean.email"
+											placeholder="e.g.: adam@test.com"
+											value="<bean:write name="employeeForm" property="employeeBean.email"/>"></td>
 									</tr>
 									<tr>
 										<td><label>Employee Status</label></td>
 										<td>
 											<div class="col-lg-13">
-												<html:select property="employeeBean.isEnabled" name="employeeForm"
-													styleClass="form-control-client">
+												<html:select property="employeeBean.isEnabled"
+													name="employeeForm" styleClass="form-control-client">
 													<html:option value="1">Enabled</html:option>
 													<html:option value="0">Disabled</html:option>
 												</html:select>
@@ -116,6 +119,8 @@
 									</tr>
 								</tbody>
 							</table>
+							<b style="color: red; font-size: 12px"><i>*Field is
+									required</i></b>
 						</div>
 						<!-- /.table-responsive -->
 					</div>

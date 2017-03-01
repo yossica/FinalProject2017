@@ -14,8 +14,8 @@
 		document.forms[1].submit();
 	}
 
-	function flyToUpdate(id) {
-		document.forms[1].employeeId.value = id;
+	function flyToUpdate(employeeId) {
+		document.getElementsByName("employeeBean.employeeId")[0].value = employeeId;
 		flyToPage("update");
 	}
 </script>

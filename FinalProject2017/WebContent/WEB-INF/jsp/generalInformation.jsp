@@ -14,8 +14,8 @@
 		document.forms[1].submit();
 	}
 
-	function flyToUpdate(id) {
-		document.forms[1].key.value = id;
+	function flyToUpdate(key) {
+		document.getElementsByName("generalInformationBean.key")[0].value = key;
 		flyToPage("update");
 	}
 </script>
@@ -25,7 +25,7 @@
 	<jsp:include page="dashboard.jsp" />
 	<html:form action="/generalInformation" method="post">
 		<html:hidden property="task" name="generalInformationForm" />
-		<html:hidden property="key" name="generalInformationForm" />
+		<html:hidden property="generalInformationBean.key" name="generalInformationForm" />
 
 		<div id="page-wrapper">
 			<div class="row">
@@ -48,12 +48,9 @@
 										property="listGeneralInformation">
 										<tr>
 											<td><bean:write name="generalInformation" property="key" /></td>
-											<td><bean:write name="generalInformation"
-													property="value" /></td>
-											<td><bean:write name="generalInformation"
-													property="dataType" /></td>
-											<td><bean:write name="generalInformation"
-													property="length" format="#" /></td>
+											<td><bean:write name="generalInformation" property="value" /></td>
+											<td><bean:write name="generalInformation" property="dataType" /></td>
+											<td><bean:write name="generalInformation" property="length" format="#" /></td>
 											<td><input type="button" value="Edit"
 												class="btn btn-primary"
 												onclick="javascript:flyToUpdate('<bean:write name="generalInformation" property="key"/>')"></td>
