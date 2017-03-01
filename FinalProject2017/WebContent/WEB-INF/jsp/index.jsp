@@ -10,6 +10,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -58,7 +59,7 @@
 		</div>
 		<!-- Table 1 -->
 		<div class="row">
-			<div class="col-lg-6" style="width: 1200px">
+			<div class="col-lg-6" style="width: 1100px">
 				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading" style="background-color:#ffc4c1/* #d5d9e0 */">Listed</div>
