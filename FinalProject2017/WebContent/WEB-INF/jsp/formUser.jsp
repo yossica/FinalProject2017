@@ -34,6 +34,9 @@
 		var regex = /^[A-Za-z0-9]*$/;
 		var newUser = document.forms[1].newUser.value;
 		var errorMessage = "";
+		if (newUser == "") {
+			errorMessage = errorMessage + "Username must be filled! \n";
+		}
 		if (!regex.test(newUser)) {
 			errorMessage = errorMessage + "New Username must consist of only alphanumeric!";
 			//alert("New Username must consist of only alphanumeric!");
@@ -46,7 +49,7 @@
 		} else {
 			swal({
 				title : "Are you sure?",
-				text : "System will update these data to General Information",
+				text : "System will insert these data new User",
 				type : "warning",
 				showCancelButton : true,
 				confirmButtonColor : "#ef2300",
@@ -67,7 +70,7 @@
 					});
 
 				} else {
-					swal("Cancelled", "Cancel Update General Information",
+					swal("Cancelled", "Cancel Insert New User",
 							"error");
 				}
 			});
@@ -76,10 +79,39 @@
 	}
 
 	function resetPassword(username) {
-		if (confirm("Are you sure to reset this user password?")) {
+		swal({
+			title : "Are you sure?",
+			text : "System will reset password",
+			type : "warning",
+			showCancelButton : true,
+			confirmButtonColor : "#ef2300",
+			confirmButtonText : "Yes, Update",
+			cancelButtonText : "No, Cancel Please!",
+			closeOnConfirm : false,
+			closeOnCancel : false
+		}, function(isConfirm) {
+			if (isConfirm) {
+				swal({
+					title : "Good job!",
+					text : "Save Success!",
+					type : "success"
+				}, function() {
+					setTimeout(function() {
+						//flyToPage("insertUser");
+						document.forms[1].userName.value = username;
+						flyToPage("resetPassword");
+					}, 10);
+				});
+
+			} else {
+				swal("Cancelled", "Cancel Reset Password",
+						"error");
+			}
+		});
+		/* if (confirm("Are you sure to reset this user password?")) {
 			document.forms[1].userName.value = username;
 			flyToPage("resetPassword");
-		}
+		} */
 	}
 
 	function flyToPage(task) {
@@ -96,7 +128,7 @@
 			if (strValue == "Success") {
 				//Success
 				swal("Good job!", messageValue, "success");
-			} else if (strValue == "Success"){
+			} else if (strValue == "Ooooops"){
 				//Ooooops
 				sweetAlert("Oops...", messageValue, "error");
 			}

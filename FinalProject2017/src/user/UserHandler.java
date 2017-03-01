@@ -99,12 +99,10 @@ public class UserHandler extends Action {
 			userManager.insert(userForm.getNewUser());
 			userForm.setNewUser("");
 			userForm.setUserList(userManager.getAll());
-			userForm.getMessageList().add("Success!!! New User Has Been Created!");
 			return mapping.findForward("manageUser");
 		} else if ("resetPassword".equals(userForm.getTask())) {
 			userManager.resetPassword(userForm.getUserName());
 			userForm.setUserList(userManager.getAll());
-			userForm.getMessageList().add("Success!!! Password Has Been Reset!");
 			return mapping.findForward("manageUser");
 		} else {
 			if (session.getAttribute("username") != null) {
