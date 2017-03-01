@@ -73,9 +73,22 @@
 							onclick="javascript:flyToPageIndex('changePassword')"><i
 								class="fa fa-user fa-fw"></i> Change Password</a></li>
 						<li class="divider"></li>
+						<%if (request.getSession().getAttribute("username") != null) {%>
+							<%if (request.getSession().getAttribute("username").equals("Aldhi")) {%>
+								<%out.print("<li>"); %>
+								<%out.print("<a href=\"#\" onclick=\"javascript:flyToPageIndex('manageUser')\"><i class=\"fa fa-user fa-fw\"></i> Manage Users</a>"); %>
+								<%out.print("</li>"); %>
+								<%out.print("<li class=\"divider\"></li>"); %>
+								<!-- <li><a href="#"
+								onclick="javascript:flyToPageIndex('changePassword')"><i
+									class="fa fa-user fa-fw"></i> Manage Users</a></li>
+								<li class="divider"></li> -->
+							<% } %>
+						<% } %>
 						<li><a href="#" onclick="javascript:flyToPageIndex('logout')"><i
 								class="fa fa-sign-out fa-fw"></i> Logout</a></li>
-					</ul> <!-- /.dropdown-user --></li>
+					</ul> <!-- /.dropdown-user -->
+				</li>
 				<!-- /.dropdown -->
 			</ul>
 			<!-- /.navbar-top-links -->
