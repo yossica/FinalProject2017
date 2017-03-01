@@ -32,9 +32,6 @@ public class IndexHandler extends Action {
 			throws Exception {
 
 		HttpSession session = request.getSession();
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
 
 		IndexForm indexForm = (IndexForm) form;
 		OutsourceManager outsourceManager = new OutsourceManager();

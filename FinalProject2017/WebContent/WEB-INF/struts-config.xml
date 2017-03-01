@@ -16,6 +16,7 @@
 	</form-beans>	
 	<global-forwards>
 		<forward name="login" path="/login.do"></forward>
+		<forward name="index" path="/index.do"></forward>
 	</global-forwards>	
 	<action-mappings>
 		<action path="/index" name="indexForm" type="index.IndexHandler" scope="request">

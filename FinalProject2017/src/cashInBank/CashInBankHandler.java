@@ -36,11 +36,7 @@ public class CashInBankHandler extends Action {
 			throws Exception {
 
 		HttpSession session = request.getSession();
-
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
-
+		
 		CashInBankForm cashInBankForm = (CashInBankForm) form;
 		CashInBankManager cashInBankManager = new CashInBankManager();
 		MasterManager masterManager = new MasterManager();
