@@ -6,7 +6,7 @@ public class TrainingDetailBean implements Serializable {
 	private int transactionTrainingDetailId;
 	private int transactionTrainingHeaderId;
 	private String description;
-	private double fee;
+	private Double fee;
 	private String note;
 	private int isSettlement;
 	private String createdBy;
@@ -38,11 +38,11 @@ public class TrainingDetailBean implements Serializable {
 		this.description = description;
 	}
 
-	public double getFee() {
+	public Double getFee() {
 		return fee;
 	}
 
-	public void setFee(double fee) {
+	public void setFee(Double fee) {
 		this.fee = fee;
 	}
 

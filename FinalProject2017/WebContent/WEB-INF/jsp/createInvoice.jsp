@@ -162,7 +162,7 @@
 						</div>
 						<div class="col-md-8">
 							<html:select property="invoiceBean.clientId" name="invoiceForm"
-								style="width: 100%;" styleClass="form-control-client"
+								style="width: 100%;" styleClass="form-control"
 								styleId="client">
 								<option selected disabled>Select</option>
 								<html:optionsCollection name="invoiceForm" property="clientList"
@@ -358,8 +358,12 @@
 				</div>
 			</div>
 		</div>
-
-
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#client').selectpicker({
+      liveSearch: true
+    });});
+</script>
 </body>
 </html>

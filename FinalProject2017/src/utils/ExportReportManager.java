@@ -47,7 +47,6 @@ public class ExportReportManager {
 
 		String path = "";
 		try {
-			//file menumpang di disk server sebelum didownload oleh client
 			File outDir = new File("D://");
 			outDir.mkdirs();
 			path = outDir.getAbsolutePath() + "\\" + fileName;

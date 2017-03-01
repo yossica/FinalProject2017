@@ -127,7 +127,7 @@
 								<tbody>
 									<tr>
 										<td><label>Client Name</label></td>
-										<td><html:text name="clientForm" property="name"
+										<td><html:text name="clientForm" property="ClientBean.name"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
