@@ -956,8 +956,7 @@ public class InvoiceHandler extends Action {
 					.getClientId()));
 			invoiceForm.setTransactionInvoiceHeaderId(invoiceForm
 					.getInvoiceBean().getTransactionInvoiceHeaderId());
-			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean()
-					.getStatusInvoiceId()));
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 			invoiceForm.setTask("detailInvoice");
 			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm
 					.getTransactionInvoiceHeaderId()));
