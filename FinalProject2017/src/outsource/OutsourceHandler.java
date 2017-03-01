@@ -27,10 +27,6 @@ public class OutsourceHandler extends Action {
 
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
-
 		OutsourceForm outsourceForm = (OutsourceForm) form;
 		OutsourceManager outsourceManager = new OutsourceManager();
 		ClientManager clientManager = new ClientManager();

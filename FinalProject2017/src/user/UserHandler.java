@@ -19,6 +19,9 @@ public class UserHandler extends Action {
 		HttpSession session = request.getSession(true);
 
 		if ("login".equals(userForm.getTask())) {
+			if (session.getAttribute("username") != null) {
+				return mapping.findForward("index");
+			}
 			if (userForm.getUserName() == null) {
 				return mapping.findForward("login");
 			}
@@ -102,6 +105,9 @@ public class UserHandler extends Action {
 			userForm.setUserList(userManager.getAll());
 			return mapping.findForward("manageUser");
 		} else {
+			if (session.getAttribute("username") != null) {
+				return mapping.findForward("index");
+			}
 			return mapping.findForward("login");
 		}
 	}

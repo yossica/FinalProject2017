@@ -36,10 +36,6 @@ public class PettyCashHandler extends Action {
 			throws Exception {
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("username") == null) {
-			return mapping.findForward("login");
-		}
-
 		PettyCashForm pettyCashForm = (PettyCashForm) form;
 		PettyCashManager pettyCashManager = new PettyCashManager();
 		MasterManager masterManager = new MasterManager();
