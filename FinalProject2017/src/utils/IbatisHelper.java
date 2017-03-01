@@ -14,8 +14,6 @@ public class IbatisHelper {
 			String resource = "SqlMapConfig.xml";
 			Reader reader = Resources.getResourceAsReader(resource);
 			sqlMap = SqlMapClientBuilder.buildSqlMapClient(reader);
-			System.out.println("Building ibatis sqlmap from " + resource
-					+ ". Finished!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(
