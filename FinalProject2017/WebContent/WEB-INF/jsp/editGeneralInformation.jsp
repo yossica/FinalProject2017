@@ -17,8 +17,10 @@
 	function flyToSave() {
 		var value = document.getElementsByName("generalInformationBean.value")[0].value;
 		var key = document.getElementsByName("generalInformationBean.key")[0].value;
-		var type = document.getElementsByName("generalInformationBean.dataType")[0].value;
-		var length = document.getElementsByName("generalInformationBean.length")[0].value;
+		var type = document
+				.getElementsByName("generalInformationBean.dataType")[0].value;
+		var length = document
+				.getElementsByName("generalInformationBean.length")[0].value;
 		var phoneAndFaxRegEx = /^([+0])([\d-])*$/;
 		var intOrDouble = /^[0-9]+([,.][0-9]+)?$/;
 
@@ -37,7 +39,7 @@
 				|| key == "fax" && !phoneAndFaxRegEx.test(value)) {
 			errorMessage = errorMessage + key
 					+ " format is wrong! \n ex: 021-123456 \n";
-		} else if (key=="rek_no" && isNaN(value)) {
+		} else if (key == "rek_no" && isNaN(value)) {
 			errorMessage = errorMessage + "Account number must be numeric! \n";
 		}
 
@@ -98,28 +100,34 @@
 										<td><label>Key</label></td>
 										<td><html:text name="generalInformationForm"
 												property="generalInformationBean.key" readonly="true"
-												styleClass="form-control-client" /></td>
+												styleClass="form-control-client"
+												style="background-color:#EFEFEF;" /></td>
 									</tr>
 									<tr>
-										<td><label>Value <b style="color:red; font-size:12px"><i>*Field is required</i></b></label></td>
+										<td><label>Value <b
+												style="color: red; font-size: 12px"><i>*</i></b></label></td>
 										<td><html:text name="generalInformationForm"
-												property="generalInformationBean.value" styleClass="form-control-client" /></td>
+												property="generalInformationBean.value"
+												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Data Type</label></td>
 										<td><html:text name="generalInformationForm"
 												property="generalInformationBean.dataType" readonly="true"
-												styleClass="form-control-client" /></td>
+												styleClass="form-control-client"
+												style="background-color:#EFEFEF;" /></td>
 									</tr>
 									<tr>
 										<td><label>Length</label></td>
 										<td><html:text name="generalInformationForm"
 												property="generalInformationBean.length" readonly="true"
-												styleClass="form-control-client" /></td>
+												styleClass="form-control-client"
+												style="background-color:#EFEFEF;" /></td>
 									</tr>
 								</tbody>
 							</table>
-							<b style="color:red; font-size:12px"><i>*Field is required</i></b>
+							<b style="color: red; font-size: 12px"><i>*Field is
+									required</i></b>
 						</div>
 						<!-- /.table-responsive -->
 						<div class="col-md-15" style="color: red;" id="message">
