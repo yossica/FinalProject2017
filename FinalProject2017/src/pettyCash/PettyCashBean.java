@@ -6,8 +6,8 @@ public class PettyCashBean implements Serializable {
 	private int transactionPettyCashId;
 	private String cashFlowCategoryId;
 	private String cashFlowCategoryName;
-	private double amount;
-	private double balance;
+	private Double amount;
+	private Double balance;
 	private String description;
 	private String transactionDate;
 	private int isDebit;
@@ -38,19 +38,19 @@ public class PettyCashBean implements Serializable {
 		this.cashFlowCategoryName = cashFlowCategoryName;
 	}
 
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
-	public double getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(double balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 

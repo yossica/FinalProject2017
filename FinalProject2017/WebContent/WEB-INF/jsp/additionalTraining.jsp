@@ -145,11 +145,11 @@
 			<div class="col-lg-12"
 				style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF;">
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-12" style="padding-right: 1%">
+					<div class="col-md-12">
 						<div class="col-md-2">Client</div>
 						<div class="col-md-10">
 							<html:select property="clientId" name="trainingForm"
-								styleClass="form-control"
+								styleClass="form-control" styleId="basic"
 								onchange="javascript:flyToPage('loadTrainingHeader')">
 								<logic:notEmpty name="trainingForm" property="clientList">
 									<html:optionsCollection name="trainingForm"
@@ -160,12 +160,12 @@
 					</div>
 				</div>
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-12" style="padding-right: 1%">
+					<div class="col-md-12">
 						<div class="col-md-2">Training</div>
 						<div class="col-md-10">
 							<html:select
 								property="trainingDetailBean.transactionTrainingHeaderId"
-								name="trainingForm" styleClass="form-control"
+								name="trainingForm" styleClass="form-control" styleId="basic2"
 								onchange="javascript:flyToPage('loadTrainingDetail')">
 								<logic:notEmpty name="trainingForm"
 									property="trainingHeaderList">
@@ -259,5 +259,15 @@
 			</div>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });
+  $('#basic2').selectpicker({
+      liveSearch: true
+    });
+});
+</script>
 </body>
 </html>

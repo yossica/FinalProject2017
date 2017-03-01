@@ -346,7 +346,7 @@ to {
 								name="invoiceForm">
 								<html:select name="invoiceForm"
 									property="trainingBean.transactionTrainingHeaderId"
-									styleClass="form-control"
+									styleClass="form-control" styleId="basic"
 									onchange="javascript:flyToPage('getTax')">
 									<html:optionsCollection name="invoiceForm" label="description"
 										value="transactionTrainingHeaderId"
@@ -488,5 +488,11 @@ to {
 			</logic:notEmpty>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });});
+</script>
 </body>
 </html>
