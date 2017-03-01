@@ -91,6 +91,26 @@ to {
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	function alertThenFly(task, textVal, confirmVal){
+		swal({
+			title: "Are you sure?",
+			text: textVal,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#ef2300",
+			confirmButtonText: confirmVal,
+			cancelButtonText: "No, Cancel Please!",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},function(isConfirm){
+		if (isConfirm) {
+			document.forms[1].task.value = task;
+			document.forms[1].submit();
+		} else {
+			swal("Cancelled", "Cancel Insert Transaction", "error");
+		}
+	});
+	}
 	function flyToPage(task){
 		var detailSize = document.getElementsByName("invoiceBean.detailSize")[0].value;
 		var errorMessage = "";
@@ -120,28 +140,14 @@ to {
 
 		if(errorMessage.length != 0){
 			sweetAlert("Oops...", errorMessage, "error");
-			//document.getElementById("message").innerHTML = errorMessage;
 			return;
+		}else if (task == 'insertPS'){
+			alertThenFly(task, "System will insert these data to Invoice Professional Service",
+				"Yes, Insert");
+		}else if (task == 'editInvoicePS'){
+			alertThenFly(task, "System will edit these Invoice Professional Service data",
+				"Yes, Edit");
 		}
-		 swal({
-			  title: "Are you sure?",
-			  text: "System will insert these data to Invoice Professional Service",
-			  type: "warning",
-			  showCancelButton: true,
-			  confirmButtonColor: "#ef2300",
-			  confirmButtonText: "Yes, Insert",
-			  cancelButtonText: "No, Cancel Please!",
-			  closeOnConfirm: false,
-			  closeOnCancel: false
-			},
-			function(isConfirm){
-			  if (isConfirm) {
-					document.forms[1].task.value = task;
-					document.forms[1].submit();
-			  } else {
-			    swal("Cancelled", "Cancel Insert Transaction", "error");
-			  }
-			});
 	}
 </script>
 </head>
@@ -373,6 +379,7 @@ to {
 								name="invoiceForm">
 								<html:hidden property="transactionInvoiceHeaderId"
 									name="invoiceForm" />
+								<html:hidden property="invoiceBean.invoiceNumber" name="invoiceForm" />
 								<html:hidden property="client" name="invoiceForm" />
 								<html:hidden property="statusId" name="invoiceForm" />
 								<button type="button" class="btn btn-primary"
