@@ -17,16 +17,16 @@ public class InvoiceBean implements Serializable {
 	private String invoiceTypeName;
 	private int clientId;
 	private String clientName;
-	private double totalNet;
-	private double ppnPercentage;
+	private Double totalNet;
+	private Double ppnPercentage;
 	private int isGross;
-	private double totalGross;
+	private Double totalGross;
 	private String notes;
 	private String createdBy;
 	private String createdDate;
 	private String changedBy;
 	private String changedDate;
-	private double totalPpn;
+	private Double totalPpn;
 	private String detailSize;
 	private String settlementInvoiceId;
 	private String paidDate;
@@ -136,19 +136,19 @@ public class InvoiceBean implements Serializable {
 		this.clientName = clientName;
 	}
 
-	public double getTotalNet() {
+	public Double getTotalNet() {
 		return totalNet;
 	}
 
-	public void setTotalNet(double totalNet) {
+	public void setTotalNet(Double totalNet) {
 		this.totalNet = totalNet;
 	}
 
-	public double getPpnPercentage() {
+	public Double getPpnPercentage() {
 		return ppnPercentage;
 	}
 
-	public void setPpnPercentage(double ppnPercentage) {
+	public void setPpnPercentage(Double ppnPercentage) {
 		this.ppnPercentage = ppnPercentage;
 	}
 
@@ -160,11 +160,11 @@ public class InvoiceBean implements Serializable {
 		this.isGross = isGross;
 	}
 
-	public double getTotalGross() {
+	public Double getTotalGross() {
 		return totalGross;
 	}
 
-	public void setTotalGross(double totalGross) {
+	public void setTotalGross(Double totalGross) {
 		this.totalGross = totalGross;
 	}
 
@@ -219,11 +219,11 @@ public class InvoiceBean implements Serializable {
 		this.detailList = detailList;
 	}
 
-	public double getTotalPpn() {
+	public Double getTotalPpn() {
 		return totalPpn;
 	}
 
-	public void setTotalPpn(double totalPpn) {
+	public void setTotalPpn(Double totalPpn) {
 		this.totalPpn = totalPpn;
 	}
 

@@ -259,11 +259,11 @@
 					<div id="filterForm" class="col-lg-12"
 						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 						<div class="row" style="margin-top: 10px;">
-							<div class="col-md-12" style="padding-right: 1%">
+							<div class="col-md-12">
 								<div class="col-md-2">Client</div>
 								<div class="col-md-10">
 									<html:select property="clientId" name="invoiceForm"
-										styleClass="form-control-client">
+										styleClass="form-control" styleId="basic">
 										<html:option value="">Select</html:option>
 										<html:optionsCollection name="invoiceForm"
 											property="clientList" label="name" value="clientId" />
@@ -469,5 +469,12 @@
 			</logic:notEmpty>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });
+});
+</script>
 </body>
 </html>

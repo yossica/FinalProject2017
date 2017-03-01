@@ -65,7 +65,7 @@ public class TrainingHandler extends Action {
 					.getDetailByIdHeader(trainingForm.getTrainingDetailBean()
 							.getTransactionTrainingHeaderId()));
 
-			trainingForm.getTrainingDetailBean().setFee(0);
+			trainingForm.getTrainingDetailBean().setFee(0.0);
 			trainingForm.getTrainingDetailBean().setDescription("");
 			return mapping.findForward("additionalTraining");
 		} else if ("deleteDetail".equals(trainingForm.getTask())) {
@@ -80,7 +80,7 @@ public class TrainingHandler extends Action {
 					.getDetailByIdHeader(trainingForm.getTrainingDetailBean()
 							.getTransactionTrainingHeaderId()));
 
-			trainingForm.getTrainingDetailBean().setFee(0);
+			trainingForm.getTrainingDetailBean().setFee(0.0);
 			trainingForm.getTrainingDetailBean().setDescription("");
 			return mapping.findForward("additionalTraining");
 		} else {

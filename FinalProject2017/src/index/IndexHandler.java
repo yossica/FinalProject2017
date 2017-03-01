@@ -112,6 +112,7 @@ public class IndexHandler extends Action {
 							arrList.add(invoiceBean);
 						}
 					}
+					//gimana cara mundur in dari jan 2017 ke des 2016
 					Integer year = Integer.parseInt((currentPeriod + "")
 							.substring(0, 4));
 					Integer month = Integer.parseInt((currentPeriod + "")

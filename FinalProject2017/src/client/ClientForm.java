@@ -7,7 +7,7 @@ import org.apache.struts.action.ActionForm;
 
 public class ClientForm extends ActionForm {
 	private String task;
-
+	
 	private int clientId;
 	private String name;
 	private String address;
