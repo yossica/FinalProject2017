@@ -74,7 +74,7 @@
 								class="fa fa-user fa-fw"></i> Change Password</a></li>
 						<li class="divider"></li>
 						<%if (request.getSession().getAttribute("username") != null) {%>
-							<%if (request.getSession().getAttribute("username").equals("Aldhi")) {%>
+							<%if (request.getSession().getAttribute("username").equals("MrScrooge")) {%>
 								<%out.print("<li>"); %>
 								<%out.print("<a href=\"#\" onclick=\"javascript:flyToPageIndex('manageUser')\"><i class=\"fa fa-user fa-fw\"></i> Manage Users</a>"); %>
 								<%out.print("</li>"); %>
