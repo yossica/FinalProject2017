@@ -87,30 +87,21 @@ to {
 			var HHSize = document.getElementById('headHunterListSize').value;
 			for(var i=0; i<HHSize; i++){
 				if (document.getElementsByName('invoiceDetailHH['+i+'].description')[0].value == ''){
-					/* alert('Error Deskripsi Kosong');
-					error = true; */
 					errorMessage = errorMessage + "Description must be filled! \n";
 				}else if (document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value == ''){
-					/* alert('Error Fee Kosong');
-					error = true; */
 					errorMessage = errorMessage + "Fee must be filled! \n";
 				}else if (!doubleReg.test(document.getElementsByName('invoiceDetailHH['+i+'].fee')[0].value)){
-					/* alert('Error Fee tidak sesuai format');
-					error = true; */
 					errorMessage = errorMessage + "Fee must be Number! \n";
 				}
 			}
 		}
 		if(errorMessage.length != 0){
 			sweetAlert("Oops...", errorMessage, "error");
-			//document.getElementById("message").innerHTML = errorMessage;
 			return;
-		}
-		else{
-
+		}else if (task == 'insertHH') {
 			swal({
 				  title: "Are you sure?",
-				  text: "System will insert these data to Invoice Head Hunter",
+				  text: "System will insert these data",
 				  type: "warning",
 				  showCancelButton: true,
 				  confirmButtonColor: "#ef2300",
@@ -120,13 +111,37 @@ to {
 				  closeOnCancel: false
 				},
 				function(isConfirm){
-				  if (isConfirm) {
-					  document.forms[1].task.value = task;
+				  	if (isConfirm) {
+						document.forms[1].task.value = task;
 						document.forms[1].submit();
-				  } else {
-				    swal("Cancelled", "Cancel Insert Transaction", "error");
-				  }
+				  	} else {
+				    	swal("Cancelled", "Cancel Insert Transaction", "error");
+				  	}
 				});
+		}else if (task == 'editInvoiceHH'){
+			swal({
+				  title: "Are you sure?",
+				  text: "System will edit these data",
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#ef2300",
+				  confirmButtonText: "Yes, Edit",
+				  cancelButtonText: "No, Cancel Please!",
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  	if (isConfirm) {
+						document.forms[1].task.value = task;
+						document.forms[1].submit();
+				  	} else {
+				    	swal("Cancelled", "Cancel Edit Invoice", "error");
+				  	}
+				});
+		}
+		else {
+			document.forms[1].task.value = task;
+			document.forms[1].submit();
 		}
 	}
 	function flyToDetail(task,transactionInvoiceHeaderId, clientId, statusId){
@@ -183,6 +198,7 @@ to {
 	<html:hidden property="deleteIndex" name="invoiceForm" />
 	<html:hidden property="invoiceBean.transactionInvoiceHeaderId" name="invoiceForm" />
 	<html:hidden property="headHunterListSize" name="invoiceForm" styleId="headHunterListSize"/>
+	<html:hidden property="invoiceBean.statusInvoiceId" name="invoiceForm"/>
 	<div id="page-wrapper">
 		<div class="row">
 			<div class="col-lg-12">
@@ -194,29 +210,17 @@ to {
 				</logic:equal>
 			</div>
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-md-12" style="padding-right: 1%">
-					<div class="col-md-2"><label>Invoice Date</label></div>
-					<div class="col-md-6">
-					<logic:equal name="invoiceForm" property="task" value="formInvoiceHH">
-						<html:hidden name="invoiceForm" property="invoiceBean.invoiceDate" />
-						: <bean:write name="invoiceForm" property="invoiceBean.invoiceDate" />
-
-					</logic:equal>
-					<logic:equal name="invoiceForm" property="task" value="editInvoice">
-						<h1 class="page-header">Edit Invoice Head Hunter</h1>
-					</logic:equal>
-				</div>
 				<div class="row" style="margin-top: 10px;">
 					<div class="col-md-12" style="padding-right: 1%">
 						<div class="col-md-2">
 							<label>Invoice Date</label>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-5">
 							<logic:equal name="invoiceForm" property="task"
 								value="formInvoiceHH">
 								<html:hidden name="invoiceForm"
 									property="invoiceBean.invoiceDate" />
-						: <bean:write name="invoiceForm"
+								: <bean:write name="invoiceForm"
 									property="invoiceBean.invoiceDate" />
 							</logic:equal>
 							<logic:equal name="invoiceForm" property="task"

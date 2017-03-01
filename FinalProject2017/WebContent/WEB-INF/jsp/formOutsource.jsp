@@ -155,7 +155,7 @@
 												value="savecreate">
 												<html:select name="outsourceForm"
 													property="outsourceBean.clientId" styleClass="form-control"
-													size="1">
+													size="1" styleId="basic">
 													<html:optionsCollection name="outsourceForm"
 														property="optClientList" value="clientId" label="name" />
 												</html:select>
@@ -170,7 +170,7 @@
 												value="savemutation">
 												<html:select name="outsourceForm"
 													property="outsourceBean.clientId" styleClass="form-control"
-													size="1">
+													size="1" styleId="basic">
 													<html:optionsCollection name="outsourceForm"
 														property="optClientList" value="clientId" label="name" />
 												</html:select>
@@ -189,7 +189,7 @@
 												value="savecreate">
 												<html:select name="outsourceForm"
 													property="outsourceBean.employeeId"
-													styleClass="form-control" size="1">
+													styleClass="form-control" size="1" styleId="basic2">
 													<html:optionsCollection name="outsourceForm"
 														property="optEmployeeList" value="employeeId" label="name" />
 												</html:select>
@@ -288,5 +288,15 @@
 				</div>
 			</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });
+  $('#basic2').selectpicker({
+      liveSearch: true
+    });
+});
+</script>
 </body>
 </html>

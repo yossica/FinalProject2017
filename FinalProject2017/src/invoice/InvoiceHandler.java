@@ -175,7 +175,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setInvoiceNumber(
 					invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
-			float ppn = Float.parseFloat(generalInformationManager.getByKey(
+			Double ppn = Double.parseDouble(generalInformationManager.getByKey(
 					"tax").getValue());
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			double netTotal = 0;
@@ -185,8 +185,8 @@ public class InvoiceHandler extends Action {
 						.getProfessionalServiceList()) {
 					bean.setCreatedBy((String) session.getAttribute("username"));
 					String description = "Jasa Professional Service - "
-							+ bean.getEmployeeName() + " " + bean.getManDays()
-							+ " Work Days";
+							+ bean.getEmployeeName() /*+ " " + bean.getManDays()
+							+ " Work Days"*/;
 					Integer workDays = bean.getWorkDays();
 					int manDays = bean.getManDays();
 					double fee = bean.getFee();
@@ -217,8 +217,8 @@ public class InvoiceHandler extends Action {
 					double totalFee = fee * manDays / workDays;
 					double totalGross = bean.getFee() * manDays / workDays;
 					String description = "Jasa Professional Service - "
-							+ bean.getEmployeeName() + " " + bean.getManDays()
-							+ " hari";
+							+ bean.getEmployeeName() /*+ " " + bean.getManDays()
+							+ " hari"*/;
 					netTotal += totalFee;
 					grossTotal += totalGross;
 					bean.setUnitPrice(fee);
@@ -316,7 +316,7 @@ public class InvoiceHandler extends Action {
 					Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
 
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
-			float ppn = Float.parseFloat(generalInformationManager.getByKey(
+			Double ppn = Double.parseDouble(generalInformationManager.getByKey(
 					"tax").getValue());
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 
@@ -450,7 +450,7 @@ public class InvoiceHandler extends Action {
 					dateFormat.format(cal.getTime()));
 
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
-			float ppn = Float.parseFloat(generalInformationManager.getByKey(
+			Double ppn = Double.parseDouble(generalInformationManager.getByKey(
 					"tax").getValue());
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			double netTotal = 0;
@@ -724,8 +724,8 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setInvoiceDate(
 					dateFormat.format(cal.getTime()));
 
-			double netTotal = 0;
-			float ppn = (float) invoiceForm.getInvoiceBean().getPpnPercentage();
+			Double netTotal = 0.0;
+			Double ppn = (Double) invoiceForm.getInvoiceBean().getPpnPercentage();
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			invoiceForm.getInvoiceBean().setInvoiceTypeId(1);
 			if (invoiceForm.getInvoiceBean().getIsGross() == 0) {
@@ -737,8 +737,8 @@ public class InvoiceHandler extends Action {
 					bean.setTransactionInvoiceHeaderId(invoiceForm
 							.getInvoiceBean().getTransactionInvoiceHeaderId());
 					String description = "Jasa Professional Service - "
-							+ bean.getEmployeeName() + " " + bean.getManDays()
-							+ " Work Days";
+							+ bean.getEmployeeName() /*+ " " + bean.getManDays()
+							+ " Work Days"*/;
 					int manDays = bean.getManDays();
 					double fee = bean.getFee();
 					double totalFee = fee * manDays / bean.getWorkDays();
@@ -772,8 +772,8 @@ public class InvoiceHandler extends Action {
 					double totalGross = bean.getFee() * manDays
 							/ bean.getWorkDays();
 					String description = "Jasa Professional Service - "
-							+ bean.getEmployeeName() + " " + bean.getManDays()
-							+ " Work Days";
+							+ bean.getEmployeeName() /*+ " " + bean.getManDays()
+							+ " Work Days"*/;
 					netTotal += totalFee;
 					grossTotal += totalGross;
 					bean.setUnitPrice(fee);
@@ -870,7 +870,7 @@ public class InvoiceHandler extends Action {
 					.setNotes(invoiceForm.getInvoiceDetailNotes());
 			invoiceBean.getDetailList().get(0)
 					.setChangedBy((String) session.getAttribute("username"));
-			float ppn = (float) invoiceBean.getPpnPercentage();
+			Double ppn = (Double) invoiceBean.getPpnPercentage();
 			if (invoiceForm.getInvoiceBean().getIsGross() == 0) {
 				// exclude ppn
 				double netTotal = 0;
@@ -961,8 +961,7 @@ public class InvoiceHandler extends Action {
 					.getClientId()));
 			invoiceForm.setTransactionInvoiceHeaderId(invoiceForm
 					.getInvoiceBean().getTransactionInvoiceHeaderId());
-			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean()
-					.getStatusInvoiceId()));
+			invoiceForm.setStatusId(String.valueOf(invoiceForm.getInvoiceBean().getStatusInvoiceId()));
 			invoiceForm.setTask("detailInvoice");
 			invoiceForm.setInvoiceBean(invoiceManager.getHeaderById(invoiceForm
 					.getTransactionInvoiceHeaderId()));
@@ -1024,7 +1023,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setPeriodYear(
 					Integer.parseInt(invoiceDateFormat.format(cal.getTime())));
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
-			float ppn = Float.parseFloat(generalInformationManager.getByKey(
+			Double ppn = Double.parseDouble(generalInformationManager.getByKey(
 					"tax").getValue());
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			double netTotal = 0;
@@ -1137,7 +1136,7 @@ public class InvoiceHandler extends Action {
 			invoiceForm.getInvoiceBean().setInvoiceNumber(
 					invoiceManager.getInvoiceNumber(dateFormat.format(date)));
 			invoiceForm.getInvoiceBean().setStatusInvoiceId(1);
-			float ppn = Float.parseFloat(generalInformationManager.getByKey(
+			Double ppn = Double.parseDouble(generalInformationManager.getByKey(
 					"tax").getValue());
 			invoiceForm.getInvoiceBean().setPpnPercentage(ppn);
 			double netTotal = 0;

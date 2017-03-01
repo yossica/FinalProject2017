@@ -72,7 +72,6 @@
 									</logic:iterate>
 								</tbody>
 							</table>
-						</div>
 						<!-- /.table-responsive -->
 					</div>
 				</div>

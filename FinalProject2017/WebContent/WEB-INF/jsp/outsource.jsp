@@ -83,11 +83,11 @@
 					<div id="filterForm" class="col-lg-12"
 						style="border: solid 2px gray; border-radius: 10px; background-color: #EFEFEF; display: none;">
 						<div class="row" style="margin-top: 10px;">
-							<div class="col-md-12" style="padding-right: 1%">
+							<div class="col-md-12">
 								<div class="col-md-2">Client</div>
 								<div class="col-md-10">
 									<html:select name="outsourceForm" property="filterClient"
-										styleClass="form-control-client" size="1">
+										styleClass="form-control" size="1" styleId="basic2">
 										<html:option value="">Select All</html:option>
 										<html:optionsCollection name="outsourceForm"
 											property="optClientList" value="clientId" label="name" />
@@ -96,11 +96,11 @@
 							</div>
 						</div>
 						<div class="row" style="margin-top: 10px;">
-							<div class="col-md-12" style="padding-right: 1%">
+							<div class="col-md-12">
 								<div class="col-md-2">Employee</div>
 								<div class="col-md-10">
 									<html:select name="outsourceForm" property="filterEmployee"
-										styleClass="form-control-client" size="1">
+										styleClass="form-control" size="1" styleId="basic">
 										<html:option value="">Select All</html:option>
 										<html:optionsCollection name="outsourceForm"
 											property="optEmployeeList" value="employeeId" label="name" />
@@ -194,5 +194,15 @@
 			</div>
 		</div>
 	</html:form>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#basic').selectpicker({
+      liveSearch: true
+    });
+  $('#basic2').selectpicker({
+      liveSearch: true
+    });
+});
+</script>
 </body>
 </html>
