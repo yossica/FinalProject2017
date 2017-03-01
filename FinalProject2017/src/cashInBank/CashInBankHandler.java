@@ -631,32 +631,7 @@ public class CashInBankHandler extends Action {
 					+ "\\report\\FinanceTransactionReport" + ".jrxml",
 					fileName, parameters, cashInBankData);
 			
-			//download to client
-			//https://coderanch.com/t/293523/java/Download-file-Server-client-machine
-			response.setContentType("application/octet-stream");
-			String disHeader = "Attachment; Filename=\""+fileName+"\"";
-			response.setHeader("Content-Disposition", disHeader);
-
-			InputStream in = null;
-			ServletOutputStream outs = response.getOutputStream();
-
-			try {
-				in = new BufferedInputStream(new FileInputStream(
-						resultServerPath));
-				int ch;
-				while ((ch = in.read()) != -1) {
-					outs.print((char) ch);
-				}
-			} finally {
-				if(outs != null){
-					outs.flush();
-				}
-				if (in != null)
-					in.close(); // very important
-			}
-
-			response.setContentType("text/javascript");
-			//download until here
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
 			
 			return null;
 		} else {

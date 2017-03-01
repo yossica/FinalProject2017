@@ -3,6 +3,7 @@ package pettyCash;
 import generalInformation.GeneralInformationManager;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import cashInBank.CashInBankBean;
+import cashInBank.CashInBankManager;
 import utils.ExportReportManager;
 
 public class PettyCashHandler extends Action {
@@ -103,22 +106,35 @@ public class PettyCashHandler extends Action {
 
 			double amount = maxBalance - currBalance;
 			PettyCashBean pettyCashBean = new PettyCashBean();
+			CashInBankBean cashInBankBean = new CashInBankBean();
 			if (amount <= 0) {
 				pettyCashBean.setCashFlowCategoryId("1p-bal");
 				pettyCashBean.setAmount(Math.abs(amount));
 				pettyCashBean.setIsDebit(1);
+				cashInBankBean.setCashFlowCategoryId("0c-bal");
+				cashInBankBean.setAmount(Math.abs(amount));
+				cashInBankBean.setIsDebit(0);
 			} else {
 				pettyCashBean.setCashFlowCategoryId("0p-bal");
 				pettyCashBean.setAmount(amount);
 				pettyCashBean.setIsDebit(0);
+				cashInBankBean.setCashFlowCategoryId("1c-bal");
+				cashInBankBean.setAmount(amount);
+				cashInBankBean.setIsDebit(1);
 			}
-			pettyCashBean.setBalance(maxBalance);
-			pettyCashBean.setDescription("Balancing Petty Cash "
-					+ dateFormat.format(cal.getTime()));
+			String desc = "Balancing Petty Cash "
+					+ dateFormat.format(cal.getTime());
+			pettyCashBean.setDescription(desc);
 			pettyCashBean.setTransactionDate(dateFormat.format(cal.getTime()));
 			pettyCashBean.setCreatedBy((String) session
 					.getAttribute("username"));
 			pettyCashManager.insert(pettyCashBean);
+			//insert transaction to cash in bank
+			cashInBankBean.setDescription(desc);
+			cashInBankBean.setTransactionDate(dateFormat.format(cal.getTime()));
+			cashInBankBean.setCreatedBy((String) session
+					.getAttribute("username"));
+			new CashInBankManager().insert(cashInBankBean);
 			
 			//view list petty cash
 			pettyCashForm.setRemainingBalance(pettyCashManager
@@ -492,32 +508,7 @@ public class PettyCashHandler extends Action {
 					+ "\\report\\FinanceTransactionReport" + ".jrxml",
 					fileName, parameters, cashInBankData);
 
-			//download to client
-			//https://coderanch.com/t/293523/java/Download-file-Server-client-machine
-			response.setContentType("application/octet-stream");
-			String disHeader = "Attachment; Filename=\""+fileName+"\"";
-			response.setHeader("Content-Disposition", disHeader);
-
-			InputStream in = null;
-			ServletOutputStream outs = response.getOutputStream();
-
-			try {
-				in = new BufferedInputStream(new FileInputStream(
-						resultServerPath));
-				int ch;
-				while ((ch = in.read()) != -1) {
-					outs.print((char) ch);
-				}
-			} finally {
-				if(outs != null){
-					outs.flush();
-				}
-				if (in != null)
-					in.close(); // very important
-			}
-
-			response.setContentType("text/javascript");
-			//download until here
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
 			
 			return null;
 		} else {

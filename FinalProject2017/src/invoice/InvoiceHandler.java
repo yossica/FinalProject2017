@@ -5,6 +5,7 @@ import generalInformation.GeneralInformationManager;
 import holiday.HolidayManager;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
@@ -1396,32 +1397,7 @@ public class InvoiceHandler extends Action {
 					+ "\\report\\InvoiceSummaryReport" + ".jrxml", fileName,
 					parameters, invoiceSummaryData);
 			
-			//download to client
-			//https://coderanch.com/t/293523/java/Download-file-Server-client-machine
-			response.setContentType("application/octet-stream");
-			String disHeader = "Attachment; Filename=\""+fileName+"\"";
-			response.setHeader("Content-Disposition", disHeader);
-
-			InputStream in = null;
-			ServletOutputStream outs = response.getOutputStream();
-
-			try {
-				in = new BufferedInputStream(new FileInputStream(
-						resultServerPath));
-				int ch;
-				while ((ch = in.read()) != -1) {
-					outs.print((char) ch);
-				}
-			} finally {
-				if(outs != null){
-					outs.flush();
-				}
-				if (in != null)
-					in.close(); // very important
-			}
-
-			response.setContentType("text/javascript");
-			//download until here
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
 			
 			return null;
 
@@ -1435,6 +1411,8 @@ public class InvoiceHandler extends Action {
 
 			GeneralInformationBean rekNo = generalInformationManager
 					.getByKey("rek_no");
+			GeneralInformationBean rekNama = generalInformationManager
+					.getByKey("rek_nama");
 			GeneralInformationBean sign = generalInformationManager
 					.getByKey("sign");
 
@@ -1462,7 +1440,8 @@ public class InvoiceHandler extends Action {
 			parameters.put("invoiceNote", invoiceBean.getNotes() == null ? ""
 					: invoiceBean.getNotes());
 			parameters.put("ppn", invoiceBean.getPpnPercentage()+"");
-			parameters.put("accountDetail", rekNo.getValue());
+			parameters.put("accountNo", rekNo.getValue().toString());
+			parameters.put("accountName", rekNama.getValue());
 			parameters.put("manager", sign.getValue());
 
 			List invoiceDetailData = invoiceManager
@@ -1482,32 +1461,7 @@ public class InvoiceHandler extends Action {
 					+ "\\report\\InvoiceDetailReport" + ".jrxml", fileName,
 					parameters, invoiceDetailData);
 			
-			//download to client
-			//https://coderanch.com/t/293523/java/Download-file-Server-client-machine
-			response.setContentType("application/octet-stream");
-			String disHeader = "Attachment; Filename=\""+fileName+"\"";
-			response.setHeader("Content-Disposition", disHeader);
-
-			InputStream in = null;
-			ServletOutputStream outs = response.getOutputStream();
-
-			try {
-				in = new BufferedInputStream(new FileInputStream(
-						resultServerPath));
-				int ch;
-				while ((ch = in.read()) != -1) {
-					outs.print((char) ch);
-				}
-			} finally {
-				if(outs != null){
-					outs.flush();
-				}
-				if (in != null)
-					in.close(); // very important
-			}
-
-			response.setContentType("text/javascript");
-			//download until here
+			ExportReportManager.downloadFile(response, resultServerPath, fileName);
 			
 			return null;
 		} else {

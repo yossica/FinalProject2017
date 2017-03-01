@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-02-23T07:53:05 -->
+<!-- 2017-03-01T10:47:14 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceDetail" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="027dd7a8-38d7-469c-9203-8f7c00476a3a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#A9A9A9">
@@ -96,11 +96,14 @@
 	<parameter name="manager" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[manager]]></parameterDescription>
 	</parameter>
-	<parameter name="accountDetail" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[accountDetail]]></parameterDescription>
+	<parameter name="accountNo" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[accountNo]]></parameterDescription>
 	</parameter>
 	<parameter name="filePath" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[filePath]]></parameterDescription>
+	</parameter>
+	<parameter name="accountName" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[accountName]]></parameterDescription>
 	</parameter>
 	<queryString>
 		<![CDATA[]]>
@@ -142,22 +145,15 @@
 				</textField>
 			</frame>
 			<textField>
-				<reportElement x="110" y="30" width="158" height="50" uuid="a86fa387-1d4c-49f5-8218-1ceab25d4240"/>
+				<reportElement x="114" y="30" width="158" height="50" uuid="a86fa387-1d4c-49f5-8218-1ceab25d4240"/>
 				<textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="350" y="10" width="60" height="20" uuid="65ee22ad-f71e-403b-9d6e-29f604e31d5d"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Invoice No.]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="410" y="10" width="134" height="20" uuid="7f697143-c8dd-4d25-9fd3-91bbe4c40694"/>
-				<textElement>
+				<reportElement x="360" y="10" width="182" height="20" uuid="7f697143-c8dd-4d25-9fd3-91bbe4c40694"/>
+				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{invoiceNo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Invoice No. "+$P{invoiceNo}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement key="" x="18" y="100" width="312" height="140" uuid="adbf93d1-8932-4b86-908b-bf2f5c257888">
@@ -244,7 +240,7 @@
 				<imageExpression><![CDATA[$P{filePath}+"/image/ace-logo.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="110" y="10" width="158" height="20" uuid="ba26cd17-49a0-4517-8b11-032b90bd8c1c"/>
+				<reportElement x="114" y="10" width="158" height="20" uuid="ba26cd17-49a0-4517-8b11-032b90bd8c1c"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -267,6 +263,7 @@
 	</title>
 	<detail>
 		<band height="71" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<componentElement>
 				<reportElement x="18" y="11" width="522" height="60" uuid="9d9d6d1e-cd3b-46bc-a75e-4a020b47afc7">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
@@ -373,7 +370,7 @@
 				<text><![CDATA[Note:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="50" y="15" width="207" height="54" uuid="13f52c55-c8b5-4245-92ce-c55cae51eb86"/>
+				<reportElement x="50" y="15" width="207" height="64" uuid="13f52c55-c8b5-4245-92ce-c55cae51eb86"/>
 				<textFieldExpression><![CDATA[$P{invoiceNote}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -392,7 +389,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<paragraph leftIndent="5" spacingBefore="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{accountDetail}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{name} +"\n\nPayment in Full Amount to:\n\na.n "+$P{accountName}+"\n\n"+$P{accountNo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
