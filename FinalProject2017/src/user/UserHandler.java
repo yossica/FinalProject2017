@@ -90,16 +90,18 @@ public class UserHandler extends Action {
 		} else if ("insertUser".equals(userForm.getTask())) {
 			userForm.getMessageList().clear();
 			if (userManager.checkUsername(userForm.getNewUser()) > 0) {
-				userForm.getMessageList().add("Username already exist!");
+				userForm.getMessageList().add("Ooooops!!! Username already exist!");
 				return mapping.findForward("manageUser");
 			}
 			userManager.insert(userForm.getNewUser());
 			userForm.setNewUser("");
 			userForm.setUserList(userManager.getAll());
+			userForm.getMessageList().add("Success!!! New User Has Been Created!");
 			return mapping.findForward("manageUser");
 		} else if ("resetPassword".equals(userForm.getTask())) {
 			userManager.resetPassword(userForm.getUserName());
 			userForm.setUserList(userManager.getAll());
+			userForm.getMessageList().add("Success!!! Password Has Been Reset!");
 			return mapping.findForward("manageUser");
 		} else {
 			return mapping.findForward("login");

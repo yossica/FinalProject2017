@@ -33,12 +33,45 @@
 	function insertUser() {
 		var regex = /^[A-Za-z0-9]*$/;
 		var newUser = document.forms[1].newUser.value;
+		var errorMessage = "";
 		if (!regex.test(newUser)) {
-			alert("New Username must consist of only alphanumeric!");
+			errorMessage = errorMessage + "New Username must consist of only alphanumeric!";
+			//alert("New Username must consist of only alphanumeric!");
 			return;
 		}
-		if (confirm("Are you sure to insert this user?")) {
-			flyToPage("insertUser");
+		if (errorMessage.length != 0) {
+			sweetAlert("Oops...", errorMessage, "error");
+			/* document.getElementById("message").innerHTML = errorMessage; */
+			return;
+		} else {
+			swal({
+				title : "Are you sure?",
+				text : "System will update these data to General Information",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#ef2300",
+				confirmButtonText : "Yes, Update",
+				cancelButtonText : "No, Cancel Please!",
+				closeOnConfirm : false,
+				closeOnCancel : false
+			}, function(isConfirm) {
+				if (isConfirm) {
+					swal({
+						title : "Good job!",
+						text : "Save Success!",
+						type : "success"
+					}, function() {
+						setTimeout(function() {
+							flyToPage("insertUser");
+						}, 10);
+					});
+
+				} else {
+					swal("Cancelled", "Cancel Update General Information",
+							"error");
+				}
+			});
+			/* flyToPage("insertUser"); */
 		}
 	}
 
@@ -53,6 +86,23 @@
 		document.forms[1].task.value = task;
 		document.forms[1].submit();
 	}
+	
+	function alertError() {
+		var message = document.getElementById("err");
+		if (message != null) {
+			var messageValue = message.value;
+
+			var strValue = messageValue.substring(0, 7);
+			if (strValue == "Success") {
+				//Success
+				swal("Good job!", messageValue, "success");
+			} else if (strValue == "Success"){
+				//Ooooops
+				sweetAlert("Oops...", messageValue, "error");
+			}
+		}
+	}
+	window.onload = alertError; 
 </script>
 </head>
 <body>
@@ -77,7 +127,8 @@
 							<logic:notEmpty name="userForm" property="messageList">
 								<logic:iterate id="message" name="userForm"
 									property="messageList">
-									<bean:write name="message" />
+									<input type="hidden" id="err"
+										value="<bean:write name="message" />">
 								</logic:iterate>
 							</logic:notEmpty>
 						</div>
@@ -116,6 +167,7 @@
 				<!-- /.col-lg-12 -->
 			</div>
 		</div>
+		
 	</html:form>
 </body>
 </html>
