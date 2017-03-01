@@ -15,10 +15,10 @@
 	}
 
 	function flyToSave() {
-		var value = document.getElementsByName("value")[0].value;
-		var key = document.getElementsByName("key")[0].value;
-		var type = document.getElementsByName("dataType")[0].value;
-		var length = document.getElementsByName("length")[0].value;
+		var value = document.getElementsByName("generalInformationBean.value")[0].value;
+		var key = document.getElementsByName("generalInformationBean.key")[0].value;
+		var type = document.getElementsByName("generalInformationBean.dataType")[0].value;
+		var length = document.getElementsByName("generalInformationBean.length")[0].value;
 		var phoneAndFaxRegEx = /^([+0])([\d-])*$/;
 		var intOrDouble = /^[0-9]+([,.][0-9]+)?$/;
 
@@ -97,28 +97,29 @@
 									<tr>
 										<td><label>Key</label></td>
 										<td><html:text name="generalInformationForm"
-												property="key" readonly="true"
+												property="generalInformationBean.key" readonly="true"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
-										<td><label>Value</label></td>
+										<td><label>Value <b style="color:red; font-size:12px"><i>*Field is required</i></b></label></td>
 										<td><html:text name="generalInformationForm"
-												property="value" styleClass="form-control-client" /></td>
+												property="generalInformationBean.value" styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Data Type</label></td>
 										<td><html:text name="generalInformationForm"
-												property="dataType" readonly="true"
+												property="generalInformationBean.dataType" readonly="true"
 												styleClass="form-control-client" /></td>
 									</tr>
 									<tr>
 										<td><label>Length</label></td>
 										<td><html:text name="generalInformationForm"
-												property="length" readonly="true"
+												property="generalInformationBean.length" readonly="true"
 												styleClass="form-control-client" /></td>
 									</tr>
 								</tbody>
 							</table>
+							<b style="color:red; font-size:12px"><i>*Field is required</i></b>
 						</div>
 						<!-- /.table-responsive -->
 						<div class="col-md-15" style="color: red;" id="message">
