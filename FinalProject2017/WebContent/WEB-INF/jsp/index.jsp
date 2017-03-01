@@ -58,8 +58,8 @@
 		</div>
 		<!-- Table 1 -->
 		<div class="row">
-			<div class="col-lg-6" style="width: 1100px">
-				<div class="col-lg-2" style="width: 350px">
+			<div class="col-lg-6" style="width: 1200px">
+				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading" style="background-color:#ffc4c1/* #d5d9e0 */">Listed</div>
 						<!-- /.panel-heading -->
@@ -125,7 +125,7 @@
 					</div>
 					<!-- /.panel -->
 				</div>
-				<div class="col-lg-2" style="width: 350px">
+				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading" style="background-color:#ffcb87">Created</div>
 						<!-- /.panel-heading -->
@@ -161,7 +161,7 @@
 					</div>
 				</div>
 				<!-- /.panel -->
-				<div class="col-lg-2" style="width: 350px">
+				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading" style="background-color:#a5d3ff">Sent</div>
 						<!-- /.panel-heading -->
