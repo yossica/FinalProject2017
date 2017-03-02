@@ -79,7 +79,7 @@
 						  document.forms[1].transactionTrainingDetailId.value = id;
 						  flyToPage("deleteDetail");
 					  } else {
-					    swal("Cancelled", "Cancel Insert Transaction", "error");
+					    swal("Cancelled", "Cancel Delete Transaction", "error");
 					  }
 					});
 		}
