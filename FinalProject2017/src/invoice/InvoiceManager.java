@@ -167,16 +167,6 @@ public class InvoiceManager {
 		}
 	}
 
-	// public InvoiceBean getById(int input){
-	// InvoiceBean result = new InvoiceBean();
-	// return result;
-	// }
-
-	// public List getDetailByIdHeader(int input){
-	// List result = new ArrayList();
-	// return result;
-	// }
-
 	public List getAllWithFilter(Map input) {
 		List result = new ArrayList();
 		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
@@ -293,5 +283,22 @@ public class InvoiceManager {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	public void setNextStatus(Map paramMap) {
+		SqlMapClient ibatis = IbatisHelper.getSqlMapInstance();
+		try {
+			ibatis.startTransaction();
+			ibatis.update("invoice.updateStatus", paramMap);
+			ibatis.commitTransaction();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ibatis.endTransaction();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -93,7 +93,7 @@ public class UserHandler extends Action {
 		} else if ("insertUser".equals(userForm.getTask())) {
 			userForm.getMessageList().clear();
 			if (userManager.checkUsername(userForm.getNewUser()) > 0) {
-				userForm.getMessageList().add("Username already exist!");
+				userForm.getMessageList().add("Ooooops!!! Username already exist!");
 				return mapping.findForward("manageUser");
 			}
 			userManager.insert(userForm.getNewUser());

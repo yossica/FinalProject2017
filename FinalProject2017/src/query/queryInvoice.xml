@@ -28,7 +28,8 @@
             mit.name as invoiceTypeName,
             to_char(invoice_date, 'MM/dd/yyyy') as invoiceDate,
             tih.status_invoice_id as statusInvoiceId,
-            msi.name as statusInvoiceName
+            msi.name as statusInvoiceName,
+            to_char(tih.paid_date, 'MM/dd/yyyy') as paidDate
         from transaction_invoice_header tih
         join master_client mc on (tih.client_id=mc.client_id)
         join master_invoice_type mit on (tih.invoice_type_id=mit.invoice_type_id)
@@ -90,7 +91,8 @@
 		    i.created_by as createdBy,
 		    i.changed_date as changedDate,
 		    i.changed_by as changedBy,
-		    i.total_ppn as totalPpn
+		    i.total_ppn as totalPpn,
+            i.paid_date as paidDate
 		from 
 		    transaction_invoice_header i,
 		    master_invoice_type t,
@@ -212,10 +214,10 @@
     	insert into transaction_invoice_header
     	(TRANSACTION_INVOICE_ID,INVOICE_NUMBER,INVOICE_DATE,PERIOD_MONTH,PERIOD_YEAR,
     	STATUS_INVOICE_ID,INVOICE_TYPE_ID,CLIENT_ID,TOTAL_NET,PPN_PERCENTAGE,IS_GROSS,TOTAL_GROSS,
-    	NOTES,CREATED_BY,CREATED_DATE,CHANGED_BY,CHANGED_DATE,TOTAL_PPN)
+    	NOTES,CREATED_BY,CREATED_DATE,CHANGED_BY,CHANGED_DATE,TOTAL_PPN,PAID_DATE)
     	values (#transactionInvoiceHeaderId#, #invoiceNumber#, to_date(#invoiceDate#, 'yyyy-mm-dd'), #periodMonth#, #periodYear#, 
     	#statusInvoiceId#, #invoiceTypeId#, #clientId#, #totalNet#, #ppnPercentage#, #isGross#, #totalGross#,
-    	#notes#, #createdBy#, sysdate, null, null, #totalPpn#)
+    	#notes#, #createdBy#, sysdate, null, null, #totalPpn#,null)
     </insert>
     
     <insert id="insertDetail" parameterClass="invoice.InvoiceDetailBean">
@@ -269,5 +271,18 @@
 			TOTAL_PPN = #totalPpn#
 		where TRANSACTION_INVOICE_ID = #transactionInvoiceHeaderId#
     </update>
-     
+     	 
+	 <update id="updateStatus" parameterClass="java.util.Map">
+	 	update
+		    transaction_invoice_header
+		set
+		    status_invoice_id = #nextStatusId#
+			<isNotNull property="paidDate">
+				<isNotEmpty property="paidDate">
+					,paid_date = to_date(#paidDate#, 'MM/dd/yyyy')
+				</isNotEmpty>
+			</isNotNull>
+		where
+		    invoice_number = #invoiceNumber#
+	 </update>
 </sqlMap> 
