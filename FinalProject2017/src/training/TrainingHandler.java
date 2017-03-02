@@ -64,6 +64,8 @@ public class TrainingHandler extends Action {
 
 			trainingForm.getTrainingDetailBean().setFee(0.0);
 			trainingForm.getTrainingDetailBean().setDescription("");
+			trainingForm.getMessageList().clear();
+			trainingForm.getMessageList().add("Success insert data");
 			return mapping.findForward("additionalTraining");
 		} else if ("deleteDetail".equals(trainingForm.getTask())) {
 			trainingManager.deleteDetail(trainingForm
@@ -79,7 +81,11 @@ public class TrainingHandler extends Action {
 
 			trainingForm.getTrainingDetailBean().setFee(0.0);
 			trainingForm.getTrainingDetailBean().setDescription("");
+			trainingForm.getMessageList().clear();
+			trainingForm.getMessageList().add("Success delete data");
 			return mapping.findForward("additionalTraining");
+		} else if("noTraining".equals(trainingForm.getTask())){
+			return mapping.findForward("index");
 		} else {
 			// task = additionalTraining
 			List<ClientBean> clientList = trainingManager

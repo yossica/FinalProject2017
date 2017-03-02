@@ -142,12 +142,14 @@
 												style="color: red; font-size: 18px">*</b></label></td>
 										<td><input type="text" name="clientBean.phoneNumber"
 											placeholder="e.g.: 021 123-456 / +6221 123-456"
+											class="form-control-client"
 											value="<bean:write name="clientForm" property="clientBean.phoneNumber"/>"></td>
 									</tr>
 									<tr>
 										<td><label>Fax</label></td>
 										<td><input type="text" name="clientBean.faxNumber"
 											placeholder="e.g.: 021 123-456 / +6221 123-456"
+											class="form-control-client"
 											value="<bean:write name="clientForm" property="clientBean.faxNumber"/>"></td>
 									</tr>
 									<tr>

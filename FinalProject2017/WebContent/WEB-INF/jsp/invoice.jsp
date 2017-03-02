@@ -34,7 +34,7 @@
 	z-index: 1;
 	bottom: 125%;
 	left: -200px;
-	margin-left: -80px;
+	margin-left: 150px;
 }
 
 /* Popup arrow */

@@ -103,6 +103,7 @@
 												style="color: red; font-size: 18px">*</b></label></td>
 										<td><input type="text" name="employeeBean.email"
 											placeholder="e.g.: adam@test.com"
+											class="form-control-client"
 											value="<bean:write name="employeeForm" property="employeeBean.email"/>"></td>
 									</tr>
 									<tr>

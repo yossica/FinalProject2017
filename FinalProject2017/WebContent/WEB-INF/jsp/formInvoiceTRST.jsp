@@ -98,20 +98,16 @@ to {
 			function(isConfirm){
 			  if (isConfirm) {
 				  document.forms[1].task.value = task;
-					document.forms[1].submit();
+				  document.forms[1].submit();
 			  } else {
 			    swal("Cancelled", "Cancel Insert ", "error");
 			  }
 			});  
-	/* 	 document.forms[1].task.value = task;
-		document.forms[1].submit();  */
 	}
 	function flyToDelete(id){
-		 document.forms[1].deleteIndex.value = id;
-		flyToPage('deleteAdditionalFee'); 
-		/* swal({
+		swal({
 			  title: "Are you sure?",
-			  text: "System will delete "+id+" data from additional",
+			  text: "System will delete these data ",
 			  type: "warning",
 			  showCancelButton: true,
 			  confirmButtonColor: "#ef2300",
@@ -123,11 +119,12 @@ to {
 			function(isConfirm){
 			  if (isConfirm) {
 				  document.forms[1].deleteIndex.value = id;
-					flyToPage('deleteAdditionalFee');
+				  document.forms[1].task.value = 'deleteAdditionalFee';
+				  document.forms[1].submit();
 			  } else {
-			    swal("Cancelled", "Cancel Delete Additional", "error");
+			    swal("Cancelled", "Cancel Delete ", "error");
 			  }
-			}); */
+			}); 
 	}
 	function validate(){
 		var tgl = document.getElementsByName("invoiceBean.invoiceDate")[0].value;
@@ -163,24 +160,6 @@ to {
 			/* document.getElementById("message").innerHTML = errorMessage; */
 			return;
 		}else {
-			/* swal({
-				  title: "Are you sure?",
-				  text: "System will insert these data to additional fee",
-				  type: "warning",
-				  showCancelButton: true,
-				  confirmButtonColor: "#ef2300",
-				  confirmButtonText: "Yes, Insert",
-				  cancelButtonText: "No, Cancel Please!",
-				  closeOnConfirm: false,
-				  closeOnCancel: false
-				},
-				function(isConfirm){
-				  if (isConfirm) {
-					  flyToPage('addAdditionalFee');
-				  } else {
-				    swal("Cancelled", "Cancel Insert Additional Fee", "error");
-				  }
-				});  */
 			 flyToPage('addAdditionalFee'); 
 		}
 	}
@@ -417,10 +396,6 @@ to {
 												styleClass="form-control"></html:text></td>
 										<td><html:text name="trainingDetail" property="fee"
 												readonly="true" indexed="true" styleClass="form-control"></html:text></td>
-
-
-
-
 										<td>
 											<%-- <html:text name="trainingDetail" property="note" indexed="true" styleClass="form-control"> --%>
 
