@@ -97,14 +97,20 @@ public class CashInBankHandler extends Action {
 			 */
 			return mapping.findForward("cashInBank");
 		} else if ("balancing".equals(cashInBankForm.getTask())) {
+			Calendar cal = Calendar.getInstance();
 			// get max cash
 			double maxBalance = Double.parseDouble(generalInformationManager
 					.getByKey("max_cash").getValue());
 			double currBalance = cashInBankManager.getCurrentBalance();
-
-			Calendar cal = Calendar.getInstance();
-
 			double amount = maxBalance - currBalance;
+			
+			//get max petty
+			double maxPettyBalance = Double.parseDouble(generalInformationManager
+					.getByKey("max_petty").getValue());
+			double currPettyBalance = new PettyCashManager().getCurrentBalance();
+			double pettyAmount = maxPettyBalance - currPettyBalance;
+			
+			amount += pettyAmount;
 			CashInBankBean cashInBankBean = new CashInBankBean();
 			if (amount <= 0) {
 				cashInBankBean.setCashFlowCategoryId("1c-bal");

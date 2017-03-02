@@ -39,7 +39,7 @@
 				var clientName = clientList.options[clientList.selectedIndex].text;
 				var trainingList = document.getElementsByName("trainingDetailBean.transactionTrainingHeaderId")[0];
 				var trainingName = trainingList.options[trainingList.selectedIndex].text;
-				if (confirm/* ("Are you sure to insert these data as additional training fee for "+clientName+"-"+trainingName+"?") */) {
+				if (confirm) {
 					//flyToPage("insertDetail");
 					swal({
 						  title: "Are you sure?",
@@ -54,14 +54,7 @@
 						},
 						function(isConfirm){
 						  if (isConfirm) {
-							  swal({title: "Good job!",
-								  text: "Transaction Success!",
-								  type: "success"}
-								 ,function(){
-								  setTimeout(function(){
-									  flyToPage("insertDetail");
-									  }, 10);
-									}); 
+							  flyToPage("insertDetail");
 						  } else {
 						    swal("Cancelled", "Cancel Insert Transaction", "error");
 						  }
@@ -83,15 +76,8 @@
 					},
 					function(isConfirm){
 					  if (isConfirm) {
-						  swal({title: "Good job!",
-							  text: "Transaction Success!",
-							  type: "success"}
-							 ,function(){
-							  setTimeout(function(){
-								  document.forms[1].transactionTrainingDetailId.value = id;
-								  flyToPage("deleteDetail");
-								  }, 10);
-								}); 
+						  document.forms[1].transactionTrainingDetailId.value = id;
+						  flyToPage("deleteDetail");
 					  } else {
 					    swal("Cancelled", "Cancel Insert Transaction", "error");
 					  }
@@ -114,7 +100,25 @@
 				}
 				else if(strValue=="Ooooops"){
 					//Ooooops
-					sweetAlert("Oops...", messageValue, "error");
+					if(messageValue=="Ooooops!!! There is no ongoing training!"){
+						swal({
+							  title: "Something Went Wrong",
+							  text: messageValue,
+							  type: "warning",
+							  confirmButtonColor: "#ef2300",
+							  confirmButtonText: "OK",
+							  closeOnConfirm: false
+							},
+							function(isConfirm){
+							  if (isConfirm) {
+								  document.forms[1].task.value = 'noTraining';
+								  document.forms[1].submit();
+							  }
+							});
+					}
+					else{
+						sweetAlert("Oops...", messageValue, "error");
+					}
 				}
 			}
 		}
@@ -178,7 +182,7 @@
 					</div>
 				</div>
 				<div class="row" style="margin-top: 10px;">
-					<div class="col-md-12" style="padding-right: 1%">
+					<div class="col-md-12">
 						<div class="col-md-2">Fee</div>
 						<div class="col-md-10">
 							<html:text property="trainingDetailBean.fee" name="trainingForm"
